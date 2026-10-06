@@ -609,7 +609,7 @@ function heroTick(){
     const dots=[0.1,1,10,100].map(h=>[h/l,fn(h/l)]);
     plot($('#wv-f'),{xlog:true,ylog:true,xlim:[1e-5,1e2],ylim:useF?[0.01,2]:[1e-3,1],xlabel:'x = h/λ',ylabel:useF?'f(x)':'f̃(x)',legend:useF?'bl':'br',
       series:[{data:xs.map(x=>[x,fn(x)]),color:css('--ink'),width:2.2,name:useF?'c/√(gh)':'c/√(gλ)'},
-        ...(useF?[]:[{data:xs.map(x=>[x,Math.sqrt(x)]),color:css('--up'),dash:[6,5],width:1.6,name:'x^½'}]),
+        ...(useF?[]:[{data:xs.map(x=>[x,Math.sqrt(x)]),color:css('--up'),dash:[6,5],width:1.6,name:'x^(1/2)'}]),
         {data:dots,points:true,color:css('--crit'),r:4.5,name:'h = 0.1, 1, 10, 100 m'}]});
   }
   sl.addEventListener('input',draw); sel.addEventListener('change',draw); reg(draw);

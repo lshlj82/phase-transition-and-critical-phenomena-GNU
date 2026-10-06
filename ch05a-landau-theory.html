@@ -468,7 +468,7 @@ function drawHero(){
     series:[{data:es.map((e,i)=>[e,Ls[i]]),color:css('--up'),width:3}],
     after:(ctx,X,Y)=>{ ctx.fillStyle=css('--crit'); ctx.beginPath(); ctx.arc(X(hero.e),Y(Lfun(hero.e,t,H,0))-8,8,0,2*Math.PI); ctx.fill();
       ctx.font=`600 15px ${css('--ui-font')}`; ctx.fillStyle=css('--ink'); ctx.textAlign='center'; ctx.fillText(t>0?'T > Tc: one minimum':'T < Tc: symmetry broken',X(0),Y(lo-0.05)-14); }});
-  $('#hero-read').innerHTML=`𝓛 = tη² + ½η⁴ − Hη, with the temperature slowly cycling through T<sub>c</sub> (now t = ${t.toFixed(2)}). The ball relaxes downhill with small thermal kicks. Each time the system is cooled through T<sub>c</sub> at H = 0 it falls into one of the two wells at random: spontaneous symmetry breaking. A small field H picks the well.`;
+  $('#hero-read').innerHTML=`𝓛 = tη² + (1/2)η⁴ − Hη, with the temperature slowly cycling through T<sub>c</sub> (now t = ${t.toFixed(2)}). The ball relaxes downhill with small thermal kicks. Each time the system is cooled through T<sub>c</sub> at H = 0 it falls into one of the two wells at random: spontaneous symmetry breaking. A small field H picks the well.`;
 }
 (function(){
   bindSlider('#hero-H',v=>{ hero.H=v; drawHero(); },v=>v.toFixed(3));

@@ -761,7 +761,7 @@ function drawCo(){
   const Ts=range(0.3,3,200);
   const xi=(T,H)=>{ const [a,b]=eig(1/T,H/T); return 1/Math.log(a/b); };
   plot($('#co-xi'),{ylog:true,xlim:[0.3,3],ylim:[0.1,1e3],xlabel:'k_B T / J',ylabel:'ξ (lattice spacings)',legend:'tr',vlines:[{x:co.T,color:css('--crit')}],
-    series:[{data:Ts.map(T=>[T,0.5*Math.exp(2/T)]),color:css('--muted'),dash:[5,4],width:1.5,name:'½ e^(2J/kT)'},
+    series:[{data:Ts.map(T=>[T,0.5*Math.exp(2/T)]),color:css('--muted'),dash:[5,4],width:1.5,name:'(1/2) e^(2J/kT)'},
       {data:Ts.map(T=>[T,xi(T,0)]),color:css('--up'),width:2.4,name:'H = 0'},
       {data:Ts.map(T=>[T,xi(T,0.02)]),color:css('--down'),width:2,name:'H = 0.02 J'},
       {data:Ts.map(T=>[T,xi(T,0.2)]),color:css('--down'),width:2,dash:[6,3],name:'H = 0.2 J'}]});
