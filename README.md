@@ -1,6 +1,6 @@
 # Phase Transitions and Critical Phenomena: Interactive Lecture Notes
 
-Interactive web companion to a graduate course on phase transitions and critical phenomena, following Nigel Goldenfeld's *Lectures on Phase Transitions and the Renormalization Group* (Addison-Wesley, 1992). Each chapter is a single, self-contained HTML page that pairs the lecture notes with simulations and plots computed live in the browser.
+Interactive web companion to the graduate course on phase transitions and critical phenomena in the Department of Physics, Gyeongsang National University, following Nigel Goldenfeld's *Lectures on Phase Transitions and the Renormalization Group* (Addison-Wesley, 1992). The pages were created by Claude Opus 5.5 (Anthropic) based on Sang Hoon Lee's lecture notes. Each chapter is a single, self-contained HTML page that pairs the lecture notes with simulations and plots computed live in the browser.
 
 ## Chapters
 
@@ -242,7 +242,7 @@ Each chapter page is intentionally self-contained (HTML, CSS, and JavaScript in 
 
 ## Acknowledgments and disclaimer
 
-These pages are based on the course instructor's own lecture notes on Goldenfeld's textbook. The text is a paraphrase written for teaching; it does not reproduce the book, and this project is not affiliated with or endorsed by the author or publisher. Experimental exponent values are those quoted in the notes.
+These pages were created by Claude Opus 5.5 (Anthropic) based on Sang Hoon Lee's lecture notes on Goldenfeld's textbook, for the graduate course of the Department of Physics, Gyeongsang National University. The text is a paraphrase written for teaching; it does not reproduce the book, and this project is not affiliated with or endorsed by the author or publisher. Experimental exponent values are those quoted in the notes.
 
 ## License
 
