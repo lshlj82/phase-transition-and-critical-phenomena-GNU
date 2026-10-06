@@ -4,19 +4,19 @@ Interactive web companion to the graduate course on phase transitions and critic
 
 ## Chapters
 
-Live pages (GitHub Pages). Start from the [course home page](https://YOUR-USERNAME.github.io/YOUR-REPO/).
+Live pages (GitHub Pages). Start from the [course home page](https://lshlj82.github.io/phase-transition-and-critical-phenomena-GNU/).
 
 | Chapter | Demo page | Source |
 |---|---|---|
-| 1. Introduction | [Open demo](https://YOUR-USERNAME.github.io/YOUR-REPO/ch01-introduction.html) | [`ch01-introduction.html`](ch01-introduction.html) |
-| 2. How phase transitions occur in principle, Part 1 (§2.1–2.8) | [Open demo](https://YOUR-USERNAME.github.io/YOUR-REPO/ch02a-phase-transitions-in-principle.html) | [`ch02a-phase-transitions-in-principle.html`](ch02a-phase-transitions-in-principle.html) |
-| 2. How phase transitions occur in principle, Part 2 (§2.8–2.14) | [Open demo](https://YOUR-USERNAME.github.io/YOUR-REPO/ch02b-symmetry-breaking-and-lattice-gases.html) | [`ch02b-symmetry-breaking-and-lattice-gases.html`](ch02b-symmetry-breaking-and-lattice-gases.html) |
-| 3. How phase transitions occur in practice (§3.1–3.7 + appendix) | [Open demo](https://YOUR-USERNAME.github.io/YOUR-REPO/ch03-phase-transitions-in-practice.html) | [`ch03-phase-transitions-in-practice.html`](ch03-phase-transitions-in-practice.html) |
-| 4. Critical phenomena in fluids (§4.1–4.5) | [Open demo](https://YOUR-USERNAME.github.io/YOUR-REPO/ch04-critical-phenomena-in-fluids.html) | [`ch04-critical-phenomena-in-fluids.html`](ch04-critical-phenomena-in-fluids.html) |
-| 5. Landau theory, Part 1 (§5.1–5.3) | [Open demo](https://YOUR-USERNAME.github.io/YOUR-REPO/ch05a-landau-theory.html) | [`ch05a-landau-theory.html`](ch05a-landau-theory.html) |
-| 5. Landau theory, Part 2 (§5.4–5.7) | [Open demo](https://YOUR-USERNAME.github.io/YOUR-REPO/ch05b-coarse-graining-and-correlations.html) | [`ch05b-coarse-graining-and-correlations.html`](ch05b-coarse-graining-and-correlations.html) |
+| 1. Introduction | [Open demo](https://lshlj82.github.io/phase-transition-and-critical-phenomena-GNU/ch01-introduction.html) | [`ch01-introduction.html`](ch01-introduction.html) |
+| 2. How phase transitions occur in principle, Part 1 (§2.1–2.8) | [Open demo](https://lshlj82.github.io/phase-transition-and-critical-phenomena-GNU/ch02a-phase-transitions-in-principle.html) | [`ch02a-phase-transitions-in-principle.html`](ch02a-phase-transitions-in-principle.html) |
+| 2. How phase transitions occur in principle, Part 2 (§2.8–2.14) | [Open demo](https://lshlj82.github.io/phase-transition-and-critical-phenomena-GNU/ch02b-symmetry-breaking-and-lattice-gases.html) | [`ch02b-symmetry-breaking-and-lattice-gases.html`](ch02b-symmetry-breaking-and-lattice-gases.html) |
+| 3. How phase transitions occur in practice (§3.1–3.7 + appendix) | [Open demo](https://lshlj82.github.io/phase-transition-and-critical-phenomena-GNU/ch03-phase-transitions-in-practice.html) | [`ch03-phase-transitions-in-practice.html`](ch03-phase-transitions-in-practice.html) |
+| 4. Critical phenomena in fluids (§4.1–4.5) | [Open demo](https://lshlj82.github.io/phase-transition-and-critical-phenomena-GNU/ch04-critical-phenomena-in-fluids.html) | [`ch04-critical-phenomena-in-fluids.html`](ch04-critical-phenomena-in-fluids.html) |
+| 5. Landau theory, Part 1 (§5.1–5.3) | [Open demo](https://lshlj82.github.io/phase-transition-and-critical-phenomena-GNU/ch05a-landau-theory.html) | [`ch05a-landau-theory.html`](ch05a-landau-theory.html) |
+| 5. Landau theory, Part 2 (§5.4–5.7) | [Open demo](https://lshlj82.github.io/phase-transition-and-critical-phenomena-GNU/ch05b-coarse-graining-and-correlations.html) | [`ch05b-coarse-graining-and-correlations.html`](ch05b-coarse-graining-and-correlations.html) |
 
-The demo links assume the site is published with GitHub Pages; replace `YOUR-USERNAME` and `YOUR-REPO` throughout this file with your GitHub user name and repository name.
+The demo links assume the site is published with GitHub Pages; replace `lshlj82` and `phase-transition-and-critical-phenomena-GNU` throughout this file with your GitHub user name and repository name.
 
 ## Chapter 1: what's inside
 
@@ -161,8 +161,8 @@ The page header shows an Ising model near $T_c$ beside its coarse-grained magnet
 No build step and no dependencies to install. Clone the repository and open the HTML file in any modern browser:
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git
-cd YOUR-REPO
+git clone https://github.com/lshlj82/phase-transition-and-critical-phenomena-GNU.git
+cd phase-transition-and-critical-phenomena-GNU
 open ch01-introduction.html        # macOS
 xdg-open ch01-introduction.html    # Linux
 start ch01-introduction.html       # Windows
@@ -174,9 +174,9 @@ An internet connection is needed the first time for the web fonts and for [KaTeX
 
 1. Push the repository to GitHub.
 2. Go to **Settings → Pages**, choose **Deploy from a branch**, and select `main` with the `/ (root)` folder.
-3. Each chapter will be served at a URL such as `https://YOUR-USERNAME.github.io/YOUR-REPO/ch01-introduction.html`.
+3. Each chapter will be served at a URL such as `https://lshlj82.github.io/phase-transition-and-critical-phenomena-GNU/ch01-introduction.html`.
 
-The landing page `index.html` is served at `https://YOUR-USERNAME.github.io/YOUR-REPO/` and links to every chapter.
+The landing page `index.html` is served at `https://lshlj82.github.io/phase-transition-and-critical-phenomena-GNU/` and links to every chapter.
 
 ## Repository layout
 
