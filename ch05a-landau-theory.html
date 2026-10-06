@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chapter 5, Part 1: Landau Theory | Phase Transitions and Critical Phenomena</title>
+<meta name="description" content="Interactive lecture notes for Chapter 5 (Part 1) of a graduate course on phase transitions: order parameters, the common structure of mean-field theories, the Landau free energy, continuous and first-order transitions, and Landau theory on scale-free networks.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+
+
+:root{
+  --paper:#F3F5F7; --surface:#FFFFFF; --ink:#0E1420; --muted:#3E4859; --rule:#C3CBD6;
+  --up:#1537A8; --down:#B35F00; --crit:#B3104E; --mark:#C2EDB0; --mark-edge:#2E8A1E;
+  --spin-up:#0A1F6E; --spin-down:#FFD23F;
+  --serif:"Source Serif 4", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --ui-font:"IBM Plex Sans Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#0B1019; --surface:#131A27; --ink:#F4F6FA; --muted:#BAC4D3; --rule:#35415A;
+    --up:#8FAEFF; --down:#FFC23D; --crit:#FF7AA6; --mark:#244A1E; --mark-edge:#7EDB6A;
+    --spin-up:#1E3FBF; --spin-down:#FFD23F;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:1.0625rem;line-height:1.62;
+  padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0)}
+a{color:var(--up);text-underline-offset:2px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--crit);outline-offset:2px}
+h1,h2,h3{font-family:var(--serif);line-height:1.15;font-weight:700}
+h2{font-size:1.9rem;margin:3.6rem 0 .6rem;letter-spacing:-.01em}
+h2 .sec{color:var(--muted);font-weight:400;margin-right:.35em}
+h3{font-size:1.3rem;margin:2.4rem 0 .4rem}
+p,ul,ol{max-width:68ch}
+p,li,figcaption,h3{overflow-wrap:break-word}
+.ui{font-family:var(--ui-font)}
+
+/* hero */
+header.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:3rem;align-items:center;
+  max-width:1180px;margin:0 auto;padding:3.5rem 1.5rem 2.5rem}
+.course{font-family:var(--ui-font);font-size:1rem;color:var(--muted);margin:0 0 1rem}
+.hero h1{font-size:clamp(2.6rem,6vw,4.4rem);margin:0 0 1.2rem;letter-spacing:-.02em}
+.hero h1 span{display:block;font-weight:400;font-style:italic;font-size:.5em;letter-spacing:0;color:var(--muted);margin-top:.35em}
+.hero .lede{font-size:1.2rem;max-width:34ch}
+.lattice-wrap{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:12px}
+canvas.lattice{display:block;width:100%;aspect-ratio:1;image-rendering:pixelated;image-rendering:crisp-edges;border-radius:2px}
+.lattice-wrap .controls{margin-top:10px}
+
+/* layout */
+.page{display:grid;grid-template-columns:200px minmax(0,1fr);gap:3rem;max-width:1180px;margin:0 auto;padding:0 1.5rem 4rem}
+nav.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 1.5rem);align-self:start;font-family:var(--ui-font);font-size:.95rem;padding-top:3.8rem}
+nav.toc ol{list-style:none;margin:0;padding:0}
+nav.toc li{margin:.15rem 0}
+nav.toc ol ol{padding-left:.9rem;font-size:.9rem}
+nav.toc a{color:var(--muted);text-decoration:none;display:block;padding:.15rem 0 .15rem .6rem;border-left:2px solid transparent}
+nav.toc a:hover{color:var(--ink)}
+nav.toc a.active{color:var(--ink);border-left-color:var(--crit)}
+main{min-width:0}
+
+/* key results echo the green boxes of the handwritten notes */
+.result{background:var(--mark);border-left:4px solid var(--mark-edge);padding:.6rem 1rem;margin:1.2rem 0;max-width:68ch;overflow-x:auto}
+.result p{margin:.2rem 0}
+.aside{color:var(--muted);font-style:italic;border-left:1px solid var(--rule);padding-left:1rem}
+mark{background:linear-gradient(transparent 55%, var(--mark) 55%);color:inherit;padding:0 .1em}
+.question{border:1.5px solid var(--ink);padding:.9rem 1.2rem;margin:2rem 0 1rem;max-width:68ch}
+.question h3{margin:0;font-size:1.2rem}
+.question h3 b{color:var(--crit)}
+.math-scroll{overflow-x:auto;max-width:68ch}
+/* keep KaTeX's absolutely positioned accessibility markup inside scroll boxes */
+.result,.math-scroll,.table-scroll{position:relative}
+.katex-display{overflow-x:auto;overflow-y:hidden;padding:2px 0}
+
+
+/* demos */
+figure.demo{margin:1.8rem 0 2.2rem;background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:1.1rem 1.2rem 1rem}
+figure.demo > .title{font-family:var(--ui-font);font-weight:600;font-size:1.05rem;margin:0 0 .7rem}
+figure.demo figcaption{font-size:.95rem;color:var(--muted);margin-top:.8rem;max-width:80ch}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem}
+.grid-lat{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:1.4rem;align-items:start}
+canvas.plot{display:block;width:100%;height:280px}
+.plot-label{font-family:var(--ui-font);font-size:.9rem;color:var(--muted);margin:0 0 .2rem}
+.controls{display:flex;flex-wrap:wrap;gap:.6rem 1.4rem;align-items:center;font-family:var(--ui-font);font-size:.95rem;margin-bottom:.8rem}
+.controls label{display:flex;align-items:center;gap:.5rem}
+.controls input[type=range]{width:150px;accent-color:var(--up)}
+.controls output{font-variant-numeric:tabular-nums;min-width:4.5ch;display:inline-block}
+button,select{font-family:var(--ui-font);font-size:.92rem;background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:3px;padding:.3rem .7rem;cursor:pointer}
+button:hover{border-color:var(--muted)}
+button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.readout{font-family:var(--ui-font);font-size:.95rem;font-variant-numeric:tabular-nums;margin:.5rem 0 0}
+.readout b{font-weight:600}
+.swatch{display:inline-block;width:.8em;height:.8em;border-radius:1px;vertical-align:-.05em;margin-right:.25em}
+
+table.exps{border-collapse:collapse;font-size:1rem;margin:1rem 0;min-width:520px}
+table.exps th,table.exps td{text-align:left;padding:.45rem .9rem .45rem 0;border-bottom:1px solid var(--rule);vertical-align:top}
+table.exps th{font-family:var(--ui-font);font-weight:600;color:var(--muted)}
+.table-scroll{overflow-x:auto}
+
+ol.timeline{list-style:none;padding:0;margin:1.2rem 0;max-width:72ch;border-left:2px solid var(--rule)}
+ol.timeline li{position:relative;padding:0 0 1.1rem 1.4rem}
+ol.timeline li::before{content:"";position:absolute;left:-7px;top:.45rem;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--up)}
+ol.timeline .yr{font-family:var(--ui-font);font-weight:600;margin-right:.6rem}
+
+footer{max-width:1180px;margin:0 auto;padding:2rem 1.5rem 3rem;border-top:1px solid var(--rule);font-size:.95rem;color:var(--muted)}
+footer p{max-width:90ch}
+
+@media (max-width:980px){
+  .page{grid-template-columns:minmax(0,1fr)}
+  nav.toc{display:none}
+  header.hero{grid-template-columns:minmax(0,1fr);gap:1.8rem;padding-top:2rem}
+  .lattice-wrap{max-width:460px}
+}
+@media (max-width:720px){
+  .grid2,.grid-lat{grid-template-columns:minmax(0,1fr)}
+  h2{font-size:1.6rem}
+  figure.demo{padding:.9rem .8rem}
+  .controls input[type=range]{width:110px}
+  .katex-display{font-size:.86em}
+  .result{padding:.5rem .7rem}
+  .controls label{flex-wrap:wrap}
+}
+
+/* chapter 2 additions */
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.1rem}
+canvas.kymo{display:block;width:100%;image-rendering:pixelated;image-rendering:crisp-edges;border-radius:2px;background:var(--spin-down)}
+.chapnav{display:flex;flex-wrap:wrap;gap:.4rem 1.6rem;font-family:var(--ui-font);font-size:1rem;margin:0 0 1rem}
+.chapnav a{color:var(--muted)}
+.checklist{list-style:none;padding:0;margin:.6rem 0 0;font-family:var(--ui-font);font-size:.95rem;font-variant-numeric:tabular-nums;max-width:none}
+.checklist li{margin:.15rem 0}
+.checklist .ok{color:var(--mark-edge);font-weight:600}
+.checklist .bad{color:var(--crit);font-weight:600}
+.proof{border-left:2px solid var(--rule);padding-left:1rem;margin:1rem 0;max-width:68ch}
+.proof > p:first-child{margin-top:0}
+.qed{font-family:var(--ui-font);font-size:.85rem;border:1px solid var(--ink);padding:0 .3rem;margin-left:.4rem}
+svg.frustration{display:block;width:100%;max-width:220px;height:auto}
+@media (max-width:900px){ .grid3{grid-template-columns:minmax(0,1fr)} }
+
+canvas.hero-plot{display:block;width:100%;height:340px}
+table.exps td.num{font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div>
+    <p class="course">Phase Transitions and Critical Phenomena, graduate course</p>
+    <h1>Chapter 5: Landau theory<span>Part 1: order parameters and the Landau free energy</span></h1>
+    <p class="lede">Why the van der Waals fluid and the Weiss magnet share their critical exponents, and how Landau turned that coincidence into a general theory built on symmetry and analyticity alone.</p>
+  </div>
+  <div class="lattice-wrap">
+    <canvas class="hero-plot" id="hero-L" aria-label="Animated Landau free energy as the temperature cycles through the transition"></canvas>
+    <div class="controls" style="margin:10px 0 0">
+      <label>Field \(H\) <input type="range" id="hero-H" min="-0.15" max="0.15" step="0.005" value="0"> <output id="hero-H-out"></output></label>
+      <button id="hero-play" aria-pressed="false">Pause</button>
+    </div>
+    <p class="readout" id="hero-read" style="margin-top:.2rem;color:var(--muted)"></p>
+  </div>
+</header>
+
+<div class="page">
+<nav class="toc" aria-label="Contents">
+  <ol>
+    <li><a href="#s5-1">5.1 Order parameters</a></li>
+    <li><a href="#s5-2">5.2 Common features of mean-field theories</a></li>
+    <li><a href="#s5-3">5.3 Phenomenological Landau theory</a></li>
+    <li><a href="#s5-crit">Critical exponents</a></li>
+    <li><a href="#s5-net">Aside: scale-free networks</a></li>
+    <li><a href="#s5-first">First-order transitions</a></li>
+    <li><a href="#s5-4">Toward inhomogeneous systems</a></li>
+    <li><a href="#reading">Further reading</a></li>
+  </ol>
+  <p style="margin-top:1.5rem"><a href="ch04-critical-phenomena-in-fluids.html">Chapter 4</a></p>
+  <p><a href="ch01-introduction.html">Chapter 1: Introduction</a></p>
+  <p><a href="ch05b-coarse-graining-and-correlations.html">Chapter 5, Part 2</a></p>
+  <p><a href="index.html">All chapters</a></p>
+</nav>
+
+<main>
+<p>The Ising model and the van der Waals gas are apparently different physical systems, yet both are described by mean-field theory. In the Weiss model each spin interacts with the average magnetic field of the others; in the van der Waals gas each particle interacts with the average density due to all the others. The local field on spin \(i\),</p>
+<div class="math-scroll">\[ H_{\rm total}(i) = H + \sum_{j\ne i}J_{ij}\langle S_j\rangle + \sum_{j\ne i}J_{ij}\big(S_j-\langle S_j\rangle\big), \]</div>
+<p>contains a fluctuation term that the Weiss model ignores, but which contains the most important physics near a critical point. Why, then, are the critical exponents the same for the van der Waals fluid and the Weiss ferromagnet? This is a first instance of universality, and Landau theory explains it.</p>
+
+<!-- ======================= 5.1 ======================= -->
+<section id="s5-1">
+<h2><span class="sec">5.1</span>Order parameters</h2>
+<p>In Chapters 3 and 4 we obtained classical critical exponents by expanding the equation of state near the critical point. The expansion parameters had the same temperature dependence and are called <mark>order parameters</mark>: the spontaneous magnetization \(M\) of a ferromagnet, and the half-width of the coexistence curve of a fluid, \(\phi\equiv\nu-1 = (V-V_c)/V_c\). An order parameter can be a scalar, a vector, a tensor, a pseudo-scalar, or a group element of a symmetry group such as \(SU(N)\). It is not unique for a given system (\(M\) or \(M^3\) would do): any thermodynamic variable that is zero in the disordered phase and nonzero in an adjacent, usually ordered, phase qualifies.</p>
+<h3>The Heisenberg and XY models</h3>
+<p>In the Heisenberg model \(\mathcal H_\Omega = -J\sum_{\langle ij\rangle}\vec S_i\cdot\vec S_j - \vec H\cdot\sum_i\vec S_i\), each \(\vec S_i\) is a vector of fixed magnitude (chosen to be 1), \(|\vec S_i|^2 = 1\), with variable direction. When the system orders below \(T_c\) in more than two dimensions,</p>
+<div class="math-scroll">\[ \vec M = \frac{1}{N(\Omega)}\sum_i\langle\vec S_i\rangle = \begin{cases}0, & T>T_c\\ M\hat n, & T\lt T_c\end{cases} \]</div>
+<p>a vector in three dimensions: the \(O(3)\) symmetry of the zero-field Hamiltonian, \(\mathcal H_\Omega\{\vec S_i\} = \mathcal H_\Omega\{R\vec S_i\}\) for any rotation \(R\) acting on all spins, is <mark>spontaneously broken</mark>. With \(\vec H\ne0\), \(\mathcal H_\Omega\) is still invariant under rotations of the spins in the plane perpendicular to \(\vec H\), an \(O(2)\) symmetry. The <b>XY model</b> is the two-component version, \(\vec S_i = (S_{ix},S_{iy})\) and \(\vec M = (M_x,M_y)\), in any spatial dimension \(d = 1,2,3,\dots\). In \(d=2\) it has the Kosterlitz–Thouless transition (Chapter 11), recognized by the 2016 Nobel Prize in Physics to Thouless, Haldane, and Kosterlitz.</p>
+<p>A more exotic example: the order parameter of the superfluid transition in \(^3\)He is an anomalous pairing amplitude \(\Psi\), built from quantum field operators, describing Cooper pairs of \(^3\)He atoms in a \(p\)-wave state. It has 18 components and transforms as a representation of \(SO(3)\times SO(3)\times O(2)\): roughly, three orbital angular-momentum values, three spin values, and a complex phase.</p>
+</section>
+
+<!-- ======================= 5.2 ======================= -->
+<section id="s5-2">
+<h2><span class="sec">5.2</span>Common features of mean-field theories</h2>
+<p><b>Van der Waals.</b> In reduced variables \(\pi = 8\tau/(3\nu-1) - 3/\nu^2\), with \(\nu = v/v_c = \rho_c/\rho\) and \(t = \tau-1\). For later convenience take the order parameter to be \(\eta\equiv1/\nu-1 = \rho/\rho_c-1\), so \(\phi = \nu-1 = 1/(1+\eta)-1\approx-\eta\) for \(|\eta|\ll1\). The equation of state of Chapter 4 becomes</p>
+<div class="math-scroll">\[ \pi = 1 + 4t + 6t\eta + \tfrac32\eta^3 + O(\eta^4, t\eta^2), \]</div>
+<p>which can be derived from a Gibbs-like free energy, regarding \(\eta\) as an independent parameter whose value minimizes</p>
+<div class="result"><p>\[ \begin{gathered} G(p,T,\eta) = G_0(p,T) + \frac{N}{\rho_c}\Big[-(\pi-1-4t)\eta + 3t\eta^2 + \tfrac38\eta^4\Big],\\ \frac{\partial G}{\partial\eta} = 0. \end{gathered} \]</p></div>
+<p><b>Weiss.</b> With \(\tau = T_c/T\) and \(t = (T-T_c)/T_c\), so \(\tau = 1/(1+t)\) and \(1-\tau\approx t\), the order parameter \(\eta\equiv M\) satisfies (Chapter 3)</p>
+<div class="math-scroll">\[ \frac{H}{k_BT} = \eta(1-\tau) + \eta^3\Big(\tau-\tau^2+\frac{\tau^3}{3}\Big)+\cdots = \eta t + \tfrac13\eta^3 + O(t\eta^3), \]</div>
+<div class="result"><p>\[ \Gamma(\eta,T,H) = \Gamma_0(T,H) - \frac{\eta H}{k_BT} + \frac{t\eta^2}{2} + \frac{\eta^4}{12},\qquad \frac{\partial\Gamma}{\partial\eta} = 0. \]</p></div>
+<p>(Whether the cubic coefficient is written \(\tfrac13\) or 1 is immaterial: a rescaling of \(\eta\) and \(H\) by constants moves it around without changing any exponent.) The similarity of the two free energies is why the critical exponents, obtained by differentiating the thermodynamic potentials, are the same; in the van der Waals case the role of the magnetic field is played by \(\pi-1-4t\). (Whether these are "Gibbs" or "Helmholtz" free energies depends on the constraints, and does not matter here: the expanded quantity is strictly neither.)</p>
+
+<figure class="demo" id="demo-collapse">
+  <p class="title">Two theories, one Landau function</p>
+  <div class="controls">
+    <label>\(t = (T-T_c)/T_c\) <input type="range" id="co-t" min="-0.06" max="0.06" step="0.001" value="0.02"> <output id="co-t-out"></output></label>
+    <label>Range of \(x\) <input type="range" id="co-x" min="0.1" max="1" step="0.01" value="0.4"> <output id="co-x-out"></output></label>
+  </div>
+  <div class="grid2">
+    <div><p class="plot-label">Rescaled "field" \(y\) vs rescaled order parameter \(x\)</p><canvas class="plot" id="co-plot"></canvas></div>
+    <div><p class="plot-label">Deviation from the Landau form, \(y - (tx + x^3)\)</p><canvas class="plot" id="co-dev"></canvas></div>
+  </div>
+  <figcaption>The exact Weiss equation of state, \(H/k_BT = \operatorname{artanh}\eta - \tau\eta\), and the exact van der Waals equation, field \(\pi-1-4t\) with \(\eta = \rho/\rho_c-1\), are each rescaled so that their leading terms read \(y = tx + x^3\): for Weiss \(\eta = \sqrt3\,x\), \(y = (H/k_BT)/\sqrt3\); for van der Waals \(\eta = 2x\), \(y = (\pi-1-4t)/12\). Near the critical point both collapse onto the single Landau curve (magenta dashes); farther out the higher-order terms that distinguish them appear. For \(t\lt 0\) all three have the S-shape whose unstable part is replaced by Maxwell's construction.</figcaption>
+</figure>
+</section>
+
+<!-- ======================= 5.3 ======================= -->
+<section id="s5-3">
+<h2><span class="sec">5.3</span>Phenomenological Landau theory</h2>
+<p>In retrospect, mean-field exponents were inevitable. The Taylor expansions in \(\eta\) and \(t\) contained the most general lowest-order terms, and the absence of a quadratic term in the equation of state (a cubic one in the free energy) was guaranteed by the potential being even in \(\eta\) at zero field. Landau suggested applying similar considerations, at least in spirit, to <i>all</i> phase transitions. The resulting theory, based on general considerations of <mark>symmetry and analyticity</mark>, is phenomenological Landau theory. (It can also be motivated by a calculation from the microscopic Hamiltonian, with limited use, as we will see.)</p>
+<p>Landau theory writes down a function \(L\), the <b>Landau free energy</b> (or functional), depending on the couplings \(\{K_i\}\) and the order parameter \(\eta\). The state of the system is the <i>global</i> minimum of \(L\) with respect to \(\eta\). \(L\) has dimensions of energy and is related to, but not identical with, the Gibbs free energy; thermodynamic functions follow by differentiating \(L\) as if it were (the precise interpretation is discussed in §5.6). The constraints on \(L\) are:</p>
+<ol>
+  <li>\(L\) is consistent with the <mark>symmetries of the system</mark>.</li>
+  <li>Near \(T_c\), \(L\) is an analytic function of \(\eta\) and \([K]\), and can be expanded in a power series. For a spatially uniform system of volume \(V\), the Landau free energy density is \(\mathcal L\equiv L/V = \sum_{n=0}^\infty a_n([K])\eta^n\).</li>
+  <li>In an inhomogeneous system with order-parameter profile \(\eta(\vec r)\), \(\mathcal L\) is local: it depends only on \(\eta(\vec r)\) and a finite number of its derivatives.</li>
+  <li>In the disordered phase \(\eta = 0\); in the ordered phase near the transition \(\eta\) is small and nonzero (a continuous transition). So \(\eta=0\) solves the minimization for \(T>T_c\), and \(\eta\ne0\) does for \(T\lt T_c\).</li>
+</ol>
+<p>We therefore write \(\mathcal L = \sum_{n=0}^{4}a_n([K],T)\eta^n + O(\eta^5)\), in the expectation that \(\eta\) is small and that all the essential physics near \(T_c\) appears at this order, as it did for the van der Waals fluid and the Weiss magnet. Whether the truncation is valid turns out to depend on the dimensionality and on the codimension of the singular point.</p>
+<p><b>Construction.</b> \(\partial\mathcal L/\partial\eta = a_1 + 2a_2\eta + 3a_3\eta^2 + 4a_4\eta^3 = 0\) must be solved by \(\eta=0\) for \(T>T_c\), so \(a_1 = 0\). For an Ising ferromagnet at \(H=0\), with \(\eta = M\), the system is symmetric under \(\eta\to-\eta\): the probability distribution of \(\eta\) in a finite system is even, \(P(\eta) = P(-\eta)\). Assuming \(P\sim e^{-\beta L}\) (the precise connection comes later), \(\mathcal L(\eta) = \mathcal L(-\eta)\), so \(a_3 = a_5 = \dots = 0\):</p>
+<div class="result"><p>\[ \mathcal L = a_0([K],T) + a_2([K],T)\,\eta^2 + a_4([K],T)\,\eta^4. \]</p></div>
+<p>Analyticity excludes terms like \(|\eta|\). We need \(a_4>0\), otherwise \(\mathcal L\) is minimized by \(|\eta|\to\infty\), whereas we want \(\eta\) to rise from zero to a finite value as the couplings pass through the transition. \(a_0\) is the value of \(\mathcal L\) in the high-temperature phase. It describes the degrees of freedom not captured by the order parameter, a smooth background on which the singular behavior is superimposed; we usually set it to zero. Expanding near \(T_c\), \(a_4 = a_4^0 + (T-T_c)a_4^1+\cdots\), and the temperature dependence will not affect the leading behavior, so \(a_4\) can be taken to be a positive constant. Similarly \(a_2 = a_2^0 + a_2^1(T-T_c)/T_c + O[(T-T_c)^2]\). Minimizing, \(2a_2\eta + 4a_4\eta^3 = 0\) gives \(\eta=0\) or \(\eta = \sqrt{-a_2(T)/2a_4}\); since \(\eta=0\) at \(T=T_c\), \(a_2^0 = 0\). With \(t = (T-T_c)/T_c\) and the usual names \(a\equiv a_2^1\), \(b/2\equiv a_4^0\), and adding the field (whose energy is \(-H\sum_iS_i = -HNM\)),</p>
+<div class="result"><p>\[ L = V\mathcal L\ (=N\mathcal L\text{ on a lattice}),\qquad \mathcal L = at\eta^2 + \tfrac12b\eta^4 - H\eta, \]</p></div>
+<p>where \(a\) and \(b\) are phenomenological parameters, obtainable from an appropriate microscopic theory. A term \(\propto H\eta^3\) is also allowed by symmetry (\(H\to-H\), \(\eta\to-\eta\)) but is not a leading term near the critical point. We have considered only the Ising universality class; in general one writes down <i>all</i> scalar terms built from powers and products of the order-parameter components that are consistent with the symmetry of the system (Landau and Lifshitz, <i>Statistical Physics</i>, §145).</p>
+
+<h3>Continuous transitions</h3>
+<p>The figure below is the interactive version of the book's Figure 5.1. At \(H=0\), as \(T\) is lowered through \(T_c\), the single minimum at \(\eta = 0\) splits into two degenerate minima at \(\eta = \pm\eta_s(T)\): a continuous transition. For \(T\lt T_c\), varying \(H\) from negative to positive makes the global minimum jump from one well to the other: the first-order transition of the magnet.</p>
+
+<figure class="demo" id="demo-landau">
+  <p class="title">The Landau free energy explorer</p>
+  <div class="controls">
+    <label>\(t\) <input type="range" id="la-t" min="-1" max="1" step="0.005" value="-0.5"> <output id="la-t-out"></output></label>
+    <label>\(H\) <input type="range" id="la-H" min="-0.3" max="0.3" step="0.005" value="0"> <output id="la-H-out"></output></label>
+    <label>Cubic \(C\) <input type="range" id="la-C" min="-0.6" max="0.6" step="0.01" value="0"> <output id="la-C-out"></output></label>
+    <button id="la-reset">Reset</button>
+  </div>
+  <div class="grid3">
+    <div><p class="plot-label">\(\mathcal L(\eta)\) at the chosen \(t\), \(H\), \(C\)</p><canvas class="plot" id="la-L" style="height:240px"></canvas></div>
+    <div><p class="plot-label">Equilibrium \(\eta\) vs \(t\)</p><canvas class="plot" id="la-eta" style="height:240px"></canvas></div>
+    <div><p class="plot-label">\(\mathcal L_{\min}(t)\) and \(C_V/T\propto-\partial^2\mathcal L_{\min}/\partial t^2\)</p><canvas class="plot" id="la-F" style="height:240px"></canvas></div>
+  </div>
+  <p class="readout" id="la-read"></p>
+  <figcaption>\(\mathcal L = at\eta^2 + \tfrac12b\eta^4 + C\eta^3 - H\eta\) with \(a = b = 1\). Filled circle: global minimum (the equilibrium state); open circles: other local minima (metastable states). With \(C = 0\) and \(H=0\), \(\eta\) rises continuously as \(\sqrt{-at/b}\), and the second derivative of \(\mathcal L_{\min}\) jumps (the heat-capacity discontinuity, \(\alpha = 0\)). A cubic term makes \(\eta\) jump at \(t_1 = C^2/2ab > 0\) and puts a kink in \(\mathcal L_{\min}\) itself: a first-order transition.</figcaption>
+</figure>
+
+<h3 id="s5-crit">Critical exponents</h3>
+<p>At \(H=0\), for \(t\lt 0\), \(\eta = \sqrt{-a_2(T)/2a_4} = \sqrt{-at/b} = \sqrt{a(T_c-T)/bT_c}\), so \(\beta = \tfrac12\). For \(t>0\), \(\mathcal L = 0\); for \(t\lt 0\), substituting \(\eta^2 = -at/b\),</p>
+<div class="math-scroll">\[ \mathcal L = at\Big(\frac{-at}{b}\Big) + \frac12b\frac{a^2t^2}{b^2} = -\frac12\frac{a^2t^2}{b} = -\frac{a^2(T-T_c)^2}{2bT_c^2}. \]</div>
+<p>Since \(\mathcal L\) plays the role of the free energy at fixed volume, \(C_V = T(\partial S/\partial T)_V = -T\,\partial^2\mathcal L/\partial T^2\) (the thermodynamic square gives \(S = -\partial F/\partial T|_V\)), and</p>
+<div class="result"><p>\[ \begin{gathered} C_V = \begin{cases}0, & T>T_c\\ a^2/bT_c, & T\lt T_c\end{cases}\\ \Longrightarrow\\ \alpha = 0\ \text{(a discontinuity)}. \end{gathered} \]</p></div>
+<p>With \(H\ne0\), \(\partial\mathcal L/\partial\eta = 2at\eta + 2b\eta^3 - H = 0\) (the derivative is with respect to \(\eta\)), so \(at\eta + b\eta^3 = \tfrac12H\). On the critical isotherm \(t=0\), \(H\propto\eta^3\): \(\delta = 3\). The isothermal susceptibility is</p>
+<div class="math-scroll">\[ \chi_T(H)\equiv\frac{\partial\eta(H)}{\partial H}\Big|_T = \frac{1}{\partial H/\partial\eta|_T} = \frac{1}{2(at+3b\eta^2)}, \]</div>
+<p>which for \(t>0\) (\(\eta=0\)) is \(1/2at\propto(T-T_c)^{-1}\) and for \(t\lt 0\) (\(\eta^2 = -at/b\)) is \(1/2(at-3at) = -1/4at\propto(T_c-T)^{-1}\). So \(\gamma = \gamma' = 1\), with the familiar amplitude ratio 2. We have found all the mean-field thermodynamic exponents, in agreement with Weiss and van der Waals. The exponents describing <i>spatial</i> correlations require an extension of Landau theory to inhomogeneous systems (§5.4).</p>
+
+<h3 id="s5-net">Aside: Landau theory on scale-free networks</h3>
+<p>For the Ising model on a scale-free network with degree distribution \(p(k)\propto k^{-\lambda}\) (Goltsev, Dorogovtsev, and Mendes, <i>Phys. Rev. E</i> <b>67</b>, 026123 (2003); see also <i>Rev. Mod. Phys.</i> <b>80</b>, 1275 (2008)), the heterogeneity of the network adds a non-analytic term to the Landau free energy,</p>
+<div class="result"><p>\[ \mathcal L = at\eta^2 + \tfrac12b\eta^4 + C\,|\eta|^{\lambda-1}, \]</p></div>
+<p>the free-energy counterpart of the singular term in the self-consistency equation of the Chapter 3 appendix. Its sign is fixed by that microscopic theory: \(C\lt 0\) for \(2\lt\lambda\lt3\) and \(C>0\) for \(3\lt\lambda\lt5\).</p>
+<ol type="i">
+  <li>\(2\lt\lambda\lt3\): the lowest-order term is \(C\eta^{\lambda-1}\) with \(1\lt\lambda-1\lt2\), and with \(C\lt 0\) it always favors \(\eta\ne0\). There is no transition: the system is always magnetized.</li>
+  <li>\(3\lt\lambda\lt5\): \(\eta^{\lambda-1}\) lies between \(\eta^2\) and \(\eta^4\), and the \(\eta^4\) term is higher order. Then \(\partial\mathcal L/\partial\eta\approx2at\eta + (\lambda-1)C\eta^{\lambda-2} = 0\) gives \(\eta\propto(-t)^{1/(\lambda-3)}\), so \(\beta = 1/(\lambda-3)\), recovering the result of the Chapter 3 appendix.</li>
+  <li>\(\lambda>5\): \(\eta^{\lambda-1}\) is higher order than \(\eta^4\), so \(2at\eta + 2b\eta^3\approx0\) and \(\beta = \tfrac12\), the ordinary mean-field result.</li>
+</ol>
+
+<figure class="demo" id="demo-net">
+  <p class="title">A non-analytic Landau term from network heterogeneity</p>
+  <div class="controls">
+    <label>Degree exponent \(\lambda\) <input type="range" id="nl-l" min="2.3" max="6.5" step="0.05" value="3.8"> <output id="nl-l-out"></output></label>
+    <label>\(t\) for the left panel <input type="range" id="nl-t" min="-0.5" max="0.5" step="0.005" value="-0.1"> <output id="nl-t-out"></output></label>
+  </div>
+  <div class="grid2">
+    <div><p class="plot-label">\(\mathcal L(\eta)\), \(\eta\ge0\)</p><canvas class="plot" id="nl-L"></canvas></div>
+    <div><p class="plot-label">Equilibrium \(\eta\) vs \(|t|\), log–log</p><canvas class="plot" id="nl-eta"></canvas></div>
+  </div>
+  <p class="readout" id="nl-read"></p>
+  <figcaption>\(a = b = 1\) and \(|C| = 1\), with the sign of \(C\) set by \(\lambda\) as above. Right: for \(t\lt 0\) (blue) the order parameter follows \((-t)^{\beta}\) with \(\beta = 1/(\lambda-3)\) for \(3\lt\lambda\lt5\) and \(\tfrac12\) for \(\lambda>5\) (dashed reference slopes). For \(2\lt\lambda\lt3\) the order parameter is nonzero for \(t>0\) as well (orange): there is no transition at all.</figcaption>
+</figure>
+
+<h3 id="s5-first">First-order transitions</h3>
+<p>Landau theory assumes \(\eta(t)\to0\) as \(t\to0\). Without the symmetry argument, the general \(\partial\mathcal L/\partial\eta = a_1 + 2a_2\eta + 3a_3\eta^2 + 4a_4\eta^3\) still has \(a_1 = 0\) (so that \(\eta=0\) for \(T>T_c\)), but \(a_3\) can be nonzero:</p>
+<div class="math-scroll">\[ \begin{gathered} \mathcal L = at\eta^2 + \tfrac12b\eta^4 + C\eta^3 - H\eta,\\ \frac{\partial\mathcal L}{\partial\eta} = 2at\eta + 2b\eta^3 + 3C\eta^2 - H = 0. \end{gathered} \]</div>
+<p>For \(H=0\), \(\eta(2at + 2b\eta^2 + 3C\eta) = 0\), so \(\eta = 0\) or</p>
+<div class="math-scroll">\[ \eta = \frac{-3C\pm\sqrt{9C^2-16atb}}{4b} = -c\pm\sqrt{c^2 - at/b},\qquad c\equiv\frac{3C}{4b}. \]</div>
+<p>A real nonzero solution requires \(c^2 - at/b>0\), i.e. \(t\lt t^*\equiv bc^2/a>0\): it appears at a temperature <i>above</i> \(T_c\) (the temperature where \(t\) vanishes), whereas for a continuous transition \(\eta\ne0\) only for \(t\lt 0\). What is going on? Take \(C\lt 0\) without loss of generality. For \(t\lt t^*\) a secondary minimum and a maximum develop in addition to the minimum at \(\eta=0\). At \(t = t_1\) the secondary minimum reaches \(\mathcal L = 0\), and for \(t\lt t_1\) it becomes the global minimum, so <mark>the minimizing \(\eta\) jumps discontinuously</mark> from \(0\) to a nonzero value: a first-order transition. Solving \(\mathcal L = 0\) and \(\partial\mathcal L/\partial\eta = 0\) together gives</p>
+<div class="result"><p>\[ t_1 = \frac{C^2}{2ab},\qquad \eta(t_1) = -\frac Cb,\qquad t^* = \frac{9C^2}{16ab} > t_1. \]</p></div>
+<p>At the first-order transition \(\eta(t_1)\) is <i>not</i> arbitrarily small, so Landau theory, an expansion in small \(\eta\), is not strictly valid there. Unless a symmetry forces \(C=0\), a cubic term will in general cause a first-order transition.</p>
+<p>When the order parameter has several components, \(\mathcal L\) is built from combinations of the components that are invariant under the symmetries of the problem. A <i>sufficient</i> but not necessary condition for a continuous transition is that there are no cubic invariants. That it is not necessary is shown by the replica theory of spin glasses and rubber: the \(n\times n\) order parameter \(Q^{\alpha\beta}\) becomes, as \(n\to0\), a non-negative function \(q(x)\), and the Landau free energy, a functional of \(q(x)\), has a cubic term. But its sign is such that the secondary minimum that would preempt the continuous transition occurs only for negative, unphysical values of \(q\), so the transition is continuous despite the cubic term.</p>
+<p>The Landau criterion is, of course, a statement made within mean-field theory, and fluctuations can change the order of a transition. Two examples: (a) the three-state Potts model in two dimensions, where mean-field theory predicts a first-order transition but the actual transition is continuous; (b) the type I superconductor–normal metal transition in three dimensions, where mean-field theory predicts a continuous transition but fluctuations of the electromagnetic field make it first order.</p>
+</section>
+
+<!-- ======================= 5.4 ======================= -->
+<section id="s5-4">
+<h2><span class="sec">5.4</span>Toward inhomogeneous systems</h2>
+<p>An order parameter \(\eta(\vec r)\) varying in space can result from an inhomogeneous field \(H(\vec r)\), and the spatial correlations grow as \(T\to T_c\): the correlation length \(\xi(T)\) is the linear dimension of patches of spins in which the magnetization is approximately constant. Describing them requires <b>coarse graining</b>, the subject of Part 2.</p>
+<p class="aside">Chapter 5 continues in <a href="ch05b-coarse-graining-and-correlations.html">Part 2</a>.</p>
+</section>
+
+<section id="reading">
+<h2>Further reading</h2>
+<ul>
+  <li>N. Goldenfeld, <i>Lectures on Phase Transitions and the Renormalization Group</i> (Addison-Wesley, 1992), Chapter 5.</li>
+  <li>L. D. Landau and E. M. Lifshitz, <i>Statistical Physics, Part 1</i>, 3rd ed. (Pergamon, 1980), §145.</li>
+  <li>A. V. Goltsev, S. N. Dorogovtsev, and J. F. F. Mendes, "Critical phenomena in networks," <i>Phys. Rev. E</i> <b>67</b>, 026123 (2003).</li>
+  <li>S. N. Dorogovtsev, A. V. Goltsev, and J. F. F. Mendes, "Critical phenomena in complex networks," <i>Rev. Mod. Phys.</i> <b>80</b>, 1275 (2008).</li>
+  <li>P. M. Goldbart and N. Goldenfeld, "Microscopic theory for cross-linked macromolecules," <i>Phys. Rev. A</i> <b>39</b>, 1402 (1989).</li>
+</ul>
+</section>
+</main>
+</div>
+
+<footer>
+  <nav class="chapnav" aria-label="Chapters">
+    <a href="index.html">All chapters</a>
+    <a href="ch04-critical-phenomena-in-fluids.html">Previous: Chapter 4</a>
+    <a href="ch05b-coarse-graining-and-correlations.html">Next: Chapter 5, Part 2, Coarse graining and correlations</a>
+  </nav>
+  <p>Interactive companion to lecture notes on Chapter 5 of N. Goldenfeld, <i>Lectures on Phase Transitions and the Renormalization Group</i>, with the instructor's aside on network models. The text paraphrases the notes. All calculations run client side with no data collection.</p>
+</footer>
+
+<script>
+"use strict";
+/* ---------- utilities ---------- */
+const $ = s => document.querySelector(s);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function hexRGB(h){ h=h.replace('#',''); if(h.length===3) h=h.split('').map(c=>c+c).join(''); const n=parseInt(h,16); return [(n>>16)&255,(n>>8)&255,n&255]; }
+function rgba(hex,a){ const [r,g,b]=hexRGB(hex); return `rgba(${r},${g},${b},${a})`; }
+const SUP={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+const sup = s => String(s).split('').map(c=>SUP[c]||c).join('');
+function fmt(v){
+  if(v===0) return '0';
+  const a=Math.abs(v);
+  if(a>=1e4||a<1e-3){ const e=Math.floor(Math.log10(a)+1e-9); const mm=v/10**e; return (Math.abs(Math.abs(mm)-1)<1e-6?(mm<0?'−':''):(+mm.toFixed(1))+'×')+'10'+sup(e); }
+  return String(+v.toPrecision(3)).replace('-','−');
+}
+function niceTicks(a,b,n){
+  const raw=(b-a)/n, mag=10**Math.floor(Math.log10(raw)), norm=raw/mag;
+  const step=(norm<1.5?1:norm<3?2:norm<7?5:10)*mag, t=[];
+  for(let v=Math.ceil(a/step-1e-9)*step; v<=b+step*1e-6; v+=step){ const vv=Math.abs(v)<step*1e-6?0:v; t.push({v:vv,label:fmt(+vv.toPrecision(12))}); }
+  return t;
+}
+function logTicks(a,b){
+  const k0=Math.ceil(Math.log10(a)-1e-9), k1=Math.floor(Math.log10(b)+1e-9), span=k1-k0, t=[];
+  const mants = span<=1 ? [1,2,5] : [1];
+  const every = span>7 ? 2 : 1;
+  for(let k=k0-1;k<=k1;k++) for(const mt of mants){
+    const v=mt*10**k; if(v<a*(1-1e-9)||v>b*(1+1e-9)) continue;
+    if(mt===1 && (k-k0)%every!==0) { t.push({v,label:''}); continue; }
+    t.push({v,label: span<=1||(k>=-1&&k<=2)? fmt(v) : '10'+sup(k)});
+  }
+  return t;
+}
+/* generic canvas plot */
+function plot(cv,o){
+  const H=o.height||cv.clientHeight||280, dpr=window.devicePixelRatio||1, w=cv.clientWidth||600;
+  cv.width=Math.round(w*dpr); cv.height=Math.round(H*dpr);
+  const ctx=cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,H);
+  const ink=css('--ink'), muted=css('--muted'), rule=css('--rule'), font=css('--ui-font');
+  const m={l:52,r:12,t:10,b:40}, pw=w-m.l-m.r, ph=H-m.t-m.b;
+  const fx=o.xlog?Math.log10:(v=>v), fy=o.ylog?Math.log10:(v=>v);
+  const ax0=fx(o.xlim[0]),ax1=fx(o.xlim[1]),ay0=fy(o.ylim[0]),ay1=fy(o.ylim[1]);
+  const X=v=>m.l+(fx(v)-ax0)/(ax1-ax0)*pw, Y=v=>m.t+ph-(fy(v)-ay0)/(ay1-ay0)*ph;
+  ctx.font=`12px ${font}`; ctx.lineWidth=1;
+  const xt=o.xlog?logTicks(...o.xlim):niceTicks(...o.xlim,o.xticks||Math.max(3,Math.round(pw/90)));
+  const yt=o.ylog?logTicks(...o.ylim):niceTicks(...o.ylim,o.yticks||Math.max(3,Math.round(ph/55)));
+  ctx.strokeStyle=rule; ctx.fillStyle=muted;
+  ctx.textAlign='center'; ctx.textBaseline='top';
+  for(const t of xt){ const px=Math.round(X(t.v))+.5; ctx.beginPath(); ctx.moveTo(px,m.t); ctx.lineTo(px,m.t+ph); ctx.stroke(); if(t.label) ctx.fillText(t.label,px,m.t+ph+5); }
+  ctx.textAlign='right'; ctx.textBaseline='middle';
+  for(const t of yt){ const py=Math.round(Y(t.v))+.5; ctx.beginPath(); ctx.moveTo(m.l,py); ctx.lineTo(m.l+pw,py); ctx.stroke(); if(t.label) ctx.fillText(t.label,m.l-6,py); }
+  ctx.strokeStyle=muted; ctx.strokeRect(m.l+.5,m.t+.5,pw,ph);
+  ctx.save(); ctx.beginPath(); ctx.rect(m.l,m.t,pw,ph); ctx.clip();
+  for(const v of (o.vlines||[])){ ctx.strokeStyle=v.color||muted; ctx.setLineDash(v.dash||[4,4]); ctx.beginPath(); const px=X(v.x); ctx.moveTo(px,m.t); ctx.lineTo(px,m.t+ph); ctx.stroke(); ctx.setLineDash([]);
+    if(v.label){ ctx.fillStyle=v.color||muted; ctx.textAlign='left'; ctx.textBaseline='top'; ctx.fillText(v.label,px+4,m.t+4); } }
+  for(const v of (o.hlines||[])){ ctx.strokeStyle=v.color||muted; ctx.setLineDash(v.dash||[4,4]); ctx.beginPath(); const py=Y(v.y); ctx.moveTo(m.l,py); ctx.lineTo(m.l+pw,py); ctx.stroke(); ctx.setLineDash([]); }
+  const ok=(x,y)=>isFinite(x)&&isFinite(y)&&(!o.xlog||x>0)&&(!o.ylog||y>0);
+  for(const s of o.series){
+    ctx.globalAlpha=s.alpha??1;
+    if(s.points){
+      ctx.fillStyle=s.color;
+      for(const [x,y] of s.data){ if(!ok(x,y)) continue; ctx.beginPath(); ctx.arc(X(x),Y(y),s.r||3.2,0,2*Math.PI); ctx.fill(); }
+    } else {
+      ctx.strokeStyle=s.color; ctx.lineWidth=s.width||2; ctx.setLineDash(s.dash||[]); ctx.lineJoin='round';
+      ctx.beginPath(); let pen=false;
+      for(const [x,y] of s.data){ if(!ok(x,y)){pen=false;continue;} const px=X(x),py=Y(y); if(pen) ctx.lineTo(px,py); else {ctx.moveTo(px,py); pen=true;} }
+      ctx.stroke(); ctx.setLineDash([]);
+    }
+    ctx.globalAlpha=1;
+  }
+  if(o.after) o.after(ctx,X,Y);
+  ctx.restore();
+  ctx.fillStyle=ink; ctx.font=`13px ${font}`;
+  if(o.xlabel){ ctx.textAlign='center'; ctx.textBaseline='bottom'; ctx.fillText(o.xlabel,m.l+pw/2,H-2); }
+  if(o.ylabel){ ctx.save(); ctx.translate(12,m.t+ph/2); ctx.rotate(-Math.PI/2); ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(o.ylabel,0,0); ctx.restore(); }
+  const leg=o.series.filter(s=>s.name);
+  if(leg.length){
+    ctx.font=`12px ${font}`; const lh=17, lw=Math.max(...leg.map(s=>ctx.measureText(s.name).width))+34;
+    const pos=o.legend||'tl'; const lx=pos.includes('r')?m.l+pw-lw-6:m.l+8; const ly=pos.includes('b')?m.t+ph-leg.length*lh-8:m.t+8;
+    ctx.fillStyle=rgba(css('--surface'),.88); ctx.fillRect(lx-4,ly-4,lw+4,leg.length*lh+6);
+    leg.forEach((s,i)=>{ const yy=ly+i*lh+lh/2; ctx.globalAlpha=s.alpha??1;
+      if(s.points){ ctx.fillStyle=s.color; ctx.beginPath(); ctx.arc(lx+11,yy,3.5,0,2*Math.PI); ctx.fill(); }
+      else { ctx.strokeStyle=s.color; ctx.lineWidth=s.width||2; ctx.setLineDash(s.dash||[]); ctx.beginPath(); ctx.moveTo(lx,yy); ctx.lineTo(lx+22,yy); ctx.stroke(); ctx.setLineDash([]); }
+      ctx.globalAlpha=1; ctx.fillStyle=ink; ctx.textAlign='left'; ctx.textBaseline='middle'; ctx.fillText(s.name,lx+28,yy); });
+  }
+  return {X,Y};
+}
+const range=(a,b,n)=>Array.from({length:n},(_,i)=>a+(b-a)*i/(n-1));
+const logRange=(a,b,n)=>range(Math.log10(a),Math.log10(b),n).map(v=>10**v);
+
+/* redraw registry (resize, color scheme) */
+const redraws=[];
+function reg(f){ redraws.push(f); f(); }
+let rzT; window.addEventListener('resize',()=>{ clearTimeout(rzT); rzT=setTimeout(()=>redraws.forEach(f=>f()),120); });
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{ refreshSpinColors(); redraws.forEach(f=>f()); });
+
+/* visibility flags so off-screen simulations sleep */
+const visible=new Map();
+const io=new IntersectionObserver(es=>es.forEach(e=>visible.set(e.target.id,e.isIntersecting)),{rootMargin:'100px'});
+function watch(id){ visible.set(id,false); io.observe(document.getElementById(id)); }
+
+
+/* ---------- spin colors and small helpers ---------- */
+let SPIN_UP=[0,0,0], SPIN_DN=[0,0,0];
+function refreshSpinColors(){ SPIN_UP=hexRGB(css('--spin-up')); SPIN_DN=hexRGB(css('--spin-down')); }
+refreshSpinColors();
+function bindSlider(id,fn,fmtf){ const el=$(id), out=$(id+'-out'); const u=()=>{ const v=+el.value; if(out) out.textContent=fmtf?fmtf(v):v; fn(v); }; el.addEventListener('input',u); u(); return el; }
+const lncosh2 = x => { const a=Math.abs(x); return a+Math.log1p(Math.exp(-2*a)); }; // ln(2 cosh x)
+
+
+/* ---------- Landau helpers ---------- */
+const Lfun=(e,t,H,C,a=1,b=1)=>a*t*e*e+0.5*b*e**4+C*e**3-H*e;
+function minima(t,H,C){ // all local minima on [-3,3] (refined), sorted by L
+  const n=1200, xs=[], out=[];
+  for(let k=0;k<=n;k++) xs.push(-3+6*k/n);
+  const v=xs.map(e=>Lfun(e,t,H,C));
+  for(let k=1;k<n;k++) if(v[k]<=v[k-1]&&v[k]<v[k+1]){ let e=xs[k];
+    for(let it=0;it<60;it++){ const d1=2*t*e+2*e**3+3*C*e*e-H, d2=2*t+6*e*e+6*C*e; if(d2<=0) break; const ne=e-d1/d2; if(!isFinite(ne)||Math.abs(ne-e)>0.1){ break; } e=ne; }
+    out.push({e,L:Lfun(e,t,H,C)}); }
+  return out.sort((a,b)=>Math.abs(a.L-b.L)<1e-12?b.e-a.e:a.L-b.L);
+}
+
+/* ---------- hero: a ball in the Landau potential ---------- */
+const hero={run:!reduceMotion,H:0,e:0.02,clock:0,last:0};
+function drawHero(){
+  const t=0.8*Math.cos(2*Math.PI*hero.clock/30), H=hero.H, es=range(-1.6,1.6,240);
+  const Ls=es.map(e=>Lfun(e,t,H,0)), lo=Math.min(...Ls,-0.35), hi=Math.max(0.9,...Ls.filter((v,i)=>Math.abs(es[i])<1.4));
+  plot($('#hero-L'),{height:340,xlim:[-1.6,1.6],ylim:[lo-0.05,Math.min(hi,1.6)],xlabel:'order parameter η',ylabel:'Landau free energy',hlines:[{y:0}],vlines:[{x:0}],
+    series:[{data:es.map((e,i)=>[e,Ls[i]]),color:css('--up'),width:3}],
+    after:(ctx,X,Y)=>{ ctx.fillStyle=css('--crit'); ctx.beginPath(); ctx.arc(X(hero.e),Y(Lfun(hero.e,t,H,0))-8,8,0,2*Math.PI); ctx.fill();
+      ctx.font=`600 15px ${css('--ui-font')}`; ctx.fillStyle=css('--ink'); ctx.textAlign='center'; ctx.fillText(t>0?'T > Tc: one minimum':'T < Tc: symmetry broken',X(0),Y(lo-0.05)-14); }});
+  $('#hero-read').innerHTML=`𝓛 = tη² + ½η⁴ − Hη, with the temperature slowly cycling through T<sub>c</sub> (now t = ${t.toFixed(2)}). The ball relaxes downhill with small thermal kicks. Each time the system is cooled through T<sub>c</sub> at H = 0 it falls into one of the two wells at random: spontaneous symmetry breaking. A small field H picks the well.`;
+}
+(function(){
+  bindSlider('#hero-H',v=>{ hero.H=v; drawHero(); },v=>v.toFixed(3));
+  const btn=$('#hero-play'); const sync=()=>{ btn.textContent=hero.run?'Pause':'Play'; btn.setAttribute('aria-pressed',String(!hero.run)); };
+  btn.addEventListener('click',()=>{ hero.run=!hero.run; hero.last=0; sync(); }); sync();
+})();
+watch('hero-L'); reg(drawHero);
+function heroTick(now){
+  if(!hero.run||!visible.get('hero-L')) return;
+  if(now-hero.last<40){ return; } const dt=hero.last?Math.min(now-hero.last,100)/1000:0.04; hero.last=now; hero.clock+=dt;
+  const t=0.8*Math.cos(2*Math.PI*hero.clock/30);
+  for(let k=0;k<10;k++){ const h=dt/10, g=2*t*hero.e+2*hero.e**3-hero.H; hero.e+=-1.5*g*h+0.06*Math.sqrt(h)*(Math.random()*2-1)*1.7; }
+  drawHero();
+}
+
+/* ---------- 5.2 collapse of Weiss and van der Waals ---------- */
+(function(){
+  let t=0.02, X=0.4;
+  const weiss=(x,t)=>{ const eta=Math.sqrt(3)*x, tau=1/(1+t); return Math.abs(eta)<1?(Math.atanh(eta)-tau*eta)/Math.sqrt(3):NaN; };
+  const vdw=(x,t)=>{ const eta=2*x, nu=1/(1+eta), tau=1+t; if(eta<=-1||3*nu-1<=0) return NaN; const pi=8*tau/(3*nu-1)-3/(nu*nu); return (pi-1-4*t)/12; };
+  function draw(){
+    const xs=range(-X,X,401), land=x=>t*x+x**3;
+    const all=xs.flatMap(x=>[land(x),weiss(x,t),vdw(x,t)]).filter(isFinite), m=Math.max(...all.map(Math.abs))*1.05||0.01;
+    plot($('#co-plot'),{xlim:[-X,X],ylim:[-m,m],xlabel:'x (rescaled order parameter)',ylabel:'y (rescaled field)',legend:'tl',hlines:[{y:0}],vlines:[{x:0}],
+      series:[{data:xs.map(x=>[x,weiss(x,t)]),color:css('--up'),width:2.6,name:'Weiss magnet (exact MF)'},{data:xs.map(x=>[x,vdw(x,t)]),color:css('--down'),width:2.6,name:'van der Waals (exact)'},{data:xs.map(x=>[x,land(x)]),color:css('--crit'),width:1.8,dash:[6,4],name:'Landau: tx + x³'}]});
+    const dw=xs.map(x=>[x,weiss(x,t)-land(x)]), dv=xs.map(x=>[x,vdw(x,t)-land(x)]);
+    const m2=Math.max(...[...dw,...dv].map(p=>Math.abs(p[1])).filter(isFinite))*1.1||1e-6;
+    plot($('#co-dev'),{xlim:[-X,X],ylim:[-m2,m2],xlabel:'x',ylabel:'y − (tx + x³)',legend:'tl',hlines:[{y:0}],
+      series:[{data:dw,color:css('--up'),width:2.4,name:'Weiss'},{data:dv,color:css('--down'),width:2.4,name:'van der Waals'}]});
+  }
+  bindSlider('#co-t',v=>{t=v;draw();},v=>v.toFixed(3));
+  bindSlider('#co-x',v=>{X=v;draw();},v=>v.toFixed(2));
+  reg(draw);
+})();
+
+/* ---------- 5.3 Landau explorer ---------- */
+(function(){
+  let t=-0.5,H=0,C=0;
+  function eqCurve(){ const ts=range(-1,1,401), pts=[]; let prev=null;
+    for(const tt of ts){ const m=minima(tt,H,C)[0]; const e=m?m.e:0; if(prev!==null&&Math.abs(e-prev)>0.08) pts.push([tt,NaN]); pts.push([tt,e]); prev=e; } return pts; }
+  function draw(){
+    const es=range(-2,2,400), Ls=es.map(e=>Lfun(e,t,H,C)), ms=minima(t,H,C);
+    const vis=Ls.filter((v,i)=>Math.abs(es[i])<1.8), lo=Math.min(...vis), hi=Math.min(Math.max(...vis),lo+3.5);
+    plot($('#la-L'),{height:240,xlim:[-2,2],ylim:[lo-0.1*(hi-lo)-0.01,hi],xlabel:'η',ylabel:'𝓛',hlines:[{y:0}],vlines:[{x:0}],
+      series:[{data:es.map((e,i)=>[e,Ls[i]]),color:css('--up'),width:2.6}],
+      after:(ctx,X,Y)=>{ ms.forEach((m,i)=>{ ctx.beginPath(); ctx.arc(X(m.e),Y(m.L),6,0,2*Math.PI); ctx.lineWidth=2.2; ctx.strokeStyle=css('--crit'); ctx.fillStyle=Math.abs(m.L-ms[0].L)<1e-12?css('--crit'):css('--surface'); ctx.fill(); ctx.stroke(); }); }});
+    const ec=eqCurve();
+    plot($('#la-eta'),{height:240,xlim:[-1,1],ylim:[-1.6,1.6],xlabel:'t',ylabel:'η (global minimum)',hlines:[{y:0}],vlines:[{x:t,color:css('--crit')}],
+      series:[{data:ec,color:css('--up'),width:2.6}]});
+    const ts=range(-1,1,801), Fm=ts.map(tt=>{ const m=minima(tt,H,C)[0]; return m?m.L:0; });
+    const d2=Fm.map((v,i)=>i>0&&i<Fm.length-1?-(Fm[i+1]-2*v+Fm[i-1])/((ts[1]-ts[0])**2):NaN);
+    plot($('#la-F'),{height:240,xlim:[-1,1],ylim:[-1,2.5],xlabel:'t',legend:'tr',vlines:[{x:t,color:css('--crit')}],hlines:[{y:0}],
+      series:[{data:ts.map((tt,i)=>[tt,Fm[i]]),color:css('--up'),width:2.4,name:'𝓛_min'},{data:ts.map((tt,i)=>[tt,Math.abs(d2[i])<20?d2[i]:NaN]),color:css('--down'),width:2,name:'−∂²𝓛_min/∂t²'}]});
+    let msg='';
+    if(C!==0&&H===0){ const t1=C*C/2, ts_=9*C*C/16, e1=-C; msg=`Cubic term: first-order transition at t₁ = C²/2ab = <b>${t1.toFixed(4)}</b>, where η jumps to −C/b = <b>${e1.toFixed(3)}</b>; metastable ordered minimum first appears at t* = 9C²/16ab = ${ts_.toFixed(4)}.`; }
+    else if(C===0&&H===0) msg=t<0?`Continuous transition: η = √(−at/b) = <b>${Math.sqrt(-t).toFixed(4)}</b>; χ<sub>T</sub> = −1/4at = ${(-1/(4*t)).toFixed(3)}; heat-capacity jump a²/b = 1 in these units.`:`Disordered: η = 0, χ<sub>T</sub> = 1/2at = ${t>0?(1/(2*t)).toFixed(3):'∞'}.`;
+    else msg=`With H ≠ 0 the transition at H = 0 is avoided: η varies smoothly with t. ${ms.length>1?'Two local minima: the unfavored one is metastable (hysteresis).':''}`;
+    const degen=ms.length>1&&Math.abs(ms[1].L-ms[0].L)<1e-12;
+    $('#la-read').innerHTML=`Global minimum η = <b>${degen?'±':''}${Math.abs(ms[0].e).toFixed(4)}</b>${degen?' (two degenerate minima; the η-vs-t plot follows the positive one)':''}, 𝓛 = ${ms[0].L.toFixed(4)}. ${msg}`;
+  }
+  const sT=bindSlider('#la-t',v=>{t=v;draw();},v=>v.toFixed(3));
+  const sH=bindSlider('#la-H',v=>{H=v;draw();},v=>v.toFixed(3));
+  const sC=bindSlider('#la-C',v=>{C=v;draw();},v=>v.toFixed(2));
+  $('#la-reset').addEventListener('click',()=>{ sT.value=-0.5; sH.value=0; sC.value=0; [sT,sH,sC].forEach(s=>s.dispatchEvent(new Event('input'))); });
+  reg(draw);
+})();
+
+/* ---------- aside: network Landau term ---------- */
+(function(){
+  let lam=3.8, t=-0.1;
+  const sgn=l=>l<3?-1:1;
+  const Ln=(e,t,l)=>t*e*e+0.5*e**4+sgn(l)*Math.pow(Math.abs(e),l-1);
+  function etaMin(t,l){ // global minimum over eta >= 0 on a log grid, then golden refine
+    let best=0,bv=Ln(0,t,l); const g=logRange(1e-9,3,600);
+    for(const e of g){ const v=Ln(e,t,l); if(v<bv){bv=v;best=e;} }
+    if(best===0) return 0;
+    let a=best/1.05,b=best*1.05; for(let k=0;k<80;k++){ const m1=a+(b-a)/3, m2=b-(b-a)/3; if(Ln(m1,t,l)<Ln(m2,t,l)) b=m2; else a=m1; } return (a+b)/2;
+  }
+  function draw(){
+    const es=range(0,1.6,400), Ls=es.map(e=>Ln(e,t,lam)), lo=Math.min(...Ls), hi=Math.min(Math.max(...Ls),lo+2);
+    const em=etaMin(t,lam);
+    plot($('#nl-L'),{xlim:[0,1.6],ylim:[lo-0.05*(hi-lo)-0.01,hi],xlabel:'η',ylabel:'𝓛',hlines:[{y:0}],
+      series:[{data:es.map((e,i)=>[e,Ls[i]]),color:css('--up'),width:2.6}],
+      after:(ctx,X,Y)=>{ ctx.beginPath(); ctx.arc(X(em),Y(Ln(em,t,lam)),6,0,2*Math.PI); ctx.fillStyle=css('--crit'); ctx.fill(); }});
+    const ts=logRange(1e-6,0.5,50), neg=ts.map(x=>[x,etaMin(-x,lam)]), pos=ts.map(x=>[x,etaMin(x,lam)]);
+    const bth=lam<3?null:lam<5?1/(lam-3):0.5, anc=neg[Math.floor(neg.length*0.3)];
+    const ref=sl=>[[1e-6,anc[1]*Math.pow(1e-6/anc[0],sl)],[0.5,anc[1]*Math.pow(0.5/anc[0],sl)]];
+    plot($('#nl-eta'),{xlog:true,ylog:true,xlim:[1e-6,0.5],ylim:[1e-6,2],xlabel:'|t|',ylabel:'η',legend:'br',
+      series:[...(bth?[{data:ref(bth),color:css('--muted'),dash:[5,4],width:1.5,name:`slope ${bth.toFixed(3)}`}]:[]),
+        {data:neg,color:css('--up'),width:2.6,name:'t < 0'},...(lam<3?[{data:pos,color:css('--down'),width:2.6,name:'t > 0'}]:[])]});
+    let fitTxt='';
+    const near=neg.filter(p=>p[0]<1e-4&&p[1]>0);
+    if(near.length>=3){ const n=near.length; let sx=0,sy=0,sxx=0,sxy=0; for(const [x,y] of near){ const lx=Math.log(x), ly=Math.log(y); sx+=lx; sy+=ly; sxx+=lx*lx; sxy+=lx*ly; } fitTxt=` Fitted β for |t| < 10⁻⁴: <b>${((n*sxy-sx*sy)/(n*sxx-sx*sx)).toFixed(3)}</b>.`; }
+    $('#nl-read').innerHTML= lam<3? `λ = ${lam.toFixed(2)} < 3: C < 0 and η > 0 for every t (here η = ${em.toPrecision(3)} at t = ${t.toFixed(3)}). No transition.`
+      : `λ = ${lam.toFixed(2)}: predicted β = ${bth.toFixed(3)}.${fitTxt}`;
+  }
+  bindSlider('#nl-l',v=>{lam=v;draw();},v=>v.toFixed(2));
+  bindSlider('#nl-t',v=>{t=v;draw();},v=>v.toFixed(3));
+  reg(draw);
+})();
+
+/* ---------- table of contents highlighting ---------- */
+(function(){
+  const links=[...document.querySelectorAll('nav.toc ol a')], map=new Map(links.map(a=>[a.getAttribute('href').slice(1),a]));
+  const tio=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ links.forEach(a=>a.classList.remove('active')); map.get(e.target.id)?.classList.add('active'); } }); },{rootMargin:'-20% 0px -70% 0px'});
+  map.forEach((_,id)=>{ const el=document.getElementById(id); if(el) tio.observe(el); });
+})();
+
+function loop(now){ heroTick(now); requestAnimationFrame(loop); }
+requestAnimationFrame(loop);
+
+window.addEventListener('load',()=>{
+  if(window.renderMathInElement) renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});
+  redraws.forEach(f=>f());
+});
+</script>
+</body>
+</html>

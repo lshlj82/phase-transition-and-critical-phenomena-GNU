@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chapter 3: How Phase Transitions Occur in Practice | Phase Transitions and Critical Phenomena</title>
+<meta name="description" content="Interactive lecture notes for Chapter 3 of a graduate course on phase transitions: transfer matrices, the one-dimensional Ising model, correlations, the low-temperature expansion, Weiss mean-field theory, and the Ising model on networks.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+
+
+:root{
+  --paper:#F3F5F7; --surface:#FFFFFF; --ink:#0E1420; --muted:#3E4859; --rule:#C3CBD6;
+  --up:#1537A8; --down:#B35F00; --crit:#B3104E; --mark:#C2EDB0; --mark-edge:#2E8A1E;
+  --spin-up:#0A1F6E; --spin-down:#FFD23F;
+  --serif:"Source Serif 4", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --ui-font:"IBM Plex Sans Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#0B1019; --surface:#131A27; --ink:#F4F6FA; --muted:#BAC4D3; --rule:#35415A;
+    --up:#8FAEFF; --down:#FFC23D; --crit:#FF7AA6; --mark:#244A1E; --mark-edge:#7EDB6A;
+    --spin-up:#1E3FBF; --spin-down:#FFD23F;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:1.0625rem;line-height:1.62;
+  padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0)}
+a{color:var(--up);text-underline-offset:2px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--crit);outline-offset:2px}
+h1,h2,h3{font-family:var(--serif);line-height:1.15;font-weight:700}
+h2{font-size:1.9rem;margin:3.6rem 0 .6rem;letter-spacing:-.01em}
+h2 .sec{color:var(--muted);font-weight:400;margin-right:.35em}
+h3{font-size:1.3rem;margin:2.4rem 0 .4rem}
+p,ul,ol{max-width:68ch}
+p,li,figcaption,h3{overflow-wrap:break-word}
+.ui{font-family:var(--ui-font)}
+
+/* hero */
+header.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:3rem;align-items:center;
+  max-width:1180px;margin:0 auto;padding:3.5rem 1.5rem 2.5rem}
+.course{font-family:var(--ui-font);font-size:1rem;color:var(--muted);margin:0 0 1rem}
+.hero h1{font-size:clamp(2.6rem,6vw,4.4rem);margin:0 0 1.2rem;letter-spacing:-.02em}
+.hero h1 span{display:block;font-weight:400;font-style:italic;font-size:.5em;letter-spacing:0;color:var(--muted);margin-top:.35em}
+.hero .lede{font-size:1.2rem;max-width:34ch}
+.lattice-wrap{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:12px}
+canvas.lattice{display:block;width:100%;aspect-ratio:1;image-rendering:pixelated;image-rendering:crisp-edges;border-radius:2px}
+.lattice-wrap .controls{margin-top:10px}
+
+/* layout */
+.page{display:grid;grid-template-columns:200px minmax(0,1fr);gap:3rem;max-width:1180px;margin:0 auto;padding:0 1.5rem 4rem}
+nav.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 1.5rem);align-self:start;font-family:var(--ui-font);font-size:.95rem;padding-top:3.8rem}
+nav.toc ol{list-style:none;margin:0;padding:0}
+nav.toc li{margin:.15rem 0}
+nav.toc ol ol{padding-left:.9rem;font-size:.9rem}
+nav.toc a{color:var(--muted);text-decoration:none;display:block;padding:.15rem 0 .15rem .6rem;border-left:2px solid transparent}
+nav.toc a:hover{color:var(--ink)}
+nav.toc a.active{color:var(--ink);border-left-color:var(--crit)}
+main{min-width:0}
+
+/* key results echo the green boxes of the handwritten notes */
+.result{background:var(--mark);border-left:4px solid var(--mark-edge);padding:.6rem 1rem;margin:1.2rem 0;max-width:68ch;overflow-x:auto}
+.result p{margin:.2rem 0}
+.aside{color:var(--muted);font-style:italic;border-left:1px solid var(--rule);padding-left:1rem}
+mark{background:linear-gradient(transparent 55%, var(--mark) 55%);color:inherit;padding:0 .1em}
+.question{border:1.5px solid var(--ink);padding:.9rem 1.2rem;margin:2rem 0 1rem;max-width:68ch}
+.question h3{margin:0;font-size:1.2rem}
+.question h3 b{color:var(--crit)}
+.math-scroll{overflow-x:auto;max-width:68ch}
+/* keep KaTeX's absolutely positioned accessibility markup inside scroll boxes */
+.result,.math-scroll,.table-scroll{position:relative}
+.katex-display{overflow-x:auto;overflow-y:hidden;padding:2px 0}
+
+
+/* demos */
+figure.demo{margin:1.8rem 0 2.2rem;background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:1.1rem 1.2rem 1rem}
+figure.demo > .title{font-family:var(--ui-font);font-weight:600;font-size:1.05rem;margin:0 0 .7rem}
+figure.demo figcaption{font-size:.95rem;color:var(--muted);margin-top:.8rem;max-width:80ch}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem}
+.grid-lat{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:1.4rem;align-items:start}
+canvas.plot{display:block;width:100%;height:280px}
+.plot-label{font-family:var(--ui-font);font-size:.9rem;color:var(--muted);margin:0 0 .2rem}
+.controls{display:flex;flex-wrap:wrap;gap:.6rem 1.4rem;align-items:center;font-family:var(--ui-font);font-size:.95rem;margin-bottom:.8rem}
+.controls label{display:flex;align-items:center;gap:.5rem}
+.controls input[type=range]{width:150px;accent-color:var(--up)}
+.controls output{font-variant-numeric:tabular-nums;min-width:4.5ch;display:inline-block}
+button,select{font-family:var(--ui-font);font-size:.92rem;background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:3px;padding:.3rem .7rem;cursor:pointer}
+button:hover{border-color:var(--muted)}
+button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.readout{font-family:var(--ui-font);font-size:.95rem;font-variant-numeric:tabular-nums;margin:.5rem 0 0}
+.readout b{font-weight:600}
+.swatch{display:inline-block;width:.8em;height:.8em;border-radius:1px;vertical-align:-.05em;margin-right:.25em}
+
+table.exps{border-collapse:collapse;font-size:1rem;margin:1rem 0;min-width:520px}
+table.exps th,table.exps td{text-align:left;padding:.45rem .9rem .45rem 0;border-bottom:1px solid var(--rule);vertical-align:top}
+table.exps th{font-family:var(--ui-font);font-weight:600;color:var(--muted)}
+.table-scroll{overflow-x:auto}
+
+ol.timeline{list-style:none;padding:0;margin:1.2rem 0;max-width:72ch;border-left:2px solid var(--rule)}
+ol.timeline li{position:relative;padding:0 0 1.1rem 1.4rem}
+ol.timeline li::before{content:"";position:absolute;left:-7px;top:.45rem;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--up)}
+ol.timeline .yr{font-family:var(--ui-font);font-weight:600;margin-right:.6rem}
+
+footer{max-width:1180px;margin:0 auto;padding:2rem 1.5rem 3rem;border-top:1px solid var(--rule);font-size:.95rem;color:var(--muted)}
+footer p{max-width:90ch}
+
+@media (max-width:980px){
+  .page{grid-template-columns:minmax(0,1fr)}
+  nav.toc{display:none}
+  header.hero{grid-template-columns:minmax(0,1fr);gap:1.8rem;padding-top:2rem}
+  .lattice-wrap{max-width:460px}
+}
+@media (max-width:720px){
+  .grid2,.grid-lat{grid-template-columns:minmax(0,1fr)}
+  h2{font-size:1.6rem}
+  figure.demo{padding:.9rem .8rem}
+  .controls input[type=range]{width:110px}
+  .katex-display{font-size:.86em}
+  .result{padding:.5rem .7rem}
+  .controls label{flex-wrap:wrap}
+}
+
+/* chapter 2 additions */
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.1rem}
+canvas.kymo{display:block;width:100%;image-rendering:pixelated;image-rendering:crisp-edges;border-radius:2px;background:var(--spin-down)}
+.chapnav{display:flex;flex-wrap:wrap;gap:.4rem 1.6rem;font-family:var(--ui-font);font-size:1rem;margin:0 0 1rem}
+.chapnav a{color:var(--muted)}
+.checklist{list-style:none;padding:0;margin:.6rem 0 0;font-family:var(--ui-font);font-size:.95rem;font-variant-numeric:tabular-nums;max-width:none}
+.checklist li{margin:.15rem 0}
+.checklist .ok{color:var(--mark-edge);font-weight:600}
+.checklist .bad{color:var(--crit);font-weight:600}
+.proof{border-left:2px solid var(--rule);padding-left:1rem;margin:1rem 0;max-width:68ch}
+.proof > p:first-child{margin-top:0}
+.qed{font-family:var(--ui-font);font-size:.85rem;border:1px solid var(--ink);padding:0 .3rem;margin-left:.4rem}
+svg.frustration{display:block;width:100%;max-width:220px;height:auto}
+@media (max-width:900px){ .grid3{grid-template-columns:minmax(0,1fr)} }
+
+/* chapter 3 additions */
+canvas.net{display:block;width:100%;aspect-ratio:1;border-radius:2px;background:var(--surface)}
+.matrix{font-family:var(--ui-font);font-variant-numeric:tabular-nums;border-collapse:collapse;margin:.3rem 0}
+.matrix td{padding:.15rem .7rem;text-align:right}
+.matrix{border-left:2px solid var(--ink);border-right:2px solid var(--ink);border-radius:7px}
+table.exps td.num{font-variant-numeric:tabular-nums}
+.grid-side{grid-template-columns:minmax(0,300px) minmax(0,1fr)}
+@media (max-width:720px){ .grid-side{grid-template-columns:minmax(0,1fr)} }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div>
+    <p class="course">Phase Transitions and Critical Phenomena, graduate course</p>
+    <h1>Chapter 3: How phase transitions occur in practice<span>transfer matrices, low-temperature expansions, and mean-field theory</span></h1>
+    <p class="lede">Concrete calculations: an exact solution of the one-dimensional Ising model, its correlations, a systematic expansion about the ground state, and Weiss's mean-field theory, extended at the end to magnets living on networks.</p>
+  </div>
+  <div class="lattice-wrap">
+    <canvas class="net" id="hero-net" aria-label="Live Ising model on a scale-free network"></canvas>
+    <div class="controls" style="margin:10px 0 0">
+      <label>\(T/T_c^{\rm HMF}\) <input type="range" id="hero-T" min="0.2" max="1.2" step="0.01" value="0.4"> <output id="hero-T-out"></output></label>
+      <button id="hero-play" aria-pressed="false">Pause</button>
+    </div>
+    <p class="readout" id="hero-read" style="margin-top:.2rem;color:var(--muted)"></p>
+  </div>
+</header>
+
+<div class="page">
+<nav class="toc" aria-label="Contents">
+  <ol>
+    <li><a href="#s3-1">3.1 Ad hoc solution methods</a></li>
+    <li><a href="#s3-2">3.2 The transfer matrix</a></li>
+    <li><a href="#s3-3">3.3 Phase transitions</a></li>
+    <li><a href="#s3-4">3.4 Thermodynamic properties</a></li>
+    <li><a href="#s3-5">3.5 Spatial correlations</a></li>
+    <li><a href="#s3-6">3.6 Low-temperature expansion</a></li>
+    <li><a href="#s3-7">3.7 Mean-field theory</a></li>
+    <li><a href="#app">Appendix: Ising model on networks</a></li>
+    <li><a href="#reading">Further reading</a></li>
+  </ol>
+  <p style="margin-top:1.5rem"><a href="ch02b-symmetry-breaking-and-lattice-gases.html">Chapter 2, Part 2</a></p>
+  <p><a href="ch01-introduction.html">Chapter 1: Introduction</a></p>
+  <p><a href="ch04-critical-phenomena-in-fluids.html">Chapter 4</a></p>
+  <p><a href="index.html">All chapters</a></p>
+</nav>
+
+<main>
+<p>Chapters 1 and 2 explored the basic notions of phase transitions and how non-analytic behavior can occur in principle. Now we see these ideas in action, with concrete calculations for magnetic systems that show non-analytic behavior explicitly and make precise the concepts related to spatial correlations. Most of the chapter uses the <mark>transfer matrix</mark> method, introduced by Kramers, which reduces computing the partition function to finding the eigenvalues of a matrix. We also describe the <mark>low-temperature expansion</mark> and Weiss's <mark>mean-field theory</mark>.</p>
+
+<!-- ======================= 3.1 ======================= -->
+<section id="s3-1">
+<h2><span class="sec">3.1</span>Ad hoc solution methods</h2>
+<p>The nearest-neighbor Ising model in one dimension, with \(J>0\) (ferromagnetic), is</p>
+<div class="math-scroll">\[ \begin{gathered} -\mathcal H_\Omega\{S\} = H\sum_iS_i + J\sum_{\langle ij\rangle}S_iS_j,\\ h\equiv\beta H,\quad K\equiv\beta J, \end{gathered} \]</div>
+<div class="result"><p>\[ Z_\Omega(h,K,N) = \sum_{\{S\}}\exp\Big[h\sum_iS_i + K\sum_iS_iS_{i+1}\Big], \]</p></div>
+<p>where the range of the bond sum depends on the boundary conditions.</p>
+
+<h3>Free boundary conditions, \(H=0\)</h3>
+<p>With free ends there are \(N-1\) bonds; spin \(N\) has no right-hand neighbor. Define bond variables \(\eta_i = S_iS_{i+1}\), \(i=1,\dots,N-1\), equal to \(+1\) if the neighbors are parallel and \(-1\) otherwise. Then \(\{S_1,\eta_1,\dots,\eta_{N-1}\}\) specifies a state (\(S_2 = S_1\eta_1\), and so on), and the sum factorizes:</p>
+<div class="math-scroll">\[ Z_\Omega = \sum_{S_1}\sum_{\eta_1}\cdots\sum_{\eta_{N-1}}e^{K(\eta_1+\cdots+\eta_{N-1})} = 2\prod_{i=1}^{N-1}\sum_{\eta_i=\pm1}e^{K\eta_i}. \]</div>
+<div class="result"><p>\[ Z_\Omega = 2\,(2\cosh K)^{N-1}. \]</p></div>
+<p>We can calculate everything from this.</p>
+
+<h3>Periodic boundary conditions, \(H=0\)</h3>
+<p>With \(S_{N+1}\equiv S_1\) there is an extra bond, \(KS_NS_1\). The state is still specified by \(\{S_1,\eta_1,\dots,\eta_{N-1}\}\), and since \(S_N = S_1\eta_1\cdots\eta_{N-1}\), the extra bond is \(S_NS_1 = \eta_1\eta_2\cdots\eta_{N-1}\), which couples all the \(\eta\)'s. Expanding \(e^{K\eta_1\cdots\eta_{N-1}} = \sum_\alpha (K\eta_1\cdots\eta_{N-1})^\alpha/\alpha!\) restores the factorization:</p>
+<div class="math-scroll">\[ \begin{aligned} Z_\Omega &= 2\sum_{\alpha=0}^{\infty}\frac{K^\alpha}{\alpha!}\Big[\sum_{\eta=\pm1}\eta^\alpha e^{K\eta}\Big]^{N-1} = 2\sum_{\alpha=0}^{\infty}\frac{K^\alpha}{\alpha!}\big[e^K+(-1)^\alpha e^{-K}\big]^{N-1}\\ &= 2\Big\{\cosh K\,(2\cosh K)^{N-1} + \sinh K\,(2\sinh K)^{N-1}\Big\}, \end{aligned} \]</div>
+<p>separating even \(\alpha\) (which sum to \(\cosh K\)) from odd \(\alpha\) (which sum to \(\sinh K\)). Hence</p>
+<div class="result"><p>\[ Z_\Omega = (2\cosh K)^N + (2\sinh K)^N. \]</p></div>
+
+<h3>Recursion</h3>
+<p>Another method for \(H=0\) with free boundaries: adding spin \(N+1\) to a chain of \(N\),</p>
+<div class="math-scroll">\[ \begin{aligned} Z(N+1) &= \sum_{S_1}\cdots\sum_{S_N}e^{K(S_1S_2+\cdots+S_{N-1}S_N)}\sum_{S_{N+1}}e^{KS_NS_{N+1}}\\ &= Z(N)\,(2\cosh K), \end{aligned} \]</div>
+<p>because \(\sum_{S_{N+1}}e^{KS_NS_{N+1}} = 2\cosh(KS_N) = 2\cosh K\) regardless of \(S_N\) (cosh is even). Iterating from \(Z(1)=2\) gives \(Z(N) = 2(2\cosh K)^{N-1}\), as before.</p>
+
+<h3>Effect of boundary conditions</h3>
+<p>For free boundaries, \(F_\Omega = -Nk_BT\big[\log2 + \tfrac{N-1}{N}\log\cosh K\big] \to -k_BTN\big[\log(2\cosh K) + O(1/N)\big]\). For periodic boundaries, \(F_\Omega = -k_BT\log\big[(2\cosh K)^N\big(1+\tanh^NK\big)\big] \to -k_BTN\log(2\cosh K)\), since \(0\le\tanh K\lt 1\). The difference between boundary conditions becomes negligible as the system grows.</p>
+</section>
+
+<!-- ======================= 3.2 ======================= -->
+<section id="s3-2">
+<h2><span class="sec">3.2</span>The transfer matrix</h2>
+<p>The ad hoc methods are hard to apply when \(H\ne0\). With periodic boundary conditions, split the field term symmetrically between neighboring bonds:</p>
+<div class="math-scroll">\[ \begin{aligned} Z_N(h,K) &= \sum_{S_1}\cdots\sum_{S_N}\Big(e^{\frac h2(S_1+S_2)+KS_1S_2}\Big)\Big(e^{\frac h2(S_2+S_3)+KS_2S_3}\Big)\\ &\qquad\qquad\cdots\Big(e^{\frac h2(S_N+S_1)+KS_NS_1}\Big)\\ &= \sum_{S_1}\cdots\sum_{S_N}T_{S_1S_2}T_{S_2S_3}\cdots T_{S_NS_1}, \end{aligned} \]</div>
+<p>treating each factor as an element of a matrix</p>
+<div class="result"><p>\[ \begin{gathered} T_{SS'} = e^{\frac h2(S+S')+KSS'},\\ \mathbf T = \begin{pmatrix}T_{1,1} & T_{1,-1}\\ T_{-1,1} & T_{-1,-1}\end{pmatrix} = \begin{pmatrix}e^{h+K} & e^{-K}\\ e^{-K} & e^{-h+K}\end{pmatrix}. \end{gathered} \]</p></div>
+<p>By the matrix multiplication rule \((\mathbf{BC})_{ij} = \sum_kB_{ik}C_{kj}\), each sum over an intermediate spin is a matrix product, so</p>
+<div class="result"><p>\[ Z_N(h,K) = \sum_{S_1}\big(\mathbf T^N\big)_{S_1S_1} = \operatorname{Tr}\big(\mathbf T^N\big) = \lambda_1^N + \lambda_2^N, \]</p></div>
+<p>where \(\lambda_{1,2}\) are the eigenvalues of \(\mathbf T\). To see the last step, diagonalize: since \(\mathbf T\) is real and symmetric, there is a matrix \(\mathbf S\) of eigenvectors with \(\mathbf S^{T} = \mathbf S^{-1}\), the eigenvalues are real, and \(\mathbf T' = \mathbf S^{-1}\mathbf T\mathbf S = \operatorname{diag}(\lambda_1,\lambda_2)\). The cyclic property of the trace, \(\operatorname{Tr}(\mathbf{ABC}) = \operatorname{Tr}(\mathbf{BCA})\), gives \(\operatorname{Tr}\mathbf T^N = \operatorname{Tr}\mathbf T'^N\). With \(\lambda_1>\lambda_2\),</p>
+<div class="math-scroll">\[ \begin{gathered} Z_N(h,K) = \lambda_1^N\Big(1+\big[\lambda_2/\lambda_1\big]^N\Big) \simeq \lambda_1^N\big(1+O(e^{-\alpha N})\big),\\ \alpha = \log(\lambda_1/\lambda_2), \end{gathered} \]</div>
+<div class="result"><p>\[ \lim_{N\to\infty}\frac{F_N(h,K,T)}{N} = -k_BT\log\lambda_1. \]</p></div>
+<p>The eigenvalues follow from \(\det(\mathbf T-\lambda) = \lambda^2 - 2e^K\cosh h\,\lambda + e^{2K}-e^{-2K} = 0\):</p>
+<div class="result"><p>\[ \begin{gathered} \lambda_{1,2} = e^K\Big[\cosh h \pm \sqrt{\sinh^2h + e^{-4K}}\Big],\\ \frac{F_N}{N} = -J - k_BT\log\Big[\cosh h + \sqrt{\sinh^2h+e^{-4K}}\Big]. \end{gathered} \]</p></div>
+
+<figure class="demo" id="demo-tm">
+  <p class="title">The transfer matrix, checked against brute force</p>
+  <div class="controls">
+    <label>\(K = J/k_BT\) <input type="range" id="tm-K" min="0.02" max="2.5" step="0.01" value="0.6"> <output id="tm-K-out"></output></label>
+    <label>\(h = H/k_BT\) <input type="range" id="tm-h" min="-1" max="1" step="0.01" value="0.1"> <output id="tm-h-out"></output></label>
+    <label>\(N\) for the check <select id="tm-N"></select></label>
+  </div>
+  <div class="grid-lat grid-side">
+    <div class="readout" id="tm-mat" style="margin:0"></div>
+    <div class="grid2">
+      <div><p class="plot-label">Eigenvalues vs \(K\) at the chosen \(h\)</p><canvas class="plot" id="tm-eig" style="height:240px"></canvas></div>
+      <div><p class="plot-label">Ratio \(\lambda_2/\lambda_1\) vs \(K\) for several fields</p><canvas class="plot" id="tm-ratio" style="height:240px"></canvas></div>
+    </div>
+  </div>
+  <figcaption>Left: the matrix, its eigenvalues, and \(\lambda_1^N+\lambda_2^N\) compared with a direct sum over all \(2^N\) configurations of a periodic ring. They agree to rounding error. Right: the two eigenvalues never meet at finite \(K\). At \(h=0\), \(\lambda_2/\lambda_1 = \tanh K\) approaches 1 only as \(K\to\infty\) (\(T\to0\)); any field keeps them apart. A phase transition would require exactly such a degeneracy (§3.5).</figcaption>
+</figure>
+</section>
+
+<!-- ======================= 3.3 ======================= -->
+<section id="s3-3">
+<h2><span class="sec">3.3</span>Phase transitions</h2>
+<p>For \(T>0\) the square root in \(f = -J - k_BT\log\big[\cosh h + \sqrt{\sinh^2h+e^{-4K}}\big]\) is strictly positive for real \(h\) and \(K\), so \(f\) is manifestly <mark>analytic for \(T>0\)</mark>. This agrees with the heuristic argument of Chapter 2: there is no phase transition for \(T>0\) in one dimension. The only possibilities for a transition are \(T=0\) or \(h=0\) with \(e^{-4K}\to0\); there the two eigenvalues become degenerate, both tending to \(e^K\), so that \(\lambda_2/\lambda_1\to1\).</p>
+<p>The same conclusion follows from <b>Perron's theorem</b>: for an \(N\times N\) matrix (\(N\lt\infty\)) with all \(A_{ij}>0\), the eigenvalue of largest magnitude is (a) real and positive, (b) non-degenerate, and (c) an analytic function of the \(A_{ij}\). In one dimension, the transfer matrix for finite-ranged interactions satisfies these requirements, so \(\lambda_1\ne0\), \(\lambda_1\ne\lambda_2\), and \(\lambda_1\) is analytic: there is no transition for \(T>0\). Why can't the theorem be applied in higher dimensions? In one dimension the Ising transfer matrix is \(2\times2\); in two and higher dimensions it is \(\infty\times\infty\) in the thermodynamic limit, and Perron's theorem does not apply.</p>
+<p>What happens at \(T=0\) (\(K\to\infty\))? Then \(\lambda_1 = e^K\big[\cosh h + |\sinh h|\,(1+O(e^{-4K}))\big]\) and \(\cosh h + |\sinh h| = e^{|h|}\), so \(\lambda_1 = e^{K+|h|}\) and</p>
+<div class="result"><p>\[ \begin{gathered} F = -Nk_BT\big(K+|h|\big) + O(T^2)\ \xrightarrow{\,T=0\,}\ -N\big(J+|H|\big),\\ M = -\frac1N\frac{\partial F}{\partial H} = \begin{cases}+1, & H>0\\ -1, & H\lt 0\end{cases} \end{gathered} \]</p></div>
+<p>even for finite \(N\), as expected from Chapter 2. The non-analytic behavior comes from \(\sqrt{h^2} = |h|\); for \(T>0\), the smoothed version \(\sqrt{h^2+\epsilon^2}\) is analytic at \(h=0\) as long as \(\epsilon\ne0\).</p>
+</section>
+
+<!-- ======================= 3.4 ======================= -->
+<section id="s3-4">
+<h2><span class="sec">3.4</span>Thermodynamic properties</h2>
+<p>At \(h=0\), \(\lambda_1 = e^K(1+e^{-2K}) = 2\cosh K\) and \(Z = (2\cosh K)^N\) as \(N\to\infty\), confirming the ad hoc result. Then</p>
+<div class="math-scroll">\[ \begin{gathered} F = -k_BTN\big[K+\log(1+e^{-2K})\big],\\ f_N\equiv\frac FN \to \begin{cases}-J, & T\to0\ (K\to\infty),\\ -k_BT\log2, & T\to\infty\ (K\to0). \end{cases} \end{gathered} \]</div>
+<p>At low temperature the free energy is dominated by the energy, and at high temperature by the entropy.</p>
+<div class="result"><p>\[ \begin{gathered} E = -\frac{\partial}{\partial\beta}\log Z = -NJ\tanh(\beta J),\\ C = \frac{dE}{dT} = \frac{NJ^2}{k_BT^2}\operatorname{sech}^2\!\Big(\frac{J}{k_BT}\Big). \end{gathered} \]</p></div>
+<p>The heat capacity has no singularity, only a broad peak: \(x^2\operatorname{sech}^2x\) is maximal at \(x\approx1.2\), i.e. \(k_BT\approx0.83J\). This is a <b>Schottky anomaly</b>, typical of a system with a gap in its excitation spectrum. For general \(H\), with \(w^2\equiv e^{-4K}\) the relative Boltzmann weight of two configurations differing by a single spin flip (\(\uparrow\uparrow\uparrow\) vs \(\uparrow\downarrow\uparrow\), energy difference \(4J\)),</p>
+<div class="math-scroll">\[ \begin{gathered} \frac FN = -J - k_BT\log\Big[\cosh h + \sqrt{\sinh^2h+w^2}\Big],\\ M = -\frac{1}{Nk_BT}\frac{\partial F}{\partial h} = \frac{\sinh h}{\sqrt{\sinh^2h+w^2}}. \end{gathered} \]</div>
+<p>At \(K=\infty\), \(w=0\) and \(M=\pm1\) depending on the sign of \(h\); for \(T>0\), \(w\) smooths this step. The isothermal susceptibility \(\chi_T\equiv\partial M/\partial H\) follows for small fields from \(\sinh h\approx h\), \(M\approx h/w = he^{2K}\):</p>
+<div class="result"><p>\[ \begin{gathered} \chi_T = \frac{e^{2K}}{k_BT} = \frac{e^{2J/k_BT}}{k_BT},\\ \chi_T \sim \begin{cases} 1/k_BT, & T\to\infty\ \text{(Curie's law)},\\ e^{2J/k_BT}/k_BT, & T\to0\ \text{(exponential divergence)}. \end{cases} \end{gathered} \]</div>
+
+<figure class="demo" id="demo-thermo">
+  <p class="title">The exactly solved chain</p>
+  <div class="controls">
+    <label>\(k_BT/J\) <input type="range" id="th-T" min="0.1" max="4" step="0.01" value="0.8"> <output id="th-T-out"></output></label>
+  </div>
+  <div class="grid2">
+    <div><p class="plot-label">Energy and heat capacity per spin vs \(T\)</p><canvas class="plot" id="th-ec" style="height:230px"></canvas></div>
+    <div><p class="plot-label">Susceptibility \(\chi_T\) (log scale) vs \(T\)</p><canvas class="plot" id="th-chi" style="height:230px"></canvas></div>
+  </div>
+  <div style="margin-top:.8rem"><p class="plot-label">Magnetization \(M\) vs \(H/J\) at the chosen \(T\) and at \(T = 0\)</p><canvas class="plot" id="th-m" style="height:220px"></canvas></div>
+  <p class="readout" id="th-read"></p>
+  <figcaption>All curves are exact results for the infinite chain. The heat capacity peaks near \(k_BT\approx0.83J\) without any singularity (a Schottky anomaly). The susceptibility crosses over from Curie's law \(1/k_BT\) at high temperature to the exponential divergence \(e^{2J/k_BT}/k_BT\) as \(T\to0\). The magnetization curve sharpens toward the \(T=0\) step but stays smooth for every \(T>0\).</figcaption>
+</figure>
+</section>
+
+<!-- ======================= 3.5 ======================= -->
+<section id="s3-5">
+<h2><span class="sec">3.5</span>Spatial correlations</h2>
+<p>In zero field and for \(T>0\), \(\langle S_i\rangle = 0\) in one dimension. The two-point correlation function</p>
+<div class="math-scroll">\[ G(i,j) = \langle S_iS_j\rangle - \langle S_i\rangle\langle S_j\rangle = \big\langle(S_i-\langle S_i\rangle)(S_j-\langle S_j\rangle)\big\rangle \]</div>
+<p>measures correlations in the <i>fluctuations</i> of spins at different sites. It is also related to the probability that spins \(i\) and \(j\) have the same value: \(P_{ij}\equiv\langle\delta_{S_iS_j}\rangle = \langle\tfrac12(1+S_iS_j)\rangle = \tfrac12 + \tfrac12\big(G(i,j)+\langle S_i\rangle\langle S_j\rangle\big)\).</p>
+<p><b>Ad hoc calculation.</b> With free boundaries, give each bond its own coupling \(K_i\). Then \(Z_N\{K_i\} = 2^N\prod_{i=1}^{N-1}\cosh K_i\), and differentiating brings down spins:</p>
+<div class="math-scroll">\[ \langle S_iS_{i+1}\rangle = \frac{1}{Z_N}\frac{\partial Z_N}{\partial K_i} = \frac{\partial}{\partial K_i}\log Z_N\{K_i\} = \tanh K_i. \]</div>
+<p>(With all \(K_i = K\), this gives \(E = -J\sum_i\langle S_iS_{i+1}\rangle = -NJ\tanh\beta J\), as before.) For larger separations, use \((S_{i+1})^2 = 1\):</p>
+<div class="math-scroll">\[ \begin{aligned} \frac{1}{Z_N}\frac{\partial}{\partial K_i}\frac{\partial}{\partial K_{i+1}}Z_N &= \langle S_iS_{i+1}S_{i+1}S_{i+2}\rangle = \langle S_iS_{i+2}\rangle\\ &= \tanh K_i\tanh K_{i+1}, \end{aligned} \]</div>
+<p>and by induction \(G(i,i+j) = \tanh K_i\tanh K_{i+1}\cdots\tanh K_{i+j-1}\). With uniform couplings,</p>
+<div class="result"><p>\[ \begin{gathered} G(i,i+j) = (\tanh K)^j = e^{-j\log\coth K} = e^{-j/\xi},\\ \xi = \frac{1}{\log\coth K}. \end{gathered} \]</p></div>
+<p>The result depends only on \(j\): it is translationally invariant, as it must be when \(K_i\) does not depend on \(i\) (in a continuous system, \(G(\vec r,\vec r') = G(\vec r-\vec r')\)), even in a finite system away from the boundaries. At \(T=0\), \(\tanh K = 1\) and \(G=1\) for all \(j\): a perfectly correlated state with long-range order. The <mark>correlation length</mark> \(\xi\) measures the distance over which spins are correlated with probability of order one. As \(K\to0\), \(\coth K\to\infty\) and \(\xi\to0\); as \(K\to\infty\), \(\coth K\approx1+2e^{-2K}\) and</p>
+<div class="result"><p>\[ \begin{gathered} \xi \approx \frac{1}{\log(1+2e^{-2K})} \approx \tfrac12\,e^{2J/k_BT}\\ (T\to0), \end{gathered} \]</p></div>
+<p>an <i>essential singularity</i>: \(\xi\) diverges exponentially fast. Contrast this with the generic behavior near a continuous transition at \(T_c>0\), \(\xi(T)\sim(T-T_c)^{-\nu}\), with \(\nu\) a critical exponent.</p>
+
+<h3>Correlations from the transfer matrix</h3>
+<p>For \(H\ne0\), write the spin at site \(i\) inside the chain of matrix products. Summing over \(S_i\) gives a matrix element \(A_{ab} = \sum_{S_i}T_{aS_i}S_iT_{S_ib}\), i.e. \(\mathbf A = \mathbf T\sigma_z\mathbf T\) with the Pauli matrix \(\sigma_z = \operatorname{diag}(1,-1)\), and by the cyclic property</p>
+<div class="math-scroll">\[ \begin{gathered} \langle S_i\rangle = \frac1Z\operatorname{Tr}\big(\sigma_z\mathbf T^N\big) = \frac{\operatorname{Tr}\big[\mathbf S^{-1}\sigma_z\mathbf S\,\mathbf T'^N\big]}{\operatorname{Tr}\mathbf T'^N},\\ \mathbf S^{-1}\sigma_z\mathbf S \equiv \begin{pmatrix}e & g\\ f & k\end{pmatrix}, \end{gathered} \]</div>
+<p>with \(e,f,g,k\) functions of \(h\) and \(K\) computed from the eigenvectors (Exercise 3-1). Then \(\langle S_i\rangle = (e\lambda_1^N + k\lambda_2^N)/(\lambda_1^N+\lambda_2^N)\to e\), and similarly</p>
+<div class="math-scroll">\[ \begin{aligned} \langle S_iS_{i+j}\rangle &= \frac{e^2\lambda_1^N + gf\lambda_1^{N-j}\lambda_2^j + gf\lambda_1^j\lambda_2^{N-j} + k^2\lambda_2^N}{\lambda_1^N+\lambda_2^N}\\ &\approx e^2 + gf\Big(\frac{\lambda_2}{\lambda_1}\Big)^j, \end{aligned} \]</div>
+<div class="result"><p>\[ \begin{gathered} G(i,i+j) \approx gf\exp\Big[-j\log\frac{\lambda_1}{\lambda_2}\Big],\\ \xi = \frac{1}{\log(\lambda_1/\lambda_2)}. \end{gathered} \]</p></div>
+<p>Again the correlations decay exponentially for \(T>0\), because \(\lambda_1>\lambda_2\). At \(h=0\), \(\lambda_1 = 2\cosh K\), \(\lambda_2 = 2\sinh K\), and \(\xi = 1/\log\coth K\), as before. Notes: (1) \(\xi\) cannot diverge unless \(\lambda_1=\lambda_2\); there can be no phase transition unless the largest eigenvalue of the transfer matrix becomes degenerate, a general result. (2) For \(h\ne0\), \(\lambda_1>\lambda_2\), so there is no transition. (3) For \(h=0\), the eigenvalues become degenerate when \(K=\infty\), so a transition can occur at \(T=0\), where \(\xi\to\infty\).</p>
+
+<figure class="demo" id="demo-corr">
+  <p class="title">Exponential decay of correlations, measured and exact</p>
+  <div class="controls">
+    <label>\(k_BT/J\) <input type="range" id="co-T" min="0.4" max="3" step="0.01" value="0.9"> <output id="co-T-out"></output></label>
+    <button id="co-reset">Reset measurement</button>
+  </div>
+  <div class="grid2">
+    <div><p class="plot-label">\(G(j) = \langle S_iS_{i+j}\rangle\) vs separation \(j\), \(H=0\)</p><canvas class="plot" id="co-G"></canvas></div>
+    <div><p class="plot-label">Correlation length \(\xi\) vs \(T\)</p><canvas class="plot" id="co-xi"></canvas></div>
+  </div>
+  <p class="readout" id="co-read"></p>
+  <figcaption>Left: points come from heat-bath Monte Carlo on a periodic chain of 10,000 spins, averaged over sweeps, with one-standard-error bars from block averaging; points are shown only once they are resolved (more than two standard errors above zero), so the reachable range of \(j\) grows as statistics accumulate. The line is the exact \((\tanh K)^j\). Right: exact \(\xi = 1/\log(\lambda_1/\lambda_2)\) at \(H=0\) and in two small fields, with the low-temperature form \(\tfrac12e^{2J/k_BT}\) (dashes). At \(H=0\), \(\xi\) diverges only as \(T\to0\); a field cuts it off.</figcaption>
+</figure>
+</section>
+
+<!-- ======================= 3.6 ======================= -->
+<section id="s3-6">
+<h2><span class="sec">3.6</span>Low-temperature expansion</h2>
+<p>Start at \(T=0\) and raise the temperature slightly. Consider \(\mathcal H_\Omega\{S\} = -J\sum_{\langle ij\rangle}S_iS_j\) in zero field on a \(d\)-dimensional hypercubic lattice with coordination number \(z=2d\). At \(T=0\) all spins are aligned; choose the ground state \(\uparrow\). For \(T>0\), clusters of \(1, 2, \dots\) flipped spins appear, each with an energy and a degeneracy:</p>
+<div class="table-scroll">
+<table class="exps">
+  <thead><tr><th>Configuration</th><th>Energy</th><th>Degeneracy</th></tr></thead>
+  <tbody>
+    <tr><td>Ground state</td><td>\(E_0 = -JNz/2\)</td><td>\(g_0 = 1\)</td></tr>
+    <tr><td>One spin down</td><td>\(E_0 + 2Jz\)</td><td>\(g_1 = N\)</td></tr>
+    <tr><td>Two spins down, nearest neighbors</td><td>\(E_0 + 2J(2z-2)\)</td><td>\(g_{2a} = Nz/2\)</td></tr>
+    <tr><td>Two spins down, not neighbors</td><td>\(E_0 + 2J(2z)\)</td><td>\(g_{2b} = \binom N2 - dN = \tfrac12N(N-1-2d)\)</td></tr>
+  </tbody>
+</table>
+</div>
+<p>At low temperature few spins are flipped. With \(w^2 = e^{-4\beta J}\),</p>
+<div class="math-scroll">\[ \begin{aligned} Z &= e^{NJd\beta}\Big(1 + Ne^{-4\beta Jd} + dNe^{-4\beta J(2d-1)}\\ &\qquad\qquad + \tfrac12N(N-1-2d)\,e^{-8\beta Jd} + \cdots\Big),\\ F &= -dJN - k_BT\log\Big[1 + N(w^2)^d + dN(w^2)^{2d-1}\\ &\qquad\qquad + \tfrac12N(N-1-2d)(w^2)^{2d} + \cdots\Big]\\ &\equiv -dJN - k_BT\log\Big(1+\sum_kB_k\Big), \end{aligned} \]</div>
+<p>with \(B_1 = N(w^2)^d\) and \(B_2 = dN(w^2)^{2d-1} + \tfrac12N(N-1-2d)(w^2)^{2d}\). For \(d>1\), \(B_k\ll B_{k-1}\), and expanding \(\log(1+\epsilon)\approx\epsilon-\epsilon^2/2\) to second order gives \(B_1 + B_2 - \tfrac12B_1^2\). The terms of order \(N^2\) cancel, leaving an extensive free energy:</p>
+<div class="result"><p>\[ \begin{gathered} f = \frac FN = -dJ - k_BT\Big[(w^2)^d + d\,(w^2)^{2d-1} - \big(d+\tfrac12\big)(w^2)^{2d}\Big]\\ (d>1). \end{gathered} \]</p></div>
+<div class="proof">
+<p><b>A subtlety in \(d=2\).</b> The last term is complete only for \(d\ge3\). Three flipped spins in a row or in an L shape break \(6z-8\) bonds, which equals \(4z = 8d\) exactly when \(d=2\). So in two dimensions, three-spin clusters (\(6N\) of them) and \(2\times2\) blocks (\(N\), also with 8 broken bonds) contribute at the same order as the two-spin terms. They change the coefficient of \((w^2)^4\) from \(-\tfrac52\) to \(-\tfrac52 + 6 + 1 = +\tfrac92\), the known coefficient of the square-lattice series. In \(d\ge3\) these clusters enter only at higher order. The demo below compares both forms with Onsager's exact free energy.</p>
+</div>
+<p>For \(d=1\), the exact transfer-matrix result is \(f = -k_BT\log(2\cosh K) = -J - k_BT\log(1+e^{-2K}) \approx -J - k_BTe^{-2J/k_BT}\). The factor \(e^{-2J/k_BT}\) disagrees with the low-temperature expansion, which starts at \((w^2)^d = e^{-4J/k_BT}\). The problem is the non-commutativity of the limits \(T\to0\) and \(N\to\infty\). At finite \(N\),</p>
+<div class="math-scroll">\[ \begin{aligned} Z_N &= (2\cosh K)^N + (2\sinh K)^N\\ &= e^{NK}\Big[(1+e^{-2K})^N + (1-e^{-2K})^N\Big],\\ F_N &= -NJ - k_BTN^2e^{-4K} + O\big((N^2e^{-4K})^2\big), \end{aligned} \]</div>
+<p>so \(f = -J - k_BTNe^{-4K}+\cdots\), which in the thermodynamic limit does not reduce to the expansion and is unbounded below: the ground state \(E/N=-J\) is not stable for \(T>0\). The expansion is valid only for \(d>1\), where the \(B_k\) decrease with \(k\). In \(d=1\), two adjacent down spins contribute \(d(w^2)^{2d-1} = (w^2)^1\), the same order as a single flip \((w^2)^d\), and so on for larger blocks. <mark>Blocks of adjacent reversed spins</mark>, which cost only the two walls at their ends, are the dangerous thermal fluctuations that destroy the ordered state in \(d=1\). This makes concrete the domain-wall argument of §2.8.</p>
+
+<figure class="demo" id="demo-lowT">
+  <p class="title">Testing the low-temperature series</p>
+  <div class="controls">
+    <span role="group" aria-label="Dimension"><button id="lt-d2" aria-pressed="true">Square lattice, \(d=2\)</button> <button id="lt-d1" aria-pressed="false">Chain, \(d=1\)</button></span>
+  </div>
+  <div class="grid2">
+    <div><p class="plot-label">\(-\beta(f-f_0)\) vs \(K = J/k_BT\), log scale</p><canvas class="plot" id="lt-f"></canvas></div>
+    <div><p class="plot-label">Relative error of each approximation</p><canvas class="plot" id="lt-err"></canvas></div>
+  </div>
+  <p class="readout" id="lt-read"></p>
+  <figcaption>\(f_0 = -dJ\) is the ground-state energy per spin. In \(d=2\) the exact curve is Onsager's free energy, evaluated by numerical integration; the series converges to it rapidly for \(K\) well above \(K_c\approx0.4407\), and the corrected \(+\tfrac92\) coefficient lowers the error by orders of magnitude. In \(d=1\) the exact result \(\log(1+e^{-2K})\) decays as \(e^{-2K}\), while the series (taken with \(d=1\)) decays as \(e^{-4K}\): it misses the dominant excitations, the blocks of flipped spins.</figcaption>
+</figure>
+</section>
+
+<!-- ======================= 3.7 ======================= -->
+<section id="s3-7">
+<h2><span class="sec">3.7</span>Mean-field theory</h2>
+<p>Mean-field theory is the simplest treatment of an interacting statistical system, short of ignoring the interactions altogether. Consider Weiss's theory for the nearest-neighbor Ising model in \(d\) dimensions,</p>
+<div class="math-scroll">\[ \mathcal H_\Omega\{S\} = -J\sum_{\langle ij\rangle}S_iS_j - H\sum_iS_i. \]</div>
+<p>Suppose first that the spins are independent (\(J=0\)). Then</p>
+<div class="math-scroll">\[ \begin{gathered} Z_\Omega(0,H) = \sum_{S_1}\cdots\sum_{S_N}e^{\beta H\sum_iS_i} = \prod_i\sum_{S_i}e^{\beta HS_i},\\ Z_\Omega(0,H) = \big[2\cosh(H/k_BT)\big]^N,\\ M = -\frac1N\frac{\partial F}{\partial H} = \tanh\Big(\frac{H}{k_BT}\Big): \end{gathered} \]</div>
+<p>a paramagnet. When \(J\ne0\), each spin feels an effective field from the magnetic moments of all the others, which is itself unknown at the outset. Write \(\mathcal H_\Omega = -\sum_iS_iH_i\) with</p>
+<div class="math-scroll">\[ H_i = H + \sum_jJ_{ij}\langle S_j\rangle + \sum_jJ_{ij}\big(S_j-\langle S_j\rangle\big), \]</div>
+<p>the external field, the mean field, and the fluctuation. Ignoring the fluctuation term, \(H_i = H + 2dJM\) (\(z=2d\) neighbors, each with \(\langle S_j\rangle = M\)), and the paramagnet result becomes</p>
+<div class="result"><p>\[ \begin{gathered} M = \tanh\Big(\frac{H+2dJM}{k_BT}\Big),\\ \text{and at } H=0:\quad M = \tanh\Big(\frac{2dJM}{k_BT}\Big), \end{gathered} \]</p></div>
+<p>the <mark>self-consistency equation</mark>. Graphically, for \(T>T_c\) the tanh curve lies below \(y=M\) for \(M>0\), and the only intersection is \(M=0\). For \(T\lt T_c\) there are also intersections at \(\pm M_s(T)\). Non-analyticity arises from how the solution changes with \(T\), and the mean-field critical temperature is</p>
+<div class="result"><p>\[ T_c = \frac{2dJ}{k_B}. \]</p></div>
+
+<figure class="demo" id="demo-mf">
+  <p class="title">Solving the self-consistency equation</p>
+  <div class="controls">
+    <label>\(T/T_c\) <input type="range" id="mf-T" min="0.3" max="1.6" step="0.005" value="0.7"> <output id="mf-T-out"></output></label>
+    <label>\(H/k_BT_c\) <input type="range" id="mf-H" min="-0.3" max="0.3" step="0.005" value="0"> <output id="mf-H-out"></output></label>
+  </div>
+  <div class="grid2">
+    <div><p class="plot-label">\(y = M\) and \(y = \tanh\big[(H+2dJM)/k_BT\big]\)</p><canvas class="plot" id="mf-graph"></canvas></div>
+    <div><p class="plot-label">Mean-field free energy per spin, \(g(M)\)</p><canvas class="plot" id="mf-g"></canvas></div>
+  </div>
+  <p class="readout" id="mf-read"></p>
+  <figcaption>Circles are stable solutions and squares unstable ones. The right panel shows the variational free energy \(g(M) = dJM^2 - k_BT\ln2\cosh\big[(H+2dJM)/k_BT\big]\), whose stationary points are exactly the solutions on the left: its minima are the stable ones. Below \(T_c\) the single minimum splits into two, and a small field tilts the landscape, leaving the minimum on the unfavored side metastable until it disappears.</figcaption>
+</figure>
+
+<h3>Critical behavior</h3>
+<p>Let \(\tau = T_c/T\), so that \(1/k_BT = \tau/2dJ\) and \(M = \tanh(H/k_BT + M\tau)\). Using \(\tanh(x+y) = (\tanh x+\tanh y)/(1+\tanh x\tanh y)\),</p>
+<div class="math-scroll">\[ \begin{gathered} \tanh\frac{H}{k_BT} = \frac{M-\tanh M\tau}{1-M\tanh M\tau},\\ \frac{H}{k_BT} \approx M(1-\tau) + M^3\Big(\tau-\tau^2+\frac{\tau^3}{3}\Big) + \cdots \end{gathered} \]</div>
+<p>for small \(H\) and \(M\). This one expansion yields all the mean-field exponents.</p>
+<ul>
+  <li><b>Order parameter</b> (\(H=0\), \(T\to T_c^-\)): \(M^2\big(\tau(1-\tau)+\tau^3/3\big) = -(1-\tau)\), so \(M^2\approx3(T_c-T)/T_c\) and \(M\propto(T_c-T)^{\beta}\) with \(\beta = \tfrac12\).</li>
+  <li><b>Critical isotherm</b> (\(\tau=1\)): \(H/k_BT\approx M^3/3\), so \(H\sim M^{\delta}\) with \(\delta = 3\).</li>
+  <li><b>Susceptibility:</b> differentiating, \(1/k_BT = \chi_T(1-\tau) + 3M^2\chi_T(\tau-\tau^2+\tfrac13\tau^3)\). For \(T>T_c\), \(M=0\) and \(\chi_T = 1/k_B(T-T_c)+\cdots\). For \(T\lt T_c\), \(M^2\approx3(T_c-T)/T\) gives \(\chi_T = 1/2k_B(T_c-T)+\cdots\). With \(\chi_T\sim|T-T_c|^{-\gamma}\), \(\gamma = \gamma' = 1\), and the amplitude below \(T_c\) is half that above.</li>
+  <li><b>Heat capacity:</b> \(\bar E = \langle\mathcal H\rangle_{\rm MF} = -J\sum_{\langle ij\rangle}\langle S_i\rangle\langle S_j\rangle = -NJdM^2\). For \(T>T_c\), \(\bar E=0\) and \(C=0\). For \(T\to T_c^-\), \(M^2\approx3(T_c-T)/T_c\) gives \(\bar E\approx-3dNJ(1-T/T_c)\) and \(C/N = 3dJ/T_c = \tfrac32k_B\). The heat capacity jumps discontinuously at \(T_c\): \(\alpha = 0\) (discontinuity), with \(C\sim|T-T_c|^{-\alpha}\).</li>
+</ul>
+
+<figure class="demo" id="demo-exp">
+  <p class="title">Reading off the mean-field exponents</p>
+  <div class="grid2">
+    <div><p class="plot-label">\(M\) vs \((T_c-T)/T_c\)</p><canvas class="plot" id="ex-M" style="height:220px"></canvas></div>
+    <div><p class="plot-label">\(k_BT_c\,\chi_T\) vs \(|T-T_c|/T_c\)</p><canvas class="plot" id="ex-chi" style="height:220px"></canvas></div>
+    <div><p class="plot-label">\(H/k_BT_c\) vs \(M\) on the critical isotherm</p><canvas class="plot" id="ex-H" style="height:220px"></canvas></div>
+    <div><p class="plot-label">Heat capacity per spin \(C/Nk_B\) vs \(T/T_c\)</p><canvas class="plot" id="ex-C" style="height:220px"></canvas></div>
+  </div>
+  <p class="readout" id="ex-read"></p>
+  <figcaption>Exact numerical solutions of the self-consistency equation (no expansion), with slopes fitted over the three decades closest to \(T_c\). The two susceptibility branches are parallel with slope \(-1\), offset by the factor of 2 between the amplitudes above and below \(T_c\). The heat capacity jumps from \(\tfrac32k_B\) to zero.</figcaption>
+</figure>
+
+<h3>Spatial correlations and the susceptibility sum rule</h3>
+<p>Mean-field theory and spatial correlations might seem antithetical: how can there be interesting correlations when fluctuations have been averaged away? The answer is that the correlation length governs not only the spatial extent of order-parameter fluctuations but also how the order parameter varies in space in response to an <i>inhomogeneous</i> external field. A self-consistent solution can still be built for such a perturbation in the spirit of mean-field theory, as we will see in Landau theory.</p>
+<p>The connection is the <b>static susceptibility sum rule</b>. With \(Z_\Omega = \operatorname{Tr}\exp\big[\beta J\sum_{\langle ij\rangle}S_iS_j + \beta H\sum_iS_i\big]\),</p>
+<div class="math-scroll">\[ \begin{gathered} \sum_i\langle S_i\rangle = \frac{1}{\beta Z_\Omega}\frac{\partial Z_\Omega}{\partial H},\\ \sum_{ij}\langle S_iS_j\rangle = \frac{1}{\beta^2Z_\Omega}\frac{\partial^2Z_\Omega}{\partial H^2}, \end{gathered} \]</div>
+<div class="math-scroll">\[ \begin{aligned} \chi_T = \frac{\partial M}{\partial H} &= \frac{1}{N\beta}\frac{\partial^2\log Z_\Omega}{\partial H^2}\\ &= \frac{k_BT}{N}\Big[\frac{1}{Z_\Omega}\frac{\partial^2Z_\Omega}{\partial H^2} - \frac{1}{Z_\Omega^2}\Big(\frac{\partial Z_\Omega}{\partial H}\Big)^2\Big]\\ &= \frac{1}{Nk_BT}\Big[\sum_{ij}\langle S_iS_j\rangle - \Big(\sum_i\langle S_i\rangle\Big)^2\Big]\\ &= \frac{1}{k_BT}\sum_iG(\vec x_i), \end{aligned} \]</div>
+<div class="result"><p>\[ \chi_T = \frac{1}{a^dk_BT}\int_\Omega d^dr\,G(\vec r), \]</p></div>
+<p>with \(a\) the lattice spacing. A divergent \(\chi_T\) must therefore be reflected in \(G\).</p>
+
+<figure class="demo" id="demo-sum">
+  <p class="title">The sum rule, term by term</p>
+  <div class="controls">
+    <label>\(k_BT/J\) <input type="range" id="sr-T" min="0.4" max="3" step="0.01" value="0.8"> <output id="sr-T-out"></output></label>
+  </div>
+  <div class="grid2">
+    <div><p class="plot-label">\(G(j) = (\tanh K)^{|j|}\) for the chain</p><canvas class="plot" id="sr-G" style="height:220px"></canvas></div>
+    <div><p class="plot-label">Partial sum \(\sum_{|j|\le R}G(j)\) vs \(R\)</p><canvas class="plot" id="sr-S" style="height:220px"></canvas></div>
+  </div>
+  <p class="readout" id="sr-read"></p>
+  <figcaption>For the one-dimensional chain, \(\sum_jG(j) = (1+\tanh K)/(1-\tanh K) = e^{2K}\), so the sum rule gives \(\chi_T = e^{2K}/k_BT\), exactly the susceptibility computed from the free energy in §3.4. The sum converges after a few correlation lengths; as \(T\to0\) the correlations reach further and \(\chi_T\) grows accordingly.</figcaption>
+</figure>
+
+<p>We will see later that for \(|\vec r|\gg\xi\),</p>
+<div class="math-scroll">\[ G(\vec r) \sim \frac{e^{-|\vec r|/\xi}}{|\vec r|^{(d-1)/2}\,\xi^{(d-3)/2}}, \]</div>
+<p>whose integral converges when \(\xi\) is finite. As \(T\to T_c\), \(\chi_T\) diverges, so \(\xi\) must diverge too (as we saw in \(d=1\) as \(T\to0\)). Assuming isotropy and substituting \(z = r/\xi\),</p>
+<div class="math-scroll">\[ \Big(\frac{T-T_c}{T_c}\Big)^{-1} \sim \int dr\,\frac{r^{d-1}e^{-r/\xi}}{r^{(d-1)/2}\xi^{(d-3)/2}} = \xi^2\int dz\,z^{(d-1)/2}e^{-z}, \]</div>
+<p>and the \(z\) integral converges, so \(\xi\sim\big((T-T_c)/T_c\big)^{-\nu}\) with \(\nu = \tfrac12\). Finally, the exponent \(\eta\) describes how \(G\) behaves at large distances <i>exactly at</i> the critical point, \(G(r)\sim r^{-(d-2+\eta)}\); the same mean-field calculation gives \(\eta = 0\), though in principle \(\eta\) can be nonzero.</p>
+
+<h3>How good is mean-field theory?</h3>
+<p>The table compares mean-field exponents with experiments on fluids (which, by the lattice-gas mapping, should be in the Ising universality class) and with the Ising model in two and three dimensions. The values are illustrative, as quoted by Goldenfeld from the literature of the time; \(\nu\) and \(\delta\) are not independent of the others, being related by scaling laws.</p>
+<div class="table-scroll">
+<table class="exps">
+  <thead><tr><th>Exponent</th><th>Mean field</th><th>Experiment</th><th>Ising, \(d=2\)</th><th>Ising, \(d=3\)</th></tr></thead>
+  <tbody>
+    <tr><td>\(\alpha\)</td><td>0 (disc.)</td><td class="num">0.110–0.116</td><td>0 (log)</td><td class="num">0.110(5)</td></tr>
+    <tr><td>\(\beta\)</td><td>1/2</td><td class="num">0.316–0.327</td><td>1/8</td><td class="num">0.325 ± 0.0015</td></tr>
+    <tr><td>\(\gamma\)</td><td>1</td><td class="num">1.23–1.25</td><td>7/4</td><td class="num">1.2405 ± 0.0015</td></tr>
+    <tr><td>\(\delta\)</td><td>3</td><td class="num">4.6–4.9</td><td>15</td><td class="num">4.82(4)</td></tr>
+    <tr><td>\(\nu\)</td><td>1/2</td><td class="num">0.625 ± 0.010</td><td>1</td><td class="num">0.630(2)</td></tr>
+    <tr><td>\(\eta\)</td><td>0</td><td class="num">0.016–0.06</td><td>1/4</td><td class="num">0.032 ± 0.003</td></tr>
+  </tbody>
+</table>
+</div>
+<p>The mean-field exponents are in reasonable agreement with experiment and the three-dimensional Ising model, with clear systematic differences. They do not depend on dimension, whereas the exact exponents do. Mean-field theory <i>can</i> give dimension-dependent exponents: for the size of a self-avoiding walk, \(R\sim N^\nu\) with \(\nu_{\rm MFT} = 3/(2+d)\) (Flory theory), which gives \(1\), \(3/4\), \(3/5\), and \(1/2\) in \(d=1\) to \(4\), compared with exact or best values \(1\), \(3/4\), \(0.588\), and \(1/2\). The dimension dependence is quantitatively off, and the values are slightly but definitely wrong. Still, mean-field theory does exhibit universality, a feature that emerges from Landau theory, and it predicted the correct phase diagram and an expression for \(T_c\). Its predictions are not always reliable, but they are always a good first step toward a more complete theory.</p>
+<p class="aside">Mean-field \(T_c = 2dJ/k_B\) also overestimates the transition temperature, because it ignores the fluctuations that disorder the system: \(2J\), \(4J\), and \(6J\) in \(d=1,2,3\), against the exact or numerical values \(0\), \(2.269J\), and \(4.511J\).</p>
+</section>
+
+<!-- ======================= Appendix ======================= -->
+<section id="app">
+<h2>Appendix: the mean-field Ising model on networks</h2>
+<p>This appendix, following S. H. Lee, M. Ha, H. Jeong, J. D. Noh, and H. Park, <i>Phys. Rev. E</i> <b>80</b>, 051127 (2009), applies the annealed approximation and heterogeneous mean-field theory (HMFT) to an Ising model on a network with degree distribution \(p(k)\). Take \(N\) spins connected by \(L\) edges, with adjacency matrix \(a_{ij} = 1\) if \(i\) and \(j\) are connected and \(0\) otherwise (\(\sum_{ij}a_{ij} = 2L\)), and</p>
+<div class="result"><p>\[ \mathcal H = -J\sum_{i\lt j}a_{ij}S_iS_j - \sum_ih_iS_i. \]</p></div>
+<p>The <mark>annealed approximation</mark> replaces \(a_{ij}\) by its average over networks with the same degrees, \(a_{ij}\approx k_ik_j/2L\), where the degree \(k_i = \sum_ja_{ij}\) is the number of neighbors of spin \(i\), \(\sum_ik_i = 2L\), and \(\langle k\rangle = 2L/N\). Ignoring the diagonal terms \(i=j\),</p>
+<div class="math-scroll">\[ \begin{gathered} \mathcal H \approx -\frac{J}{4L}\Big(\sum_ik_iS_i\Big)^2 - \sum_ih_iS_i,\\ Z = \sum_{\{S_i\}}e^{\frac{\beta J}{4L}x^2 + \beta\sum_ih_iS_i},\quad x\equiv\sum_ik_iS_i. \end{gathered} \]</div>
+<p>The Hubbard–Stratonovich transformation linearizes the square,</p>
+<div class="math-scroll">\[ e^{\frac{\beta J}{4L}x^2} = \int_{-\infty}^{\infty}\frac{dy}{\sqrt{\pi/(L\beta J)}}\,e^{-L\beta Jy^2+\beta Jxy}, \]</div>
+<p>after which the spins decouple:</p>
+<div class="math-scroll">\[ \begin{gathered} Z = \int_{-\infty}^{\infty}\frac{dy}{\sqrt{\pi/(L\beta J)}}\,e^{-\beta LX(y)},\\ X(y) = Jy^2 - \frac{1}{\beta L}\sum_{i=1}^N\ln\Big\{2\cosh\big[\beta(Jyk_i+h_i)\big]\Big\}. \end{gathered} \]</div>
+<p>For \(L\to\infty\) the integral is dominated by the saddle point \(\partial X/\partial y|_{y_0} = 0\) (the method of steepest descents), so \(Z\propto e^{-\beta LX(y_0)}\) with</p>
+<div class="math-scroll">\[ y_0 = \frac{1}{2L}\sum_{i=1}^Nk_i\tanh\big[\beta(Jy_0k_i+h_i)\big]. \]</div>
+<p>Since \(\langle S_i\rangle = \beta^{-1}\partial\ln Z/\partial h_i = \tanh[\beta(Jy_0k_i+h_i)]\), this is \(y_0 = \langle kS(k)\rangle/\langle k\rangle\), assuming \(\langle S_i\rangle\) depends only on \(k_i\): a degree-weighted average magnetization, \(-1\le y_0\le1\), which serves as the order parameter. Writing \(m\equiv y_0\), in zero field and replacing the sum over nodes by a sum over the degree distribution,</p>
+<div class="result"><p>\[ m = \sum_k\frac{k\,p(k)}{\langle k\rangle}\tanh(\beta Jkm). \]</p></div>
+<p>Expanding about \(m=0\), \(m = \beta J\frac{\langle k^2\rangle}{\langle k\rangle}m - \frac{(\beta J)^3}{3}\frac{\langle k^4\rangle}{\langle k\rangle}m^3+\cdots\). A nonzero solution requires the linear coefficient to exceed 1:</p>
+<div class="result"><p>\[ T_c = \frac{\langle k^2\rangle}{\langle k\rangle}\frac{J}{k_B}, \]</p></div>
+<p>and if all the moments are finite, \(T_c/T - 1 = \frac{\langle k^4\rangle\langle k\rangle^2}{3\langle k^2\rangle^3}\big(\frac{T_c}{T}\big)^3m^2\), so \(m\propto(T_c-T)^{1/2}\), the ordinary mean-field \(\beta = \tfrac12\). For a regular lattice (\(k = z\) for every node) this reduces to Weiss's \(T_c = zJ/k_B\).</p>
+<p>For <mark>scale-free networks</mark>, \(p(k) = ck^{-\gamma}\) (here \(\gamma\) is the degree exponent, not the susceptibility exponent), the moments need not be finite:</p>
+<ul>
+  <li>\(2\lt\gamma\lt3\): \(\langle k\rangle\) is finite but \(\langle k^2\rangle\propto\int^\infty k^{2-\gamma}dk\to\infty\), so \(T_c\to\infty\). The system is magnetized at every finite temperature.</li>
+  <li>\(3\lt\gamma\lt5\): \(\langle k^2\rangle\) is finite but \(\langle k^4\rangle\propto\int^\infty k^{4-\gamma}dk\to\infty\), and the expansion is singular. Writing \(m = \frac{\langle k^2\rangle}{\langle k\rangle}\beta Jm + \frac{c}{\langle k\rangle}\int_{k_{\min}}^\infty dk\,k^{1-\gamma}\big[\tanh(\beta Jkm)-\beta Jkm\big]\) and substituting \(x = \beta Jkm\), the integral scales as \(m^{\gamma-2}\). Defining the constant \(-A\) by \(\frac{c}{\langle k\rangle}\int(\cdots) = -Am^{\gamma-2}\), we get \(1 = T_c/T - Am^{\gamma-3}\), so</li>
+</ul>
+<div class="result"><p>\[ \begin{gathered} m\propto(T_c-T)^{1/(\gamma-3)}\\ (3\lt\gamma\lt5), \end{gathered} \]</p></div>
+<p>while for \(\gamma>5\), or any distribution with finite \(\langle k^4\rangle\), \(\beta = \tfrac12\).</p>
+
+<figure class="demo" id="demo-net">
+  <p class="title">Heterogeneous mean-field theory on scale-free networks</p>
+  <div class="controls">
+    <label>Degree exponent \(\gamma\) <input type="range" id="nt-g" min="2.2" max="6" step="0.05" value="3.8"> <output id="nt-g-out"></output></label>
+    <label>Network size \(N\) <input type="range" id="nt-N" min="3" max="18" step="0.1" value="12"> <output id="nt-N-out"></output></label>
+  </div>
+  <div class="grid3">
+    <div><p class="plot-label">\(m\) vs \(T/T_c\)</p><canvas class="plot" id="nt-m" style="height:230px"></canvas></div>
+    <div><p class="plot-label">Local exponent \(\beta_{\rm eff} = d\ln m/d\ln t\)</p><canvas class="plot" id="nt-beta" style="height:230px"></canvas></div>
+    <div><p class="plot-label">\(T_c\) vs \(N\)</p><canvas class="plot" id="nt-tc" style="height:230px"></canvas></div>
+  </div>
+  <p class="readout" id="nt-read"></p>
+  <figcaption>The self-consistency equation solved numerically for \(p(k)\propto k^{-\gamma}\) with \(k_{\min}=2\) and the natural cutoff \(k_{\max} = k_{\min}N^{1/(\gamma-1)}\) of a finite network. Middle: the local exponent \(\beta_{\rm eff}(t)\), with reference lines at \(\tfrac12\) and \(1/(\gamma-3)\). For \(3\lt\gamma\lt5\) it approaches the anomalous value over a window of \(t\) that widens only slowly as \(N\) grows, since \(k_{\max}\) grows as a small power of \(N\); very close to \(T_c\) a finite network always has finite moments, and \(\beta_{\rm eff}\) returns to \(\tfrac12\). Enormous \(N\) are allowed here to make the asymptotics visible. Right: \(T_c\) for several \(\gamma\). It grows without bound for \(\gamma\lt3\) (as \(N^{(3-\gamma)/(\gamma-1)}\)), logarithmically at \(\gamma=3\), and saturates for \(\gamma>3\). The header shows a 300-node Barabási–Albert network (\(\gamma=3\)) running heat-bath dynamics on the actual graph; its temperature slider is scaled by the HMF prediction \(\langle k^2\rangle/\langle k\rangle\) for that graph.</figcaption>
+</figure>
+</section>
+
+<section id="reading">
+<h2>Further reading</h2>
+<ul>
+  <li>N. Goldenfeld, <i>Lectures on Phase Transitions and the Renormalization Group</i> (Addison-Wesley, 1992), Chapter 3.</li>
+  <li>H. A. Kramers and G. H. Wannier, "Statistics of the two-dimensional ferromagnet," <i>Phys. Rev.</i> <b>60</b>, 252 (1941).</li>
+  <li>C. Domb, "On the theory of cooperative phenomena in crystals," <i>Adv. Phys.</i> <b>9</b>, 149 (1960): low-temperature series.</li>
+  <li>J. C. Le Guillou and J. Zinn-Justin, "Critical exponents from field theory," <i>Phys. Rev. B</i> <b>21</b>, 3976 (1980).</li>
+  <li>S. H. Lee, M. Ha, H. Jeong, J. D. Noh, and H. Park, "Critical behavior of the Ising model in annealed scale-free networks," <i>Phys. Rev. E</i> <b>80</b>, 051127 (2009).</li>
+  <li>S. N. Dorogovtsev, A. V. Goltsev, and J. F. F. Mendes, "Critical phenomena in complex networks," <i>Rev. Mod. Phys.</i> <b>80</b>, 1275 (2008).</li>
+</ul>
+</section>
+</main>
+</div>
+
+<footer>
+  <nav class="chapnav" aria-label="Chapters">
+    <a href="index.html">All chapters</a>
+    <a href="ch02b-symmetry-breaking-and-lattice-gases.html">Previous: Chapter 2, Part 2</a>
+    <a href="ch04-critical-phenomena-in-fluids.html">Next: Chapter 4, Critical phenomena in fluids</a>
+  </nav>
+  <p>Interactive companion to lecture notes on Chapter 3 of N. Goldenfeld, <i>Lectures on Phase Transitions and the Renormalization Group</i>, with an appendix based on the instructor's notes on network models. The text paraphrases the notes. All calculations run client side with no data collection.</p>
+</footer>
+
+<script>
+"use strict";
+/* ---------- utilities ---------- */
+const $ = s => document.querySelector(s);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function hexRGB(h){ h=h.replace('#',''); if(h.length===3) h=h.split('').map(c=>c+c).join(''); const n=parseInt(h,16); return [(n>>16)&255,(n>>8)&255,n&255]; }
+function rgba(hex,a){ const [r,g,b]=hexRGB(hex); return `rgba(${r},${g},${b},${a})`; }
+const SUP={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+const sup = s => String(s).split('').map(c=>SUP[c]||c).join('');
+function fmt(v){
+  if(v===0) return '0';
+  const a=Math.abs(v);
+  if(a>=1e4||a<1e-3){ const e=Math.floor(Math.log10(a)+1e-9); const mm=v/10**e; return (Math.abs(Math.abs(mm)-1)<1e-6?(mm<0?'−':''):(+mm.toFixed(1))+'×')+'10'+sup(e); }
+  return String(+v.toPrecision(3)).replace('-','−');
+}
+function niceTicks(a,b,n){
+  const raw=(b-a)/n, mag=10**Math.floor(Math.log10(raw)), norm=raw/mag;
+  const step=(norm<1.5?1:norm<3?2:norm<7?5:10)*mag, t=[];
+  for(let v=Math.ceil(a/step-1e-9)*step; v<=b+step*1e-6; v+=step){ const vv=Math.abs(v)<step*1e-6?0:v; t.push({v:vv,label:fmt(+vv.toPrecision(12))}); }
+  return t;
+}
+function logTicks(a,b){
+  const k0=Math.ceil(Math.log10(a)-1e-9), k1=Math.floor(Math.log10(b)+1e-9), span=k1-k0, t=[];
+  const mants = span<=1 ? [1,2,5] : [1];
+  const every = span>7 ? 2 : 1;
+  for(let k=k0-1;k<=k1;k++) for(const mt of mants){
+    const v=mt*10**k; if(v<a*(1-1e-9)||v>b*(1+1e-9)) continue;
+    if(mt===1 && (k-k0)%every!==0) { t.push({v,label:''}); continue; }
+    t.push({v,label: span<=1||(k>=-1&&k<=2)? fmt(v) : '10'+sup(k)});
+  }
+  return t;
+}
+/* generic canvas plot */
+function plot(cv,o){
+  const H=o.height||cv.clientHeight||280, dpr=window.devicePixelRatio||1, w=cv.clientWidth||600;
+  cv.width=Math.round(w*dpr); cv.height=Math.round(H*dpr);
+  const ctx=cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,H);
+  const ink=css('--ink'), muted=css('--muted'), rule=css('--rule'), font=css('--ui-font');
+  const m={l:52,r:12,t:10,b:40}, pw=w-m.l-m.r, ph=H-m.t-m.b;
+  const fx=o.xlog?Math.log10:(v=>v), fy=o.ylog?Math.log10:(v=>v);
+  const ax0=fx(o.xlim[0]),ax1=fx(o.xlim[1]),ay0=fy(o.ylim[0]),ay1=fy(o.ylim[1]);
+  const X=v=>m.l+(fx(v)-ax0)/(ax1-ax0)*pw, Y=v=>m.t+ph-(fy(v)-ay0)/(ay1-ay0)*ph;
+  ctx.font=`12px ${font}`; ctx.lineWidth=1;
+  const xt=o.xlog?logTicks(...o.xlim):niceTicks(...o.xlim,o.xticks||Math.max(3,Math.round(pw/90)));
+  const yt=o.ylog?logTicks(...o.ylim):niceTicks(...o.ylim,o.yticks||Math.max(3,Math.round(ph/55)));
+  ctx.strokeStyle=rule; ctx.fillStyle=muted;
+  ctx.textAlign='center'; ctx.textBaseline='top';
+  for(const t of xt){ const px=Math.round(X(t.v))+.5; ctx.beginPath(); ctx.moveTo(px,m.t); ctx.lineTo(px,m.t+ph); ctx.stroke(); if(t.label) ctx.fillText(t.label,px,m.t+ph+5); }
+  ctx.textAlign='right'; ctx.textBaseline='middle';
+  for(const t of yt){ const py=Math.round(Y(t.v))+.5; ctx.beginPath(); ctx.moveTo(m.l,py); ctx.lineTo(m.l+pw,py); ctx.stroke(); if(t.label) ctx.fillText(t.label,m.l-6,py); }
+  ctx.strokeStyle=muted; ctx.strokeRect(m.l+.5,m.t+.5,pw,ph);
+  ctx.save(); ctx.beginPath(); ctx.rect(m.l,m.t,pw,ph); ctx.clip();
+  for(const v of (o.vlines||[])){ ctx.strokeStyle=v.color||muted; ctx.setLineDash(v.dash||[4,4]); ctx.beginPath(); const px=X(v.x); ctx.moveTo(px,m.t); ctx.lineTo(px,m.t+ph); ctx.stroke(); ctx.setLineDash([]);
+    if(v.label){ ctx.fillStyle=v.color||muted; ctx.textAlign='left'; ctx.textBaseline='top'; ctx.fillText(v.label,px+4,m.t+4); } }
+  for(const v of (o.hlines||[])){ ctx.strokeStyle=v.color||muted; ctx.setLineDash(v.dash||[4,4]); ctx.beginPath(); const py=Y(v.y); ctx.moveTo(m.l,py); ctx.lineTo(m.l+pw,py); ctx.stroke(); ctx.setLineDash([]); }
+  const ok=(x,y)=>isFinite(x)&&isFinite(y)&&(!o.xlog||x>0)&&(!o.ylog||y>0);
+  for(const s of o.series){
+    ctx.globalAlpha=s.alpha??1;
+    if(s.points){
+      ctx.fillStyle=s.color;
+      for(const [x,y] of s.data){ if(!ok(x,y)) continue; ctx.beginPath(); ctx.arc(X(x),Y(y),s.r||3.2,0,2*Math.PI); ctx.fill(); }
+    } else {
+      ctx.strokeStyle=s.color; ctx.lineWidth=s.width||2; ctx.setLineDash(s.dash||[]); ctx.lineJoin='round';
+      ctx.beginPath(); let pen=false;
+      for(const [x,y] of s.data){ if(!ok(x,y)){pen=false;continue;} const px=X(x),py=Y(y); if(pen) ctx.lineTo(px,py); else {ctx.moveTo(px,py); pen=true;} }
+      ctx.stroke(); ctx.setLineDash([]);
+    }
+    ctx.globalAlpha=1;
+  }
+  if(o.after) o.after(ctx,X,Y);
+  ctx.restore();
+  ctx.fillStyle=ink; ctx.font=`13px ${font}`;
+  if(o.xlabel){ ctx.textAlign='center'; ctx.textBaseline='bottom'; ctx.fillText(o.xlabel,m.l+pw/2,H-2); }
+  if(o.ylabel){ ctx.save(); ctx.translate(12,m.t+ph/2); ctx.rotate(-Math.PI/2); ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(o.ylabel,0,0); ctx.restore(); }
+  const leg=o.series.filter(s=>s.name);
+  if(leg.length){
+    ctx.font=`12px ${font}`; const lh=17, lw=Math.max(...leg.map(s=>ctx.measureText(s.name).width))+34;
+    const pos=o.legend||'tl'; const lx=pos.includes('r')?m.l+pw-lw-6:m.l+8; const ly=pos.includes('b')?m.t+ph-leg.length*lh-8:m.t+8;
+    ctx.fillStyle=rgba(css('--surface'),.88); ctx.fillRect(lx-4,ly-4,lw+4,leg.length*lh+6);
+    leg.forEach((s,i)=>{ const yy=ly+i*lh+lh/2; ctx.globalAlpha=s.alpha??1;
+      if(s.points){ ctx.fillStyle=s.color; ctx.beginPath(); ctx.arc(lx+11,yy,3.5,0,2*Math.PI); ctx.fill(); }
+      else { ctx.strokeStyle=s.color; ctx.lineWidth=s.width||2; ctx.setLineDash(s.dash||[]); ctx.beginPath(); ctx.moveTo(lx,yy); ctx.lineTo(lx+22,yy); ctx.stroke(); ctx.setLineDash([]); }
+      ctx.globalAlpha=1; ctx.fillStyle=ink; ctx.textAlign='left'; ctx.textBaseline='middle'; ctx.fillText(s.name,lx+28,yy); });
+  }
+  return {X,Y};
+}
+const range=(a,b,n)=>Array.from({length:n},(_,i)=>a+(b-a)*i/(n-1));
+const logRange=(a,b,n)=>range(Math.log10(a),Math.log10(b),n).map(v=>10**v);
+
+/* redraw registry (resize, color scheme) */
+const redraws=[];
+function reg(f){ redraws.push(f); f(); }
+let rzT; window.addEventListener('resize',()=>{ clearTimeout(rzT); rzT=setTimeout(()=>redraws.forEach(f=>f()),120); });
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{ refreshSpinColors(); redraws.forEach(f=>f()); });
+
+/* visibility flags so off-screen simulations sleep */
+const visible=new Map();
+const io=new IntersectionObserver(es=>es.forEach(e=>visible.set(e.target.id,e.isIntersecting)),{rootMargin:'100px'});
+function watch(id){ visible.set(id,false); io.observe(document.getElementById(id)); }
+
+
+/* ---------- spin colors and small helpers ---------- */
+let SPIN_UP=[0,0,0], SPIN_DN=[0,0,0];
+function refreshSpinColors(){ SPIN_UP=hexRGB(css('--spin-up')); SPIN_DN=hexRGB(css('--spin-down')); }
+refreshSpinColors();
+function bindSlider(id,fn,fmtf){ const el=$(id), out=$(id+'-out'); const u=()=>{ const v=+el.value; if(out) out.textContent=fmtf?fmtf(v):v; fn(v); }; el.addEventListener('input',u); u(); return el; }
+const lncosh2 = x => { const a=Math.abs(x); return a+Math.log1p(Math.exp(-2*a)); }; // ln(2 cosh x)
+
+
+function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+
+/* ---------- hero: Ising model on a Barabasi-Albert network ---------- */
+const net=(function(){
+  const N=300, m=2, rng=mulberry32(20090511), nbr=Array.from({length:N},()=>[]), targets=[];
+  const link=(a,b)=>{ nbr[a].push(b); nbr[b].push(a); targets.push(a,b); };
+  for(let i=0;i<=m;i++) for(let j=0;j<i;j++) link(i,j);
+  for(let v=m+1;v<N;v++){ const ch=new Set(); while(ch.size<m) ch.add(targets[(rng()*targets.length)|0]); for(const u of ch) link(v,u); }
+  // Fruchterman-Reingold layout, computed once
+  const x=new Float64Array(N), y=new Float64Array(N); for(let i=0;i<N;i++){ x[i]=rng(); y[i]=rng(); }
+  const k=Math.sqrt(1/N); let temp=0.1;
+  for(let it=0;it<260;it++){
+    const dx=new Float64Array(N), dy=new Float64Array(N);
+    for(let i=0;i<N;i++) for(let j=i+1;j<N;j++){ let ux=x[i]-x[j], uy=y[i]-y[j], d2=ux*ux+uy*uy+1e-9, f=k*k/d2; dx[i]+=ux*f; dy[i]+=uy*f; dx[j]-=ux*f; dy[j]-=uy*f; }
+    for(let i=0;i<N;i++) for(const j of nbr[i]) if(j>i){ const ux=x[i]-x[j], uy=y[i]-y[j], d=Math.sqrt(ux*ux+uy*uy)+1e-9, f=d/k; dx[i]-=ux*f; dy[i]-=uy*f; dx[j]+=ux*f; dy[j]+=uy*f; }
+    for(let i=0;i<N;i++){ const d=Math.sqrt(dx[i]*dx[i]+dy[i]*dy[i])+1e-12, s=Math.min(d,temp)/d; x[i]+=dx[i]*s; y[i]+=dy[i]*s; }
+    temp*=0.985;
+  }
+  let x0=Infinity,x1=-Infinity,y0=Infinity,y1=-Infinity; for(let i=0;i<N;i++){ x0=Math.min(x0,x[i]); x1=Math.max(x1,x[i]); y0=Math.min(y0,y[i]); y1=Math.max(y1,y[i]); }
+  const sc=Math.max(x1-x0,y1-y0); for(let i=0;i<N;i++){ x[i]=0.05+0.9*(x[i]-x0)/sc; y[i]=0.05+0.9*(y[i]-y0)/sc; }
+  const deg=nbr.map(a=>a.length), k1=deg.reduce((a,b)=>a+b,0)/N, k2=deg.reduce((a,b)=>a+b*b,0)/N;
+  const s=new Int8Array(N).fill(1);
+  return {N,nbr,x,y,deg,k1,k2,TcHMF:k2/k1,s,rng};
+})();
+const hero={tr:0.4,run:!reduceMotion,last:0};
+function drawNet(){
+  const cv=$('#hero-net'), dpr=window.devicePixelRatio||1, W=cv.clientWidth||500;
+  cv.width=Math.round(W*dpr); cv.height=Math.round(W*dpr);
+  const ctx=cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,W);
+  ctx.strokeStyle=rgba(css('--muted'),0.28); ctx.lineWidth=0.7; ctx.beginPath();
+  for(let i=0;i<net.N;i++) for(const j of net.nbr[i]) if(j>i){ ctx.moveTo(net.x[i]*W,net.y[i]*W); ctx.lineTo(net.x[j]*W,net.y[j]*W); }
+  ctx.stroke();
+  const up=css('--spin-up'), dn=css('--spin-down'), edge=css('--ink');
+  const order=[...Array(net.N).keys()].sort((a,b)=>net.deg[a]-net.deg[b]);
+  for(const i of order){ const r=(1.6+1.1*Math.sqrt(net.deg[i]))*W/520; ctx.beginPath(); ctx.arc(net.x[i]*W,net.y[i]*W,r,0,2*Math.PI); ctx.fillStyle=net.s[i]>0?up:dn; ctx.fill(); ctx.lineWidth=0.6; ctx.strokeStyle=rgba(edge,0.35); ctx.stroke(); }
+  const M=net.s.reduce((a,b)=>a+b,0)/net.N;
+  $('#hero-read').innerHTML=`Heat-bath Ising dynamics on a 300-node Barabási–Albert network: up spins navy, down spins yellow, node size growing with degree. ⟨k⟩ = ${net.k1.toFixed(2)}, HMF prediction k<sub>B</sub>T<sub>c</sub> = J⟨k²⟩/⟨k⟩ = ${net.TcHMF.toFixed(2)}J. Current m = ${M.toFixed(2)}. On this small sparse graph order actually sets in near 0.4–0.5 T<sub>c</sub><sup>HMF</sup>: the annealed approximation of the appendix ignores the real graph's structure and overestimates T<sub>c</sub>.`;
+}
+function netSweep(T){ const {N,nbr,s,rng}=net; for(let n=0;n<N;n++){ const i=(rng()*N)|0; let h=0; for(const j of nbr[i]) h+=s[j]; s[i]=rng()<1/(1+Math.exp(-2*h/T))?1:-1; } }
+(function(){
+  bindSlider('#hero-T',v=>hero.tr=v,v=>v.toFixed(2));
+  const btn=$('#hero-play'); const sync=()=>{ btn.textContent=hero.run?'Pause':'Play'; btn.setAttribute('aria-pressed',String(!hero.run)); };
+  btn.addEventListener('click',()=>{ hero.run=!hero.run; sync(); }); sync();
+  for(let k=0;k<50;k++) netSweep(hero.tr*net.TcHMF);
+})();
+watch('hero-net'); reg(drawNet);
+function heroTick(now){
+  if(!hero.run||!visible.get('hero-net')) return;
+  if(now-hero.last<220) return; hero.last=now; // calm: about 4–5 sweeps per second
+  netSweep(hero.tr*net.TcHMF); drawNet();
+}
+
+/* ---------- 1D chain exact helpers ---------- */
+function eig(K,h){ const a=Math.exp(K)*Math.cosh(h), r=Math.exp(K)*Math.sqrt(Math.sinh(h)**2+Math.exp(-4*K)); return [a+r,a-r]; }
+
+/* ---------- 3.2 transfer matrix demo ---------- */
+(function(){
+  let K=0.6,h=0.1,N=10;
+  const sel=$('#tm-N'); [4,6,8,10,12,14,16].forEach(n=>{ const o=document.createElement('option'); o.value=n; o.textContent=n; if(n===N) o.selected=true; sel.appendChild(o); });
+  function brute(N,K,h){ let Z=0; for(let c=0;c<(1<<N);c++){ let sS=0,sB=0; for(let i=0;i<N;i++){ const si=(c>>i)&1?1:-1, sj=(c>>((i+1)%N))&1?1:-1; sS+=si; sB+=si*sj; } Z+=Math.exp(h*sS+K*sB); } return Z; }
+  function draw(){
+    const [l1,l2]=eig(K,h), Ztm=l1**N+l2**N, Zb=brute(N,K,h), f4=v=>v.toPrecision(5);
+    $('#tm-mat').innerHTML=`<table class="matrix" aria-label="transfer matrix"><tr><td>${f4(Math.exp(h+K))}</td><td>${f4(Math.exp(-K))}</td></tr><tr><td>${f4(Math.exp(-K))}</td><td>${f4(Math.exp(K-h))}</td></tr></table>
+      λ₁ = <b>${f4(l1)}</b>, λ₂ = <b>${f4(l2)}</b><br>λ₂/λ₁ = ${f4(l2/l1)}, ξ = 1/ln(λ₁/λ₂) = <b>${f4(1/Math.log(l1/l2))}</b><br>
+      f = −k<sub>B</sub>T ln λ₁ = ${f4(-Math.log(l1))} k<sub>B</sub>T<br><br>
+      N = ${N}: λ₁<sup>N</sup> + λ₂<sup>N</sup> = ${Ztm.toPrecision(10)}<br>sum over 2<sup>${N}</sup> states = ${Zb.toPrecision(10)}<br>relative difference ${Math.abs(Ztm/Zb-1).toExponential(1)}`;
+    const Ks=range(0.02,2.5,200);
+    plot($('#tm-eig'),{height:240,ylog:true,xlim:[0,2.5],ylim:[0.01,300],xlabel:'K = J / k_B T',ylabel:'eigenvalue',legend:'tl',vlines:[{x:K,color:css('--crit')}],
+      series:[{data:Ks.map(k=>[k,eig(k,h)[0]]),color:css('--up'),width:2.4,name:'λ₁'},{data:Ks.map(k=>[k,eig(k,h)[1]]),color:css('--down'),width:2.4,name:'λ₂'}]});
+    const hs=[0,0.01,0.1,0.5];
+    plot($('#tm-ratio'),{height:240,xlim:[0,2.5],ylim:[0,1.05],xlabel:'K = J / k_B T',ylabel:'λ₂ / λ₁',legend:'br',hlines:[{y:1}],
+      series:hs.map((hh,i)=>({data:Ks.map(k=>{ const [a,b]=eig(k,hh); return [k,b/a]; }),color:i===0?css('--up'):css('--down'),width:2,alpha:i===0?1:1-0.25*(i-1),dash:i===0?[]:[6,3],name:'h = '+hh}))});
+  }
+  bindSlider('#tm-K',v=>{K=v;draw();},v=>v.toFixed(2));
+  bindSlider('#tm-h',v=>{h=v;draw();},v=>v.toFixed(2));
+  sel.addEventListener('change',()=>{ N=+sel.value; draw(); });
+  reg(draw);
+})();
+
+/* ---------- 3.4 thermodynamics ---------- */
+(function(){
+  let T=0.8;
+  function draw(){
+    const Ts=range(0.05,4,300), vl=[{x:T,color:css('--crit')}];
+    plot($('#th-ec'),{height:230,xlim:[0,4],ylim:[-1.05,0.6],xlabel:'k_B T / J',legend:'br',vlines:vl,hlines:[{y:0}],
+      series:[{data:Ts.map(t=>[t,-Math.tanh(1/t)]),color:css('--up'),width:2.4,name:'E / NJ'},{data:Ts.map(t=>[t,(1/t)**2/Math.cosh(1/t)**2]),color:css('--down'),width:2.4,name:'C / N k_B'}]});
+    plot($('#th-chi'),{height:230,ylog:true,xlim:[0,4],ylim:[0.1,1e4],xlabel:'k_B T / J',ylabel:'J χ_T',legend:'tr',vlines:vl,
+      series:[{data:Ts.map(t=>[t,1/t]),color:css('--muted'),dash:[5,4],width:1.5,name:'Curie, 1/T'},{data:Ts.map(t=>[t,Math.exp(2/t)/t]),color:css('--up'),width:2.4,name:'exact, e^(2J/kT)/kT'}]});
+    const Hs=range(-1,1,401);
+    plot($('#th-m'),{height:220,xlim:[-1,1],ylim:[-1.05,1.05],xlabel:'H / J',ylabel:'M',legend:'br',hlines:[{y:0}],
+      series:[{data:[[-1,-1],[0,-1],[0,NaN],[0,1],[1,1]],color:css('--crit'),width:1.6,dash:[5,4],name:'T = 0'},
+        ...[2,4].map(f=>({data:Hs.map(H=>{ const hh=H/(T*f), K=1/(T*f); return [H,Math.sinh(hh)/Math.sqrt(Math.sinh(hh)**2+Math.exp(-4*K))]; }),color:css('--muted'),width:1.3,alpha:.6})),
+        {data:Hs.map(H=>{ const hh=H/T, K=1/T; return [H,Math.sinh(hh)/Math.sqrt(Math.sinh(hh)**2+Math.exp(-4*K))]; }),color:css('--up'),width:2.4,name:`T = ${T.toFixed(2)} J/k_B`}]});
+    $('#th-read').innerHTML=`At k<sub>B</sub>T = ${T.toFixed(2)}J: E/N = ${(-Math.tanh(1/T)).toFixed(4)}J, C/Nk<sub>B</sub> = ${((1/T)**2/Math.cosh(1/T)**2).toFixed(4)}, Jχ<sub>T</sub> = ${(Math.exp(2/T)/T).toPrecision(4)}. The heat-capacity maximum is at k<sub>B</sub>T ≈ 0.834J. Gray curves: twice and four times the chosen T.`;
+  }
+  bindSlider('#th-T',v=>{T=v;draw();},v=>v.toFixed(2));
+  reg(draw);
+})();
+
+/* ---------- 3.5 correlations: simulation + exact ---------- */
+const co={N:10000,s:new Int8Array(10000),T:0.9,G:new Float64Array(41),n:0,sweeps:0,frame:0,blk:new Float64Array(41),bn:0,blocks:[]};
+(function(){ for(let i=0;i<co.N;i++) co.s[i]=Math.random()<.5?1:-1;
+  const reset=()=>{ co.G.fill(0); co.n=0; co.sweeps=0; co.blk.fill(0); co.bn=0; co.blocks=[]; };
+  bindSlider('#co-T',v=>{ co.T=v; reset(); drawCo(); },v=>v.toFixed(2));
+  $('#co-reset').addEventListener('click',()=>{ reset(); drawCo(); });
+})();
+watch('demo-corr');
+function drawCo(){
+  const K=1/co.T, t=Math.tanh(K), js=range(0,40,41);
+  // standard error from block averages (blocks of 40 measurements, longer than the autocorrelation time)
+  const nb=co.blocks.length, err=js.map(j=>{ if(nb<4) return Infinity; const mu=co.blocks.reduce((a,b)=>a+b[j],0)/nb; const v=co.blocks.reduce((a,b)=>a+(b[j]-mu)**2,0)/(nb-1); return Math.sqrt(v/nb); });
+  const pts=co.n?js.map(j=>[j,co.G[j]/co.n,err[j]]).filter(p=>p[1]>2*p[2]):[];
+  plot($('#co-G'),{ylog:true,xlim:[0,40],ylim:[1e-3,1.2],xlabel:'separation j',ylabel:'G(j)',legend:'tr',
+    series:[{data:js.map(j=>[j,t**j]),color:css('--ink'),width:2,name:'exact (tanh K)^j'},{data:pts.map(p=>[p[0],p[1]]),points:true,color:css('--up'),r:3.5,name:'simulation ± 1σ'}],
+    after:(ctx,X,Y)=>{ ctx.strokeStyle=css('--up'); ctx.lineWidth=1.2; pts.forEach(([j,g,e])=>{ ctx.beginPath(); ctx.moveTo(X(j),Y(Math.max(g-e,1e-4))); ctx.lineTo(X(j),Y(g+e)); ctx.stroke(); }); }});
+  const Ts=range(0.3,3,200);
+  const xi=(T,H)=>{ const [a,b]=eig(1/T,H/T); return 1/Math.log(a/b); };
+  plot($('#co-xi'),{ylog:true,xlim:[0.3,3],ylim:[0.1,1e3],xlabel:'k_B T / J',ylabel:'ξ (lattice spacings)',legend:'tr',vlines:[{x:co.T,color:css('--crit')}],
+    series:[{data:Ts.map(T=>[T,0.5*Math.exp(2/T)]),color:css('--muted'),dash:[5,4],width:1.5,name:'½ e^(2J/kT)'},
+      {data:Ts.map(T=>[T,xi(T,0)]),color:css('--up'),width:2.4,name:'H = 0'},
+      {data:Ts.map(T=>[T,xi(T,0.02)]),color:css('--down'),width:2,name:'H = 0.02 J'},
+      {data:Ts.map(T=>[T,xi(T,0.2)]),color:css('--down'),width:2,dash:[6,3],name:'H = 0.2 J'}]});
+  // fit xi from simulation where G is well resolved
+  let fit='';
+  const good=pts.filter(p=>p[0]>=1&&p[1]>0.03);
+  if(good.length>=3&&co.sweeps>200){ const n=good.length; let sx=0,sy=0,sxx=0,sxy=0; for(const [x,y] of good){ const ly=Math.log(y); sx+=x; sy+=ly; sxx+=x*x; sxy+=x*ly; } const b=(n*sxy-sx*sy)/(n*sxx-sx*sx); fit=`, fitted from the simulation <b>${(-1/b).toFixed(2)}</b>`; }
+  $('#co-read').innerHTML=`k<sub>B</sub>T = ${co.T.toFixed(2)}J: exact ξ = 1/ln coth K = <b>${(1/Math.log(1/t)).toFixed(3)}</b>${fit} (${co.sweeps.toLocaleString('en-US')} sweeps).`;
+}
+reg(drawCo);
+function coTick(){
+  if(!visible.get('demo-corr')) return;
+  const {N,s}=co, t0=performance.now();
+  while(performance.now()-t0<5){
+    const pu=[1/(1+Math.exp(4/co.T)),0.5,1/(1+Math.exp(-4/co.T))]; // heat-bath probability of up for neighbor sum -2, 0, +2
+    for(let n=0;n<N;n++){ const i=(Math.random()*N)|0, h=s[(i+N-1)%N]+s[(i+1)%N]; s[i]=Math.random()<pu[(h+2)>>1]?1:-1; }
+    co.sweeps++;
+    if(co.sweeps>100){ for(let j=0;j<=40;j++){ let acc=0; for(let i=0;i<N;i++) acc+=s[i]*s[(i+j)%N]; co.G[j]+=acc/N; co.blk[j]+=acc/N; } co.n++; co.bn++;
+      if(co.bn===40){ co.blocks.push(Array.from(co.blk,v=>v/40)); co.blk.fill(0); co.bn=0; } }
+  }
+  co.frame++; if(co.frame%20===0) drawCo(); // about 3 redraws per second
+}
+
+/* ---------- 3.6 low-temperature expansion ---------- */
+(function(){
+  let d=2, cache=null;
+  function onsager(K,n=160){ // -beta f, square lattice, midpoint rule on [0,pi]^2
+    const c2=Math.cosh(2*K)**2, s2=Math.sinh(2*K); let acc=0;
+    for(let a=0;a<n;a++){ const ca=Math.cos((a+0.5)*Math.PI/n); for(let b=0;b<n;b++) acc+=Math.log(c2-s2*(ca+Math.cos((b+0.5)*Math.PI/n))); }
+    return Math.LN2+0.5*acc/(n*n);
+  }
+  function build(){ const Ks=range(0.46,1.6,60); cache=Ks.map(K=>[K,onsager(K)-2*K]); }
+  function draw(){
+    if(d===2 && !cache) build();
+    const Ks=range(0.2,1.6,141), series=[], err=[];
+    if(d===2){
+      const notes=K=>{ const x=Math.exp(-2*K); return x**4+2*x**6-2.5*x**8; };
+      const full=K=>{ const x=Math.exp(-2*K); return x**4+2*x**6+4.5*x**8; };
+      const one=K=>Math.exp(-8*K);
+      series.push({data:cache,color:css('--ink'),width:3,name:'exact (Onsager)'},
+        {data:Ks.map(K=>[K,one(K)]),color:css('--muted'),width:1.5,dash:[3,3],name:'one flipped spin'},
+        {data:Ks.map(K=>[K,notes(K)]),color:css('--down'),width:2,dash:[6,3],name:'notes: −5/2 x⁸'},
+        {data:Ks.map(K=>[K,full(K)]),color:css('--up'),width:2,name:'complete: +9/2 x⁸'});
+      for(const [nm,fn,col,ds] of [['one flipped spin',one,css('--muted'),[3,3]],['notes: −5/2 x⁸',notes,css('--down'),[6,3]],['complete: +9/2 x⁸',full,css('--up'),[]]])
+        err.push({data:cache.map(([K,v])=>[K,Math.abs(fn(K)/v-1)]),color:col,width:2,dash:ds,name:nm});
+      plot($('#lt-f'),{ylog:true,xlim:[0.2,1.6],ylim:[1e-7,1],xlabel:'K = J / k_B T',ylabel:'−β(f − f₀)',legend:'tr',vlines:[{x:0.4407,color:css('--crit'),label:'K_c'}],series});
+      plot($('#lt-err'),{ylog:true,xlim:[0.2,1.6],ylim:[1e-8,10],xlabel:'K = J / k_B T',ylabel:'|series / exact − 1|',legend:'tr',vlines:[{x:0.4407,color:css('--crit')}],series:err});
+      const K=1, v=onsager(K)-2*K, x=Math.exp(-2*K);
+      $('#lt-read').innerHTML=`At K = 1 (k<sub>B</sub>T = J, about 0.44 T<sub>c</sub>): exact ${v.toExponential(4)}; notes' truncation ${(x**4+2*x**6-2.5*x**8).toExponential(4)}; complete ${(x**4+2*x**6+4.5*x**8).toExponential(4)}.`;
+    } else {
+      const exact=K=>Math.log1p(Math.exp(-2*K)), ser=K=>Math.exp(-4*K)+Math.exp(-4*K)-1.5*Math.exp(-8*K);
+      plot($('#lt-f'),{ylog:true,xlim:[0.2,1.6],ylim:[1e-6,1],xlabel:'K = J / k_B T',ylabel:'−β(f − f₀)',legend:'tr',
+        series:[{data:Ks.map(K=>[K,exact(K)]),color:css('--ink'),width:3,name:'exact, ln(1 + e^(−2K))'},{data:Ks.map(K=>[K,Math.exp(-2*K)]),color:css('--crit'),width:1.6,dash:[3,3],name:'e^(−2K)'},{data:Ks.map(K=>[K,ser(K)]),color:css('--down'),width:2,dash:[6,3],name:'series with d = 1'}]});
+      plot($('#lt-err'),{ylog:true,xlim:[0.2,1.6],ylim:[1e-3,10],xlabel:'K = J / k_B T',ylabel:'|series / exact − 1|',legend:'tr',
+        series:[{data:Ks.map(K=>[K,Math.abs(ser(K)/exact(K)-1)]),color:css('--down'),width:2,dash:[6,3],name:'series with d = 1'}]});
+      $('#lt-read').innerHTML=`In d = 1 the relative error of the series tends to 1, not 0, as T → 0: it captures a vanishing fraction of the true free energy.`;
+    }
+    $('#lt-d2').setAttribute('aria-pressed',String(d===2)); $('#lt-d1').setAttribute('aria-pressed',String(d===1));
+  }
+  $('#lt-d2').addEventListener('click',()=>{d=2;draw();}); $('#lt-d1').addEventListener('click',()=>{d=1;draw();});
+  const once=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ once.disconnect(); reg(draw); } },{rootMargin:'400px'});
+  once.observe($('#demo-lowT'));
+})();
+
+/* ---------- 3.7 mean-field graphical solution (units 2dJ = 1, so Tc = 1) ---------- */
+(function(){
+  let T=0.7,H=0;
+  const F=(M)=>Math.tanh((H+M)/T);
+  const g=M=>M*M/2-T*lncosh2((H+M)/T);
+  function roots(){ const out=[], n=4000; let prev=null;
+    for(let k=0;k<=n;k++){ const M=-1.1+2.2*k/n, v=F(M)-M; if(prev&&Math.sign(v)!==Math.sign(prev[1])){ let a=prev[0],b=M; for(let it=0;it<60;it++){ const c=(a+b)/2; if(Math.sign(F(c)-c)===Math.sign(F(a)-a)) a=c; else b=c; } const r=(a+b)/2, slope=(1-Math.tanh((H+r)/T)**2)/T; out.push({M:r,stable:slope<1}); } else if(v===0){ out.push({M,stable:(1-Math.tanh((H+M)/T)**2)/T<1}); } prev=[M,v]; }
+    return out.filter((r,i)=>i===0||Math.abs(r.M-out[i-1].M)>1e-6); }
+  function draw(){
+    const Ms=range(-1.2,1.2,481), rs=roots();
+    plot($('#mf-graph'),{xlim:[-1.2,1.2],ylim:[-1.2,1.2],xlabel:'M',ylabel:'y',hlines:[{y:0}],vlines:[{x:0}],legend:'tl',
+      series:[{data:Ms.map(M=>[M,M]),color:css('--muted'),width:1.6,name:'y = M'},{data:Ms.map(M=>[M,F(M)]),color:css('--up'),width:2.4,name:'tanh'}],
+      after:(ctx,X,Y)=>{ for(const r of rs){ ctx.lineWidth=2.2; ctx.strokeStyle=css('--crit'); ctx.fillStyle=css('--surface');
+        if(r.stable){ ctx.beginPath(); ctx.arc(X(r.M),Y(r.M),6,0,2*Math.PI); ctx.fill(); ctx.stroke(); } else { ctx.fillRect(X(r.M)-5,Y(r.M)-5,10,10); ctx.strokeRect(X(r.M)-5,Y(r.M)-5,10,10); } } }});
+    const gv=Ms.map(M=>g(M)), lo=Math.min(...gv), hi=Math.max(...gv.filter((v,i)=>Math.abs(Ms[i])<=1.05)), pad=(hi-lo)*0.1+1e-4;
+    plot($('#mf-g'),{xlim:[-1.2,1.2],ylim:[lo-pad,hi+pad],xlabel:'M',ylabel:'g(M) / 2dJ',vlines:[{x:0}],
+      series:[{data:Ms.map((M,i)=>[M,gv[i]]),color:css('--up'),width:2.4}],
+      after:(ctx,X,Y)=>{ for(const r of rs){ ctx.lineWidth=2.2; ctx.strokeStyle=css('--crit'); ctx.fillStyle=css('--surface'); const gy=g(r.M);
+        if(r.stable){ ctx.beginPath(); ctx.arc(X(r.M),Y(gy),6,0,2*Math.PI); ctx.fill(); ctx.stroke(); } else { ctx.fillRect(X(r.M)-5,Y(gy)-5,10,10); ctx.strokeRect(X(r.M)-5,Y(gy)-5,10,10); } } }});
+    const st=rs.filter(r=>r.stable).sort((a,b)=>g(a.M)-g(b.M));
+    $('#mf-read').innerHTML=`Solutions: ${rs.map(r=>`M = ${(Math.abs(r.M)<5e-5?0:r.M).toFixed(4)} (${r.stable?'stable':'unstable'})`).join(', ')}.${st.length>1?(Math.abs(g(st[0].M)-g(st[1].M))<1e-12?' The two stable solutions are exactly degenerate: the symmetric case, in which the system must break the symmetry spontaneously.':` The global minimum is M = ${st[0].M.toFixed(4)}; the other stable solution is metastable.`):''}`;
+  }
+  bindSlider('#mf-T',v=>{T=v;draw();},v=>v.toFixed(3));
+  bindSlider('#mf-H',v=>{H=v;draw();},v=>v.toFixed(3));
+  reg(draw);
+})();
+
+/* ---------- 3.7 mean-field exponents (units 2dJ = kB Tc = 1) ---------- */
+(function(){
+  const solveM=(T,H)=>{ // positive root of m = tanh((H+m)/T) by geometric bisection (H >= 0 here)
+    const f=m=>Math.tanh((H+m)/T)-m; if(f(1e-14)<=0) return 0; let a=1e-14,b=1;
+    for(let k=0;k<200;k++){ const c=Math.sqrt(a*b); if(f(c)>0) a=c; else b=c; } return Math.sqrt(a*b); };
+  const chi=(T)=>{ const m=T<1?solveM(T,0):0, s=1-m*m; return s/(T-s); }; // dM/dH from M = tanh((H+M)/T)
+  const fit=(pts)=>{ const n=pts.length; let sx=0,sy=0,sxx=0,sxy=0; for(const [x,y] of pts){ const lx=Math.log(x), ly=Math.log(y); sx+=lx; sy+=ly; sxx+=lx*lx; sxy+=lx*ly; } return (n*sxy-sx*sy)/(n*sxx-sx*sx); };
+  function draw(){
+    const ts=logRange(1e-6,0.5,60);
+    const Mp=ts.map(t=>[t,solveM(1-t,0)]);
+    plot($('#ex-M'),{height:220,xlog:true,ylog:true,xlim:[1e-6,0.5],ylim:[1e-3,1.5],xlabel:'(T_c − T) / T_c',ylabel:'M',series:[{data:Mp,color:css('--up'),width:2.4}]});
+    const up=ts.map(t=>[t,chi(1+t)]), dn=ts.map(t=>[t,chi(1-t)]);
+    plot($('#ex-chi'),{height:220,xlog:true,ylog:true,xlim:[1e-6,0.5],ylim:[1,2e6],xlabel:'|T − T_c| / T_c',ylabel:'k_B T_c χ_T',legend:'tr',
+      series:[{data:up,color:css('--up'),width:2.4,name:'T > T_c'},{data:dn,color:css('--down'),width:2.4,dash:[6,3],name:'T < T_c'}]});
+    const ms=logRange(1e-3,0.5,60), Hc=ms.map(m=>[m,Math.atanh(m)-m]); // critical isotherm, T = Tc = 1: H = atanh(M) - M
+    plot($('#ex-H'),{height:220,xlog:true,ylog:true,xlim:[1e-3,0.5],ylim:[1e-10,0.1],xlabel:'M',ylabel:'H / k_B T_c',series:[{data:Hc,color:css('--up'),width:2.4}]});
+    const Ts=range(0.5,1.5,401), C=Ts.map(T=>{ if(T>=1) return [T,0]; const dT=1e-5; const e=t=>-0.5*solveM(t,0)**2; return [T,(e(T+dT)-e(T-dT))/(2*dT)]; });
+    plot($('#ex-C'),{height:220,xlim:[0.5,1.5],ylim:[0,2],xlabel:'T / T_c',ylabel:'C / N k_B',hlines:[{y:1.5,color:css('--muted')}],
+      series:[{data:[...C.filter(p=>p[0]<1),[1,NaN],...C.filter(p=>p[0]>=1)],color:css('--up'),width:2.4}]});
+    const near=a=>a.filter(p=>p[0]<1e-3);
+    const b=fit(near(Mp)), g1=-fit(near(up)), g2=-fit(near(dn)), dlt=fit(Hc.filter(p=>p[0]<1e-2)), ratio=up[0][1]/dn[0][1], Cj=C.filter(p=>p[0]<1).slice(-1)[0][1];
+    $('#ex-read').innerHTML=`Fitted: β = <b>${b.toFixed(4)}</b>, γ = <b>${g1.toFixed(4)}</b>, γ′ = <b>${g2.toFixed(4)}</b>, δ = <b>${dlt.toFixed(4)}</b>; amplitude ratio χ(T<sub>c</sub>+)/χ(T<sub>c</sub>−) = <b>${ratio.toFixed(3)}</b>; heat-capacity jump <b>${Cj.toFixed(3)}</b> k<sub>B</sub>.`;
+  }
+  const once=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ once.disconnect(); reg(draw); } },{rootMargin:'400px'});
+  once.observe($('#demo-exp'));
+})();
+
+/* ---------- 3.7 susceptibility sum rule ---------- */
+(function(){
+  let T=0.8;
+  function draw(){
+    const t=Math.tanh(1/T), js=range(-30,30,61), target=Math.exp(2/T);
+    plot($('#sr-G'),{height:220,xlim:[-30.5,30.5],ylim:[0,1.05],xlabel:'j',ylabel:'G(j)',series:[],
+      after:(ctx,X,Y)=>{ const bw=Math.max(2,(X(1)-X(0))*0.7); ctx.fillStyle=css('--up'); js.forEach(j=>{ const v=t**Math.abs(j); ctx.fillRect(X(j)-bw/2,Y(v),bw,Y(0)-Y(v)); }); }});
+    const Rs=range(0,60,61), S=Rs.map(R=>[R,1+2*t*(1-t**R)/(1-t)]);
+    plot($('#sr-S'),{height:220,xlim:[0,60],ylim:[0,Math.max(target*1.15,3)],xlabel:'R',ylabel:'Σ G(j), |j| ≤ R',hlines:[{y:target,color:css('--crit')}],legend:'br',
+      series:[{data:S,color:css('--up'),width:2.4,name:'partial sum'},{data:[],color:css('--crit'),dash:[4,4],width:1.5,name:'e^(2K) = k_B T χ_T'}]});
+    $('#sr-read').innerHTML=`k<sub>B</sub>T = ${T.toFixed(2)}J: ξ = ${(1/Math.log(1/t)).toFixed(3)}, Σ<sub>j</sub>G(j) = (1 + tanh K)/(1 − tanh K) = <b>${((1+t)/(1-t)).toFixed(4)}</b> = e<sup>2K</sup> = <b>${target.toFixed(4)}</b>, so χ<sub>T</sub> = ${(target/T).toFixed(4)}/J.`;
+  }
+  bindSlider('#sr-T',v=>{T=v;draw();},v=>v.toFixed(2));
+  reg(draw);
+})();
+
+/* ---------- appendix: HMFT on scale-free networks ---------- */
+(function(){
+  let gam=3.8, lgN=12; const kmin=2;
+  function dist(g,kmax){ // degrees and normalized weights; exact sum to 3000, log-spaced integral beyond
+    const ks=[],w=[]; const kc=Math.min(Math.floor(kmax),3000);
+    for(let k=kmin;k<=kc;k++){ ks.push(k); w.push(Math.pow(k,-g)); }
+    if(kmax>kc+1){ const n=400, a=Math.log(kc+0.5), b=Math.log(kmax+0.5); for(let i=0;i<n;i++){ const u=a+(b-a)*(i+0.5)/n, k=Math.exp(u); ks.push(k); w.push(Math.pow(k,-g)*k*(b-a)/n); } }
+    const Z=w.reduce((a,b)=>a+b,0); const p=w.map(v=>v/Z);
+    const mom=q=>ks.reduce((a,k,i)=>a+p[i]*Math.pow(k,q),0);
+    const k1=mom(1), k2=mom(2), k4=mom(4), wk=ks.map((k,i)=>k*p[i]/k1);
+    return {ks,wk,k1,k2,k4,Tc:k2/k1};
+  }
+  function mOf(D,T){ if(T>=D.Tc) return 0; const g=m=>{ let s=0; for(let i=0;i<D.ks.length;i++) s+=D.wk[i]*Math.tanh(D.ks[i]*m/T); return s-m; };
+    let a=1e-12,b=1; for(let it=0;it<70;it++){ const c=Math.sqrt(a*b); if(g(c)>0) a=c; else b=c; } return Math.sqrt(a*b); }
+  let timer=null;
+  function draw(){
+    const N=10**lgN, kmax=kmin*Math.pow(N,1/(gam-1)), D=dist(gam,kmax);
+    const Tr=range(0.02,1.2,90);
+    plot($('#nt-m'),{height:230,xlim:[0,1.2],ylim:[0,1.05],xlabel:'T / T_c',ylabel:'m',vlines:[{x:1,color:css('--crit')}],
+      series:[{data:Tr.map(r=>[r,mOf(D,r*D.Tc)]),color:css('--up'),width:2.4}]});
+    const ts=logRange(1e-8,0.3,50), mp=ts.map(t=>[t,mOf(D,(1-t)*D.Tc)]), bAn=gam>3&&gam<5?1/(gam-3):null;
+    const be=mp.slice(1,-1).map((p,i)=>[p[0],Math.log(mp[i+2][1]/mp[i][1])/Math.log(mp[i+2][0]/mp[i][0])]);
+    plot($('#nt-beta'),{height:230,xlog:true,xlim:[1e-8,0.3],ylim:[0,Math.max(2.2,(bAn||0)*1.2)],xlabel:'t = 1 − T/T_c',ylabel:'β_eff',legend:'tl',
+      hlines:[{y:0.5,color:css('--muted')},...(bAn?[{y:bAn,color:css('--crit')}]:[])],
+      series:[{data:[],color:css('--muted'),dash:[4,4],width:1.5,name:'1/2'},...(bAn?[{data:[],color:css('--crit'),dash:[4,4],width:1.5,name:`1/(γ−3) = ${bAn.toFixed(2)}`}]:[]),
+        {data:be,color:css('--up'),width:2.4,name:'HMFT'}]});
+    const Ns=logRange(1e2,1e18,40), gs=[2.5,3,3.5,5];
+    plot($('#nt-tc'),{height:230,xlog:true,ylog:true,xlim:[1e2,1e18],ylim:[1,1e8],xlabel:'N',ylabel:'k_B T_c / J',legend:'tl',vlines:[{x:N,color:css('--crit')}],
+      series:[...gs.map((g,i)=>({data:Ns.map(n=>[n,dist(g,kmin*Math.pow(n,1/(g-1))).Tc]),color:css('--muted'),width:1.4,alpha:0.4+0.15*i,dash:i%2?[4,3]:[],name:'γ = '+g})),
+        {data:Ns.map(n=>[n,dist(gam,kmin*Math.pow(n,1/(gam-1))).Tc]),color:css('--up'),width:2.6,name:'γ = '+gam.toFixed(2)}]});
+    const pred= gam<3?'T<sub>c</sub> diverges as N → ∞ (always ordered)': gam<5?`β = 1/(γ−3) = ${(1/(gam-3)).toFixed(3)} in the N → ∞ limit`:'β = 1/2 (⟨k⁴⟩ finite)';
+    $('#nt-read').innerHTML=`k<sub>max</sub> = ${kmax.toPrecision(3)}: ⟨k⟩ = ${D.k1.toFixed(3)}, ⟨k²⟩ = ${D.k2.toPrecision(4)}, ⟨k⁴⟩ = ${D.k4.toPrecision(4)}, k<sub>B</sub>T<sub>c</sub> = J⟨k²⟩/⟨k⟩ = <b>${D.Tc.toPrecision(4)}J</b>. Prediction: ${pred}.`;
+  }
+  bindSlider('#nt-g',v=>{ gam=v; clearTimeout(timer); timer=setTimeout(draw,40); },v=>v.toFixed(2));
+  bindSlider('#nt-N',v=>{ lgN=v; clearTimeout(timer); timer=setTimeout(draw,40); },v=>fmt(+(10**v).toPrecision(2)));
+  const once=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ once.disconnect(); reg(draw); } },{rootMargin:'400px'});
+  once.observe($('#demo-net'));
+})();
+
+/* ---------- table of contents highlighting ---------- */
+(function(){
+  const links=[...document.querySelectorAll('nav.toc ol a')], map=new Map(links.map(a=>[a.getAttribute('href').slice(1),a]));
+  const tio=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ links.forEach(a=>a.classList.remove('active')); map.get(e.target.id)?.classList.add('active'); } }); },{rootMargin:'-20% 0px -70% 0px'});
+  map.forEach((_,id)=>{ const el=document.getElementById(id); if(el) tio.observe(el); });
+})();
+
+/* ---------- main loop ---------- */
+function loop(now){ heroTick(now); coTick(); requestAnimationFrame(loop); }
+requestAnimationFrame(loop);
+
+/* ---------- math typesetting ---------- */
+window.addEventListener('load',()=>{
+  if(window.renderMathInElement) renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});
+  redraws.forEach(f=>f());
+});
+</script>
+</body>
+</html>

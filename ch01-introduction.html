@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chapter 1: Introduction | Phase Transitions and Critical Phenomena</title>
+<meta name="description" content="Interactive lecture notes for Chapter 1 of a graduate course on phase transitions and critical phenomena, following N. Goldenfeld's Lectures on Phase Transitions and the Renormalization Group.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --paper:#F3F5F7; --surface:#FFFFFF; --ink:#0E1420; --muted:#3E4859; --rule:#C3CBD6;
+  --up:#1537A8; --down:#B35F00; --crit:#B3104E; --mark:#C2EDB0; --mark-edge:#2E8A1E;
+  --spin-up:#0A1F6E; --spin-down:#FFD23F;
+  --serif:"Source Serif 4", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --ui-font:"IBM Plex Sans Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#0B1019; --surface:#131A27; --ink:#F4F6FA; --muted:#BAC4D3; --rule:#35415A;
+    --up:#8FAEFF; --down:#FFC23D; --crit:#FF7AA6; --mark:#244A1E; --mark-edge:#7EDB6A;
+    --spin-up:#1E3FBF; --spin-down:#FFD23F;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:1.0625rem;line-height:1.62;
+  padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0)}
+a{color:var(--up);text-underline-offset:2px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--crit);outline-offset:2px}
+h1,h2,h3{font-family:var(--serif);line-height:1.15;font-weight:700}
+h2{font-size:1.9rem;margin:3.6rem 0 .6rem;letter-spacing:-.01em}
+h2 .sec{color:var(--muted);font-weight:400;margin-right:.35em}
+h3{font-size:1.3rem;margin:2.4rem 0 .4rem}
+p,ul,ol{max-width:68ch}
+p,li,figcaption,h3{overflow-wrap:break-word}
+.ui{font-family:var(--ui-font)}
+
+/* hero */
+header.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:3rem;align-items:center;
+  max-width:1180px;margin:0 auto;padding:3.5rem 1.5rem 2.5rem}
+.course{font-family:var(--ui-font);font-size:1rem;color:var(--muted);margin:0 0 1rem}
+.hero h1{font-size:clamp(2.6rem,6vw,4.4rem);margin:0 0 1.2rem;letter-spacing:-.02em}
+.hero h1 span{display:block;font-weight:400;font-style:italic;font-size:.5em;letter-spacing:0;color:var(--muted);margin-top:.35em}
+.hero .lede{font-size:1.2rem;max-width:34ch}
+.lattice-wrap{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:12px}
+canvas.lattice{display:block;width:100%;aspect-ratio:1;image-rendering:pixelated;image-rendering:crisp-edges;border-radius:2px}
+.lattice-wrap .controls{margin-top:10px}
+
+/* layout */
+.page{display:grid;grid-template-columns:200px minmax(0,1fr);gap:3rem;max-width:1180px;margin:0 auto;padding:0 1.5rem 4rem}
+nav.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 1.5rem);align-self:start;font-family:var(--ui-font);font-size:.95rem;padding-top:3.8rem}
+nav.toc ol{list-style:none;margin:0;padding:0}
+nav.toc li{margin:.15rem 0}
+nav.toc ol ol{padding-left:.9rem;font-size:.9rem}
+nav.toc a{color:var(--muted);text-decoration:none;display:block;padding:.15rem 0 .15rem .6rem;border-left:2px solid transparent}
+nav.toc a:hover{color:var(--ink)}
+nav.toc a.active{color:var(--ink);border-left-color:var(--crit)}
+main{min-width:0}
+
+/* key results echo the green boxes of the handwritten notes */
+.result{background:var(--mark);border-left:4px solid var(--mark-edge);padding:.6rem 1rem;margin:1.2rem 0;max-width:68ch;overflow-x:auto}
+.result p{margin:.2rem 0}
+.aside{color:var(--muted);font-style:italic;border-left:1px solid var(--rule);padding-left:1rem}
+mark{background:linear-gradient(transparent 55%, var(--mark) 55%);color:inherit;padding:0 .1em}
+.question{border:1.5px solid var(--ink);padding:.9rem 1.2rem;margin:2rem 0 1rem;max-width:68ch}
+.question h3{margin:0;font-size:1.2rem}
+.question h3 b{color:var(--crit)}
+.math-scroll{overflow-x:auto;max-width:68ch}
+/* keep KaTeX's absolutely positioned accessibility markup inside scroll boxes */
+.result,.math-scroll,.table-scroll{position:relative}
+.katex-display{overflow-x:auto;overflow-y:hidden;padding:2px 0}
+
+
+/* demos */
+figure.demo{margin:1.8rem 0 2.2rem;background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:1.1rem 1.2rem 1rem}
+figure.demo > .title{font-family:var(--ui-font);font-weight:600;font-size:1.05rem;margin:0 0 .7rem}
+figure.demo figcaption{font-size:.95rem;color:var(--muted);margin-top:.8rem;max-width:80ch}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem}
+.grid-lat{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:1.4rem;align-items:start}
+canvas.plot{display:block;width:100%;height:280px}
+.plot-label{font-family:var(--ui-font);font-size:.9rem;color:var(--muted);margin:0 0 .2rem}
+.controls{display:flex;flex-wrap:wrap;gap:.6rem 1.4rem;align-items:center;font-family:var(--ui-font);font-size:.95rem;margin-bottom:.8rem}
+.controls label{display:flex;align-items:center;gap:.5rem}
+.controls input[type=range]{width:150px;accent-color:var(--up)}
+.controls output{font-variant-numeric:tabular-nums;min-width:4.5ch;display:inline-block}
+button,select{font-family:var(--ui-font);font-size:.92rem;background:var(--paper);color:var(--ink);border:1px solid var(--rule);border-radius:3px;padding:.3rem .7rem;cursor:pointer}
+button:hover{border-color:var(--muted)}
+button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.readout{font-family:var(--ui-font);font-size:.95rem;font-variant-numeric:tabular-nums;margin:.5rem 0 0}
+.readout b{font-weight:600}
+.swatch{display:inline-block;width:.8em;height:.8em;border-radius:1px;vertical-align:-.05em;margin-right:.25em}
+
+table.exps{border-collapse:collapse;font-size:1rem;margin:1rem 0;min-width:520px}
+table.exps th,table.exps td{text-align:left;padding:.45rem .9rem .45rem 0;border-bottom:1px solid var(--rule);vertical-align:top}
+table.exps th{font-family:var(--ui-font);font-weight:600;color:var(--muted)}
+.table-scroll{overflow-x:auto}
+
+ol.timeline{list-style:none;padding:0;margin:1.2rem 0;max-width:72ch;border-left:2px solid var(--rule)}
+ol.timeline li{position:relative;padding:0 0 1.1rem 1.4rem}
+ol.timeline li::before{content:"";position:absolute;left:-7px;top:.45rem;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--up)}
+ol.timeline .yr{font-family:var(--ui-font);font-weight:600;margin-right:.6rem}
+
+footer{max-width:1180px;margin:0 auto;padding:2rem 1.5rem 3rem;border-top:1px solid var(--rule);font-size:.95rem;color:var(--muted)}
+footer p{max-width:90ch}
+
+@media (max-width:980px){
+  .page{grid-template-columns:minmax(0,1fr)}
+  nav.toc{display:none}
+  header.hero{grid-template-columns:minmax(0,1fr);gap:1.8rem;padding-top:2rem}
+  .lattice-wrap{max-width:460px}
+}
+@media (max-width:720px){
+  .grid2,.grid-lat{grid-template-columns:minmax(0,1fr)}
+  h2{font-size:1.6rem}
+  figure.demo{padding:.9rem .8rem}
+  .controls input[type=range]{width:110px}
+  .katex-display{font-size:.86em}
+  .result{padding:.5rem .7rem}
+  .controls label{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div>
+    <p class="course">Phase Transitions and Critical Phenomena, graduate course</p>
+    <h1>Chapter 1: Introduction<span>scaling, power laws, and why a smooth sum can turn singular</span></h1>
+    <p class="lede">Interactive lecture notes following Nigel Goldenfeld's <i>Lectures on Phase Transitions and the Renormalization Group</i>. Every figure on this page is computed live in your browser.</p>
+  </div>
+  <div class="lattice-wrap">
+    <canvas class="lattice" id="hero-lattice" width="128" height="128" aria-label="Live two-dimensional Ising model simulation"></canvas>
+    <div class="controls" style="margin-bottom:0">
+      <label>Temperature <input type="range" id="hero-T" min="1.5" max="3.5" step="0.005" value="2.269"> <output id="hero-T-out"></output></label>
+      <button id="hero-play" aria-pressed="false">Pause</button>
+    </div>
+    <p class="readout" style="margin-top:.2rem;color:var(--muted)">2D Ising model, 128 × 128 sites, slow Metropolis updates. At \(T_c = 2/\ln(1+\sqrt2) \approx 2.269\,J/k_B\) the domains of up (navy) and down (yellow) spins appear on all length scales.</p>
+  </div>
+</header>
+
+<div class="page">
+<nav class="toc" aria-label="Contents">
+  <ol>
+    <li><a href="#s1-1">1.1 Scaling and dimensional analysis</a></li>
+    <li><a href="#s1-2">1.2 Power laws in statistical physics</a>
+      <ol>
+        <li><a href="#liquid-gas">Liquid–gas critical point</a></li>
+        <li><a href="#magnet">Magnetic critical point</a></li>
+        <li><a href="#helium">Superfluid transition</a></li>
+        <li><a href="#saw">Self-avoiding walks</a></li>
+        <li><a href="#dynamic">Dynamic phenomena</a></li>
+      </ol>
+    </li>
+    <li><a href="#s1-3">1.3 Some important questions</a></li>
+    <li><a href="#s1-4">1.4 Historical development</a></li>
+    <li><a href="#reading">Further reading</a></li>
+  </ol>
+  <p style="margin-top:1.5rem"><a href="ch02a-phase-transitions-in-principle.html">Chapter 2, Part 1: How phase transitions occur in principle</a></p>
+  <p><a href="index.html">All chapters</a></p>
+</nav>
+
+<main>
+
+<!-- ======================= 1.1 ======================= -->
+<section id="s1-1">
+<h2><span class="sec">1.1</span>Scaling and dimensional analysis</h2>
+<p>We say that two measurable quantities obey <mark>scaling</mark> when they depend on each other in a <mark>power-law</mark> fashion, \(y \propto x^{a}\). A familiar example is Kepler's third law,</p>
+<div class="result"><p>\[ T \propto R^{3/2}, \]</p></div>
+<p>relating the period \(T\) of a planet to the radius \(R\) of its circular orbit.</p>
+
+<p>A second example: the phase speed \(c\) of waves on shallow water of depth \(h\). Neglecting surface tension and viscous effects, \(c^2 = gh\), so that \(c \propto \sqrt{h}\). This is the scaling law for this example, and it is only valid when \(h \ll \lambda\), with \(\lambda\) the wavelength. The more general dispersion relation is</p>
+<div class="math-scroll">\[ c^2 = \frac{g\lambda}{2\pi}\tanh\!\left(\frac{2\pi h}{\lambda}\right), \]</div>
+<p>and for \(h \ll \lambda\) the Taylor expansion \(\tanh(2\pi h/\lambda) \approx 2\pi h/\lambda\) gives back \(c^2 \approx gh\).</p>
+
+<h3>Scaling from dimensional analysis</h3>
+<p>Scaling laws can often be deduced from dimensional analysis alone. Writing \([\,\cdot\,]\) for "the physical dimension of",</p>
+<div class="math-scroll">\[ \begin{gathered} [g] = LT^{-2},\qquad [c] = LT^{-1},\\ [h] = [\lambda] = L,\qquad [\rho] = ML^{-3}. \end{gathered} \]</div>
+<p>The fluid density \(\rho\) is the only quantity carrying mass, so it cannot appear. The most general consistent form is</p>
+<div class="result"><p>\[ c = (gh)^{1/2}\, f(h/\lambda), \]</p></div>
+<p>where \(f(x)\) is a dimensionless function that dimensional analysis cannot determine. In the limit \(h/\lambda \to 0\), \(c \sim (gh)^{1/2} f(0) \propto \sqrt{h}\): we recover the scaling law without any detailed knowledge of fluid dynamics.</p>
+<p class="aside">This step quietly assumes the limit is regular, i.e., that \(f(0)\) exists and is finite and nonzero. The cases where this regularity assumption breaks down, where the limit is singular, are the central topic of this course.</p>
+
+<p>The choice of prefactor is an arbitrary convention. We could just as well have written \(c = (g\lambda)^{1/2}\tilde f(h/\lambda)\). Then in the limit \(h/\lambda \to 0\) the only way \(\lambda\) can cancel out is if \(\tilde f\) has a square-root behavior for small arguments:</p>
+<div class="result"><p>\[ \tilde f(x) \sim x^{1/2} f(x) \quad\text{as } x \to 0, \]</p></div>
+<p>with \(f\) analytic as \(x \to 0\), so that \(f(0)\) is well defined.</p>
+
+<figure class="demo" id="demo-waves">
+  <p class="title">Water waves: one scaling function for every wavelength</p>
+  <div class="controls">
+    <label>Wavelength \(\lambda\) <input type="range" id="wv-lam" min="0" max="3" step="0.01" value="1.5"> <output id="wv-lam-out"></output></label>
+    <label>Scaling function
+      <select id="wv-which"><option value="f">f(x) = c / √(gh)</option><option value="ft">f̃(x) = c / √(gλ)</option></select>
+    </label>
+  </div>
+  <div class="grid2">
+    <div><p class="plot-label">Phase speed \(c\) (m/s) vs depth \(h\) (m)</p><canvas class="plot" id="wv-c"></canvas></div>
+    <div><p class="plot-label">Scaling function vs \(x = h/\lambda\)</p><canvas class="plot" id="wv-f"></canvas></div>
+  </div>
+  <figcaption>Left: the exact dispersion relation (solid) crosses over from the shallow-water law \(c=\sqrt{gh}\) (blue dashes, slope 1/2) to the deep-water limit \(c=\sqrt{g\lambda/2\pi}\) (orange dashes, slope 0) near \(h \sim \lambda\). Right: the dots are the same four depths \(h = 0.1, 1, 10, 100\) m. As you change \(\lambda\) they slide along a single curve, which is the content of \(c = (gh)^{1/2} f(h/\lambda)\). Switching to \(\tilde f\) shows the \(x^{1/2}\) behavior at small \(x\).</figcaption>
+</figure>
+</section>
+
+<!-- ======================= 1.2 ======================= -->
+<section id="s1-2">
+<h2><span class="sec">1.2</span>Power laws in statistical physics</h2>
+<p>In statistical physics we meet power laws \(y = Cx^{\alpha}\) whose exponent \(\alpha\) need not be a simple fraction; it can even be irrational. A broad class of phenomena with power-law behavior is <mark>phase transitions where there is a critical point</mark>.</p>
+
+<h3 id="liquid-gas">The liquid–gas critical point</h3>
+<p>Above the critical temperature \(T_c\) one can pass continuously from a gas to a liquid at constant temperature; there is no real way to distinguish the two. Below \(T_c\), as the density is increased at fixed temperature, it is not possible to go from the gaseous phase to the liquid phase without passing through a two-phase (coexistence) regime. Near the top of the coexistence curve, its shape is a power law. For sulfur hexafluoride (SF\(_6\)),</p>
+<div class="result"><p>\[ |\rho_+ - \rho_-| \propto (T_c - T)^{\beta},\qquad \beta = 0.327 \pm 0.006. \]</p></div>
+<p>The exponent \(\beta\) is a <mark>critical exponent</mark>. Remarkably, it does not depend on the particular fluid: this is our first glimpse of <mark>universality</mark>.</p>
+
+<figure class="demo" id="demo-dome">
+  <p class="title">How the exponent shapes the coexistence curve</p>
+  <div class="controls" id="dome-boxes"></div>
+  <div class="grid2">
+    <div><p class="plot-label">Coexistence curve: \(T/T_c\) vs \(\rho/\rho_c\)</p><canvas class="plot" id="dome-lin"></canvas></div>
+    <div><p class="plot-label">\(\Delta\rho/\rho_c\) vs \(t\), log–log</p><canvas class="plot" id="dome-log"></canvas></div>
+  </div>
+  <figcaption>Model curves \(\rho_\pm/\rho_c = 1 \pm B\,t^{\beta}\) with a common illustrative amplitude \(B = 0.9\); only the exponent is physical. A smaller \(\beta\) gives a flatter top. On log–log axes each power law is a straight line of slope \(\beta\); the SF\(_6\) fluid and the DyAlO\(_3\) magnet lie almost on top of each other, while mean-field theory (\(\beta = 1/2\)) does not.</figcaption>
+</figure>
+
+<h3 id="magnet">The magnetic critical point</h3>
+<p>A <mark>ferromagnet</mark> can be regarded as a set of magnetic dipoles, or spins, residing on the vertices of a crystal lattice. The spins exchange energy through interactions among themselves, as well as with other degrees of freedom of the crystal lattice, e.g., via spin–orbit coupling. For systems in <mark>equilibrium</mark> one can define a temperature \(T\): if one waits a sufficiently long time, equilibrium is established between the lattice and the spins, and both sets of degrees of freedom are described by the same \(T\).</p>
+<ul>
+  <li>At high temperatures and zero external field the system is in the <b>paramagnetic</b> phase: spins point in all directions with equal frequency, and the average net magnetization is zero.</li>
+  <li>Below \(T_c\) and in zero external field, the spins tend to align along a particular direction in space even in the absence of an external field. There is a net magnetization \(M(T) \neq 0\), and the system is in the <b>ferromagnetic</b> phase. Which direction is chosen is a nontrivial question we return to later.</li>
+</ul>
+<p>The magnetization is the <mark>order parameter</mark>: it rises continuously from zero as \(T\) is lowered through \(T_c\), so this is a <mark>continuous phase transition</mark>.</p>
+<p>In an <b>Ising</b> ferromagnet each spin can only point up or down along one axis (the \(z\) axis): simpler, but not that simple. Parallel spins (\(\uparrow\uparrow\)) have lower energy and antiparallel spins (\(\uparrow\downarrow\)) have higher energy. In an Ising <i>antiferromagnet</i> the antiparallel arrangement has lower energy; on certain crystal lattices and in zero applied field its thermodynamics is identical to that of the ferromagnet. For the three-dimensional Ising antiferromagnet DyAlO\(_3\),</p>
+<div class="result"><p>\[ M \propto (T_c - T)^{\beta},\qquad \beta = 0.311 \pm 0.005. \]</p></div>
+
+<figure class="demo" id="demo-ising">
+  <p class="title">The 2D Ising model, hands on</p>
+  <div class="grid-lat">
+    <div><canvas class="lattice" id="is-lattice" width="96" height="96" aria-label="Ising model lattice, Metropolis dynamics"></canvas></div>
+    <div>
+      <div class="controls">
+        <label>Temperature \(k_BT/J\) <input type="range" id="is-T" min="0.5" max="5" step="0.01" value="3.0"> <output id="is-T-out"></output></label>
+        <label>Field \(h/J\) <input type="range" id="is-h" min="-1" max="1" step="0.01" value="0"> <output id="is-h-out"></output></label>
+        <label>Speed <input type="range" id="is-speed" min="1" max="30" step="1" value="4"> <output id="is-speed-out"></output></label>
+      </div>
+      <div class="controls">
+        <button id="is-hot">Restart random</button>
+        <button id="is-cold">Restart all up</button>
+        <button id="is-pause" aria-pressed="false">Pause</button>
+      </div>
+      <p class="plot-label">Magnetization per spin \(m\) over the last 400 sweeps</p>
+      <canvas class="plot" id="is-trace" style="height:170px"></canvas>
+      <p class="readout" id="is-read"></p>
+    </div>
+  </div>
+  <div style="margin-top:1.2rem">
+    <div class="controls"><button id="is-scan">Measure ⟨|m|⟩(T)</button><span id="is-scan-status" class="readout" style="margin:0"></span></div>
+    <canvas class="plot" id="is-scan-plot"></canvas>
+  </div>
+  <figcaption>Metropolis dynamics on a 96 × 96 periodic lattice. Cool it below \(T_c\approx 2.269\) from a random start and watch domains coarsen; the system eventually picks one direction spontaneously. The measurement runs a separate 32 × 32 lattice down in temperature and compares with Onsager's exact result \(m = [1-\sinh^{-4}(2J/k_BT)]^{1/8}\), which has \(\beta = 1/8\) in two dimensions, and with mean-field theory (dashes), which predicts \(\beta = 1/2\) and a \(T_c\) that is too high. The three-dimensional Ising value is \(\beta \approx 0.33\), consistent with DyAlO\(_3\). Near \(T_c\) the dynamics slows down markedly; this critical slowing down is itself a dynamic critical phenomenon.</figcaption>
+</figure>
+
+<h3 id="helium">The superfluid (λ) transition in \(^4\)He</h3>
+<p>For pressures from near zero to about 25 atmospheres, liquid \(^4\)He undergoes a continuous transition to a superfluid at a temperature of about 2 K. The superfluid shows dissipationless flow through fine capillaries, among other unusual properties. The transition is called the λ-transition after the shape of the heat-capacity curve, and its temperature \(T_\lambda\) depends on pressure. Near \(T_\lambda\) the heat capacity has a cusp,</p>
+<div class="result"><p>\[ C \propto |T - T_\lambda|^{-\alpha},\qquad \alpha = -0.013 \pm 0.003, \]</p></div>
+<p>a very small critical exponent. Because \(x^{n} = e^{n\ln x} \approx 1 + n\ln x\) for \(|n| \ll 1\) (and \(x\) not too small), such a power law is nearly indistinguishable from a logarithm,</p>
+<div class="math-scroll">\[ C \approx \begin{cases} A\,\ln(T-T_\lambda) + B, & T > T_\lambda,\\ A'\ln(T_\lambda - T) + B', & T \lt  T_\lambda. \end{cases} \]</div>
+
+<figure class="demo" id="demo-lambda">
+  <p class="title">A small exponent or a logarithm?</p>
+  <div class="controls">
+    <label>Exponent \(\alpha\) <input type="range" id="lam-a" min="-0.1" max="0.1" step="0.001" value="-0.013"> <output id="lam-a-out"></output></label>
+    <button id="lam-reset">Reset to ⁴He value</button>
+  </div>
+  <div class="grid2">
+    <div><p class="plot-label">Heat capacity (arb. units) vs \(T/T_\lambda - 1\)</p><canvas class="plot" id="lam-lin"></canvas></div>
+    <div><p class="plot-label">Same, against \(|t| = |T/T_\lambda - 1|\) on a log axis</p><canvas class="plot" id="lam-log"></canvas></div>
+  </div>
+  <p class="readout" id="lam-read"></p>
+  <figcaption>Solid: \(C = A(|t|^{-\alpha}-1)/\alpha\), which tends to \(-A\ln|t|\) as \(\alpha \to 0\). Dashes: the pure logarithm. Amplitudes \(A=1\) above and \(A'=1.07\) below \(T_\lambda\) are illustrative. Over the first few decades of \(|t|\) the two are indistinguishable; for \(\alpha\lt 0\) the power law eventually bends over and \(C\) stays finite at \(T_\lambda\), a cusp rather than a divergence. Resolving this took measurements reaching \(|t| \sim 10^{-9}\).</figcaption>
+</figure>
+
+<h3 id="saw">The self-avoiding random walk</h3>
+<p>For an ordinary random walk, the root-mean-square distance \(R\) traveled after \(N\) steps obeys \(R \propto \sqrt N\). This is diffusion, \(\partial\rho/\partial t \propto \nabla^2\rho\), in disguise: space squared is proportional to time.</p>
+<p>A <mark>self-avoiding walk</mark> (SAW) is not permitted to intersect itself. It is a minimal model of a polymer chain in solution, and here</p>
+<div class="result"><p>\[ \begin{gathered} R \propto N^{\nu},\\ \nu = 0.586 \pm 0.004 \ \text{(experiment, dilute polymers)}. \end{gathered} \]</p></div>
+<p>Since \(\nu > 1/2\), the SAW naturally goes farther than an ordinary walk. The exponent is completely independent of the chemistry and depends only on the "spaghetti" nature of the polymer. Renormalization-group calculations give \(\nu = 0.5880 \pm 0.0015\).</p>
+
+<figure class="demo" id="demo-saw">
+  <p class="title">Measure ν yourself</p>
+  <div class="controls">
+    <span role="group" aria-label="Dimension"><button id="saw-d2" aria-pressed="false">2D lattice</button> <button id="saw-d3" aria-pressed="true">3D lattice</button></span>
+    <label>Show walks with \(N\) = <select id="saw-N"></select></label>
+    <button id="saw-reset">Restart sampling</button>
+  </div>
+  <div class="grid2">
+    <div><p class="plot-label">Self-avoiding walk (blue) and ordinary walk (gray), same \(N\), same scale</p><canvas class="plot" id="saw-draw" style="height:300px"></canvas></div>
+    <div><p class="plot-label">\(R_{\rm rms}\) vs \(N\), log–log</p><canvas class="plot" id="saw-plot" style="height:300px"></canvas></div>
+  </div>
+  <p class="readout" id="saw-read"></p>
+  <figcaption>Self-avoiding walks on the square or simple cubic lattice are sampled with the pivot algorithm: a random site is chosen, the rest of the chain is rotated or reflected about it by a random lattice symmetry, and the move is accepted only if the result does not intersect itself. Ordinary random walks are sampled directly. The fitted slopes estimate \(\nu\); the 2D exact value is \(3/4\). Short chains carry corrections to scaling, so the fitted slope can sit slightly off the asymptotic value; the statistical error shrinks as sampling accumulates.</figcaption>
+</figure>
+
+<h3 id="dynamic">Dynamic critical phenomena</h3>
+<p>Nontrivial power laws can also appear in <mark>transport coefficients</mark> of a system near a critical point. A transport coefficient is a phenomenological parameter relating a current to a driving force. Ohm's law \(\vec J = \overleftrightarrow{\sigma}\,\vec E\) relates the current density to the electric field through the conductivity tensor; other examples are diffusion coefficients and the viscosity. For shear flow between plates of area \(A\),</p>
+<div class="math-scroll">\[ \frac{|F_x|}{A} = \eta_s\,\frac{du_x}{dz}, \]</div>
+<p>and the shear viscosity \(\eta_s\) is found to diverge weakly near the critical point of a binary fluid (nitroethane–3-methylpentane):</p>
+<div class="result"><p>\[ \eta_s \propto \left(\frac{T-T_c}{T_c}\right)^{-0.03 \pm 0.01}. \]</p></div>
+<figure class="demo" id="demo-visc">
+  <p class="title">A divergence you can barely see</p>
+  <canvas class="plot" id="visc-plot" style="height:220px"></canvas>
+  <figcaption>\(\eta_s/\eta_s(t{=}1) = t^{-0.03}\) over four decades of reduced temperature \(t\): the viscosity grows by only about 30%. Close to equilibrium, transport properties can be related to purely equilibrium quantities through linear response theory.</figcaption>
+</figure>
+</section>
+
+<!-- ======================= 1.3 ======================= -->
+<section id="s1-3">
+<h2><span class="sec">1.3</span>Some important questions</h2>
+<p>This course is primarily concerned with phase transitions where <mark>no latent heat is generated</mark>. For the most part we omit first-order transitions in the Ehrenfest classification, in which a transition is called \(n\)th order if some \(n\)th derivative of the free energy with respect to one of its arguments is discontinuous at the transition.</p>
+<p>The phenomena we describe, <mark>critical phenomena</mark>, occur at what Ehrenfest would call second-order transitions. We prefer the term <i>continuous</i> phase transition. Ehrenfest's scheme fails because, when it was formulated, it was not known that quantities such as the specific heat actually <i>diverge</i> at continuous transitions instead of simply jumping. We will see that this failure is tied to the failure of mean-field theory, exemplified by the Weiss theory of ferromagnetism and the van der Waals equation for fluids.</p>
+<p>Many different observable quantities exhibit scaling behavior and have associated critical exponents. They fall into two categories: (1) thermodynamic variables, such as the specific heat, and (2) spatial ordering, e.g., how the local magnetic moment varies from point to point.</p>
+
+<div class="question"><h3><b>Question 0.</b> Why do phase transitions occur at all?</h3></div>
+<p>In equilibrium statistical mechanics, for a system in contact with a large reservoir at temperature \(T\), thermodynamics follows from the Helmholtz free energy \(F\) and its derivatives, given by Gibbs' formula</p>
+<div class="result"><p>\[ e^{-F/k_BT} = \operatorname{Tr}\, e^{-\mathcal H/k_BT} \equiv Z, \]</p></div>
+<p>where \(\mathcal H\) is the Hamiltonian, the trace is the sum over all degrees of freedom appearing in \(\mathcal H\), and \(Z\) is the partition function. Since \(\mathcal H\) is usually a non-singular function of the degrees of freedom, \(Z\) is a sum of terms \(e^{-\mathcal H/k_BT}\), each an analytic function of the parameters in the Hamiltonian. How, then, can such a sum give rise to the non-analytic behavior described above? Is it even clear a priori that a single partition function can describe several phases?</p>
+<p>The answer, developed in Chapter 2, is the <mark>thermodynamic limit</mark>: a finite sum of analytic terms is analytic, but the limit \(N \to \infty\) need not be. The demo below makes this concrete with a model whose partition function can be summed exactly for any \(N\).</p>
+
+<figure class="demo" id="demo-cw">
+  <p class="title">Non-analyticity emerges only as \(N \to \infty\)</p>
+  <div class="controls">
+    <label>Number of spins \(N\) <input type="range" id="cw-N" min="0" max="10" step="1" value="4"> <output id="cw-N-out"></output></label>
+  </div>
+  <div class="grid2">
+    <div><p class="plot-label">Order parameter \(\langle |m| \rangle\) vs \(k_BT/J\)</p><canvas class="plot" id="cw-m"></canvas></div>
+    <div><p class="plot-label">Heat capacity per spin \(C/Nk_B\) vs \(k_BT/J\)</p><canvas class="plot" id="cw-c"></canvas></div>
+  </div>
+  <figcaption>The Curie–Weiss model \(\mathcal H = -\frac{J}{2N}\big(\sum_i s_i\big)^2\), in which every spin interacts equally with every other, has \(Z_N = \sum_{k=0}^{N}\binom{N}{k}\exp\!\big[(2k-N)^2 J/2Nk_BT\big]\), a finite sum of smooth terms. Gray curves are smaller \(N\), the blue curve is the current \(N\), and the magenta dashes are the \(N\to\infty\) limit, with a kink in \(\langle|m|\rangle\) and a jump in \(C\) at \(T_c = J/k_B\). Every finite-\(N\) curve is smooth; the singularity appears only in the limit.</figcaption>
+</figure>
+
+<div class="question"><h3><b>Question 1.</b> How can we calculate the phase diagram of a system as we change the external parameters?</h3></div>
+<p>The external parameters enter \(F\) through \(\mathcal H\), as well as through \(T\), via \(e^{-F/k_BT} = \operatorname{Tr}\, e^{-\mathcal H/k_BT}\).</p>
+
+<div class="question"><h3><b>Question 2.</b> How do we compute the exponents observed at a continuous transition?</h3></div>
+<p>Mean-field theories always lead to exponents given by rational fractions, but the observed values do not agree with these predictions:</p>
+<div class="table-scroll">
+<table class="exps">
+  <thead><tr><th>Quantity</th><th>System</th><th>Measured</th><th>Mean field</th></tr></thead>
+  <tbody>
+    <tr><td>\(|\rho_+-\rho_-| \propto |T-T_c|^{\beta}\)</td><td>SF\(_6\) fluid</td><td>\(0.327 \pm 0.006\)</td><td>\(1/2\)</td></tr>
+    <tr><td>\(M \propto (T_c-T)^{\beta}\)</td><td>DyAlO\(_3\) magnet</td><td>\(0.311 \pm 0.005\)</td><td>\(1/2\)</td></tr>
+    <tr><td>\(C \propto |T-T_\lambda|^{-\alpha}\)</td><td>\(^4\)He, λ-line</td><td>\(\alpha = -0.013 \pm 0.003\)</td><td>\(0\) (a jump)</td></tr>
+    <tr><td>\(R \propto N^{\nu}\)</td><td>dilute polymers</td><td>\(0.586 \pm 0.004\)</td><td>\(1/2\) (ideal chain)</td></tr>
+  </tbody>
+</table>
+</div>
+<p>Resolving this discrepancy produced a new way of looking at physics: K. G. Wilson's <mark>renormalization group</mark> (RG), recognized by the 1982 Nobel Prize in Physics.</p>
+
+<div class="question"><h3><b>Question 3.</b> Why does universality occur, and what determines which phenomena share the same critical exponents?</h3></div>
+<p>The critical exponents are often independent of the specific system. The exponent \(\beta\) of the liquid–gas critical point and the exponent \(\beta\) of the ferromagnetic critical point are the same within experimental accuracy, as the log–log plot in the coexistence-curve demo shows. That two apparently different physical systems can share precisely the same set of critical exponents is called <mark>universality</mark>, and phenomena with the same set of exponents form a <mark>universality class</mark>. In general, members of a universality class have only three things in common:</p>
+<ol>
+  <li>the symmetry group of the Hamiltonian (not of the lattice, if one is present);</li>
+  <li>the dimensionality of space;</li>
+  <li>whether or not the forces are short ranged.</li>
+</ol>
+</section>
+
+<!-- ======================= 1.4 ======================= -->
+<section id="s1-4">
+<h2><span class="sec">1.4</span>Historical development</h2>
+<p>We will follow the historical development of the subject approximately, but start from a precise statistical-mechanical definition of a phase transition. That definition emphasizes the <mark>thermodynamic limit</mark>, in which the system size is taken to be infinitely large; strictly speaking, phase transitions arise only in this limit.</p>
+<p>Two physical systems anchor the classical theory: the liquid–gas system, described by van der Waals, and the ferromagnet, described by Weiss. Their mathematical descriptions become identical near a critical point, and this similarity forms the basis of <mark>Landau's theory of phase transitions</mark>, the most succinct statement of the classical approach. Landau theory is a mean-field theory: a variable such as the magnetization is replaced by its average value, and fluctuations about that value are ignored. Near a critical point fluctuations are not negligible, so the theory is not self-consistent there.</p>
+
+<h3>Widom scaling</h3>
+<p>The notion of <mark>scaling laws</mark> was first reached on a phenomenological basis by B. Widom. For a magnet, the equation of state relates the magnetization \(M\), the temperature, and the external field \(H\): \(H = f(M,t)\) with \(t = (T-T_c)/T_c\), a function of two variables. Widom found that near a critical point it can be written as</p>
+<div class="result"><p>\[ H = M^{\delta}\,\Phi\!\left(\frac{t}{M^{1/\beta}}\right), \]</p></div>
+<p>a function of a single variable. This implies relations among the exponents of different thermodynamic quantities (specific heat, susceptibility, magnetization). His striking discovery was that \(\delta\), \(\beta\), and \(T_c\) can be chosen so that experimental data from different materials all satisfy the equation with the <i>same</i> function \(\Phi\).</p>
+
+<figure class="demo" id="demo-widom">
+  <p class="title">Find the exponents that collapse the data</p>
+  <div class="controls">
+    <label>\(\beta\) <input type="range" id="wd-b" min="0.2" max="0.9" step="0.005" value="0.33"> <output id="wd-b-out"></output></label>
+    <label>\(\delta\) <input type="range" id="wd-d" min="1.5" max="6" step="0.01" value="4.5"> <output id="wd-d-out"></output></label>
+    <button id="wd-answer">Reveal exponents</button>
+  </div>
+  <div class="grid2">
+    <div><p class="plot-label">Raw isotherms: \(m\) vs \(h\)</p><canvas class="plot" id="wd-raw"></canvas></div>
+    <div><p class="plot-label">Scaled: \(h/m^{\delta}\) vs \(t/m^{1/\beta}\)</p><canvas class="plot" id="wd-scaled"></canvas></div>
+  </div>
+  <p class="readout" id="wd-read"></p>
+  <figcaption>Isotherms of the exact mean-field equation of state \(h = T\,\mathrm{artanh}(m) - m\) (in units \(J = k_B = 1\), \(T_c = 1\)) for eight temperatures, blue below \(T_c\) and orange above. Adjust \(\beta\) and \(\delta\) until the right-hand curves fall onto one curve per branch; the spread is the scatter of \(\ln(h/m^\delta)\) between isotherms at equal scaled argument. Because these "data" come from a mean-field model, the collapse exponents are the mean-field ones. Real magnets collapse with different values, which is the point of Question 2.</figcaption>
+</figure>
+
+<h3>Kadanoff, Wilson, and beyond</h3>
+<p>Where do scaling laws come from? L. P. Kadanoff proposed that Widom's form follows if, near a critical point, the system <mark>looks the same on all length scales</mark>. The argument is not quite correct, but it supplies the physical insight on which the renormalization group is built. Starting in 1971, Wilson developed the RG in both condensed matter and high-energy physics; many applications used perturbation expansions in small parameters such as \(\epsilon \equiv 4-d\), with \(d\) the dimension of space, or \(1/n\), with \(n\) the number of components of the order parameter.</p>
+<ol class="timeline">
+  <li><span class="yr">1873</span>van der Waals: equation of state for fluids, with a liquid–gas critical point.</li>
+  <li><span class="yr">1907</span>Weiss: molecular-field theory of ferromagnetism.</li>
+  <li><span class="yr">1937</span>Landau: a unified mean-field theory of continuous transitions built on the order parameter.</li>
+  <li><span class="yr">1965</span>Widom: scaling form of the equation of state.</li>
+  <li><span class="yr">1966</span>Kadanoff: block-spin picture of self-similarity near \(T_c\).</li>
+  <li><span class="yr">1971</span>Wilson: the renormalization group; \(\epsilon\)-expansion follows in 1972 with Fisher.</li>
+  <li><span class="yr">1982</span>Nobel Prize in Physics to Wilson.</li>
+</ol>
+<p>The RG reaches beyond equilibrium. Goldenfeld's preface describes realizing, in the winter of 1983–84, that certain non-equilibrium phenomena can be analyzed with the RG even though there is no partition function to compute. Examples include phase separation in a binary alloy below its critical point, where the X-ray scattering intensity obeys dynamical scaling,</p>
+<div class="math-scroll">\[ S(k,t) = t^{d\phi}\,F(kt^{\phi}),\qquad \phi \approx 1/3, \]</div>
+<p>and partial differential equations with similarity solutions \(u(x,t) \sim t^{\alpha} f(xt^{\beta})\) as \(t\to\infty\), whose exponents sometimes cannot be found by dimensional analysis: precisely the singular case flagged in §1.1. These return in Chapter 10.</p>
+</section>
+
+<section id="reading">
+<h2>Further reading</h2>
+<ul>
+  <li>N. Goldenfeld, <i>Lectures on Phase Transitions and the Renormalization Group</i> (Addison-Wesley, 1992), Chapter 1.</li>
+  <li>G. I. Barenblatt, <i>Scaling</i> (Cambridge University Press, 2003): dimensional analysis, self-similarity, and when it fails.</li>
+  <li>D. V. Schroeder, <i>An Introduction to Thermal Physics</i> (Addison-Wesley, 2000): transport coefficients and viscosity at an undergraduate level.</li>
+</ul>
+</section>
+</main>
+</div>
+
+<footer>
+  <nav class="chapnav" aria-label="Chapters" style="display:flex;flex-wrap:wrap;gap:.4rem 1.6rem;font-family:var(--ui-font);font-size:1rem;margin:0 0 1rem">
+    <a href="index.html" style="color:var(--muted)">All chapters</a>
+    <a href="ch02a-phase-transitions-in-principle.html" style="color:var(--muted)">Next: Chapter 2, Part 1, How phase transitions occur in principle</a>
+  </nav>
+  <p>Interactive companion to lecture notes on Chapter 1 of N. Goldenfeld, <i>Lectures on Phase Transitions and the Renormalization Group</i>. The text paraphrases the notes; experimental exponents are as quoted there. All simulations run client side with no data collection.</p>
+</footer>
+
+<script>
+"use strict";
+/* ---------- utilities ---------- */
+const $ = s => document.querySelector(s);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function hexRGB(h){ h=h.replace('#',''); if(h.length===3) h=h.split('').map(c=>c+c).join(''); const n=parseInt(h,16); return [(n>>16)&255,(n>>8)&255,n&255]; }
+function rgba(hex,a){ const [r,g,b]=hexRGB(hex); return `rgba(${r},${g},${b},${a})`; }
+const SUP={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
+const sup = s => String(s).split('').map(c=>SUP[c]||c).join('');
+function fmt(v){
+  if(v===0) return '0';
+  const a=Math.abs(v);
+  if(a>=1e4||a<1e-3){ const e=Math.floor(Math.log10(a)+1e-9); const mm=v/10**e; return (Math.abs(Math.abs(mm)-1)<1e-6?(mm<0?'−':''):(+mm.toFixed(1))+'×')+'10'+sup(e); }
+  return String(+v.toPrecision(3)).replace('-','−');
+}
+function niceTicks(a,b,n){
+  const raw=(b-a)/n, mag=10**Math.floor(Math.log10(raw)), norm=raw/mag;
+  const step=(norm<1.5?1:norm<3?2:norm<7?5:10)*mag, t=[];
+  for(let v=Math.ceil(a/step-1e-9)*step; v<=b+step*1e-6; v+=step){ const vv=Math.abs(v)<step*1e-6?0:v; t.push({v:vv,label:fmt(+vv.toPrecision(12))}); }
+  return t;
+}
+function logTicks(a,b){
+  const k0=Math.ceil(Math.log10(a)-1e-9), k1=Math.floor(Math.log10(b)+1e-9), span=k1-k0, t=[];
+  const mants = span<=1 ? [1,2,5] : [1];
+  const every = span>7 ? 2 : 1;
+  for(let k=k0-1;k<=k1;k++) for(const mt of mants){
+    const v=mt*10**k; if(v<a*(1-1e-9)||v>b*(1+1e-9)) continue;
+    if(mt===1 && (k-k0)%every!==0) { t.push({v,label:''}); continue; }
+    t.push({v,label: span<=1||(k>=-1&&k<=2)? fmt(v) : '10'+sup(k)});
+  }
+  return t;
+}
+/* generic canvas plot */
+function plot(cv,o){
+  const H=o.height||cv.clientHeight||280, dpr=window.devicePixelRatio||1, w=cv.clientWidth||600;
+  cv.width=Math.round(w*dpr); cv.height=Math.round(H*dpr);
+  const ctx=cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,H);
+  const ink=css('--ink'), muted=css('--muted'), rule=css('--rule'), font=css('--ui-font');
+  const m={l:52,r:12,t:10,b:40}, pw=w-m.l-m.r, ph=H-m.t-m.b;
+  const fx=o.xlog?Math.log10:(v=>v), fy=o.ylog?Math.log10:(v=>v);
+  const ax0=fx(o.xlim[0]),ax1=fx(o.xlim[1]),ay0=fy(o.ylim[0]),ay1=fy(o.ylim[1]);
+  const X=v=>m.l+(fx(v)-ax0)/(ax1-ax0)*pw, Y=v=>m.t+ph-(fy(v)-ay0)/(ay1-ay0)*ph;
+  ctx.font=`12px ${font}`; ctx.lineWidth=1;
+  const xt=o.xlog?logTicks(...o.xlim):niceTicks(...o.xlim,o.xticks||Math.max(3,Math.round(pw/90)));
+  const yt=o.ylog?logTicks(...o.ylim):niceTicks(...o.ylim,o.yticks||Math.max(3,Math.round(ph/55)));
+  ctx.strokeStyle=rule; ctx.fillStyle=muted;
+  ctx.textAlign='center'; ctx.textBaseline='top';
+  for(const t of xt){ const px=Math.round(X(t.v))+.5; ctx.beginPath(); ctx.moveTo(px,m.t); ctx.lineTo(px,m.t+ph); ctx.stroke(); if(t.label) ctx.fillText(t.label,px,m.t+ph+5); }
+  ctx.textAlign='right'; ctx.textBaseline='middle';
+  for(const t of yt){ const py=Math.round(Y(t.v))+.5; ctx.beginPath(); ctx.moveTo(m.l,py); ctx.lineTo(m.l+pw,py); ctx.stroke(); if(t.label) ctx.fillText(t.label,m.l-6,py); }
+  ctx.strokeStyle=muted; ctx.strokeRect(m.l+.5,m.t+.5,pw,ph);
+  ctx.save(); ctx.beginPath(); ctx.rect(m.l,m.t,pw,ph); ctx.clip();
+  for(const v of (o.vlines||[])){ ctx.strokeStyle=v.color||muted; ctx.setLineDash(v.dash||[4,4]); ctx.beginPath(); const px=X(v.x); ctx.moveTo(px,m.t); ctx.lineTo(px,m.t+ph); ctx.stroke(); ctx.setLineDash([]);
+    if(v.label){ ctx.fillStyle=v.color||muted; ctx.textAlign='left'; ctx.textBaseline='top'; ctx.fillText(v.label,px+4,m.t+4); } }
+  for(const v of (o.hlines||[])){ ctx.strokeStyle=v.color||muted; ctx.setLineDash(v.dash||[4,4]); ctx.beginPath(); const py=Y(v.y); ctx.moveTo(m.l,py); ctx.lineTo(m.l+pw,py); ctx.stroke(); ctx.setLineDash([]); }
+  const ok=(x,y)=>isFinite(x)&&isFinite(y)&&(!o.xlog||x>0)&&(!o.ylog||y>0);
+  for(const s of o.series){
+    ctx.globalAlpha=s.alpha??1;
+    if(s.points){
+      ctx.fillStyle=s.color;
+      for(const [x,y] of s.data){ if(!ok(x,y)) continue; ctx.beginPath(); ctx.arc(X(x),Y(y),s.r||3.2,0,2*Math.PI); ctx.fill(); }
+    } else {
+      ctx.strokeStyle=s.color; ctx.lineWidth=s.width||2; ctx.setLineDash(s.dash||[]); ctx.lineJoin='round';
+      ctx.beginPath(); let pen=false;
+      for(const [x,y] of s.data){ if(!ok(x,y)){pen=false;continue;} const px=X(x),py=Y(y); if(pen) ctx.lineTo(px,py); else {ctx.moveTo(px,py); pen=true;} }
+      ctx.stroke(); ctx.setLineDash([]);
+    }
+    ctx.globalAlpha=1;
+  }
+  if(o.after) o.after(ctx,X,Y);
+  ctx.restore();
+  ctx.fillStyle=ink; ctx.font=`13px ${font}`;
+  if(o.xlabel){ ctx.textAlign='center'; ctx.textBaseline='bottom'; ctx.fillText(o.xlabel,m.l+pw/2,H-2); }
+  if(o.ylabel){ ctx.save(); ctx.translate(12,m.t+ph/2); ctx.rotate(-Math.PI/2); ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(o.ylabel,0,0); ctx.restore(); }
+  const leg=o.series.filter(s=>s.name);
+  if(leg.length){
+    ctx.font=`12px ${font}`; const lh=17, lw=Math.max(...leg.map(s=>ctx.measureText(s.name).width))+34;
+    const pos=o.legend||'tl'; const lx=pos.includes('r')?m.l+pw-lw-6:m.l+8; const ly=pos.includes('b')?m.t+ph-leg.length*lh-8:m.t+8;
+    ctx.fillStyle=rgba(css('--surface'),.88); ctx.fillRect(lx-4,ly-4,lw+4,leg.length*lh+6);
+    leg.forEach((s,i)=>{ const yy=ly+i*lh+lh/2; ctx.globalAlpha=s.alpha??1;
+      if(s.points){ ctx.fillStyle=s.color; ctx.beginPath(); ctx.arc(lx+11,yy,3.5,0,2*Math.PI); ctx.fill(); }
+      else { ctx.strokeStyle=s.color; ctx.lineWidth=s.width||2; ctx.setLineDash(s.dash||[]); ctx.beginPath(); ctx.moveTo(lx,yy); ctx.lineTo(lx+22,yy); ctx.stroke(); ctx.setLineDash([]); }
+      ctx.globalAlpha=1; ctx.fillStyle=ink; ctx.textAlign='left'; ctx.textBaseline='middle'; ctx.fillText(s.name,lx+28,yy); });
+  }
+  return {X,Y};
+}
+const range=(a,b,n)=>Array.from({length:n},(_,i)=>a+(b-a)*i/(n-1));
+const logRange=(a,b,n)=>range(Math.log10(a),Math.log10(b),n).map(v=>10**v);
+
+/* redraw registry (resize, color scheme) */
+const redraws=[];
+function reg(f){ redraws.push(f); f(); }
+let rzT; window.addEventListener('resize',()=>{ clearTimeout(rzT); rzT=setTimeout(()=>redraws.forEach(f=>f()),120); });
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{ refreshSpinColors(); redraws.forEach(f=>f()); });
+
+/* visibility flags so off-screen simulations sleep */
+const visible=new Map();
+const io=new IntersectionObserver(es=>es.forEach(e=>visible.set(e.target.id,e.isIntersecting)),{rootMargin:'100px'});
+function watch(id){ visible.set(id,false); io.observe(document.getElementById(id)); }
+
+/* ---------- Ising machinery ---------- */
+let SPIN_UP=[0,0,0], SPIN_DN=[0,0,0];
+function refreshSpinColors(){ SPIN_UP=hexRGB(css('--spin-up')); SPIN_DN=hexRGB(css('--spin-down')); }
+refreshSpinColors();
+function lattice(L){ return {L,s:new Int8Array(L*L)}; }
+function fill(sys,hot){ const s=sys.s; for(let i=0;i<s.length;i++) s[i]=hot?(Math.random()<.5?1:-1):1; }
+function magnet(sys){ let M=0; for(const v of sys.s) M+=v; return M/sys.s.length; }
+function metropolisSweep(sys,T,h){
+  const {L,s}=sys, N=L*L, b=1/T;
+  // acceptance for flipping spin s with neighbor sum nn: dE = 2 s (nn + h)
+  const acc={};
+  for(const sp of [1,-1]) for(let nn=-4;nn<=4;nn+=2){ const dE=2*sp*(nn+h); acc[sp*10+nn]=dE<=0?1:Math.exp(-b*dE); }
+  for(let n=0;n<N;n++){
+    const i=(Math.random()*N)|0, x=i%L, y=(i-x)/L;
+    const nn=s[y*L+(x+1)%L]+s[y*L+(x+L-1)%L]+s[((y+1)%L)*L+x]+s[((y+L-1)%L)*L+x];
+    const sp=s[i]; if(Math.random()<acc[sp*10+nn]) s[i]=-sp;
+  }
+}
+function wolffCluster(sys,T,stack){
+  const {L,s}=sys, p=1-Math.exp(-2/T), i0=(Math.random()*L*L)|0, s0=s[i0];
+  let sp=0, size=1; stack[sp++]=i0; s[i0]=-s0;
+  while(sp){
+    const i=stack[--sp], x=i%L, y=(i-x)/L;
+    const nb=[y*L+(x+1)%L, y*L+(x+L-1)%L, ((y+1)%L)*L+x, ((y+L-1)%L)*L+x];
+    for(const j of nb) if(s[j]===s0 && Math.random()<p){ s[j]=-s0; stack[sp++]=j; size++; }
+  }
+  return size;
+}
+function drawLattice(cv,sys,normalize){
+  const {L,s}=sys, ctx=cv.getContext('2d');
+  if(!cv._img||cv._img.width!==L) cv._img=ctx.createImageData(L,L);
+  const d=cv._img.data, flip=normalize&&magnet(sys)<0?-1:1;
+  for(let i=0;i<L*L;i++){ const c=s[i]*flip>0?SPIN_UP:SPIN_DN; d[4*i]=c[0]; d[4*i+1]=c[1]; d[4*i+2]=c[2]; d[4*i+3]=255; }
+  ctx.putImageData(cv._img,0,0);
+}
+
+/* ---------- hero ---------- */
+const hero={sys:lattice(128),T:2.269,run:!reduceMotion,stack:new Int32Array(128*128)};
+fill(hero.sys,true);
+(function(){
+  const sl=$('#hero-T'), out=$('#hero-T-out'), btn=$('#hero-play');
+  const upd=()=>{ hero.T=+sl.value; out.textContent=hero.T.toFixed(3)+(Math.abs(hero.T-2.269)<0.006?' ≈ Tc':''); };
+  sl.addEventListener('input',upd); upd();
+  const syncBtn=()=>{ btn.textContent=hero.run?'Pause':'Play'; btn.setAttribute('aria-pressed',String(!hero.run)); };
+  btn.addEventListener('click',()=>{ hero.run=!hero.run; syncBtn(); }); syncBtn();
+  // equilibrate a little up front so the first frame already shows structure
+  for(let k=0;k<400;k++) wolffCluster(hero.sys,hero.T,hero.stack); // start from an equilibrated critical state
+  drawLattice($('#hero-lattice'),hero.sys,false);
+})();
+watch('hero-lattice');
+const HERO_INTERVAL=160; // ms between sweeps: slow and calm
+function heroTick(){
+  if(!hero.run||!visible.get('hero-lattice')) return;
+  const now=performance.now(); if(now-(hero.last||0)<HERO_INTERVAL) return; hero.last=now;
+  metropolisSweep(hero.sys,hero.T,0);
+  drawLattice($('#hero-lattice'),hero.sys,false);
+}
+
+/* ---------- 1.1 water waves ---------- */
+(function(){
+  const g=9.81, sl=$('#wv-lam'), out=$('#wv-lam-out'), sel=$('#wv-which');
+  const lam=()=>10**(+sl.value);
+  const c=(h,l)=>Math.sqrt(g*l/(2*Math.PI)*Math.tanh(2*Math.PI*h/l));
+  const f=x=>Math.sqrt(Math.tanh(2*Math.PI*x)/(2*Math.PI*x));
+  const ft=x=>Math.sqrt(Math.tanh(2*Math.PI*x)/(2*Math.PI));
+  function draw(){
+    const l=lam(); out.textContent=(l<10?l.toFixed(1):Math.round(l))+' m';
+    const hs=logRange(1e-2,1e3,300);
+    plot($('#wv-c'),{xlog:true,ylog:true,xlim:[1e-2,1e3],ylim:[0.1,100],xlabel:'depth h (m)',ylabel:'c (m/s)',legend:'br',
+      vlines:[{x:l,label:'h = λ'}],
+      series:[
+        {data:hs.map(h=>[h,Math.sqrt(g*h)]),color:css('--up'),dash:[6,5],width:1.6,name:'√(gh)'},
+        {data:hs.map(h=>[h,Math.sqrt(g*l/(2*Math.PI))]),color:css('--down'),dash:[6,5],width:1.6,name:'√(gλ/2π)'},
+        {data:hs.map(h=>[h,c(h,l)]),color:css('--ink'),width:2.2,name:'exact'}]});
+    const xs=logRange(1e-5,1e2,300), useF=sel.value==='f', fn=useF?f:ft;
+    const dots=[0.1,1,10,100].map(h=>[h/l,fn(h/l)]);
+    plot($('#wv-f'),{xlog:true,ylog:true,xlim:[1e-5,1e2],ylim:useF?[0.01,2]:[1e-3,1],xlabel:'x = h/λ',ylabel:useF?'f(x)':'f̃(x)',legend:useF?'bl':'br',
+      series:[{data:xs.map(x=>[x,fn(x)]),color:css('--ink'),width:2.2,name:useF?'c/√(gh)':'c/√(gλ)'},
+        ...(useF?[]:[{data:xs.map(x=>[x,Math.sqrt(x)]),color:css('--up'),dash:[6,5],width:1.6,name:'x^½'}]),
+        {data:dots,points:true,color:css('--crit'),r:4.5,name:'h = 0.1, 1, 10, 100 m'}]});
+  }
+  sl.addEventListener('input',draw); sel.addEventListener('change',draw); reg(draw);
+})();
+
+/* ---------- coexistence curve explorer ---------- */
+(function(){
+  const sys=[
+    {name:'SF₆ fluid, β = 0.327',b:0.327,col:'--up',on:true},
+    {name:'DyAlO₃ magnet, β = 0.311',b:0.311,col:'--down',on:true},
+    {name:'mean field, β = 1/2',b:0.5,col:'--muted',dash:[6,5],on:true},
+    {name:'2D Ising, β = 1/8',b:0.125,col:'--crit',on:false}];
+  const box=$('#dome-boxes');
+  sys.forEach((s,i)=>{ const lab=document.createElement('label'); lab.innerHTML=`<input type="checkbox" ${s.on?'checked':''}> <span class="swatch"></span>${s.name}`;
+    lab.querySelector('input').addEventListener('change',e=>{ s.on=e.target.checked; draw(); }); s.sw=lab.querySelector('.swatch'); box.appendChild(lab); });
+  const B=0.9;
+  function draw(){
+    sys.forEach(s=>s.sw.style.background=css(s.col));
+    const ts=range(0,1,400).map(v=>v**3), act=sys.filter(s=>s.on);
+    plot($('#dome-lin'),{xlim:[0,2],ylim:[0,1.08],xlabel:'ρ/ρc',ylabel:'T/Tc',
+      hlines:[{y:1}],
+      series:act.map(s=>({color:css(s.col),dash:s.dash,width:2.2,
+        data:[...ts.slice().reverse().map(t=>[1-B*t**s.b,1-t]),...ts.map(t=>[1+B*t**s.b,1-t])]}))});
+    const tl=logRange(1e-4,1,200);
+    plot($('#dome-log'),{xlog:true,ylog:true,xlim:[1e-4,1],ylim:[1e-2,3],xlabel:'t = (Tc − T)/Tc',ylabel:'Δρ/ρc',legend:'br',
+      series:act.map(s=>({name:s.name,color:css(s.col),dash:s.dash,width:2.2,data:tl.map(t=>[t,2*B*t**s.b])}))});
+  }
+  reg(draw);
+})();
+
+/* ---------- interactive Ising ---------- */
+const ising={sys:lattice(96),T:3,h:0,speed:4,run:true,trace:[],acc:0,last:0};
+fill(ising.sys,true);
+const scan={active:false,sys:lattice(32),temps:[],i:0,sweep:0,sum:0,n:0,pts:[],equil:300,meas:1500};
+(function(){
+  const bindR=(id,key,fmtf)=>{ const el=$(id), out=$(id+'-out'); const u=()=>{ ising[key]=+el.value; out.textContent=fmtf(+el.value); }; el.addEventListener('input',u); u(); };
+  bindR('#is-T','T',v=>v.toFixed(2)+(Math.abs(v-2.269)<0.012?' ≈ Tc':''));
+  bindR('#is-h','h',v=>v.toFixed(2));
+  bindR('#is-speed','speed',v=>v+' sweeps/s');
+  $('#is-hot').addEventListener('click',()=>{ fill(ising.sys,true); ising.trace=[]; });
+  $('#is-cold').addEventListener('click',()=>{ fill(ising.sys,false); ising.trace=[]; });
+  const pb=$('#is-pause'); pb.addEventListener('click',()=>{ ising.run=!ising.run; ising.last=0; ising.acc=0; pb.textContent=ising.run?'Pause':'Resume'; pb.setAttribute('aria-pressed',String(!ising.run)); });
+  $('#is-scan').addEventListener('click',()=>{
+    scan.temps=range(3.4,1.4,21); scan.i=0; scan.sweep=0; scan.sum=0; scan.n=0; scan.pts=[]; fill(scan.sys,true); scan.active=true; drawScan();
+  });
+})();
+watch('demo-ising');
+function onsager(T){ const Tc=2/Math.log(1+Math.SQRT2); return T>=Tc?0:Math.pow(1-Math.pow(Math.sinh(2/T),-4),1/8); }
+function mfIsing(T){ if(T>=4) return 0; let m=1; for(let k=0;k<500;k++) m=Math.tanh(4*m/T); return m; }
+function drawTrace(){
+  plot($('#is-trace'),{height:170,xlim:[0,400],ylim:[-1,1],xticks:4,yticks:4,xlabel:'sweeps ago',hlines:[{y:0}],
+    series:[{data:ising.trace.map((v,i)=>[ising.trace.length-1-i,v]),color:css('--up'),width:1.8}]});
+  const m=ising.trace.length?ising.trace[ising.trace.length-1]:magnet(ising.sys);
+  $('#is-read').innerHTML=`<b>m = ${m.toFixed(3)}</b> &nbsp; Onsager spontaneous |m| at this T (h = 0): ${onsager(ising.T).toFixed(3)}`;
+}
+function drawScan(){
+  const Ts=range(1.2,4.2,300), Tc=2/Math.log(1+Math.SQRT2);
+  plot($('#is-scan-plot'),{xlim:[1.2,4.2],ylim:[0,1.05],xlabel:'T (units of J/kB)',ylabel:'⟨|m|⟩',legend:'tr',
+    vlines:[{x:Tc,label:'Tc (exact)',color:css('--crit')}],
+    series:[{data:Ts.map(T=>[T,onsager(T)]),color:css('--ink'),width:2,name:'Onsager, β = 1/8'},
+      {data:Ts.map(T=>[T,mfIsing(T)]),color:css('--muted'),dash:[6,5],width:1.8,name:'mean field, β = 1/2'},
+      {data:scan.pts,points:true,color:css('--up'),r:4,name:'simulation, L = 32'}]});
+}
+reg(()=>{ drawTrace(); drawScan(); });
+function isingTick(){
+  if(!visible.get('demo-ising')) return;
+  if(ising.run){
+    const now=performance.now(), dt=Math.min(now-(ising.last||now),250); ising.last=now;
+    ising.acc+=dt/1000*ising.speed; let n=0;
+    while(ising.acc>=1&&n<30){ metropolisSweep(ising.sys,ising.T,ising.h); ising.trace.push(magnet(ising.sys)); ising.acc-=1; n++; }
+    if(n){ if(ising.trace.length>400) ising.trace.splice(0,ising.trace.length-400);
+      drawLattice($('#is-lattice'),ising.sys,false); drawTrace(); }
+  }
+  if(scan.active){
+    const t0=performance.now();
+    while(performance.now()-t0<7 && scan.active){
+      const T=scan.temps[scan.i]; metropolisSweep(scan.sys,T,0); scan.sweep++;
+      const eq=scan.i===0?scan.equil*2:scan.equil;
+      if(scan.sweep>eq){ scan.sum+=Math.abs(magnet(scan.sys)); scan.n++; }
+      if(scan.sweep>=eq+scan.meas){ scan.pts.push([T,scan.sum/scan.n]); scan.i++; scan.sweep=0; scan.sum=0; scan.n=0;
+        if(scan.i>=scan.temps.length) scan.active=false; drawScan(); }
+    }
+    $('#is-scan-status').textContent=scan.active?`measuring T = ${scan.temps[scan.i].toFixed(2)} (${scan.i+1} of ${scan.temps.length})`:'done: note the rounding near Tc from the finite lattice';
+  }
+}
+
+/* ---------- lambda transition ---------- */
+(function(){
+  const sl=$('#lam-a'), out=$('#lam-a-out');
+  const Cp=(t,a,A)=>A*(Math.abs(a)<1e-6?-Math.log(Math.abs(t)):(Math.pow(Math.abs(t),-a)-1)/a);
+  const Cl=(t,A)=>-A*Math.log(Math.abs(t));
+  function draw(){
+    const a=+sl.value; out.textContent=a.toFixed(3);
+    const amp=t=>t>0?1:1.07;
+    const tl=range(-0.05,0.05,4001).filter(t=>t!==0);
+    plot($('#lam-lin'),{xlim:[-0.05,0.05],ylim:[0,13],xlabel:'T/Tλ − 1',ylabel:'C',vlines:[{x:0,label:'Tλ'}],legend:'tr',
+      series:[{data:tl.map(t=>[t,Cl(t,amp(t))]),color:css('--muted'),dash:[5,4],width:1.6,name:'logarithm'},
+        {data:tl.map(t=>[t,Cp(t,a,amp(t))]),color:css('--up'),width:2.2,name:'power law, α = '+a.toFixed(3)}]});
+    const tg=logRange(1e-12,1,400);
+    plot($('#lam-log'),{xlog:true,xlim:[1e-12,1],ylim:[0,30],xlabel:'|t|',ylabel:'C',legend:'tr',
+      series:[{data:tg.map(t=>[t,Cl(t,1.07)]),color:css('--muted'),dash:[5,4],width:1.6,name:'log, T < Tλ'},
+        {data:tg.map(t=>[t,Cp(t,a,1.07)]),color:css('--up'),width:2.2,name:'power, T < Tλ'},
+        {data:tg.map(t=>[t,Cp(t,a,1)]),color:css('--down'),width:2.2,name:'power, T > Tλ'}]});
+    $('#lam-read').innerHTML = a<0 ? `With α = ${a.toFixed(3)} < 0, C(Tλ) = −A/α = <b>${(-1/a).toFixed(0)}</b> in these units: finite, a cusp.`
+      : a>0 ? `With α = ${a.toFixed(3)} > 0, C <b>diverges</b> as |t|<sup>−α</sup>.` : 'With α = 0 the power law becomes exactly logarithmic: a weak divergence.';
+  }
+  sl.addEventListener('input',draw); $('#lam-reset').addEventListener('click',()=>{ sl.value=-0.013; draw(); }); reg(draw);
+})();
+
+/* ---------- self-avoiding walks (pivot algorithm) ---------- */
+function symmetries(d){
+  const perms=d===3?[[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]]:[[0,1,2],[1,0,2]];
+  const out=[];
+  for(const p of perms) for(let sx of [1,-1]) for(let sy of [1,-1]) for(let sz of (d===3?[1,-1]:[1])) out.push({p,s:[sx,sy,sz]});
+  return out; // identity is out[0]
+}
+const SYM={2:symmetries(2),3:symmetries(3)};
+const key=(x,y,z)=>((x+2048)*4096+(y+2048))*4096+(z+2048);
+class Pivot{
+  constructor(N,d){ this.N=N; this.d=d; this.syms=SYM[d];
+    this.x=new Int32Array(N+1); this.y=new Int32Array(N+1); this.z=new Int32Array(N+1);
+    this.nx=new Int32Array(N+1); this.ny=new Int32Array(N+1); this.nz=new Int32Array(N+1);
+    for(let i=0;i<=N;i++) this.x[i]=i;
+    this.set=new Set(); this.att=0; this.sum=0; this.n=0; this.burn=6*N+1000; }
+  attempt(){
+    const N=this.N, k=1+((Math.random()*(N-1))|0), g=this.syms[1+((Math.random()*(this.syms.length-1))|0)];
+    const {x,y,z,nx,ny,nz,set}=this; set.clear();
+    for(let i=0;i<=k;i++) set.add(key(x[i],y[i],z[i]));
+    const px=x[k],py=y[k],pz=z[k], P=g.p, S=g.s; let ok=true;
+    for(let i=k+1;i<=N;i++){
+      const v0=x[i]-px, v1=y[i]-py, v2=z[i]-pz;
+      const qx=px+S[0]*(P[0]===0?v0:P[0]===1?v1:v2), qy=py+S[1]*(P[1]===0?v0:P[1]===1?v1:v2), qz=pz+S[2]*(P[2]===0?v0:P[2]===1?v1:v2);
+      const kk=key(qx,qy,qz); if(set.has(kk)){ ok=false; break; } set.add(kk); nx[i]=qx; ny[i]=qy; nz[i]=qz;
+    }
+    if(ok) for(let i=k+1;i<=N;i++){ x[i]=nx[i]; y[i]=ny[i]; z[i]=nz[i]; }
+    this.att++;
+    if(this.att>this.burn){ const dx=x[N]-x[0],dy=y[N]-y[0],dz=z[N]-z[0]; this.sum+=dx*dx+dy*dy+dz*dz; this.n++; }
+  }
+}
+function randomWalk(N,d){ const pts=[[0,0,0]]; let p=[0,0,0]; for(let i=0;i<N;i++){ p=p.slice(); const ax=(Math.random()*d)|0; p[ax]+=Math.random()<.5?1:-1; pts.push(p); } return pts; }
+const saw={d:3,Ns:[16,32,64,128,256,512],chains:[],rw:[],show:256,rwShow:null,theta:0,frame:0};
+function sawInit(){
+  saw.chains=saw.Ns.map(N=>new Pivot(N,saw.d));
+  saw.rw=saw.Ns.map(N=>({N,sum:0,n:0}));
+  saw.rwShow=randomWalk(saw.show,saw.d);
+  $('#saw-d2').setAttribute('aria-pressed',String(saw.d===2)); $('#saw-d3').setAttribute('aria-pressed',String(saw.d===3));
+}
+(function(){
+  const sel=$('#saw-N'); saw.Ns.forEach(N=>{ const o=document.createElement('option'); o.value=N; o.textContent=N; if(N===saw.show) o.selected=true; sel.appendChild(o); });
+  sel.addEventListener('change',()=>{ saw.show=+sel.value; saw.rwShow=randomWalk(saw.show,saw.d); drawSaw(); });
+  $('#saw-d2').addEventListener('click',()=>{ saw.d=2; sawInit(); drawSaw(); });
+  $('#saw-d3').addEventListener('click',()=>{ saw.d=3; sawInit(); drawSaw(); });
+  $('#saw-reset').addEventListener('click',()=>{ sawInit(); drawSaw(); });
+  sawInit();
+})();
+watch('demo-saw');
+function fitSlope(pts){ const n=pts.length; if(n<2) return NaN; let sx=0,sy=0,sxx=0,sxy=0; for(const [x,y] of pts){ const lx=Math.log(x), ly=Math.log(y); sx+=lx; sy+=ly; sxx+=lx*lx; sxy+=lx*ly; } return (n*sxy-sx*sy)/(n*sxx-sx*sx); }
+function drawSaw(){
+  // walk drawing
+  const cv=$('#saw-draw'), H=300, dpr=window.devicePixelRatio||1, w=cv.clientWidth||500;
+  cv.width=Math.round(w*dpr); cv.height=Math.round(H*dpr);
+  const ctx=cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,H);
+  const ch=saw.chains[saw.Ns.indexOf(saw.show)];
+  const th=saw.theta, ph=0.45;
+  const proj=(x,y,z)=> saw.d===2?[x,y]:[x*Math.cos(th)+z*Math.sin(th), y*Math.cos(ph)+(-x*Math.sin(th)+z*Math.cos(th))*Math.sin(ph)];
+  const A=[]; for(let i=0;i<=ch.N;i++) A.push(proj(ch.x[i]-ch.x[0],ch.y[i]-ch.y[0],ch.z[i]-ch.z[0]));
+  const Bw=saw.rwShow.map(p=>proj(...p));
+  const ext=pts=>{ let a=Infinity,b=-Infinity,c=Infinity,d=-Infinity; for(const [x,y] of pts){a=Math.min(a,x);b=Math.max(b,x);c=Math.min(c,y);d=Math.max(d,y);} return [a,b,c,d]; };
+  const eA=ext(A), eB=ext(Bw);
+  const panelW=w/2-12, sc=Math.min(panelW/Math.max(eA[1]-eA[0],eB[1]-eB[0],1), (H-30)/Math.max(eA[3]-eA[2],eB[3]-eB[2],1))*0.92;
+  const drawWalk=(pts,e,cx,col,lw)=>{ const mx=(e[0]+e[1])/2, my=(e[2]+e[3])/2;
+    ctx.strokeStyle=col; ctx.lineWidth=lw; ctx.lineJoin='round'; ctx.beginPath();
+    pts.forEach(([x,y],i)=>{ const px=cx+(x-mx)*sc, py=H/2-10+(y-my)*sc; i?ctx.lineTo(px,py):ctx.moveTo(px,py); }); ctx.stroke();
+    const [x0,y0]=pts[0]; ctx.fillStyle=css('--crit'); ctx.beginPath(); ctx.arc(cx+(x0-mx)*sc,H/2-10+(y0-my)*sc,3.5,0,2*Math.PI); ctx.fill(); };
+  drawWalk(A,eA,w/4,css('--up'),saw.show>200?1.2:1.8);
+  drawWalk(Bw,eB,3*w/4,css('--muted'),saw.show>200?1.2:1.8);
+  ctx.fillStyle=css('--muted'); ctx.font=`12px ${css('--ui-font')}`; ctx.textAlign='center'; ctx.textBaseline='bottom';
+  ctx.fillText(ch.n?`self-avoiding, N = ${ch.N}`:`self-avoiding, N = ${ch.N} (equilibrating)`,w/4,H-2);
+  ctx.fillText(`ordinary random walk, N = ${ch.N}`,3*w/4,H-2);
+  // R vs N
+  const sp=saw.chains.filter(c=>c.n>200).map(c=>[c.N,Math.sqrt(c.sum/c.n)]);
+  const rp=saw.rw.filter(r=>r.n>200).map(r=>[r.N,Math.sqrt(r.sum/r.n)]);
+  const nuS=fitSlope(sp), nuR=fitSlope(rp);
+  const line=(pts,nu)=>{ if(!isFinite(nu)) return []; const [x0,y0]=pts[pts.length-1]; return [[10,y0*(10/x0)**nu],[800,y0*(800/x0)**nu]]; };
+  plot($('#saw-plot'),{height:300,xlog:true,ylog:true,xlim:[10,800],ylim:[2,300],xlabel:'N (steps)',ylabel:'R_rms',legend:'tl',
+    series:[{data:line(sp,nuS),color:css('--up'),width:1.4,dash:[5,4]},{data:line(rp,nuR),color:css('--muted'),width:1.4,dash:[5,4]},
+      {data:sp,points:true,color:css('--up'),r:4.5,name:'self-avoiding'},{data:rp,points:true,color:css('--muted'),r:4.5,name:'ordinary'}]});
+  const ref=saw.d===2?'exact 2D value 3/4':'RG 0.5880 ± 0.0015, experiment 0.586 ± 0.004';
+  $('#saw-read').innerHTML=`Fitted <b>ν<sub>SAW</sub> = ${isFinite(nuS)?nuS.toFixed(3):'…'}</b> (${ref}); fitted ν<sub>RW</sub> = ${isFinite(nuR)?nuR.toFixed(3):'…'} (exact 1/2).`;
+}
+reg(drawSaw);
+function sawTick(){
+  if(!visible.get('demo-saw')) return;
+  const t0=performance.now(); let i=0;
+  while(performance.now()-t0<9){ saw.chains[i%saw.chains.length].attempt(); if(i%3===0) for(const r of saw.rw){ let x=0,y=0,z=0; for(let s=0;s<r.N;s++){ const ax=(Math.random()*saw.d)|0, st=Math.random()<.5?1:-1; if(ax===0)x+=st; else if(ax===1)y+=st; else z+=st; } r.sum+=x*x+y*y+z*z; r.n++; } i++; }
+  saw.frame++; if(saw.d===3&&!reduceMotion) saw.theta+=0.0015;
+  if(saw.frame%600===0) saw.rwShow=randomWalk(saw.show,saw.d);
+  if(saw.frame%20===0) drawSaw();
+}
+
+/* ---------- viscosity ---------- */
+reg(()=>{ const ts=logRange(1e-4,1,100);
+  plot($('#visc-plot'),{height:220,xlog:true,xlim:[1e-4,1],ylim:[0.9,1.4],xlabel:'t = (T − Tc)/Tc',ylabel:'ηs / ηs(t=1)',
+    series:[{data:ts.map(t=>[t,t**-0.03]),color:css('--up'),width:2.4}]}); });
+
+/* ---------- Curie–Weiss: thermodynamic limit ---------- */
+(function(){
+  const Ns=[4,8,16,32,64,128,256,512,1024,2048,4096], NMAX=4096;
+  const lf=new Float64Array(NMAX+1); for(let i=1;i<=NMAX;i++) lf[i]=lf[i-1]+Math.log(i);
+  const Ts=range(0.4,1.6,241), cache={};
+  function curves(N){
+    if(cache[N]) return cache[N];
+    const m=[], C=[], lw=new Float64Array(N+1);
+    for(const T of Ts){
+      const b=1/T; let mx=-Infinity;
+      for(let k=0;k<=N;k++){ const M=2*k-N; lw[k]=lf[N]-lf[k]-lf[N-k]+b*M*M/(2*N); if(lw[k]>mx) mx=lw[k]; }
+      let Z=0,am=0,E=0,E2=0;
+      for(let k=0;k<=N;k++){ const w=Math.exp(lw[k]-mx), M=2*k-N, e=-M*M/(2*N); Z+=w; am+=w*Math.abs(M)/N; E+=w*e; E2+=w*e*e; }
+      am/=Z; E/=Z; E2/=Z; m.push([T,am]); C.push([T,b*b*(E2-E*E)/N]);
+    }
+    return cache[N]={m,C};
+  }
+  const inf={m:[],C:[]};
+  for(const T of range(0.4,1.6,601)){ let mm=0; if(T<1){ mm=1; for(let k=0;k<2000;k++) mm=Math.tanh(mm/T); }
+    inf.m.push([T,mm]); inf.C.push([T,T<1? mm*mm*(1-mm*mm)/(T*(T-1+mm*mm)) : 0]); }
+  // split the C(T) line at Tc so the jump is drawn as a jump
+  const infC=[...inf.C.filter(p=>p[0]<1),[1,NaN],...inf.C.filter(p=>p[0]>=1)];
+  const sl=$('#cw-N'), out=$('#cw-N-out');
+  function draw(){
+    const idx=+sl.value, N=Ns[idx]; out.textContent=N.toLocaleString('en-US');
+    const ser=key=>[...Ns.slice(0,idx).map((n,i)=>({data:curves(n)[key],color:css('--muted'),width:1.2,alpha:0.25+0.5*(i+1)/(idx+1)})),
+      {data:curves(N)[key],color:css('--up'),width:2.4,name:'N = '+N.toLocaleString('en-US')},
+      {data:key==='m'?inf.m:infC,color:css('--crit'),width:2,dash:[6,5],name:'N → ∞'}];
+    plot($('#cw-m'),{xlim:[0.4,1.6],ylim:[0,1.05],xlabel:'T (units of J/kB)',ylabel:'⟨|m|⟩',legend:'tr',series:ser('m')});
+    plot($('#cw-c'),{xlim:[0.4,1.6],ylim:[0,1.8],xlabel:'T (units of J/kB)',ylabel:'C / N k_B',legend:'tr',series:ser('C')});
+  }
+  sl.addEventListener('input',draw); reg(draw);
+})();
+
+/* ---------- Widom data collapse ---------- */
+(function(){
+  const Ts=[0.95,0.97,0.98,0.99,1.01,1.02,1.03,1.05];
+  const ms0=T=>{ if(T>=1) return 0; let m=1; for(let k=0;k<3000;k++) m=Math.tanh(m/T); return m; };
+  const iso=Ts.map(T=>{ const m0=ms0(T), lo=T<1?m0+0.003:0.003, hi=T<1?m0+0.2:0.35;
+    return {T,t:T-1,pts:logRange(lo,hi,70).map(m=>[m,T*Math.atanh(m)-m])}; });
+  const sb=$('#wd-b'), sd=$('#wd-d');
+  const colorOf=T=>T<1?css('--up'):css('--down'), alphaOf=T=>0.45+0.55*(1-Math.min(Math.abs(T-1)/0.05,1));
+  function spread(curves){
+    // compare ln y between curves at common x (linear interpolation along each monotone curve)
+    const xs=range(-0.5,4,46); let tot=0,cnt=0;
+    for(const xc of xs){
+      const vals=[];
+      for(const c of curves){ const p=c.slice().sort((a,b)=>a[0]-b[0]);
+        for(let i=0;i<p.length-1;i++) if(p[i][0]<=xc&&p[i+1][0]>=xc&&p[i+1][0]>p[i][0]){ const f=(xc-p[i][0])/(p[i+1][0]-p[i][0]); vals.push(Math.log(p[i][1])*(1-f)+Math.log(p[i+1][1])*f); break; } }
+      if(vals.length>=3){ const mu=vals.reduce((a,b)=>a+b,0)/vals.length; tot+=Math.sqrt(vals.reduce((a,b)=>a+(b-mu)**2,0)/vals.length); cnt++; }
+    }
+    return cnt>=5?tot/cnt:NaN;
+  }
+  function draw(){
+    const b=+sb.value, d=+sd.value; $('#wd-b-out').textContent=b.toFixed(3); $('#wd-d-out').textContent=d.toFixed(2);
+    plot($('#wd-raw'),{xlog:true,ylog:true,xlim:[1e-6,0.2],ylim:[1e-3,1],xlabel:'h',ylabel:'m',legend:'br',
+      series:[...iso.map(c=>({data:c.pts.map(([m,h])=>[h,m]),color:colorOf(c.T),alpha:alphaOf(c.T),width:2})),
+        {data:[],color:css('--up'),name:'T < Tc'},{data:[],color:css('--down'),name:'T > Tc'}]});
+    const sc=iso.map(c=>c.pts.map(([m,h])=>[c.t/Math.pow(m,1/b),h/Math.pow(m,d)]).filter(p=>p[1]>0));
+    plot($('#wd-scaled'),{ylog:true,xlim:[-1,4],ylim:[0.01,100],xlabel:'t / m^(1/β)',ylabel:'h / m^δ',vlines:[{x:0}],
+      series:sc.map((pts,i)=>({data:pts,color:colorOf(iso[i].T),alpha:alphaOf(iso[i].T),width:2}))});
+    const sLo=spread(sc.filter((_,i)=>iso[i].T<1)), sHi=spread(sc.filter((_,i)=>iso[i].T>1));
+    const s=[sLo,sHi].filter(isFinite), v=s.length?s.reduce((a,b)=>a+b,0)/s.length:NaN;
+    $('#wd-read').innerHTML = isFinite(v) ? `Collapse spread: <b>${v.toFixed(3)}</b> ${v<0.02?'(collapsed)':''}` : 'Collapse spread: not enough overlap between isotherms in view; keep adjusting.';
+  }
+  sb.addEventListener('input',draw); sd.addEventListener('input',draw);
+  $('#wd-answer').addEventListener('click',()=>{ sb.value=0.5; sd.value=3; draw(); $('#wd-read').innerHTML+=' &nbsp; Mean-field values: β = 1/2, δ = 3, and Φ(x) ≈ 1/3 + x.'; });
+  reg(draw);
+})();
+
+/* ---------- table of contents highlighting ---------- */
+(function(){
+  const links=[...document.querySelectorAll('nav.toc a')], map=new Map(links.map(a=>[a.getAttribute('href').slice(1),a]));
+  const tio=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ links.forEach(a=>a.classList.remove('active')); map.get(e.target.id)?.classList.add('active'); } }); },{rootMargin:'-20% 0px -70% 0px'});
+  map.forEach((_,id)=>{ const el=document.getElementById(id); if(el) tio.observe(el); });
+})();
+
+/* ---------- main loop ---------- */
+function loop(){ heroTick(); isingTick(); sawTick(); requestAnimationFrame(loop); }
+requestAnimationFrame(loop);
+
+/* ---------- math typesetting ---------- */
+window.addEventListener('load',()=>{
+  if(window.renderMathInElement) renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});
+  redraws.forEach(f=>f());
+});
+</script>
+</body>
+</html>
