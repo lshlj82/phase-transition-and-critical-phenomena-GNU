@@ -213,7 +213,7 @@ Each chapter page is intentionally self-contained (HTML, CSS, and JavaScript in 
 - **Landau equation (Ch. 5, Part 2):** explicit gradient-descent relaxation of the one-dimensional Landau functional on a 401-point grid, with fixed bulk values at the ends for the domain wall and reflecting ends for the point field.
 - **Bessel functions (Ch. 5, Part 2):** $K_\nu(x)$ from the integral representation $\int_0^\infty e^{-x\cosh u}\cosh\nu u\,du$ by the trapezoid rule, so non-integer dimensions work; Lanczos approximation for $\Gamma$.
 - **Curie–Weiss model:** exact summation of $Z_N = \sum_k \binom{N}{k} e^{\beta J (2k-N)^2/2N}$ using log-factorials and log-sum-exp for numerical stability.
-- **Accessibility and performance:** high-contrast palettes for light and dark color schemes (spins are drawn in deep navy and bright yellow so the two states differ strongly in lightness, not only hue); the scheme follows the operating-system setting; animation speeds are deliberately calm; simulations pause when scrolled out of view; the header animation starts paused when the user prefers reduced motion; layouts reflow down to phone widths.
+- **Accessibility and performance:** high-contrast palettes for light and dark color schemes, with a sun/moon button in the top-right corner switches by hand, and the choice is remembered across pages (spins are drawn in deep navy and bright yellow so the two states differ strongly in lightness, not only hue); the scheme follows the operating-system setting; animation speeds are deliberately calm; simulations pause when scrolled out of view; the header animation starts paused when the user prefers reduced motion; layouts reflow down to phone widths.
 
 ## References
 

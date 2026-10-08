@@ -20,12 +20,19 @@
   color-scheme:light dark;
 }
 @media (prefers-color-scheme:dark){
-  :root{
+  :root:not([data-theme="light"]){
     --paper:#0B1019; --surface:#131A27; --ink:#F4F6FA; --muted:#BAC4D3; --rule:#35415A;
     --up:#8FAEFF; --down:#FFC23D; --crit:#FF7AA6; --mark:#244A1E; --mark-edge:#7EDB6A;
     --spin-up:#1E3FBF; --spin-down:#FFD23F;
   }
 }
+:root[data-theme="dark"]{
+    --paper:#0B1019; --surface:#131A27; --ink:#F4F6FA; --muted:#BAC4D3; --rule:#35415A;
+    --up:#8FAEFF; --down:#FFC23D; --crit:#FF7AA6; --mark:#244A1E; --mark-edge:#7EDB6A;
+    --spin-up:#1E3FBF; --spin-down:#FFD23F;
+  }
+:root[data-theme="light"]{color-scheme:light}
+:root[data-theme="dark"]{color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -158,8 +165,19 @@ canvas.pix{image-rendering:pixelated;image-rendering:crisp-edges}
 .wrap.list{padding-top:1rem;max-width:1180px}
 .wrap.list ol.chapters,.wrap.list > p{max-width:820px}
 </style>
+<script>try { const t = localStorage.getItem("netsci-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}</script>
+<style>
+button.theme-btn{position:fixed; z-index:20; top:calc(env(safe-area-inset-top, 0px) + 12px); right:calc(env(safe-area-inset-right, 0px) + 12px);
+  width:40px; height:40px; padding:0; border-radius:50%; display:grid; place-items:center; cursor:pointer;
+  background:var(--surface); color:var(--ink); border:1px solid var(--rule); box-shadow:0 1px 4px rgba(0,0,0,.12)}
+button.theme-btn:hover{background:var(--surface); color:var(--ink); border-color:var(--ink)}
+button.theme-btn:focus-visible{outline:3px solid var(--up); outline-offset:2px}
+.course{padding-right:48px}
+button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+</style>
 </head>
 <body>
+<button id="themeBtn" class="theme-btn" type="button" aria-label="Switch to light mode"></button>
 <header class="hero cover">
   <div>
     <p class="course">Graduate course, Department of Physics, Gyeongsang National University</p>
@@ -225,9 +243,25 @@ canvas.pix{image-rendering:pixelated;image-rendering:crisp-edges}
   btn.addEventListener('click',()=>{ run=!run; sync(); }); sync();
   new IntersectionObserver(es=>es.forEach(e=>vis=e.isIntersecting)).observe($('#cov-raw'));
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{ colors(); draw(); });
+new MutationObserver(()=>{ colors(); draw(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   let rz; window.addEventListener('resize',()=>{ clearTimeout(rz); rz=setTimeout(draw,120); });
   function loop(now){ if(run&&vis&&now-last>=200){ last=now; sweep(); draw(); } requestAnimationFrame(loop); } // calm: about 5 updates per second
   draw(); requestAnimationFrame(loop);
+})();
+</script>
+<script>
+(() => {
+  // light/dark switch; the choice is remembered across all of the course demos
+  const btn = document.getElementById("themeBtn"), root = document.documentElement, mq = matchMedia("(prefers-color-scheme: dark)");
+  const SUN = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>';
+  const MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>';
+  const current = () => root.dataset.theme || (mq.matches ? "dark" : "light");
+  const sync = () => { const dark = current() === "dark", label = dark ? "Switch to light mode" : "Switch to dark mode";
+    btn.innerHTML = dark ? SUN : MOON; btn.setAttribute("aria-label", label); btn.title = label; };
+  btn.addEventListener("click", () => { const next = current() === "dark" ? "light" : "dark"; root.dataset.theme = next;
+    try { localStorage.setItem("netsci-theme", next); } catch (e) {} sync(); });
+  mq.addEventListener("change", sync);
+  sync();
 })();
 </script>
 </body>
