@@ -73,6 +73,9 @@ main{min-width:0}
 /* key results echo the green boxes of the handwritten notes */
 .result{background:var(--mark);border-left:4px solid var(--mark-edge);padding:.6rem 1rem;margin:1.2rem 0;max-width:68ch;overflow-x:auto}
 .result p{margin:.2rem 0}
+.prereq{border-left:4px solid var(--rule);padding:.6rem 1rem;margin:2rem 0 0;max-width:68ch}
+.prereq p{margin:0}
+.prereq .lbl{font-family:var(--ui-font);font-size:.9rem;font-weight:600;color:var(--muted);display:block;margin-bottom:.15rem}
 .aside{color:var(--muted);font-style:italic;border-left:1px solid var(--rule);padding-left:1rem}
 mark{background:linear-gradient(transparent 55%, var(--mark) 55%);color:inherit;padding:0 .1em}
 .question{border:1.5px solid var(--ink);padding:.9rem 1.2rem;margin:2rem 0 1rem;max-width:68ch}
@@ -206,6 +209,9 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
     <li class="ch"><a href="ch05a-landau-theory.html"><span class="num">Chapter 5</span><span class="t">Landau theory, Part 1</span></a><p>Order parameters, the common structure of mean-field theories, and the Landau free energy for continuous and first-order transitions.</p><p class="demos">Demos: Weiss/van der Waals collapse, the Landau explorer, network Landau terms.</p></li>
     <li class="ch"><a href="ch05b-coarse-graining-and-correlations.html"><span class="num">Chapter 5</span><span class="t">Landau theory, Part 2: coarse graining and correlations</span></a><p>Coarse graining, the Landau free energy as a constrained free energy, functional derivatives, linear response, and Ornstein–Zernike correlations.</p><p class="demos">Demos: Convexity restored, domain walls and Green functions, G(r) in d dimensions.</p></li>
   </ol>
+  <aside class="prereq" aria-label="Undergraduate background">
+    <p><span class="lbl">Undergraduate background</span>Chapters 2 and 3 develop the Ising model at the graduate level. For a first introduction, see <a href="https://lshlj82.github.io/Ising-model-basics/">Ising model</a> (<a href="https://github.com/lshlj82/Ising-model-basics">source</a>), demo 9 of the undergraduate course <a href="https://lshlj82.github.io/statphys2-GNU/">Statistical Physics 2</a>: the model, the exact solution in one dimension, the mean-field approximation, Metropolis Monte Carlo, and block spins, following Section 8.2 of Schroeder's <i>An Introduction to Thermal Physics</i>.</p>
+  </aside>
   <p style="margin-top:2rem;color:var(--muted)">All pages work on phones, tablets, and desktops, in light and dark mode. Animations are deliberately slow and can be paused.</p>
   <p style="color:var(--muted)">Created by Claude Opus 5.5 (Anthropic) based on Sang Hoon Lee's lecture notes, for the graduate course of the Department of Physics, Gyeongsang National University.</p>
 </div>

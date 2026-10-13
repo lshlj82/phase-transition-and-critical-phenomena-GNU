@@ -16,6 +16,8 @@ Live pages (GitHub Pages). Start from the [course home page](https://lshlj82.git
 | 5. Landau theory, Part 1 (§5.1–5.3) | [Open demo](https://lshlj82.github.io/phase-transition-and-critical-phenomena-GNU/ch05a-landau-theory.html) | [`ch05a-landau-theory.html`](ch05a-landau-theory.html) |
 | 5. Landau theory, Part 2 (§5.4–5.7) | [Open demo](https://lshlj82.github.io/phase-transition-and-critical-phenomena-GNU/ch05b-coarse-graining-and-correlations.html) | [`ch05b-coarse-graining-and-correlations.html`](ch05b-coarse-graining-and-correlations.html) |
 
+For undergraduate background on the Ising model (Chapters 2 and 3), see demo 9 of [Statistical Physics 2](https://github.com/lshlj82/statphys2-GNU): [Ising model](https://lshlj82.github.io/Ising-model-basics/) · [source](https://github.com/lshlj82/Ising-model-basics). The landing page shows this as a note below the chapter list.
+
 The demo links assume the site is published with GitHub Pages; replace `lshlj82` and `phase-transition-and-critical-phenomena-GNU` throughout this file with your GitHub user name and repository name.
 
 ## Chapter 1: what's inside
@@ -239,7 +241,7 @@ Each chapter page is intentionally self-contained (HTML, CSS, and JavaScript in 
 - G. H. Wannier, "Antiferromagnetism. The triangular Ising net," *Phys. Rev.* **79**, 357 (1950).
 - J. Fröhlich and T. Spencer, "The phase transition in the one-dimensional Ising model with $1/r^2$ interaction energy," *Commun. Math. Phys.* **84**, 87 (1982).
 - G. I. Barenblatt, *Scaling* (Cambridge University Press, 2003).
-- D. V. Schroeder, *An Introduction to Thermal Physics* (Addison-Wesley, 2000).
+- D. V. Schroeder, *An Introduction to Thermal Physics* (Addison-Wesley, 2000). Undergraduate background: [Statistical Physics 2](https://lshlj82.github.io/statphys2-GNU/), demo 9 ([Ising model](https://lshlj82.github.io/Ising-model-basics/)).
 - L. Onsager, "Crystal statistics. I. A two-dimensional model with an order-disorder transition," *Phys. Rev.* **65**, 117 (1944).
 - U. Wolff, "Collective Monte Carlo updating for spin systems," *Phys. Rev. Lett.* **62**, 361 (1989).
 - N. Madras and A. D. Sokal, "The pivot algorithm: a highly efficient Monte Carlo method for the self-avoiding walk," *J. Stat. Phys.* **50**, 109 (1988).
