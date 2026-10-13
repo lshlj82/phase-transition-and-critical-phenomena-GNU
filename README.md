@@ -16,6 +16,8 @@ Live pages (GitHub Pages). Start from the [course home page](https://lshlj82.git
 | 5. Landau theory, Part 1 (§5.1–5.3) | [Open demo](https://lshlj82.github.io/phase-transition-and-critical-phenomena-GNU/ch05a-landau-theory.html) | [`ch05a-landau-theory.html`](ch05a-landau-theory.html) |
 | 5. Landau theory, Part 2 (§5.4–5.7) | [Open demo](https://lshlj82.github.io/phase-transition-and-critical-phenomena-GNU/ch05b-coarse-graining-and-correlations.html) | [`ch05b-coarse-graining-and-correlations.html`](ch05b-coarse-graining-and-correlations.html) |
 
+Related graduate course: [Special Topics in Complex Systems](https://github.com/lshlj82/special-topics-in-complex-systems-GNU) ([live page](https://lshlj82.github.io/special-topics-in-complex-systems-GNU/)), following Christensen and Moloney, applies the same ideas to percolation on lattices, Bethe lattices, and networks, and carries the Ising model on to the real-space renormalization group.
+
 For undergraduate background on the Ising model (Chapters 2 and 3), see demo 9 of [Statistical Physics 2](https://github.com/lshlj82/statphys2-GNU): [Ising model](https://lshlj82.github.io/Ising-model-basics/) · [source](https://github.com/lshlj82/Ising-model-basics). The landing page shows this as a note below the chapter list.
 
 The demo links assume the site is published with GitHub Pages; replace `lshlj82` and `phase-transition-and-critical-phenomena-GNU` throughout this file with your GitHub user name and repository name.
@@ -220,6 +222,7 @@ Each chapter page is intentionally self-contained (HTML, CSS, and JavaScript in 
 ## References
 
 - N. Goldenfeld, *Lectures on Phase Transitions and the Renormalization Group* (Addison-Wesley, 1992).
+- K. Christensen and N. R. Moloney, *Complexity and Criticality* (Imperial College Press, 2005), followed in the related course [Special Topics in Complex Systems](https://lshlj82.github.io/special-topics-in-complex-systems-GNU/).
 - S. G. Brush, "History of the Lenz–Ising model," *Rev. Mod. Phys.* **39**, 883 (1967).
 - R. Peierls, "On Ising's model of ferromagnetism," *Proc. Cambridge Philos. Soc.* **32**, 477 (1936).
 - H. A. Kramers and G. H. Wannier, "Statistics of the two-dimensional ferromagnet," *Phys. Rev.* **60**, 252 and 263 (1941).
