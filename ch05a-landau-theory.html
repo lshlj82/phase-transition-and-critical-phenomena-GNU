@@ -232,7 +232,7 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 <figure class="demo" id="demo-collapse">
   <p class="title">Two theories, one Landau function</p>
   <div class="controls">
-    <label>\(t = (T-T_c)/T_c\) <input type="range" id="co-t" min="-0.06" max="0.06" step="0.001" value="0.02"> <output id="co-t-out"></output></label>
+    <label>\(t = (T-T_c)/T_c\) <input type="range" id="co-t" aria-label="Reduced temperature t = (T − T_c) / T_c" min="-0.06" max="0.06" step="0.001" value="0.02"> <output id="co-t-out"></output></label>
     <label>Range of \(x\) <input type="range" id="co-x" min="0.1" max="1" step="0.01" value="0.4"> <output id="co-x-out"></output></label>
   </div>
   <div class="grid2">
@@ -267,8 +267,8 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 <figure class="demo" id="demo-landau">
   <p class="title">The Landau free energy explorer</p>
   <div class="controls">
-    <label>\(t\) <input type="range" id="la-t" min="-1" max="1" step="0.005" value="-0.5"> <output id="la-t-out"></output></label>
-    <label>\(H\) <input type="range" id="la-H" min="-0.3" max="0.3" step="0.005" value="0"> <output id="la-H-out"></output></label>
+    <label>\(t\) <input type="range" id="la-t" aria-label="Reduced temperature t" min="-1" max="1" step="0.005" value="-0.5"> <output id="la-t-out"></output></label>
+    <label>\(H\) <input type="range" id="la-H" aria-label="Field H" min="-0.3" max="0.3" step="0.005" value="0"> <output id="la-H-out"></output></label>
     <label>Cubic \(C\) <input type="range" id="la-C" min="-0.6" max="0.6" step="0.01" value="0"> <output id="la-C-out"></output></label>
     <button id="la-reset">Reset</button>
   </div>
@@ -371,13 +371,26 @@ function fmt(v){
   if(a>=1e4||a<1e-3){ const e=Math.floor(Math.log10(a)+1e-9); const mm=v/10**e; return (Math.abs(Math.abs(mm)-1)<1e-6?(mm<0?'−':''):(+mm.toFixed(1))+'×')+'10'+sup(e); }
   return String(+v.toPrecision(3)).replace('-','−');
 }
+// a range collapsed to rounding level (b − a ~ 1e-16) gave v + step === v and an endless tick loop:
+// widen such a range relative to the data magnitude, and generate ticks by integer index with a hard cap
+function safeLim(a,b){
+  if(!isFinite(a)||!isFinite(b)) return [0,1];
+  if(Math.abs(b-a)>Math.max(Math.abs(a),Math.abs(b))*1e-9&&Math.abs(b-a)>1e-290) return [a,b];
+  const c=(a+b)/2; let w=Math.abs(c)*0.05; if(!(w>1e-300)) w=1;
+  return [c-w,c+w];
+}
 function niceTicks(a,b,n){
+  if(!isFinite(a)||!isFinite(b)||!(b>=a)) return [];
+  [a,b]=safeLim(a,b); n=Math.min(Math.max(Math.round(n)||1,1),50);
   const raw=(b-a)/n, mag=10**Math.floor(Math.log10(raw)), norm=raw/mag;
   const step=(norm<1.5?1:norm<3?2:norm<7?5:10)*mag, t=[];
-  for(let v=Math.ceil(a/step-1e-9)*step; v<=b+step*1e-6; v+=step){ const vv=Math.abs(v)<step*1e-6?0:v; t.push({v:vv,label:fmt(+vv.toPrecision(12))}); }
+  if(!(step>0)||!isFinite(step)) return t;
+  const i0=Math.ceil(a/step-1e-9), i1=Math.min(Math.floor(b/step+1e-6), i0+4*n+4);
+  for(let i=i0; i<=i1; i++){ const v=i*step; if(!isFinite(v)||(t.length&&v<=t[t.length-1].v)) break; const vv=Math.abs(v)<step*1e-6?0:v; t.push({v:vv,label:fmt(+vv.toPrecision(12))}); }
   return t;
 }
 function logTicks(a,b){
+  if(!(a>0)||!(b>a)||!isFinite(b)) return [];
   const k0=Math.ceil(Math.log10(a)-1e-9), k1=Math.floor(Math.log10(b)+1e-9), span=k1-k0, t=[];
   const mants = span<=1 ? [1,2,5] : [1];
   const every = span>7 ? 2 : 1;
@@ -396,6 +409,7 @@ function plot(cv,o){
   const ink=css('--ink'), muted=css('--muted'), rule=css('--rule'), font=css('--ui-font');
   const m={l:52,r:12,t:10,b:40}, pw=w-m.l-m.r, ph=H-m.t-m.b;
   const fx=o.xlog?Math.log10:(v=>v), fy=o.ylog?Math.log10:(v=>v);
+  if(!o.xlog) o.xlim=safeLim(...o.xlim); if(!o.ylog) o.ylim=safeLim(...o.ylim);
   const ax0=fx(o.xlim[0]),ax1=fx(o.xlim[1]),ay0=fy(o.ylim[0]),ay1=fy(o.ylim[1]);
   const X=v=>m.l+(fx(v)-ax0)/(ax1-ax0)*pw, Y=v=>m.t+ph-(fy(v)-ay0)/(ay1-ay0)*ph;
   ctx.font=`12px ${font}`; ctx.lineWidth=1;

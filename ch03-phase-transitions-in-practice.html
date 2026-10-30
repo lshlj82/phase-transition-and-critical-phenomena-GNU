@@ -182,7 +182,7 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
   <div class="lattice-wrap">
     <canvas class="net" id="hero-net" aria-label="Live Ising model on a scale-free network"></canvas>
     <div class="controls" style="margin:10px 0 0">
-      <label>\(T/T_c^{\rm HMF}\) <input type="range" id="hero-T" min="0.2" max="1.2" step="0.01" value="0.4"> <output id="hero-T-out"></output></label>
+      <label>\(T/T_c^{\rm HMF}\) <input type="range" id="hero-T" aria-label="Temperature T / T_c (HMF)" min="0.2" max="1.2" step="0.01" value="0.4"> <output id="hero-T-out"></output></label>
       <button id="hero-play" aria-pressed="false">Pause</button>
     </div>
     <p class="readout" id="hero-read" style="margin-top:.2rem;color:var(--muted)"></p>
@@ -258,8 +258,8 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 <figure class="demo" id="demo-tm">
   <p class="title">The transfer matrix, checked against brute force</p>
   <div class="controls">
-    <label>\(K = J/k_BT\) <input type="range" id="tm-K" min="0.02" max="2.5" step="0.01" value="0.6"> <output id="tm-K-out"></output></label>
-    <label>\(h = H/k_BT\) <input type="range" id="tm-h" min="-1" max="1" step="0.01" value="0.1"> <output id="tm-h-out"></output></label>
+    <label>\(K = J/k_BT\) <input type="range" id="tm-K" aria-label="Coupling K = J / k_B T" min="0.02" max="2.5" step="0.01" value="0.6"> <output id="tm-K-out"></output></label>
+    <label>\(h = H/k_BT\) <input type="range" id="tm-h" aria-label="Field h = H / k_B T" min="-1" max="1" step="0.01" value="0.1"> <output id="tm-h-out"></output></label>
     <label>\(N\) for the check <select id="tm-N"></select></label>
   </div>
   <div class="grid-lat grid-side">
@@ -298,7 +298,7 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 <figure class="demo" id="demo-thermo">
   <p class="title">The exactly solved chain</p>
   <div class="controls">
-    <label>\(k_BT/J\) <input type="range" id="th-T" min="0.1" max="4" step="0.01" value="0.8"> <output id="th-T-out"></output></label>
+    <label>\(k_BT/J\) <input type="range" id="th-T" aria-label="Temperature k_B T / J" min="0.1" max="4" step="0.01" value="0.8"> <output id="th-T-out"></output></label>
   </div>
   <div class="grid2">
     <div><p class="plot-label">Energy and heat capacity per spin vs \(T\)</p><canvas class="plot" id="th-ec" style="height:230px"></canvas></div>
@@ -337,7 +337,7 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 <figure class="demo" id="demo-corr">
   <p class="title">Exponential decay of correlations, measured and exact</p>
   <div class="controls">
-    <label>\(k_BT/J\) <input type="range" id="co-T" min="0.4" max="3" step="0.01" value="0.9"> <output id="co-T-out"></output></label>
+    <label>\(k_BT/J\) <input type="range" id="co-T" aria-label="Temperature k_B T / J" min="0.4" max="3" step="0.01" value="0.9"> <output id="co-T-out"></output></label>
     <button id="co-reset">Reset measurement</button>
   </div>
   <div class="grid2">
@@ -406,8 +406,8 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 <figure class="demo" id="demo-mf">
   <p class="title">Solving the self-consistency equation</p>
   <div class="controls">
-    <label>\(T/T_c\) <input type="range" id="mf-T" min="0.3" max="1.6" step="0.005" value="0.7"> <output id="mf-T-out"></output></label>
-    <label>\(H/k_BT_c\) <input type="range" id="mf-H" min="-0.3" max="0.3" step="0.005" value="0"> <output id="mf-H-out"></output></label>
+    <label>\(T/T_c\) <input type="range" id="mf-T" aria-label="Temperature T / T_c" min="0.3" max="1.6" step="0.005" value="0.7"> <output id="mf-T-out"></output></label>
+    <label>\(H/k_BT_c\) <input type="range" id="mf-H" aria-label="Field H / k_B T_c" min="-0.3" max="0.3" step="0.005" value="0"> <output id="mf-H-out"></output></label>
   </div>
   <div class="grid2">
     <div><p class="plot-label">\(y = M\) and \(y = \tanh\big[(H+2dJM)/k_BT\big]\)</p><canvas class="plot" id="mf-graph"></canvas></div>
@@ -451,7 +451,7 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 <figure class="demo" id="demo-sum">
   <p class="title">The sum rule, term by term</p>
   <div class="controls">
-    <label>\(k_BT/J\) <input type="range" id="sr-T" min="0.4" max="3" step="0.01" value="0.8"> <output id="sr-T-out"></output></label>
+    <label>\(k_BT/J\) <input type="range" id="sr-T" aria-label="Temperature k_B T / J" min="0.4" max="3" step="0.01" value="0.8"> <output id="sr-T-out"></output></label>
   </div>
   <div class="grid2">
     <div><p class="plot-label">\(G(j) = (\tanh K)^{|j|}\) for the chain</p><canvas class="plot" id="sr-G" style="height:220px"></canvas></div>
@@ -510,7 +510,7 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
   <li>\(3\lt\gamma\lt5\): \(\langle k^2\rangle\) is finite but \(\langle k^4\rangle\propto\int^\infty k^{4-\gamma}dk\to\infty\), and the expansion is singular. Writing \(m = \frac{\langle k^2\rangle}{\langle k\rangle}\beta Jm + \frac{c}{\langle k\rangle}\int_{k_{\min}}^\infty dk\,k^{1-\gamma}\big[\tanh(\beta Jkm)-\beta Jkm\big]\) and substituting \(x = \beta Jkm\), the integral scales as \(m^{\gamma-2}\). Defining the constant \(-A\) by \(\frac{c}{\langle k\rangle}\int(\cdots) = -Am^{\gamma-2}\), we get \(1 = T_c/T - Am^{\gamma-3}\), so</li>
 </ul>
 <div class="result"><p>\[ \begin{gathered} m\propto(T_c-T)^{1/(\gamma-3)}\\ (3\lt\gamma\lt5), \end{gathered} \]</p></div>
-<p>while for \(\gamma>5\), or any distribution with finite \(\langle k^4\rangle\), \(\beta = \tfrac12\).</p>
+<p>while for \(\gamma>5\), or any distribution with finite \(\langle k^4\rangle\), \(\beta = \tfrac12\). The two boundaries are marginal. At \(\gamma=3\), \(\langle k^2\rangle\propto\ln k_{\max}\) diverges only logarithmically, so a finite network has \(T_c\propto\ln N\) and the infinite one has no finite \(T_c\): it is ordered at every temperature, with \(m\propto Te^{-T/T_0}\) at high \(T\) (\(T_0=Jc/\langle k\rangle\) for \(p(k)\simeq ck^{-3}\)), an infinite-order transition with no exponent \(\beta\). At \(\gamma=5\), \(\langle k^4\rangle\propto\ln k_{\max}\) diverges logarithmically and \(\beta=\tfrac12\) acquires a logarithmic correction, \(m\propto[t/\ln(1/t)]^{1/2}\) (Dorogovtsev, Goltsev and Mendes, 2002).</p>
 
 <figure class="demo" id="demo-net">
   <p class="title">Heterogeneous mean-field theory on scale-free networks</p>
@@ -567,13 +567,26 @@ function fmt(v){
   if(a>=1e4||a<1e-3){ const e=Math.floor(Math.log10(a)+1e-9); const mm=v/10**e; return (Math.abs(Math.abs(mm)-1)<1e-6?(mm<0?'−':''):(+mm.toFixed(1))+'×')+'10'+sup(e); }
   return String(+v.toPrecision(3)).replace('-','−');
 }
+// a range collapsed to rounding level (b − a ~ 1e-16) gave v + step === v and an endless tick loop:
+// widen such a range relative to the data magnitude, and generate ticks by integer index with a hard cap
+function safeLim(a,b){
+  if(!isFinite(a)||!isFinite(b)) return [0,1];
+  if(Math.abs(b-a)>Math.max(Math.abs(a),Math.abs(b))*1e-9&&Math.abs(b-a)>1e-290) return [a,b];
+  const c=(a+b)/2; let w=Math.abs(c)*0.05; if(!(w>1e-300)) w=1;
+  return [c-w,c+w];
+}
 function niceTicks(a,b,n){
+  if(!isFinite(a)||!isFinite(b)||!(b>=a)) return [];
+  [a,b]=safeLim(a,b); n=Math.min(Math.max(Math.round(n)||1,1),50);
   const raw=(b-a)/n, mag=10**Math.floor(Math.log10(raw)), norm=raw/mag;
   const step=(norm<1.5?1:norm<3?2:norm<7?5:10)*mag, t=[];
-  for(let v=Math.ceil(a/step-1e-9)*step; v<=b+step*1e-6; v+=step){ const vv=Math.abs(v)<step*1e-6?0:v; t.push({v:vv,label:fmt(+vv.toPrecision(12))}); }
+  if(!(step>0)||!isFinite(step)) return t;
+  const i0=Math.ceil(a/step-1e-9), i1=Math.min(Math.floor(b/step+1e-6), i0+4*n+4);
+  for(let i=i0; i<=i1; i++){ const v=i*step; if(!isFinite(v)||(t.length&&v<=t[t.length-1].v)) break; const vv=Math.abs(v)<step*1e-6?0:v; t.push({v:vv,label:fmt(+vv.toPrecision(12))}); }
   return t;
 }
 function logTicks(a,b){
+  if(!(a>0)||!(b>a)||!isFinite(b)) return [];
   const k0=Math.ceil(Math.log10(a)-1e-9), k1=Math.floor(Math.log10(b)+1e-9), span=k1-k0, t=[];
   const mants = span<=1 ? [1,2,5] : [1];
   const every = span>7 ? 2 : 1;
@@ -592,6 +605,7 @@ function plot(cv,o){
   const ink=css('--ink'), muted=css('--muted'), rule=css('--rule'), font=css('--ui-font');
   const m={l:52,r:12,t:10,b:40}, pw=w-m.l-m.r, ph=H-m.t-m.b;
   const fx=o.xlog?Math.log10:(v=>v), fy=o.ylog?Math.log10:(v=>v);
+  if(!o.xlog) o.xlim=safeLim(...o.xlim); if(!o.ylog) o.ylim=safeLim(...o.ylim);
   const ax0=fx(o.xlim[0]),ax1=fx(o.xlim[1]),ay0=fy(o.ylim[0]),ay1=fy(o.ylim[1]);
   const X=v=>m.l+(fx(v)-ax0)/(ax1-ax0)*pw, Y=v=>m.t+ph-(fy(v)-ay0)/(ay1-ay0)*ph;
   ctx.font=`12px ${font}`; ctx.lineWidth=1;
@@ -665,13 +679,20 @@ const lncosh2 = x => { const a=Math.abs(x); return a+Math.log1p(Math.exp(-2*a));
 function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
 
 /* ---------- hero: Ising model on a Barabasi-Albert network ---------- */
+// precomputed layout of the fixed network below (seed 20090511, N = 300, m = 2): x0,y0,x1,y1,… as little-endian
+// float64 in base64, bit-identical to the computed layout; NET_HASH fingerprints the edge list
+const NET_HASH=843439552, NET_XY=(()=>{ const s=atob('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'), dv=new DataView(new ArrayBuffer(s.length)); for(let i=0;i<s.length;i++) dv.setUint8(i,s.charCodeAt(i)); return Array.from({length:s.length/8},(_,i)=>dv.getFloat64(8*i,true)); })();
 const net=(function(){
   const N=300, m=2, rng=mulberry32(20090511), nbr=Array.from({length:N},()=>[]), targets=[];
   const link=(a,b)=>{ nbr[a].push(b); nbr[b].push(a); targets.push(a,b); };
   for(let i=0;i<=m;i++) for(let j=0;j<i;j++) link(i,j);
   for(let v=m+1;v<N;v++){ const ch=new Set(); while(ch.size<m) ch.add(targets[(rng()*targets.length)|0]); for(const u of ch) link(v,u); }
-  // Fruchterman-Reingold layout, computed once
-  const x=new Float64Array(N), y=new Float64Array(N); for(let i=0;i<N;i++){ x[i]=rng(); y[i]=rng(); }
+  // Fruchterman-Reingold layout: 260 iterations of all-pair repulsion, O(260·N²). Seed and graph are fixed,
+  // so its normalized result is stored in NET_XY and loaded in O(N); it is recomputed only if the graph changes.
+  const x=new Float64Array(N), y=new Float64Array(N); for(let i=0;i<N;i++){ x[i]=rng(); y[i]=rng(); } // keeps the rng stream unchanged
+  let hash=2166136261; for(const t of targets) hash=Math.imul(hash^t,16777619);
+  if(NET_XY.length===2*N && (hash>>>0)===NET_HASH){ for(let i=0;i<N;i++){ x[i]=NET_XY[2*i]; y[i]=NET_XY[2*i+1]; } }
+  else {
   const k=Math.sqrt(1/N); let temp=0.1;
   for(let it=0;it<260;it++){
     const dx=new Float64Array(N), dy=new Float64Array(N);
@@ -682,6 +703,7 @@ const net=(function(){
   }
   let x0=Infinity,x1=-Infinity,y0=Infinity,y1=-Infinity; for(let i=0;i<N;i++){ x0=Math.min(x0,x[i]); x1=Math.max(x1,x[i]); y0=Math.min(y0,y[i]); y1=Math.max(y1,y[i]); }
   const sc=Math.max(x1-x0,y1-y0); for(let i=0;i<N;i++){ x[i]=0.05+0.9*(x[i]-x0)/sc; y[i]=0.05+0.9*(y[i]-y0)/sc; }
+  }
   const deg=nbr.map(a=>a.length), k1=deg.reduce((a,b)=>a+b,0)/N, k2=deg.reduce((a,b)=>a+b*b,0)/N;
   const s=new Int8Array(N).fill(1);
   return {N,nbr,x,y,deg,k1,k2,TcHMF:k2/k1,s,rng};
@@ -945,7 +967,12 @@ function coTick(){
     plot($('#nt-tc'),{height:230,xlog:true,ylog:true,xlim:[1e2,1e18],ylim:[1,1e8],xlabel:'N',ylabel:'k_B T_c / J',legend:'tl',vlines:[{x:N,color:css('--crit')}],
       series:[...gs.map((g,i)=>({data:Ns.map(n=>[n,dist(g,kmin*Math.pow(n,1/(g-1))).Tc]),color:css('--muted'),width:1.4,alpha:0.4+0.15*i,dash:i%2?[4,3]:[],name:'γ = '+g})),
         {data:Ns.map(n=>[n,dist(gam,kmin*Math.pow(n,1/(gam-1))).Tc]),color:css('--up'),width:2.6,name:'γ = '+gam.toFixed(2)}]});
-    const pred= gam<3?'T<sub>c</sub> diverges as N → ∞ (always ordered)': gam<5?`β = 1/(γ−3) = ${(1/(gam-3)).toFixed(3)} in the N → ∞ limit`:'β = 1/2 (⟨k⁴⟩ finite)';
+    const at=g=>Math.abs(gam-g)<1e-9;
+    const pred= at(3)?'γ = 3 is the boundary case: ⟨k²⟩ ∝ ln k<sub>max</sub>, so T<sub>c</sub> ∝ ln N → ∞ and there is no finite T<sub>c</sub> as N → ∞. The infinite network is ordered at every T, with m ∝ T e<sup>−T/T₀</sup> (T₀ = Jc/⟨k⟩ for p(k) ≃ ck<sup>−3</sup>): an infinite-order transition with no power law, so no β. The finite T<sub>c</sub> above is set by the size cutoff'
+      : gam<3?'T<sub>c</sub> diverges as N<sup>(3−γ)/(γ−1)</sup> → ∞ (always ordered)'
+      : gam<5&&!at(5)?`β = 1/(γ−3) = ${(1/(gam-3)).toFixed(3)} in the N → ∞ limit, where ⟨k⁴⟩ ∝ k<sub>max</sub><sup>5−γ</sup> → ∞; the finite ⟨k⁴⟩ above is the size cutoff`
+      : at(5)?'β = 1/2 with a logarithmic correction, m ∝ [t / ln(1/t)]<sup>1/2</sup>. At γ = 5 the infinite system has ⟨k⁴⟩ ∝ ln k<sub>max</sub> → ∞ (logarithmic divergence); the finite ⟨k⁴⟩ above is the size cutoff'
+      :'β = 1/2 (⟨k⁴⟩ stays finite as N → ∞)';
     $('#nt-read').innerHTML=`k<sub>max</sub> = ${kmax.toPrecision(3)}: ⟨k⟩ = ${D.k1.toFixed(3)}, ⟨k²⟩ = ${D.k2.toPrecision(4)}, ⟨k⁴⟩ = ${D.k4.toPrecision(4)}, k<sub>B</sub>T<sub>c</sub> = J⟨k²⟩/⟨k⟩ = <b>${D.Tc.toPrecision(4)}J</b>. Prediction: ${pred}.`;
   }
   bindSlider('#nt-g',v=>{ gam=v; clearTimeout(timer); timer=setTimeout(draw,40); },v=>v.toFixed(2));

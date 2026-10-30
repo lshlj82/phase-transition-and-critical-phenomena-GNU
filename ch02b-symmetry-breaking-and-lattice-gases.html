@@ -223,7 +223,7 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 <figure class="demo" id="demo-peierls">
   <p class="title">Energy against entropy for a domain wall in two dimensions</p>
   <div class="controls">
-    <label>\(k_BT/J\) <input type="range" id="pe-T" min="0.5" max="4.5" step="0.01" value="1.5"> <output id="pe-T-out"></output></label>
+    <label>\(k_BT/J\) <input type="range" id="pe-T" aria-label="Temperature k_B T / J" min="0.5" max="4.5" step="0.01" value="1.5"> <output id="pe-T-out"></output></label>
     <label>Lattice
       <select id="pe-lat"><option value="sq">square (z = 4)</option><option value="tri">triangular (z = 6)</option><option value="hc">honeycomb (z = 3)</option></select>
     </label>
@@ -259,7 +259,7 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 <figure class="demo" id="demo-ssb">
   <p class="title">Two limits that do not commute</p>
   <div class="controls">
-    <label>\(k_BT/J_0\) <input type="range" id="ss-T" min="0.5" max="1.3" step="0.01" value="0.8"> <output id="ss-T-out"></output></label>
+    <label>\(k_BT/J_0\) <input type="range" id="ss-T" aria-label="Temperature k_B T / J_0" min="0.5" max="1.3" step="0.01" value="0.8"> <output id="ss-T-out"></output></label>
   </div>
   <div class="grid2">
     <div><p class="plot-label">\(M_N(H)\) for increasing system size</p><canvas class="plot" id="ss-mh"></canvas></div>
@@ -315,7 +315,7 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 <figure class="demo" id="demo-erg">
   <p class="title">Watching ergodicity break as the system grows</p>
   <div class="controls">
-    <label>\(k_BT/J\) <input type="range" id="er-T" min="1.9" max="2.25" step="0.01" value="2.1"> <output id="er-T-out"></output></label>
+    <label>\(k_BT/J\) <input type="range" id="er-T" aria-label="Temperature k_B T / J" min="1.9" max="2.25" step="0.01" value="2.1"> <output id="er-T-out"></output></label>
     <label>Show trace for \(L\) = <select id="er-L"></select></label>
     <button id="er-reset">Restart</button>
   </div>
@@ -350,7 +350,7 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 <figure class="demo" id="demo-pq">
   <p class="title">The overlap distribution of a 16-spin spin glass, computed exactly</p>
   <div class="controls">
-    <label>\(k_BT/J\) <input type="range" id="pq-T" min="0.15" max="2" step="0.01" value="0.4"> <output id="pq-T-out"></output></label>
+    <label>\(k_BT/J\) <input type="range" id="pq-T" aria-label="Temperature k_B T / J" min="0.15" max="2" step="0.01" value="0.4"> <output id="pq-T-out"></output></label>
     <label>Mean coupling \(J_0/J\) <input type="range" id="pq-J0" min="0" max="2.5" step="0.05" value="0"> <output id="pq-J0-out"></output></label>
   </div>
   <div class="controls">
@@ -424,8 +424,8 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 <figure class="demo" id="demo-lg">
   <p class="title">A lattice gas is an Ising magnet</p>
   <div class="controls">
-    <label>\(k_BT/|U_2|\) <input type="range" id="lg-T" min="0.3" max="0.9" step="0.005" value="0.45"> <output id="lg-T-out"></output></label>
-    <label>\(\mu/|U_2|\) <input type="range" id="lg-mu" min="-3" max="-1" step="0.01" value="-2"> <output id="lg-mu-out"></output></label>
+    <label>\(k_BT/|U_2|\) <input type="range" id="lg-T" aria-label="Temperature k_B T / |U_2|" min="0.3" max="0.9" step="0.005" value="0.45"> <output id="lg-T-out"></output></label>
+    <label>\(\mu/|U_2|\) <input type="range" id="lg-mu" aria-label="Chemical potential mu / |U_2|" min="-3" max="-1" step="0.01" value="-2"> <output id="lg-mu-out"></output></label>
     <label>Speed <input type="range" id="lg-speed" min="1" max="30" step="1" value="6"> <output id="lg-speed-out"></output></label>
   </div>
   <div class="grid-lat" style="grid-template-columns:minmax(0,260px) minmax(0,1fr)">
@@ -512,13 +512,26 @@ function fmt(v){
   if(a>=1e4||a<1e-3){ const e=Math.floor(Math.log10(a)+1e-9); const mm=v/10**e; return (Math.abs(Math.abs(mm)-1)<1e-6?(mm<0?'−':''):(+mm.toFixed(1))+'×')+'10'+sup(e); }
   return String(+v.toPrecision(3)).replace('-','−');
 }
+// a range collapsed to rounding level (b − a ~ 1e-16) gave v + step === v and an endless tick loop:
+// widen such a range relative to the data magnitude, and generate ticks by integer index with a hard cap
+function safeLim(a,b){
+  if(!isFinite(a)||!isFinite(b)) return [0,1];
+  if(Math.abs(b-a)>Math.max(Math.abs(a),Math.abs(b))*1e-9&&Math.abs(b-a)>1e-290) return [a,b];
+  const c=(a+b)/2; let w=Math.abs(c)*0.05; if(!(w>1e-300)) w=1;
+  return [c-w,c+w];
+}
 function niceTicks(a,b,n){
+  if(!isFinite(a)||!isFinite(b)||!(b>=a)) return [];
+  [a,b]=safeLim(a,b); n=Math.min(Math.max(Math.round(n)||1,1),50);
   const raw=(b-a)/n, mag=10**Math.floor(Math.log10(raw)), norm=raw/mag;
   const step=(norm<1.5?1:norm<3?2:norm<7?5:10)*mag, t=[];
-  for(let v=Math.ceil(a/step-1e-9)*step; v<=b+step*1e-6; v+=step){ const vv=Math.abs(v)<step*1e-6?0:v; t.push({v:vv,label:fmt(+vv.toPrecision(12))}); }
+  if(!(step>0)||!isFinite(step)) return t;
+  const i0=Math.ceil(a/step-1e-9), i1=Math.min(Math.floor(b/step+1e-6), i0+4*n+4);
+  for(let i=i0; i<=i1; i++){ const v=i*step; if(!isFinite(v)||(t.length&&v<=t[t.length-1].v)) break; const vv=Math.abs(v)<step*1e-6?0:v; t.push({v:vv,label:fmt(+vv.toPrecision(12))}); }
   return t;
 }
 function logTicks(a,b){
+  if(!(a>0)||!(b>a)||!isFinite(b)) return [];
   const k0=Math.ceil(Math.log10(a)-1e-9), k1=Math.floor(Math.log10(b)+1e-9), span=k1-k0, t=[];
   const mants = span<=1 ? [1,2,5] : [1];
   const every = span>7 ? 2 : 1;
@@ -537,6 +550,7 @@ function plot(cv,o){
   const ink=css('--ink'), muted=css('--muted'), rule=css('--rule'), font=css('--ui-font');
   const m={l:52,r:12,t:10,b:40}, pw=w-m.l-m.r, ph=H-m.t-m.b;
   const fx=o.xlog?Math.log10:(v=>v), fy=o.ylog?Math.log10:(v=>v);
+  if(!o.xlog) o.xlim=safeLim(...o.xlim); if(!o.ylog) o.ylim=safeLim(...o.ylim);
   const ax0=fx(o.xlim[0]),ax1=fx(o.xlim[1]),ay0=fy(o.ylim[0]),ay1=fy(o.ylim[1]);
   const X=v=>m.l+(fx(v)-ax0)/(ax1-ax0)*pw, Y=v=>m.t+ph-(fy(v)-ay0)/(ay1-ay0)*ph;
   ctx.font=`12px ${font}`; ctx.lineWidth=1;

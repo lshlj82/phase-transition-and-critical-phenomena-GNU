@@ -184,7 +184,7 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
     </div>
     <div class="controls" style="margin:10px 0 0">
       <label>Block size \(\Lambda^{-1}\) <select id="hero-b"><option>2</option><option>4</option><option selected>8</option><option>16</option></select></label>
-      <label>\(T/T_c\) <input type="range" id="hero-T" min="0.9" max="1.3" step="0.005" value="1.02"> <output id="hero-T-out"></output></label>
+      <label>\(T/T_c\) <input type="range" id="hero-T" aria-label="Temperature T / T_c" min="0.9" max="1.3" step="0.005" value="1.02"> <output id="hero-T-out"></output></label>
       <button id="hero-play" aria-pressed="false">Pause</button>
     </div>
     <p class="readout" style="margin-top:.2rem;color:var(--muted)">A 128 × 128 Ising model near \(T_c\), evolving slowly. On the right, the magnetization averaged over blocks of side \(\Lambda^{-1}\) and drawn as a smooth field (navy +1, yellow −1, fading into the background color at 0). Choosing \(a\ll\Lambda^{-1}\lesssim\xi\) keeps the long-wavelength structure while discarding lattice-scale noise.</p>
@@ -249,7 +249,7 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 <figure class="demo" id="demo-convex">
   <p class="title">A non-convex Landau function and a convex Gibbs function, computed exactly</p>
   <div class="controls">
-    <label>\(k_BT/J_0\) <input type="range" id="cv-T" min="0.6" max="1.2" step="0.01" value="0.8"> <output id="cv-T-out"></output></label>
+    <label>\(k_BT/J_0\) <input type="range" id="cv-T" aria-label="Temperature k_B T / J_0" min="0.6" max="1.2" step="0.01" value="0.8"> <output id="cv-T-out"></output></label>
   </div>
   <div class="grid2">
     <div><p class="plot-label">Constrained free energy \(\mathcal L(m)\) per spin</p><canvas class="plot" id="cv-L"></canvas></div>
@@ -312,7 +312,7 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
   <p class="title">Solving the Landau equation: a domain wall, and the response to a point field</p>
   <div class="controls">
     <span role="group" aria-label="Setup"><button id="pr-wall" aria-pressed="true">Domain wall</button> <button id="pr-point" aria-pressed="false">Point field</button></span>
-    <label>\(t\) <input type="range" id="pr-t" min="-0.5" max="0.5" step="0.005" value="-0.1"> <output id="pr-t-out"></output></label>
+    <label>\(t\) <input type="range" id="pr-t" aria-label="Reduced temperature t" min="-0.5" max="0.5" step="0.005" value="-0.1"> <output id="pr-t-out"></output></label>
     <button id="pr-restart">Restart relaxation</button>
   </div>
   <div class="grid2">
@@ -414,13 +414,26 @@ function fmt(v){
   if(a>=1e4||a<1e-3){ const e=Math.floor(Math.log10(a)+1e-9); const mm=v/10**e; return (Math.abs(Math.abs(mm)-1)<1e-6?(mm<0?'−':''):(+mm.toFixed(1))+'×')+'10'+sup(e); }
   return String(+v.toPrecision(3)).replace('-','−');
 }
+// a range collapsed to rounding level (b − a ~ 1e-16) gave v + step === v and an endless tick loop:
+// widen such a range relative to the data magnitude, and generate ticks by integer index with a hard cap
+function safeLim(a,b){
+  if(!isFinite(a)||!isFinite(b)) return [0,1];
+  if(Math.abs(b-a)>Math.max(Math.abs(a),Math.abs(b))*1e-9&&Math.abs(b-a)>1e-290) return [a,b];
+  const c=(a+b)/2; let w=Math.abs(c)*0.05; if(!(w>1e-300)) w=1;
+  return [c-w,c+w];
+}
 function niceTicks(a,b,n){
+  if(!isFinite(a)||!isFinite(b)||!(b>=a)) return [];
+  [a,b]=safeLim(a,b); n=Math.min(Math.max(Math.round(n)||1,1),50);
   const raw=(b-a)/n, mag=10**Math.floor(Math.log10(raw)), norm=raw/mag;
   const step=(norm<1.5?1:norm<3?2:norm<7?5:10)*mag, t=[];
-  for(let v=Math.ceil(a/step-1e-9)*step; v<=b+step*1e-6; v+=step){ const vv=Math.abs(v)<step*1e-6?0:v; t.push({v:vv,label:fmt(+vv.toPrecision(12))}); }
+  if(!(step>0)||!isFinite(step)) return t;
+  const i0=Math.ceil(a/step-1e-9), i1=Math.min(Math.floor(b/step+1e-6), i0+4*n+4);
+  for(let i=i0; i<=i1; i++){ const v=i*step; if(!isFinite(v)||(t.length&&v<=t[t.length-1].v)) break; const vv=Math.abs(v)<step*1e-6?0:v; t.push({v:vv,label:fmt(+vv.toPrecision(12))}); }
   return t;
 }
 function logTicks(a,b){
+  if(!(a>0)||!(b>a)||!isFinite(b)) return [];
   const k0=Math.ceil(Math.log10(a)-1e-9), k1=Math.floor(Math.log10(b)+1e-9), span=k1-k0, t=[];
   const mants = span<=1 ? [1,2,5] : [1];
   const every = span>7 ? 2 : 1;
@@ -439,6 +452,7 @@ function plot(cv,o){
   const ink=css('--ink'), muted=css('--muted'), rule=css('--rule'), font=css('--ui-font');
   const m={l:52,r:12,t:10,b:40}, pw=w-m.l-m.r, ph=H-m.t-m.b;
   const fx=o.xlog?Math.log10:(v=>v), fy=o.ylog?Math.log10:(v=>v);
+  if(!o.xlog) o.xlim=safeLim(...o.xlim); if(!o.ylog) o.ylim=safeLim(...o.ylim);
   const ax0=fx(o.xlim[0]),ax1=fx(o.xlim[1]),ay0=fy(o.ylim[0]),ay1=fy(o.ylim[1]);
   const X=v=>m.l+(fx(v)-ax0)/(ax1-ax0)*pw, Y=v=>m.t+ph-(fy(v)-ay0)/(ay1-ay0)*ph;
   ctx.font=`12px ${font}`; ctx.lineWidth=1;
