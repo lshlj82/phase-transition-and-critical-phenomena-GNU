@@ -489,8 +489,8 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 
 <h3>Nonzero temperature in \(d = 1\)</h3>
 <p>Whether a \(T=0\) transition survives at \(T>0\) depends on the <mark>dimensionality</mark>. Landau and Peierls showed there is no long-range order in \(d=1\) for \(T>0\), while for \(d=2\) a long-range-ordered (ferromagnetic) state exists above \(T=0\), with a transition at \(T_c>0\) to a paramagnetic (disordered) state. The dimension above which a given transition occurs at \(T>0\) is the <mark>lower critical dimension</mark>.</p>
-<p>At \(T=0\) in \(d=1\) there are two possible phases, all spins up and all spins down. As the temperature is raised, each spin executes a sort of Brownian motion by virtue of being in thermal equilibrium. In the thermodynamic limit, the uncorrelated flipping of a <i>finite</i> number \(n\) of spins cannot destroy long-range order, since \(\lim_{N\to\infty}(N-n)/N = 1\). To destroy it, a nonzero <i>fraction</i> \(f\) of the spins must be reversed on average, giving \(\lim_{N\to\infty}(N-fN)/N = 1-f\lt 1\).</p>
-<p>If all the spins are aligned the entropy is zero (\(k_B\log1\)) and \(F_N = -NJ\) at \(H=0\). Now consider a state with two domains, \(\uparrow\cdots\uparrow\,\downarrow\cdots\downarrow\). The interface costs \(\Delta E = 2J\), since one bond changes from \(-J\) to \(+J\), so \(E_N = -NJ+2J\). The interface can sit at any of \(N\) positions (with periodic boundary conditions, for convenience), so \(S_N = k_B\log N\). Hence</p>
+<p>At \(T=0\) in \(d=1\) there are two possible phases, all spins up and all spins down. As the temperature is raised, each spin executes a sort of Brownian motion by virtue of being in thermal equilibrium. In the thermodynamic limit, the uncorrelated flipping of a <i>finite</i> number \(n\) of spins cannot destroy long-range order, since \(\lim_{N\to\infty}(N-n)/N = 1\). To destroy it, a nonzero <i>fraction</i> \(f\) of the spins must be reversed on average, and since each reversed spin contributes \(-1\) instead of \(+1\), the magnetization becomes \(\lim_{N\to\infty}(N-2fN)/N = 1-2f\lt 1\). Even this only reduces the order: it is destroyed when the reversed spins are no longer a minority, \(f\to\tfrac12\) and \(M\to0\). The domain-wall argument below shows that this is what happens in \(d=1\).</p>
+<p>If all the spins are aligned the entropy is zero (\(k_B\log1\)) and \(F_N = -NJ\) at \(H=0\). Now consider a state with two domains, \(\uparrow\cdots\uparrow\,\downarrow\cdots\downarrow\). The interface costs \(\Delta E = 2J\), since one bond changes from \(-J\) to \(+J\), so \(E_N = -NJ+2J\). In an open chain the interface can sit on any of the \(N-1\approx N\) bonds, so \(S_N \approx k_B\log N\). (On a periodic ring walls come in pairs: two walls cost \(4J\) and can be placed in \(\binom N2\) ways, \(\Delta F = 4J - k_BT\log\binom N2\approx 4J-2k_BT\log N\), with the same conclusion.) Hence, for the open chain,</p>
 <div class="result"><p>\[ \begin{gathered} \Delta F \equiv F_N^{\text{(boundary)}} - F_N^{\text{(one phase)}} = 2J - k_BT\log N,\\ \Delta F \longrightarrow -\infty\ \text{ as } N\to\infty,\ \text{for any } T>0. \end{gathered} \]</p></div>
 <p>The system lowers its free energy by creating a domain wall, at any \(T>0\), and again each time new domains are created; continue until no ordered domains remain at all. The long-range-ordered state is unstable to thermal fluctuations for \(T>0\), so \(M = 0\) in zero field. As a corollary there is <mark>no phase transition for \(T>0\)</mark> in \(d=1\): at \(H=0\) there are no longer two phases, only the two zero-temperature states \(M=\pm1\) at the ends of the line.</p>
 
@@ -507,7 +507,7 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
     <div><p class="plot-label">A chain of 400 spins, time running downward</p><canvas class="kymo" id="dw-kymo" width="400" height="240" style="aspect-ratio:400/240"></canvas></div>
   </div>
   <p class="readout" id="dw-read"></p>
-  <figcaption>Left: the single-wall free-energy change at the chosen temperature (solid) and at others (gray). It becomes negative for \(N > N^* = e^{2J/k_BT}\), so any long enough chain disorders, however low the temperature. Right: heat-bath dynamics started from the perfectly ordered state on a periodic ring. Walls nucleate in pairs and wander until their equilibrium density \(1/(1+e^{2J/k_BT})\), from the exact solution, is reached.</figcaption>
+  <figcaption>Left: the single-wall free-energy change of an open chain at the chosen temperature (solid) and at others (gray). It becomes negative for \(N > N^* = e^{2J/k_BT}\), so any long enough chain disorders, however low the temperature. Right: heat-bath dynamics started from the perfectly ordered state on a periodic ring. Walls nucleate in pairs and wander until their equilibrium density is reached. For this ring of \(N=400\) spins the exact density is \((1-u)(1-u^{N-1})/\big(2(1+u^N)\big)\) with \(u=\tanh(J/k_BT)\); its thermodynamic limit is \(1/(1+e^{2J/k_BT})\). The two differ noticeably at low \(T\), where the chain is not much longer than the correlation length.</figcaption>
 </figure>
 
 <p>The argument assumed short-ranged interactions, so that the energy difference between the ordered and two-domain states did not depend on \(N\). If instead \(J_{ij} = J/|\vec r_i-\vec r_j|^{\sigma}\), long-range order can persist for \(0\lt T\lt T_c\) as long as \(1\le\sigma\le2\). For \(\sigma\lt 1\) the thermodynamic limit does not exist, consistent with the requirement \(\sigma>d\) of §2.2 (the boundary case \(\sigma=1\) is marginal). For \(\sigma>2\) the interaction counts as short ranged and the argument for the destruction of long-range order at \(T>0\) applies. The difficult case \(\sigma=2\) is treated by Fröhlich and Spencer (1982).</p>
@@ -542,7 +542,20 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 /* ---------- utilities ---------- */
 const $ = s => document.querySelector(s);
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+// reduced-motion preference, followed live: animated panels autoplay only without it and follow later
+// changes to it, unless the reader has pressed that panel's Play/Pause button
+const motionMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+let reduceMotion = motionMQ.matches;
+const motionHooks = [];
+motionMQ.addEventListener('change', e => { reduceMotion = e.matches; motionHooks.forEach(f => f()); });
+function playButton(btn, st, on, labels){ // st.run is the panel's running flag; on() runs after every change
+  const [pl, rl] = labels || ['Pause', 'Play']; let chosen = false;
+  st.run = !reduceMotion;
+  const sync = () => { btn.textContent = st.run ? pl : rl; btn.setAttribute('aria-pressed', String(!st.run)); };
+  btn.addEventListener('click', () => { st.run = !st.run; chosen = true; sync(); if(on) on(); });
+  motionHooks.push(() => { if(chosen) return; st.run = !reduceMotion; sync(); if(on) on(); });
+  sync(); return sync;
+}
 function hexRGB(h){ h=h.replace('#',''); if(h.length===3) h=h.split('').map(c=>c+c).join(''); const n=parseInt(h,16); return [(n>>16)&255,(n>>8)&255,n&255]; }
 function rgba(hex,a){ const [r,g,b]=hexRGB(hex); return `rgba(${r},${g},${b},${a})`; }
 const SUP={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
@@ -653,6 +666,36 @@ const visible=new Map();
 const io=new IntersectionObserver(es=>es.forEach(e=>visible.set(e.target.id,e.isIntersecting)),{rootMargin:'100px'});
 function watch(id){ visible.set(id,false); io.observe(document.getElementById(id)); }
 
+/* accessible names: each canvas graph is named by its visible plot label (or the figure title)
+   and described by the figure caption and readout; nothing here is a live region */
+(function(){
+  let n=0; const idOf=el=>el.id||(el.id='a11y-'+(++n));
+  document.querySelectorAll('canvas').forEach(cv=>{
+    const fig=cv.closest('figure');
+    if(!cv.hasAttribute('aria-label')&&!cv.hasAttribute('aria-labelledby')){
+      let lab=cv.previousElementSibling;
+      if(!(lab&&lab.classList.contains('plot-label'))) lab=fig&&fig.querySelector('.title');
+      if(!lab) return;
+      cv.setAttribute('aria-labelledby',idOf(lab));
+    }
+    cv.setAttribute('role','img');
+    if(fig&&!cv.hasAttribute('aria-describedby')){ const d=[...fig.querySelectorAll('.readout, figcaption')].map(idOf); if(d.length) cv.setAttribute('aria-describedby',d.join(' ')); }
+  });
+})();
+/* keyboard access to horizontal scrolling: only containers that actually overflow become tab stops
+   (outermost one only), and they stop being tab stops when a resize removes the overflow */
+function markScrollers(){
+  document.querySelectorAll('.result, .math-scroll, .table-scroll, .katex-display').forEach(el=>{
+    const ours=el.dataset.scrollFocus==='1', over=el.scrollWidth>el.clientWidth+1;
+    const inside=el.parentElement&&el.parentElement.closest('[data-scroll-focus="1"]');
+    if(over&&!inside&&!ours){ el.tabIndex=0; el.setAttribute('role','region'); el.setAttribute('aria-label',el.querySelector('table')?'Scrollable table':'Scrollable equation'); el.dataset.scrollFocus='1'; }
+    else if(ours&&(!over||inside)){ el.removeAttribute('tabindex'); el.removeAttribute('role'); el.removeAttribute('aria-label'); delete el.dataset.scrollFocus; }
+  });
+}
+reg(markScrollers);
+// again once the typeset math and its web fonts have settled (the math is rendered in a later 'load' handler)
+window.addEventListener('load',()=>setTimeout(()=>{ if(document.fonts) document.fonts.ready.then(markScrollers); else markScrollers(); },0));
+
 
 /* ---------- spin colors and small helpers ---------- */
 let SPIN_UP=[0,0,0], SPIN_DN=[0,0,0];
@@ -684,8 +727,7 @@ const hero={chain:new Chain(256),T:0.75,run:!reduceMotion,last:0};
 hero.chain.randomize();
 (function(){
   bindSlider('#hero-T',v=>hero.T=v,v=>v.toFixed(2));
-  const btn=$('#hero-play'); const sync=()=>{ btn.textContent=hero.run?'Pause':'Play'; btn.setAttribute('aria-pressed',String(!hero.run)); };
-  btn.addEventListener('click',()=>{ hero.run=!hero.run; sync(); }); sync();
+  playButton($('#hero-play'),hero);
   for(let k=0;k<200;k++) hero.chain.sweep(hero.T);
   kymoFill($('#hero-kymo'),hero.chain,hero.T,200);
 })();
@@ -714,6 +756,7 @@ function heroTick(now){
   }
   function draw(){
     const Ns=[]; for(let n=2;n<=2000;n=Math.max(n+1,Math.round(n*1.12))) Ns.push(n);
+    if(Ns[Ns.length-1]!==2000) Ns.push(2000); // end exactly at the size quoted in the readout
     const rows=Ns.map(N=>{ const r=lnZ(N,T,H); return {N,fo:-T*r.open/N,fp:-T*r.per/N,fb:r.fb}; });
     const fb=rows[0].fb, all=rows.flatMap(r=>[r.fo,r.fp]).filter(isFinite);
     const lo=Math.min(...all,fb), hi=Math.max(...all,fb), pad=(hi-lo)*0.08||0.1;
@@ -726,7 +769,7 @@ function heroTick(now){
       series:[{data:rows.map(r=>[r.N,Math.abs(r.fo-r.fb)]),color:css('--up'),width:2.2,name:'open: ~ 1/N'},
         {data:rows.map(r=>[r.N,Math.abs(r.fp-r.fb)]),color:css('--down'),width:2.2,name:'periodic: ~ (λ₋/λ₊)^N'}]});
     const big=rows[rows.length-1], fs=(big.N*big.fo - big.N*big.fb)/2;
-    $('#sf-read').innerHTML=`Bulk free energy per site <b>f<sub>b</sub> = ${big.fb.toFixed(5)} J</b>; surface free energy per end <b>f<sub>s</sub> ≈ ${fs.toFixed(5)} J</b> (from N = 2000).`;
+    $('#sf-read').innerHTML=`Bulk free energy per site <b>f<sub>b</sub> = ${big.fb.toFixed(5)} J</b>; surface free energy per end <b>f<sub>s</sub> ≈ ${fs.toFixed(5)} J</b> (from N = ${big.N.toLocaleString('en-US')}).`;
   }
   bindSlider('#sf-T',v=>{T=v;draw();},v=>v.toFixed(2));
   bindSlider('#sf-H',v=>{H=v;draw();},v=>v.toFixed(2));
@@ -780,9 +823,11 @@ function hGrid(a,b,n,T){ const hs=range(a,b,n).filter(h=>Math.abs(h)>1e-9); if(T
       series:[{data:pts.map(p=>[p[0],p[2]]),color:up,width:2.4}]});
     const ms=mfSpont(T);
     let msg;
-    if(Math.abs(T-1)<0.0051) msg=`<b>Continuous transition</b> at the critical point: m(H) is continuous, but χ = ∂m/∂H diverges at H = 0 (m ∝ H<sup>1/3</sup>).`;
-    else if(T<1) msg=`<b>First-order transition</b> at H = 0: m jumps from ${(-ms).toFixed(3)} to +${ms.toFixed(3)}, so ∂f/∂H is discontinuous.`;
-    else msg=`<b>No transition</b> along this path: f is analytic, and m passes smoothly through zero.`;
+    // only the critical tick itself (T = 1 up to rounding) is the critical point; its neighbors are not
+    const near=Math.abs(T-1)<0.05;
+    if(Math.abs(T-1)<1e-9) msg=`<b>Continuous transition</b> at the critical point: m(H) is continuous, but χ = ∂m/∂H diverges at H = 0 (m ∝ H<sup>1/3</sup>).`;
+    else if(T<1) msg=`<b>First-order transition</b> at H = 0: m jumps from ${(-ms).toFixed(3)} to +${ms.toFixed(3)}, so ∂f/∂H is discontinuous.${near?' Near T<sub>c</sub> the jump is small, shrinking as (T<sub>c</sub> − T)<sup>1/2</sup>, but it is still a jump.':''}`;
+    else msg=`<b>No transition</b> along this path: f is analytic, and m passes smoothly through zero.${near?` Near T<sub>c</sub> the zero-field susceptibility χ = 1/(T/T<sub>c</sub> − 1) = ${(1/(T-1)).toFixed(0)} is large, but finite.`:''}`;
     $('#cl-read').innerHTML=msg;
   }
   const sl=bindSlider('#cl-T',v=>{T=v;draw();},v=>v.toFixed(3));
@@ -919,12 +964,19 @@ function thermo(sys,J,H,T){
 
 /* ---------- 2.8 domain walls in d = 1 ---------- */
 const dw={chain:new Chain(400),T:0.6,speed:6,run:true,acc:0,last:0,sum:0,n:0,rows:0};
+// exact wall density of a periodic ring of N spins at H = 0 (J = kB = 1):
+// <S_i S_i+1> = (u + u^(N−1))/(1 + u^N), density = (1 − u)(1 − u^(N−1)) / (2(1 + u^N)), u = tanh(1/T),
+// with 1 − u = 2/(1 + e^(2/T)) and u^n = exp(n ln u) evaluated stably at low T
+function ringWallDensity(N,T){
+  const e=Math.exp(-2/T), omu=2*e/(1+e), lnu=Math.log1p(-e)-Math.log1p(e);
+  return omu*(-Math.expm1((N-1)*lnu))/(2*(1+Math.exp(N*lnu)));
+}
 (function(){
-  const reset=()=>{ dw.chain.order(); dw.sum=0; dw.n=0; dw.rows=0; const cv=$('#dw-kymo'), ctx=cv.getContext('2d'); ctx.fillStyle=css('--spin-up'); ctx.fillRect(0,0,cv.width,cv.height); };
+  const reset=()=>{ dw.chain.order(); dw.sum=0; dw.n=0; dw.rows=0; const cv=$('#dw-kymo'), ctx=cv.getContext('2d'); ctx.fillStyle=css('--spin-up'); ctx.fillRect(0,0,cv.width,cv.height); drawDW(); };
   bindSlider('#dw-T',v=>{ dw.T=v; dw.sum=0; dw.n=0; dw.rows=0; drawDW(); },v=>v.toFixed(2));
   bindSlider('#dw-speed',v=>dw.speed=v,v=>v+' sweeps/s');
   $('#dw-restart').addEventListener('click',reset);
-  const pb=$('#dw-pause'); pb.addEventListener('click',()=>{ dw.run=!dw.run; dw.last=0; dw.acc=0; pb.textContent=dw.run?'Pause':'Resume'; pb.setAttribute('aria-pressed',String(!dw.run)); });
+  playButton($('#dw-pause'),dw,()=>{ dw.last=0; dw.acc=0; },['Pause','Resume']);
   reset();
 })();
 watch('demo-dw');
@@ -934,8 +986,8 @@ function drawDW(){
   plot($('#dw-plot'),{xlog:true,xlim:[1,1e8],ylim:[-8,2.5],xlabel:'number of sites N',ylabel:'ΔF / J',hlines:[{y:0}],
     vlines:Nstar<1e8?[{x:Nstar,color:css('--crit'),label:'N*'}]:[],
     series:[...others,{data:Ns.map(N=>[N,2-T*Math.log(N)]),color:css('--up'),width:2.6}]});
-  const exact=1/(1+Math.exp(2/T)), meas=dw.n?dw.sum/dw.n/dw.chain.N:NaN;
-  $('#dw-read').innerHTML=`N* = e<sup>2J/k<sub>B</sub>T</sup> = <b>${Nstar<1e6?Math.round(Nstar).toLocaleString('en-US'):Nstar.toExponential(2)}</b>. Wall density: exact <b>${exact.toFixed(4)}</b>, simulation ${isFinite(meas)&&dw.rows>150?meas.toFixed(4):'(equilibrating)'}; |M| = ${Math.abs(dw.chain.s.reduce((a,b)=>a+b,0)/dw.chain.N).toFixed(2)}.`;
+  const exact=ringWallDensity(dw.chain.N,T), lim=1/(1+Math.exp(2/T)), meas=dw.n?dw.sum/dw.n/dw.chain.N:NaN;
+  $('#dw-read').innerHTML=`N* = e<sup>2J/k<sub>B</sub>T</sup> = <b>${Nstar<1e6?Math.round(Nstar).toLocaleString('en-US'):Nstar.toExponential(2)}</b>. Wall density: exact for this ring (N = ${dw.chain.N}) <b>${exact.toPrecision(3)}</b> (N → ∞: ${lim.toPrecision(3)}), simulation ${isFinite(meas)&&dw.rows>150?meas.toPrecision(3):'(equilibrating)'}; |M| = ${Math.abs(dw.chain.s.reduce((a,b)=>a+b,0)/dw.chain.N).toFixed(2)}.`;
 }
 reg(drawDW);
 function dwTick(now){

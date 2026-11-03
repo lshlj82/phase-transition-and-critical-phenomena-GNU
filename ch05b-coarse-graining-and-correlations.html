@@ -314,13 +314,14 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
     <span role="group" aria-label="Setup"><button id="pr-wall" aria-pressed="true">Domain wall</button> <button id="pr-point" aria-pressed="false">Point field</button></span>
     <label>\(t\) <input type="range" id="pr-t" aria-label="Reduced temperature t" min="-0.5" max="0.5" step="0.005" value="-0.1"> <output id="pr-t-out"></output></label>
     <button id="pr-restart">Restart relaxation</button>
+    <button id="pr-play" aria-pressed="false">Pause</button>
   </div>
   <div class="grid2">
     <div><p class="plot-label">Profile \(\eta(x)\) relaxing under \(\partial_\tau\eta = -\delta L/\delta\eta\)</p><canvas class="plot" id="pr-eta"></canvas></div>
     <div><p class="plot-label">\(|\eta(x)-\eta_\infty|\), log scale</p><canvas class="plot" id="pr-log"></canvas></div>
   </div>
   <p class="readout" id="pr-read"></p>
-  <figcaption>The one-dimensional Landau equation \(-\gamma\eta'' + 2at\eta + 2b\eta^3 = H(x)\) with \(\gamma = a = b = 1\), solved by gradient descent on \(L\) (the relaxation is shown slowly). <b>Domain wall</b> (\(t\lt 0\), opposite bulk states at the ends): the solution is the kink \(\eta_s\tanh(x/2\xi_\lt)\) (magenta dashes), whose width is set by the correlation length. <b>Point field</b> (a small \(H\) concentrated at \(x=0\)): the response decays as \(e^{-|x|/\xi}\) with \(\xi_>\) above \(T_c\) and the shorter \(\xi_\lt\) below, the one-dimensional Green function of the operator above. For a wall with \(t>0\) there is no ordered state to support it, and the profile simply decays to zero.</figcaption>
+  <figcaption>The one-dimensional Landau equation \(-\gamma\eta'' + 2at\eta + 2b\eta^3 = H(x)\) with \(\gamma = a = b = 1\), solved by gradient descent on \(L\) (the relaxation is shown slowly). <b>Domain wall</b> (\(t\lt 0\), opposite bulk states at the ends): the solution is the kink \(\eta_s\tanh(x/2\xi_\lt)\) (magenta dashes), whose width is set by the correlation length. <b>Point field</b> (a small \(H\) concentrated at \(x=0\)): the response decays as \(e^{-|x|/\xi}\) with \(\xi_>\) above \(T_c\) and the shorter \(\xi_\lt\) below, the one-dimensional Green function of the operator above. The dashed curve there is the linear response on an infinite line, \(\eta_s + \tfrac12H_0\xi\,e^{-|x|/\xi}\) for a field of total strength \(H_0\); it is exact only for vanishing \(H_0\). Close to \(T_c\), where \(\xi\) is long, the nonlinear \(\eta^3\) term and the finite interval (reflecting ends at \(x=\pm50\)) make the relaxed profile fall visibly below it. For a wall with \(t>0\) there is no ordered state to support it, and the profile simply decays to zero.</figcaption>
 </figure>
 
 <p><b>Fourier transform.</b> Transforming the equation for \(G\),</p>
@@ -403,7 +404,20 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 /* ---------- utilities ---------- */
 const $ = s => document.querySelector(s);
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+// reduced-motion preference, followed live: animated panels autoplay only without it and follow later
+// changes to it, unless the reader has pressed that panel's Play/Pause button
+const motionMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+let reduceMotion = motionMQ.matches;
+const motionHooks = [];
+motionMQ.addEventListener('change', e => { reduceMotion = e.matches; motionHooks.forEach(f => f()); });
+function playButton(btn, st, on, labels){ // st.run is the panel's running flag; on() runs after every change
+  const [pl, rl] = labels || ['Pause', 'Play']; let chosen = false;
+  st.run = !reduceMotion;
+  const sync = () => { btn.textContent = st.run ? pl : rl; btn.setAttribute('aria-pressed', String(!st.run)); };
+  btn.addEventListener('click', () => { st.run = !st.run; chosen = true; sync(); if(on) on(); });
+  motionHooks.push(() => { if(chosen) return; st.run = !reduceMotion; sync(); if(on) on(); });
+  sync(); return sync;
+}
 function hexRGB(h){ h=h.replace('#',''); if(h.length===3) h=h.split('').map(c=>c+c).join(''); const n=parseInt(h,16); return [(n>>16)&255,(n>>8)&255,n&255]; }
 function rgba(hex,a){ const [r,g,b]=hexRGB(hex); return `rgba(${r},${g},${b},${a})`; }
 const SUP={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
@@ -514,6 +528,36 @@ const visible=new Map();
 const io=new IntersectionObserver(es=>es.forEach(e=>visible.set(e.target.id,e.isIntersecting)),{rootMargin:'100px'});
 function watch(id){ visible.set(id,false); io.observe(document.getElementById(id)); }
 
+/* accessible names: each canvas graph is named by its visible plot label (or the figure title)
+   and described by the figure caption and readout; nothing here is a live region */
+(function(){
+  let n=0; const idOf=el=>el.id||(el.id='a11y-'+(++n));
+  document.querySelectorAll('canvas').forEach(cv=>{
+    const fig=cv.closest('figure');
+    if(!cv.hasAttribute('aria-label')&&!cv.hasAttribute('aria-labelledby')){
+      let lab=cv.previousElementSibling;
+      if(!(lab&&lab.classList.contains('plot-label'))) lab=fig&&fig.querySelector('.title');
+      if(!lab) return;
+      cv.setAttribute('aria-labelledby',idOf(lab));
+    }
+    cv.setAttribute('role','img');
+    if(fig&&!cv.hasAttribute('aria-describedby')){ const d=[...fig.querySelectorAll('.readout, figcaption')].map(idOf); if(d.length) cv.setAttribute('aria-describedby',d.join(' ')); }
+  });
+})();
+/* keyboard access to horizontal scrolling: only containers that actually overflow become tab stops
+   (outermost one only), and they stop being tab stops when a resize removes the overflow */
+function markScrollers(){
+  document.querySelectorAll('.result, .math-scroll, .table-scroll, .katex-display').forEach(el=>{
+    const ours=el.dataset.scrollFocus==='1', over=el.scrollWidth>el.clientWidth+1;
+    const inside=el.parentElement&&el.parentElement.closest('[data-scroll-focus="1"]');
+    if(over&&!inside&&!ours){ el.tabIndex=0; el.setAttribute('role','region'); el.setAttribute('aria-label',el.querySelector('table')?'Scrollable table':'Scrollable equation'); el.dataset.scrollFocus='1'; }
+    else if(ours&&(!over||inside)){ el.removeAttribute('tabindex'); el.removeAttribute('role'); el.removeAttribute('aria-label'); delete el.dataset.scrollFocus; }
+  });
+}
+reg(markScrollers);
+// again once the typeset math and its web fonts have settled (the math is rendered in a later 'load' handler)
+window.addEventListener('load',()=>setTimeout(()=>{ if(document.fonts) document.fonts.ready.then(markScrollers); else markScrollers(); },0));
+
 
 /* ---------- spin colors and small helpers ---------- */
 let SPIN_UP=[0,0,0], SPIN_DN=[0,0,0];
@@ -530,8 +574,7 @@ const TC2=2/Math.log(1+Math.SQRT2);
   for(let k=0;k<3000;k++) heroWolff();
   bindSlider('#hero-T',v=>hero.T=v,v=>v.toFixed(3));
   $('#hero-b').addEventListener('change',e=>{ hero.b=+e.target.value; drawHero(); });
-  const btn=$('#hero-play'); const sync=()=>{ btn.textContent=hero.run?'Pause':'Play'; btn.setAttribute('aria-pressed',String(!hero.run)); };
-  btn.addEventListener('click',()=>{ hero.run=!hero.run; sync(); }); sync();
+  playButton($('#hero-play'),hero);
 })();
 function heroWolff(){
   const L=hero.L, s=hero.s, st=hero.stack, p=1-Math.exp(-2/(hero.T*TC2)), i0=(Math.random()*L*L)|0, s0=s[i0];
@@ -604,7 +647,7 @@ function heroTick(now){
 })();
 
 /* ---------- 1D Landau equation: relaxation ---------- */
-const pr={N:401,dx:0.25,t:-0.1,mode:'wall',eta:null,H:null,steps:0};
+const pr={N:401,dx:0.25,t:-0.1,mode:'wall',eta:null,H:null,steps:0,run:true};
 function prInit(){
   const N=pr.N; pr.eta=new Float64Array(N); pr.H=new Float64Array(N); pr.steps=0;
   const es=pr.t<0?Math.sqrt(-pr.t):0;
@@ -624,10 +667,13 @@ function prStep(n){
   pr.steps+=n;
 }
 (function(){
-  bindSlider('#pr-t',v=>{ pr.t=v; prInit(); },v=>v.toFixed(3));
-  $('#pr-wall').addEventListener('click',()=>{ pr.mode='wall'; prInit(); });
-  $('#pr-point').addEventListener('click',()=>{ pr.mode='point'; prInit(); });
-  $('#pr-restart').addEventListener('click',prInit);
+  // every restart redraws at once, so a paused panel shows the new starting profile
+  const restart=()=>{ prInit(); if(pr.ready) drawPr(); };
+  bindSlider('#pr-t',v=>{ pr.t=v; restart(); },v=>v.toFixed(3));
+  $('#pr-wall').addEventListener('click',()=>{ pr.mode='wall'; restart(); });
+  $('#pr-point').addEventListener('click',()=>{ pr.mode='point'; restart(); });
+  $('#pr-restart').addEventListener('click',restart);
+  playButton($('#pr-play'),pr);
 })();
 function drawPr(){
   const N=pr.N, xs=Array.from({length:N},(_,i)=>(i-(N-1)/2)*pr.dx), t=pr.t, es=t<0?Math.sqrt(-t):0;
@@ -637,7 +683,7 @@ function drawPr(){
   if(pr.mode==='point' && t!==0) exact=xs.map(x=>[x,es+0.02*xi/2*Math.exp(-Math.abs(x)/xi)]);
   const ymax=pr.mode==='wall'?Math.max(0.8,es*1.2):Math.max(...pr.eta)*1.25+1e-6, ymin=pr.mode==='wall'?-ymax:Math.min(0,es-0.01);
   plot($('#pr-eta'),{xlim:[-50,50],ylim:[ymin,ymax],xlabel:'x',ylabel:'η',legend:'tl',hlines:[{y:0}],
-    series:[{data:xs.map((x,i)=>[x,pr.eta[i]]),color:css('--up'),width:2.6,name:'relaxed profile'},...(exact?[{data:exact,color:css('--crit'),width:1.6,dash:[6,4],name:'exact'}]:[])]});
+    series:[{data:xs.map((x,i)=>[x,pr.eta[i]]),color:css('--up'),width:2.6,name:'relaxed profile'},...(exact?[{data:exact,color:css('--crit'),width:1.6,dash:[6,4],name:pr.mode==='wall'?'exact':'infinite-interval linear response'}]:[])]});
   const inf=pr.mode==='wall'?es:es;
   const dev=xs.map((x,i)=>[Math.abs(x),Math.abs(pr.mode==='wall'?(x>=0?es-pr.eta[i]:pr.eta[i]+es):pr.eta[i]-inf)]).filter(p=>p[0]>0);
   plot($('#pr-log'),{ylog:true,xlim:[0,50],ylim:[1e-8,2],xlabel:'|x|',ylabel:'|η − η(±∞)|',
@@ -648,9 +694,9 @@ function drawPr(){
   if(tail.length>10&&pr.steps>20000){ const n=tail.length; let sx=0,sy=0,sxx=0,sxy=0; for(const [x,y] of tail){ const ly=Math.log(y); sx+=x; sy+=ly; sxx+=x*x; sxy+=x*ly; } const sl=(n*sxy-sx*sy)/(n*sxx-sx*sx); fit=`, fitted decay length from the tail <b>${(-1/sl).toFixed(3)}</b>${pr.mode==='wall'?' (a tanh kink decays as e<sup>−|x|/ξ<sub><</sub></sup>)':''}`; }
   $('#pr-read').innerHTML=`t = ${t.toFixed(3)}: ${t>0?`ξ<sub>></sub> = (γ/2at)<sup>1/2</sup> = <b>${xi.toFixed(3)}</b>`:t<0?`η<sub>s</sub> = ${es.toFixed(4)}, ξ<sub><</sub> = (−γ/4at)<sup>1/2</sup> = <b>${xi.toFixed(3)}</b>`:'t = 0: ξ = ∞'}${fit}. Relaxation time elapsed τ = ${(pr.steps*0.2*pr.dx*pr.dx).toFixed(0)}.`;
 }
-prInit(); watch('demo-profile'); reg(drawPr);
+prInit(); watch('demo-profile'); reg(drawPr); pr.ready=true;
 function prTick(){
-  if(!visible.get('demo-profile')) return;
+  if(!pr.run||!visible.get('demo-profile')) return;
   if(pr.steps<400000){ prStep(250); }
   pr.frame=(pr.frame||0)+1; if(pr.frame%6===0) drawPr();
 }

@@ -299,7 +299,7 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
     <div><p class="plot-label">Same, against \(|t| = |T/T_\lambda - 1|\) on a log axis</p><canvas class="plot" id="lam-log"></canvas></div>
   </div>
   <p class="readout" id="lam-read"></p>
-  <figcaption>Solid: \(C = A(|t|^{-\alpha}-1)/\alpha\), which tends to \(-A\ln|t|\) as \(\alpha \to 0\). Dashes: the pure logarithm. Amplitudes \(A=1\) above and \(A'=1.07\) below \(T_\lambda\) are illustrative. Over the first few decades of \(|t|\) the two are indistinguishable; for \(\alpha\lt 0\) the power law eventually bends over and \(C\) stays finite at \(T_\lambda\), a cusp rather than a divergence. Resolving this took measurements reaching \(|t| \sim 10^{-9}\).</figcaption>
+  <figcaption>Solid: for \(\alpha\ge0\), \(C = A(|t|^{-\alpha}-1)/\alpha\), which tends to \(-A\ln|t|\) as \(\alpha \to 0\). Dashes: the pure logarithm. Amplitudes \(A=1\) above and \(A'=1.07\) below \(T_\lambda\) are illustrative. For \(\alpha\lt0\), \(C\) is finite at \(T_\lambda\) and must take the same value from both sides, so the two branches share one regular background: \(C = B + A_\pm|t|^{-\alpha}/\alpha\) with \(B = -A_+/\alpha\). The singular term is then negative, so the side with the larger amplitude lies lower; the λ shape needs \(A_+/A_- = 1.07\) (about 1.05 is measured in \(^4\)He). Over the first few decades of \(|t|\) the two are indistinguishable; for \(\alpha\lt 0\) the power law eventually bends over and \(C\) stays finite at \(T_\lambda\), a cusp rather than a divergence. Resolving this took measurements reaching \(|t| \sim 10^{-9}\).</figcaption>
 </figure>
 
 <h3 id="saw">The self-avoiding random walk</h3>
@@ -314,6 +314,7 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
     <span role="group" aria-label="Dimension"><button id="saw-d2" aria-pressed="false">2D lattice</button> <button id="saw-d3" aria-pressed="true">3D lattice</button></span>
     <label>Show walks with \(N\) = <select id="saw-N"></select></label>
     <button id="saw-reset">Restart sampling</button>
+    <button id="saw-play" aria-pressed="false">Pause</button>
   </div>
   <div class="grid2">
     <div><p class="plot-label">Self-avoiding walk (blue) and ordinary walk (gray), same \(N\), same scale</p><canvas class="plot" id="saw-draw" style="height:300px"></canvas></div>
@@ -453,7 +454,20 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 /* ---------- utilities ---------- */
 const $ = s => document.querySelector(s);
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+// reduced-motion preference, followed live: animated panels autoplay only without it and follow later
+// changes to it, unless the reader has pressed that panel's Play/Pause button
+const motionMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+let reduceMotion = motionMQ.matches;
+const motionHooks = [];
+motionMQ.addEventListener('change', e => { reduceMotion = e.matches; motionHooks.forEach(f => f()); });
+function playButton(btn, st, on, labels){ // st.run is the panel's running flag; on() runs after every change
+  const [pl, rl] = labels || ['Pause', 'Play']; let chosen = false;
+  st.run = !reduceMotion;
+  const sync = () => { btn.textContent = st.run ? pl : rl; btn.setAttribute('aria-pressed', String(!st.run)); };
+  btn.addEventListener('click', () => { st.run = !st.run; chosen = true; sync(); if(on) on(); });
+  motionHooks.push(() => { if(chosen) return; st.run = !reduceMotion; sync(); if(on) on(); });
+  sync(); return sync;
+}
 function hexRGB(h){ h=h.replace('#',''); if(h.length===3) h=h.split('').map(c=>c+c).join(''); const n=parseInt(h,16); return [(n>>16)&255,(n>>8)&255,n&255]; }
 function rgba(hex,a){ const [r,g,b]=hexRGB(hex); return `rgba(${r},${g},${b},${a})`; }
 const SUP={'-':'⁻','0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'};
@@ -564,6 +578,36 @@ const visible=new Map();
 const io=new IntersectionObserver(es=>es.forEach(e=>visible.set(e.target.id,e.isIntersecting)),{rootMargin:'100px'});
 function watch(id){ visible.set(id,false); io.observe(document.getElementById(id)); }
 
+/* accessible names: each canvas graph is named by its visible plot label (or the figure title)
+   and described by the figure caption and readout; nothing here is a live region */
+(function(){
+  let n=0; const idOf=el=>el.id||(el.id='a11y-'+(++n));
+  document.querySelectorAll('canvas').forEach(cv=>{
+    const fig=cv.closest('figure');
+    if(!cv.hasAttribute('aria-label')&&!cv.hasAttribute('aria-labelledby')){
+      let lab=cv.previousElementSibling;
+      if(!(lab&&lab.classList.contains('plot-label'))) lab=fig&&fig.querySelector('.title');
+      if(!lab) return;
+      cv.setAttribute('aria-labelledby',idOf(lab));
+    }
+    cv.setAttribute('role','img');
+    if(fig&&!cv.hasAttribute('aria-describedby')){ const d=[...fig.querySelectorAll('.readout, figcaption')].map(idOf); if(d.length) cv.setAttribute('aria-describedby',d.join(' ')); }
+  });
+})();
+/* keyboard access to horizontal scrolling: only containers that actually overflow become tab stops
+   (outermost one only), and they stop being tab stops when a resize removes the overflow */
+function markScrollers(){
+  document.querySelectorAll('.result, .math-scroll, .table-scroll, .katex-display').forEach(el=>{
+    const ours=el.dataset.scrollFocus==='1', over=el.scrollWidth>el.clientWidth+1;
+    const inside=el.parentElement&&el.parentElement.closest('[data-scroll-focus="1"]');
+    if(over&&!inside&&!ours){ el.tabIndex=0; el.setAttribute('role','region'); el.setAttribute('aria-label',el.querySelector('table')?'Scrollable table':'Scrollable equation'); el.dataset.scrollFocus='1'; }
+    else if(ours&&(!over||inside)){ el.removeAttribute('tabindex'); el.removeAttribute('role'); el.removeAttribute('aria-label'); delete el.dataset.scrollFocus; }
+  });
+}
+reg(markScrollers);
+// again once the typeset math and its web fonts have settled (the math is rendered in a later 'load' handler)
+window.addEventListener('load',()=>setTimeout(()=>{ if(document.fonts) document.fonts.ready.then(markScrollers); else markScrollers(); },0));
+
 /* ---------- Ising machinery ---------- */
 let SPIN_UP=[0,0,0], SPIN_DN=[0,0,0];
 function refreshSpinColors(){ SPIN_UP=hexRGB(css('--spin-up')); SPIN_DN=hexRGB(css('--spin-down')); }
@@ -607,8 +651,7 @@ fill(hero.sys,true);
   const sl=$('#hero-T'), out=$('#hero-T-out'), btn=$('#hero-play');
   const upd=()=>{ hero.T=+sl.value; out.textContent=hero.T.toFixed(3)+(Math.abs(hero.T-2.269)<0.006?' ≈ Tc':''); };
   sl.addEventListener('input',upd); upd();
-  const syncBtn=()=>{ btn.textContent=hero.run?'Pause':'Play'; btn.setAttribute('aria-pressed',String(!hero.run)); };
-  btn.addEventListener('click',()=>{ hero.run=!hero.run; syncBtn(); }); syncBtn();
+  playButton(btn,hero);
   // equilibrate a little up front so the first frame already shows structure
   for(let k=0;k<400;k++) wolffCluster(hero.sys,hero.T,hero.stack); // start from an equilibrated critical state
   drawLattice($('#hero-lattice'),hero.sys,false);
@@ -682,9 +725,11 @@ const scan={active:false,sys:lattice(32),temps:[],i:0,sweep:0,sum:0,n:0,pts:[],e
   bindR('#is-T','T',v=>v.toFixed(2)+(Math.abs(v-2.269)<0.012?' ≈ Tc':''));
   bindR('#is-h','h',v=>v.toFixed(2));
   bindR('#is-speed','speed',v=>v+' sweeps/s');
-  $('#is-hot').addEventListener('click',()=>{ fill(ising.sys,true); ising.trace=[]; });
-  $('#is-cold').addEventListener('click',()=>{ fill(ising.sys,false); ising.trace=[]; });
-  const pb=$('#is-pause'); pb.addEventListener('click',()=>{ ising.run=!ising.run; ising.last=0; ising.acc=0; pb.textContent=ising.run?'Pause':'Resume'; pb.setAttribute('aria-pressed',String(!ising.run)); });
+  // a restart redraws at once, so a paused panel shows the new state (and stays paused)
+  const restart=hot=>{ fill(ising.sys,hot); ising.trace=[]; drawLattice($('#is-lattice'),ising.sys,false); drawTrace(); };
+  $('#is-hot').addEventListener('click',()=>restart(true));
+  $('#is-cold').addEventListener('click',()=>restart(false));
+  playButton($('#is-pause'),ising,()=>{ ising.last=0; ising.acc=0; },['Pause','Resume']);
   $('#is-scan').addEventListener('click',()=>{
     scan.temps=range(3.4,1.4,21); scan.i=0; scan.sweep=0; scan.sum=0; scan.n=0; scan.pts=[]; fill(scan.sys,true); scan.active=true; drawScan();
   });
@@ -732,21 +777,31 @@ function isingTick(){
 /* ---------- lambda transition ---------- */
 (function(){
   const sl=$('#lam-a'), out=$('#lam-a-out');
-  const Cp=(t,a,A)=>A*(Math.abs(a)<1e-6?-Math.log(Math.abs(t)):(Math.pow(Math.abs(t),-a)-1)/a);
+  // log model (and α ≥ 0): C = A±(|t|^−α − 1)/α → −A± ln|t|, amplitudes A = 1 above, A′ = 1.07 below,
+  // separate backgrounds (C diverges, so nothing has to match at Tλ).
+  // α < 0: C is finite at Tλ, so both sides share one background B: C = B + A±|t|^−α/α. The singular
+  // term is then negative, so the larger amplitude lies lower; A+/A− = 1.07 gives the λ shape.
+  // B = −A+/α puts C(|t| = 1) = 0 above Tλ, and both sides tend to the same C(Tλ) = B.
+  const LOGA={up:1,dn:1.07}, CUSPA={up:1.07,dn:1};
   const Cl=(t,A)=>-A*Math.log(Math.abs(t));
+  const Cp=(t,a,side)=>{ const x=Math.abs(t);
+    if(Math.abs(a)<1e-6) return Cl(x,LOGA[side]);
+    if(a>0) return LOGA[side]*(Math.pow(x,-a)-1)/a;
+    return (CUSPA[side]*Math.pow(x,-a)-CUSPA.up)/a; };
+  const sideOf=t=>t>0?'up':'dn';
   function draw(){
     const a=+sl.value; out.textContent=a.toFixed(3);
-    const amp=t=>t>0?1:1.07;
-    const tl=range(-0.05,0.05,4001).filter(t=>t!==0);
-    plot($('#lam-lin'),{xlim:[-0.05,0.05],ylim:[0,13],xlabel:'T/Tλ − 1',ylabel:'C',vlines:[{x:0,label:'Tλ'}],legend:'tr',
-      series:[{data:tl.map(t=>[t,Cl(t,amp(t))]),color:css('--muted'),dash:[5,4],width:1.6,name:'logarithm'},
-        {data:tl.map(t=>[t,Cp(t,a,amp(t))]),color:css('--up'),width:2.2,name:'power law, α = '+a.toFixed(3)}]});
-    const tg=logRange(1e-12,1,400);
-    plot($('#lam-log'),{xlog:true,xlim:[1e-12,1],ylim:[0,30],xlabel:'|t|',ylabel:'C',legend:'tr',
-      series:[{data:tg.map(t=>[t,Cl(t,1.07)]),color:css('--muted'),dash:[5,4],width:1.6,name:'log, T < Tλ'},
-        {data:tg.map(t=>[t,Cp(t,a,1.07)]),color:css('--up'),width:2.2,name:'power, T < Tλ'},
-        {data:tg.map(t=>[t,Cp(t,a,1)]),color:css('--down'),width:2.2,name:'power, T > Tλ'}]});
-    $('#lam-read').innerHTML = a<0 ? `With α = ${a.toFixed(3)} < 0, C(Tλ) = −A/α = <b>${(-1/a).toFixed(0)}</b> in these units: finite, a cusp.`
+    const tl=range(-0.05,0.05,4001).filter(t=>t!==0), pw=tl.map(t=>[t,Cp(t,a,sideOf(t))]);
+    const ymax=v=>Math.max(...v.filter(isFinite))*1.1;
+    plot($('#lam-lin'),{xlim:[-0.05,0.05],ylim:[0,Math.max(13,ymax(pw.map(p=>p[1])))],xlabel:'T/Tλ − 1',ylabel:'C',vlines:[{x:0,label:'Tλ'}],legend:'tr',
+      series:[{data:tl.map(t=>[t,Cl(t,LOGA[sideOf(t)])]),color:css('--muted'),dash:[5,4],width:1.6,name:'logarithm'},
+        {data:pw,color:css('--up'),width:2.2,name:'power law, α = '+a.toFixed(3)}]});
+    const tg=logRange(1e-12,1,400), pdn=tg.map(t=>[t,Cp(t,a,'dn')]), pup=tg.map(t=>[t,Cp(t,a,'up')]);
+    plot($('#lam-log'),{xlog:true,xlim:[1e-12,1],ylim:[0,Math.max(30,Math.min(ymax([...pdn,...pup].map(p=>p[1])),1e4))],xlabel:'|t|',ylabel:'C',legend:'tr',
+      series:[{data:tg.map(t=>[t,Cl(t,LOGA.dn)]),color:css('--muted'),dash:[5,4],width:1.6,name:'log, T < Tλ'},
+        {data:pdn,color:css('--up'),width:2.2,name:'power, T < Tλ'},
+        {data:pup,color:css('--down'),width:2.2,name:'power, T > Tλ'}]});
+    $('#lam-read').innerHTML = a<0 ? `With α = ${a.toFixed(3)} < 0, both sides tend to the same C(Tλ) = B = −A<sub>+</sub>/α = <b>${(-CUSPA.up/a).toFixed(1)}</b> in these units: finite and continuous, a cusp. Matching the two sides needs a background offset (A<sub>+</sub> − A<sub>−</sub>)/|α| = ${((CUSPA.up-CUSPA.dn)/-a).toFixed(1)}, which grows without bound as α → 0.`
       : a>0 ? `With α = ${a.toFixed(3)} > 0, C <b>diverges</b> as |t|<sup>−α</sup>.` : 'With α = 0 the power law becomes exactly logarithmic: a weak divergence.';
   }
   sl.addEventListener('input',draw); $('#lam-reset').addEventListener('click',()=>{ sl.value=-0.013; draw(); }); reg(draw);
@@ -783,7 +838,7 @@ class Pivot{
   }
 }
 function randomWalk(N,d){ const pts=[[0,0,0]]; let p=[0,0,0]; for(let i=0;i<N;i++){ p=p.slice(); const ax=(Math.random()*d)|0; p[ax]+=Math.random()<.5?1:-1; pts.push(p); } return pts; }
-const saw={d:3,Ns:[16,32,64,128,256,512],chains:[],rw:[],show:256,rwShow:null,theta:0,frame:0};
+const saw={d:3,Ns:[16,32,64,128,256,512],chains:[],rw:[],show:256,rwShow:null,theta:0,frame:0,run:true};
 function sawInit(){
   saw.chains=saw.Ns.map(N=>new Pivot(N,saw.d));
   saw.rw=saw.Ns.map(N=>({N,sum:0,n:0}));
@@ -796,6 +851,7 @@ function sawInit(){
   $('#saw-d2').addEventListener('click',()=>{ saw.d=2; sawInit(); drawSaw(); });
   $('#saw-d3').addEventListener('click',()=>{ saw.d=3; sawInit(); drawSaw(); });
   $('#saw-reset').addEventListener('click',()=>{ sawInit(); drawSaw(); });
+  playButton($('#saw-play'),saw);
   sawInit();
 })();
 watch('demo-saw');
@@ -835,7 +891,7 @@ function drawSaw(){
 }
 reg(drawSaw);
 function sawTick(){
-  if(!visible.get('demo-saw')) return;
+  if(!saw.run||!visible.get('demo-saw')) return;
   const t0=performance.now(); let i=0;
   while(performance.now()-t0<9){ saw.chains[i%saw.chains.length].attempt(); if(i%3===0) for(const r of saw.rw){ let x=0,y=0,z=0; for(let s=0;s<r.N;s++){ const ax=(Math.random()*saw.d)|0, st=Math.random()<.5?1:-1; if(ax===0)x+=st; else if(ax===1)y+=st; else z+=st; } r.sum+=x*x+y*y+z*z; r.n++; } i++; }
   saw.frame++; if(saw.d===3&&!reduceMotion) saw.theta+=0.0015;

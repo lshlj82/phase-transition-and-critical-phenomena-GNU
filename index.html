@@ -223,9 +223,9 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 (function(){
   const $=q=>document.querySelector(q), css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
   const hex=h=>{ h=h.replace('#',''); if(h.length===3) h=h.split('').map(c=>c+c).join(''); const n=parseInt(h,16); return [(n>>16)&255,(n>>8)&255,n&255]; };
-  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionMQ=window.matchMedia('(prefers-reduced-motion: reduce)'); let chosen=false; // follow the preference live until Play/Pause is pressed
   const L=128, N=L*L, s=new Int8Array(N), st=new Int32Array(N), TC=2/Math.log(1+Math.SQRT2), T=1.02*TC;
-  let b=8, run=!reduce, last=0, vis=true, UP, DN, MID;
+  let b=8, run=!motionMQ.matches, last=0, vis=true, UP, DN, MID;
   const colors=()=>{ UP=hex(css('--spin-up')); DN=hex(css('--spin-down')); MID=hex(css('--paper')); };
   colors();
   for(let i=0;i<N;i++) s[i]=Math.random()<.5?1:-1;
@@ -249,7 +249,8 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
   }
   $('#cov-b').addEventListener('change',e=>{ b=+e.target.value; draw(); });
   const btn=$('#cov-play'); const sync=()=>{ btn.textContent=run?'Pause':'Play'; btn.setAttribute('aria-pressed',String(!run)); };
-  btn.addEventListener('click',()=>{ run=!run; sync(); }); sync();
+  btn.addEventListener('click',()=>{ run=!run; chosen=true; sync(); }); sync();
+  motionMQ.addEventListener('change',e=>{ if(!chosen){ run=!e.matches; sync(); } });
   new IntersectionObserver(es=>es.forEach(e=>vis=e.isIntersecting)).observe($('#cov-raw'));
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{ colors(); draw(); });
 new MutationObserver(()=>{ colors(); draw(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
