@@ -2,6 +2,24 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<!-- lang-toggle:head -->
+<script>(function(){var l='en';try{if(localStorage.getItem('lshlj82-demo-lang')==='ko')l='ko'}catch(e){}window.LANG=l;document.documentElement.dataset.lang=l;window.tr=function(en,ko){return window.LANG==='ko'&&ko!=null?ko:en};})();</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+#langBtn{position:fixed;z-index:21;top:calc(env(safe-area-inset-top,0px) + 12px);right:calc(env(safe-area-inset-right,0px) + 60px);
+  min-width:40px;height:40px;padding:0 10px;border-radius:20px;display:grid;place-items:center;cursor:pointer;font:600 14px/1 system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+  background:var(--lb-bg,rgba(255,255,255,.92));color:var(--lb-fg,#1d2633);border:1px solid var(--lb-bd,rgba(20,30,45,.18));box-shadow:0 1px 4px rgba(0,0,0,.12)}
+#langBtn:hover{border-color:currentColor}
+#langBtn:focus-visible{outline:2px solid #3b82f6;outline-offset:2px}
+:root[data-theme="dark"] #langBtn{--lb-bg:rgba(22,28,38,.92);--lb-fg:#e8eef6;--lb-bd:rgba(255,255,255,.18)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #langBtn{--lb-bg:rgba(22,28,38,.92);--lb-fg:#e8eef6;--lb-bd:rgba(255,255,255,.18)}}
+:root[data-lang="ko"] body{word-break:keep-all}
+:root[data-lang="ko"]{--sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;--serif:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;--ui-font:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif}
+:root[data-lang="ko"] body{font-family:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif}
+
+@media print{#langBtn{display:none}}
+</style>
+<!-- lang-toggle:head-end -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Chapter 2, Part 2: Symmetry Breaking, Ergodicity, and Lattice Gases | Phase Transitions and Critical Phenomena</title>
 <meta name="description" content="Interactive lecture notes for Chapter 2 (Part 2) of a graduate course on phase transitions: the Peierls argument, spontaneous symmetry breaking, ergodicity breaking, spin glasses and replicas, fluids, lattice gases, and equivalence.">
@@ -170,320 +188,320 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 
 <header class="hero">
   <div>
-    <p class="course">Phase Transitions and Critical Phenomena, graduate course, Department of Physics, Gyeongsang National University</p>
-    <h1>Chapter 2: How phase transitions occur in principle<span>Part 2: symmetry breaking, ergodicity, and lattice gases</span></h1>
-    <p class="lede">How a symmetric Hamiltonian ends up in an asymmetric state, why the system then cannot get out, and why a fluid and a magnet are secretly the same problem. This part covers §2.8 (continued) through §2.14.</p>
+    <p class="course" data-k="k1">Phase Transitions and Critical Phenomena, graduate course, Department of Physics, Gyeongsang National University</p>
+    <h1 data-k="k2">Chapter 2: How phase transitions occur in principle<span>Part 2: symmetry breaking, ergodicity, and lattice gases</span></h1>
+    <p class="lede" data-k="k3">How a symmetric Hamiltonian ends up in an asymmetric state, why the system then cannot get out, and why a fluid and a magnet are secretly the same problem. This part covers §2.8 (continued) through §2.14.</p>
   </div>
   <div class="lattice-wrap">
     <canvas class="lattice" id="hero-gas" width="96" height="96" aria-label="Live lattice-gas simulation showing liquid droplets forming in a vapor"></canvas>
     <div class="controls" style="margin:10px 0 0">
-      <label>Temperature <input type="range" id="hero-T" min="0.25" max="0.75" step="0.005" value="0.4"> <output id="hero-T-out"></output></label>
+      <label><span data-k="k4">Temperature</span> <input type="range" id="hero-T" min="0.25" max="0.75" step="0.005" value="0.4"> <output id="hero-T-out"></output></label>
       <button id="hero-play" aria-pressed="false">Pause</button>
     </div>
-    <p class="readout" style="margin-top:.2rem;color:var(--muted)">A two-dimensional lattice gas at fixed density 35%: occupied sites navy, empty sites yellow. Particles hop to neighboring empty sites and slowly condense into liquid droplets coexisting with the vapor. Relabel occupied as spin up and it is an Ising magnet (§2.12). Temperature in units of the attraction \(|U_2|/k_B\); \(T_c \approx 0.567\).</p>
+    <p class="readout" style="margin-top:.2rem;color:var(--muted)" data-k="k6">A two-dimensional lattice gas at fixed density 35%: occupied sites navy, empty sites yellow. Particles hop to neighboring empty sites and slowly condense into liquid droplets coexisting with the vapor. Relabel occupied as spin up and it is an Ising magnet (§2.12). Temperature in units of the attraction \(|U_2|/k_B\); \(T_c \approx 0.567\).</p>
   </div>
 </header>
 
 <div class="page">
 <nav class="toc" aria-label="Contents">
   <ol>
-    <li><a href="#s2-8">2.8 Existence of phase transitions (cont.)</a></li>
-    <li><a href="#s2-9">2.9 Spontaneous symmetry breaking</a></li>
-    <li><a href="#s2-10">2.10 Ergodicity breaking</a></li>
-    <li><a href="#s2-11">2.11 Fluids</a></li>
-    <li><a href="#s2-12">2.12 Lattice gases</a></li>
-    <li><a href="#s2-13">2.13 Equivalence</a></li>
-    <li><a href="#s2-14">2.14 Miscellaneous remarks</a></li>
-    <li><a href="#reading">Further reading</a></li>
+    <li data-k="k7"><a href="#s2-8">2.8 Existence of phase transitions (cont.)</a></li>
+    <li data-k="k8"><a href="#s2-9">2.9 Spontaneous symmetry breaking</a></li>
+    <li data-k="k9"><a href="#s2-10">2.10 Ergodicity breaking</a></li>
+    <li data-k="k10"><a href="#s2-11">2.11 Fluids</a></li>
+    <li data-k="k11"><a href="#s2-12">2.12 Lattice gases</a></li>
+    <li data-k="k12"><a href="#s2-13">2.13 Equivalence</a></li>
+    <li data-k="k13"><a href="#s2-14">2.14 Miscellaneous remarks</a></li>
+    <li data-k="k14"><a href="#reading">Further reading</a></li>
   </ol>
-  <p style="margin-top:1.5rem"><a href="ch02a-phase-transitions-in-principle.html">Chapter 2, Part 1</a></p>
-  <p><a href="ch01-introduction.html">Chapter 1: Introduction</a></p>
-  <p><a href="ch03-phase-transitions-in-practice.html">Chapter 3</a></p>
-  <p><a href="index.html">All chapters</a></p>
+  <p style="margin-top:1.5rem" data-k="k15"><a href="ch02a-phase-transitions-in-principle.html">Chapter 2, Part 1</a></p>
+  <p data-k="k16"><a href="ch01-introduction.html">Chapter 1: Introduction</a></p>
+  <p data-k="k17"><a href="ch03-phase-transitions-in-practice.html">Chapter 3</a></p>
+  <p data-k="k18"><a href="index.html">All chapters</a></p>
 </nav>
 
 <main>
 
 <!-- ======================= 2.8 cont. ======================= -->
 <section id="s2-8">
-<h2><span class="sec">2.8</span>Existence of phase transitions, continued</h2>
-<p>Part 1 ended with the one-dimensional argument: a single domain wall costs a fixed energy \(2J\) but gains entropy \(k_B\log N\), so long-range order is destroyed at any \(T>0\). What changes in two dimensions?</p>
+<h2 data-k="k19"><span class="sec">2.8</span>Existence of phase transitions, continued</h2>
+<p data-k="k20">Part 1 ended with the one-dimensional argument: a single domain wall costs a fixed energy \(2J\) but gains entropy \(k_B\log N\), so long-range order is destroyed at any \(T>0\). What changes in two dimensions?</p>
 
-<h3>The Peierls argument in \(d = 2\)</h3>
-<p>In \(d=2\), a domain of flipped spins is bounded by a wall. If the wall crosses \(n\) bonds between flipped and unflipped spins, the energy cost relative to the ordered state is \(\Delta E \approx 2Jn\): it now grows with the length of the wall. What about the entropy? Starting from a point on the boundary, count the ways the wall can continue. With coordination number \(z\) (the "degree", in network-science terms), an upper bound on the number of wall configurations of length \(n\) is \(z^n\).</p>
-<p>That is an overestimate. At each step the wall can go only in \(z-1\) directions, since it cannot retrace itself, and it also may not intersect itself, so the true number of allowed configurations is smaller still. Taking \((z-1)^n\), as in \(d=1\),</p>
+<h3 data-k="k21">The Peierls argument in \(d = 2\)</h3>
+<p data-k="k22">In \(d=2\), a domain of flipped spins is bounded by a wall. If the wall crosses \(n\) bonds between flipped and unflipped spins, the energy cost relative to the ordered state is \(\Delta E \approx 2Jn\): it now grows with the length of the wall. What about the entropy? Starting from a point on the boundary, count the ways the wall can continue. With coordination number \(z\) (the "degree", in network-science terms), an upper bound on the number of wall configurations of length \(n\) is \(z^n\).</p>
+<p data-k="k23">That is an overestimate. At each step the wall can go only in \(z-1\) directions, since it cannot retrace itself, and it also may not intersect itself, so the true number of allowed configurations is smaller still. Taking \((z-1)^n\), as in \(d=1\),</p>
 <div class="result"><p>\[ \Delta S \sim k_B\,n\log(z-1),\qquad \Delta F_n \approx \big[\,2J - k_BT\log(z-1)\,\big]\,n. \]</p></div>
-<p>In the thermodynamic limit \(n\to\infty\):</p>
+<p data-k="k24">In the thermodynamic limit \(n\to\infty\):</p>
 <ul>
-  <li>if \(T > T_c \equiv 2J/k_B\log(z-1)\), then \(\Delta F_n \to -\infty\). Walls proliferate, giving a disordered paramagnetic phase with \(M=0\). (Because \(\Delta S\) is overestimated, the true \(\Delta F_n\) is less negative than this.)</li>
-  <li>if \(0\lt T\lt T_c\), \(\Delta F_n\) is minimized by \(n\to0\). The state with <mark>long-range order</mark> is stable: there is a net spontaneous magnetization \(M\ne0\) without an applied field.</li>
+  <li data-k="k25">if \(T > T_c \equiv 2J/k_B\log(z-1)\), then \(\Delta F_n \to -\infty\). Walls proliferate, giving a disordered paramagnetic phase with \(M=0\). (Because \(\Delta S\) is overestimated, the true \(\Delta F_n\) is less negative than this.)</li>
+  <li data-k="k26">if \(0\lt T\lt T_c\), \(\Delta F_n\) is minimized by \(n\to0\). The state with <mark>long-range order</mark> is stable: there is a net spontaneous magnetization \(M\ne0\) without an applied field.</li>
 </ul>
-<p>So there is a phase transition at a temperature \(T_c>0\), and the lower critical dimension of the Ising model is \(d=1\). Note that \(T_c\) depends on the coordination number, and therefore on the type of lattice: it is <i>not</i> a universal quantity. For the square lattice (\(z=4\)) the estimate gives \(k_BT_c \approx 1.82J\), whereas the exact result \(k_BT_c = 2J/\sinh^{-1}(1) \approx 2.27J\) was obtained by Kramers and Wannier in 1941 without solving the model. The estimate is too low because the entropy was overestimated.</p>
+<p data-k="k27">So there is a phase transition at a temperature \(T_c>0\), and the lower critical dimension of the Ising model is \(d=1\). Note that \(T_c\) depends on the coordination number, and therefore on the type of lattice: it is <i>not</i> a universal quantity. For the square lattice (\(z=4\)) the estimate gives \(k_BT_c \approx 1.82J\), whereas the exact result \(k_BT_c = 2J/\sinh^{-1}(1) \approx 2.27J\) was obtained by Kramers and Wannier in 1941 without solving the model. The estimate is too low because the entropy was overestimated.</p>
 
 <figure class="demo" id="demo-peierls">
-  <p class="title">Energy against entropy for a domain wall in two dimensions</p>
+  <p class="title" data-k="k28">Energy against entropy for a domain wall in two dimensions</p>
   <div class="controls">
     <label>\(k_BT/J\) <input type="range" id="pe-T" aria-label="Temperature k_B T / J" min="0.5" max="4.5" step="0.01" value="1.5"> <output id="pe-T-out"></output></label>
-    <label>Lattice
-      <select id="pe-lat"><option value="sq">square (z = 4)</option><option value="tri">triangular (z = 6)</option><option value="hc">honeycomb (z = 3)</option></select>
+    <label><span data-k="k29">Lattice</span>
+      <select id="pe-lat"><option value="sq"><span data-k="k30">square (z = 4)</span></option><option value="tri"><span data-k="k31">triangular (z = 6)</span></option><option value="hc"><span data-k="k32">honeycomb (z = 3)</span></option></select>
     </label>
   </div>
   <div class="grid2">
-    <div><p class="plot-label">\(\Delta F_n\) vs wall length \(n\)</p><canvas class="plot" id="pe-dF"></canvas></div>
-    <div><p class="plot-label">Peierls estimate vs exact \(T_c\)</p><canvas class="plot" id="pe-tc"></canvas></div>
+    <div><p class="plot-label" data-k="k33">\(\Delta F_n\) vs wall length \(n\)</p><canvas class="plot" id="pe-dF"></canvas></div>
+    <div><p class="plot-label" data-k="k34">Peierls estimate vs exact \(T_c\)</p><canvas class="plot" id="pe-tc"></canvas></div>
   </div>
   <p class="readout" id="pe-read"></p>
-  <figcaption>Left: \(\Delta F_n = [2J - k_BT\ln(z^*-1)]\,n\) at the chosen temperature. When the slope is positive, long walls are suppressed and order survives. Right: estimate (open circles) and exact critical temperature (filled) for three lattices. A domain wall runs between spins, on the <i>dual</i> lattice, so the \(z\) that counts its continuations is the dual lattice's coordination \(z^*\): 4 for the square lattice (which is self-dual), 3 for the triangular lattice (dual: honeycomb), and 6 for the honeycomb lattice (dual: triangular). Using \(z^*\), the estimate always lies below the exact value, as an entropy overestimate must.</figcaption>
+  <figcaption data-k="k35">Left: \(\Delta F_n = [2J - k_BT\ln(z^*-1)]\,n\) at the chosen temperature. When the slope is positive, long walls are suppressed and order survives. Right: estimate (open circles) and exact critical temperature (filled) for three lattices. A domain wall runs between spins, on the <i>dual</i> lattice, so the \(z\) that counts its continuations is the dual lattice's coordination \(z^*\): 4 for the square lattice (which is self-dual), 3 for the triangular lattice (dual: honeycomb), and 6 for the honeycomb lattice (dual: triangular). Using \(z^*\), the estimate always lies below the exact value, as an entropy overestimate must.</figcaption>
 </figure>
 
-<p>Since \(d\) is an integer in these results, it is reassuring that the conclusion also holds for non-integer \(d\): writing \(d = 1+\epsilon\), one finds \(T_c = O(\epsilon)\). The analysis used only the fact that domain walls exist, so the conclusions apply in general to Hamiltonians with a <mark>discrete symmetry</mark>.</p>
+<p data-k="k36">Since \(d\) is an integer in these results, it is reassuring that the conclusion also holds for non-integer \(d\): writing \(d = 1+\epsilon\), one finds \(T_c = O(\epsilon)\). The analysis used only the fact that domain walls exist, so the conclusions apply in general to Hamiltonians with a <mark>discrete symmetry</mark>.</p>
 
-<h3>A teaser: the impossibility of phase transitions</h3>
-<p>We can easily "show" that a phase transition is impossible. Time-reversal symmetry gives \(F_\Omega(H,J,T) = F_\Omega(-H,J,T)\), and the magnetization obeys</p>
+<h3 data-k="k37">A teaser: the impossibility of phase transitions</h3>
+<p data-k="k38">We can easily "show" that a phase transition is impossible. Time-reversal symmetry gives \(F_\Omega(H,J,T) = F_\Omega(-H,J,T)\), and the magnetization obeys</p>
 <div class="math-scroll">\[ \begin{aligned} N(\Omega)M_\Omega(H) &= -\frac{\partial F_\Omega(H)}{\partial H} = -\frac{\partial F_\Omega(-H)}{\partial H}\\ &= \frac{\partial F_\Omega(-H)}{\partial(-H)} = -N(\Omega)M_\Omega(-H). \end{aligned} \]</div>
 <div class="result"><p>\[ M_\Omega(H) = -M_\Omega(-H)\quad\Longrightarrow\quad M_\Omega(0) = -M_\Omega(0) = 0. \]</p></div>
-<p>This "impossibility theorem" says the magnetization in zero field must vanish. What has gone wrong?</p>
+<p data-k="k39">This "impossibility theorem" says the magnetization in zero field must vanish. What has gone wrong?</p>
 </section>
 
 <!-- ======================= 2.9 ======================= -->
 <section id="s2-9">
-<h2><span class="sec">2.9</span>Spontaneous symmetry breaking</h2>
-<p>The argument above is correct for a <i>finite</i> system. It fails in the thermodynamic limit because \(f(H)\) can develop a <mark>discontinuity in its first derivative</mark> \(\partial f/\partial H\). The symmetry \(f(H) = f(-H)\) does not imply \(M(0) = 0\) unless we also assume \(f\) is smooth at \(H=0\), so that its left and right derivatives agree. If \(f(H) = f(0) + O(H^{\sigma})\) with \(\sigma>1\), then</p>
+<h2 data-k="k40"><span class="sec">2.9</span>Spontaneous symmetry breaking</h2>
+<p data-k="k41">The argument above is correct for a <i>finite</i> system. It fails in the thermodynamic limit because \(f(H)\) can develop a <mark>discontinuity in its first derivative</mark> \(\partial f/\partial H\). The symmetry \(f(H) = f(-H)\) does not imply \(M(0) = 0\) unless we also assume \(f\) is smooth at \(H=0\), so that its left and right derivatives agree. If \(f(H) = f(0) + O(H^{\sigma})\) with \(\sigma>1\), then</p>
 <div class="math-scroll">\[ \lim_{\epsilon\to0}\frac{f(\epsilon)-f(0)}{\epsilon} = \lim_{\epsilon\to0}\frac{f(-\epsilon)-f(0)}{\epsilon} = 0, \]</div>
-<p>and \(f\) is smooth. But if \(f(H) = f(0) - M_s|H| + O(H^{\sigma})\), then</p>
+<p data-k="k42">and \(f\) is smooth. But if \(f(H) = f(0) - M_s|H| + O(H^{\sigma})\), then</p>
 <div class="result"><p>\[ \begin{gathered} M = -\frac{\partial f}{\partial H} = \begin{cases} +M_s + O(H^{\sigma-1}), & H>0\\ -M_s + O(H^{\sigma-1}), & H\lt 0 \end{cases}\\ \longrightarrow\ \pm M_s\quad\text{as } |H|\to0. \end{gathered} \]</p></div>
-<p>The finite-system free energy is a smooth parabola at \(H=0\); in the infinite system it has a cusp, which is exactly the slope discontinuity convexity allows (Part 1, §2.6). Note that the two limits</p>
+<p data-k="k43">The finite-system free energy is a smooth parabola at \(H=0\); in the infinite system it has a cusp, which is exactly the slope discontinuity convexity allows (Part 1, §2.6). Note that the two limits</p>
 <div class="result"><p>\[ \begin{gathered} \lim_{N(\Omega)\to\infty}\,\lim_{H\to0}\,\frac{1}{N(\Omega)}\frac{\partial F_\Omega(H)}{\partial H} = 0,\\ \lim_{H\to0}\,\lim_{N(\Omega)\to\infty}\,\frac{1}{N(\Omega)}\frac{\partial F_\Omega(H)}{\partial H} \ne 0 \end{gathered} \]</p></div>
-<p>do <mark>not commute</mark>. The spontaneous magnetization depends on temperature: \(|M_s(0)| = 1\), \(|M_s| \lt 1\) for \(0 \lt T \lt T_c\), and \(M_s = 0\) for \(T \ge T_c\).</p>
+<p data-k="k44">do <mark>not commute</mark>. The spontaneous magnetization depends on temperature: \(|M_s(0)| = 1\), \(|M_s| \lt 1\) for \(0 \lt T \lt T_c\), and \(M_s = 0\) for \(T \ge T_c\).</p>
 
 <figure class="demo" id="demo-ssb">
-  <p class="title">Two limits that do not commute</p>
+  <p class="title" data-k="k45">Two limits that do not commute</p>
   <div class="controls">
     <label>\(k_BT/J_0\) <input type="range" id="ss-T" aria-label="Temperature k_B T / J_0" min="0.5" max="1.3" step="0.01" value="0.8"> <output id="ss-T-out"></output></label>
   </div>
   <div class="grid2">
-    <div><p class="plot-label">\(M_N(H)\) for increasing system size</p><canvas class="plot" id="ss-mh"></canvas></div>
-    <div><p class="plot-label">\(M_N(H)\) vs \(N\) at fixed small fields</p><canvas class="plot" id="ss-mn"></canvas></div>
+    <div><p class="plot-label" data-k="k46">\(M_N(H)\) for increasing system size</p><canvas class="plot" id="ss-mh"></canvas></div>
+    <div><p class="plot-label" data-k="k47">\(M_N(H)\) vs \(N\) at fixed small fields</p><canvas class="plot" id="ss-mn"></canvas></div>
   </div>
   <p class="readout" id="ss-read"></p>
-  <figcaption>Exact results for the Curie–Weiss magnet (\(T_c = J_0/k_B\)), summing the partition function over all magnetizations for each \(N\). Left: every finite-\(N\) curve passes smoothly through \(M=0\) at \(H=0\), as the impossibility theorem demands, but steepens toward the infinite-system jump between \(\pm M_s\) (magenta). Right: at any fixed field \(H>0\), \(M_N\) approaches \(M_s\) once \(N \gtrsim k_BT/(2HM_s)\), which is where the Boltzmann ratio \(P_B/P_A = e^{-2\beta HNM}\) of the two time-reversed states becomes small. Take \(H\to0\) first and the answer is always zero; take \(N\to\infty\) first and it is \(M_s\).</figcaption>
+  <figcaption data-k="k48">Exact results for the Curie–Weiss magnet (\(T_c = J_0/k_B\)), summing the partition function over all magnetizations for each \(N\). Left: every finite-\(N\) curve passes smoothly through \(M=0\) at \(H=0\), as the impossibility theorem demands, but steepens toward the infinite-system jump between \(\pm M_s\) (magenta). Right: at any fixed field \(H>0\), \(M_N\) approaches \(M_s\) once \(N \gtrsim k_BT/(2HM_s)\), which is where the Boltzmann ratio \(P_B/P_A = e^{-2\beta HNM}\) of the two time-reversed states becomes small. Take \(H\to0\) first and the answer is always zero; take \(N\to\infty\) first and it is \(M_s\).</figcaption>
 </figure>
 
-<p>This set of phenomena is called <mark>spontaneous symmetry breaking</mark> (SSB). "Spontaneous" distinguishes it from magnetization induced by an external field, which itself breaks the symmetry. At \(H=0\) the Hamiltonian is invariant under \(\{S_i\}\to\{-S_i\}\), yet \(M = \lim_{N\to\infty}N^{-1}\sum_i\langle S_i\rangle \ne 0\): the state is not invariant under time reversal.</p>
-<p>SSB seems paradoxical for another reason. With the Boltzmann distribution \(P_\Omega(\{S_i\}) = e^{-\beta\mathcal H_\Omega(\{S_i\})}/Z_\Omega\), if \(\mathcal H_\Omega\) is time-reversal invariant then so is \(P_\Omega\), an even function, while \(S_i\) is odd. Thus \(\langle S_i\rangle \equiv \operatorname{Tr}\,P_\Omega(\{S_i\})S_i = 0\). This is just a restatement of the impossibility theorem. In an infinite system \(Z\to\infty\), and we have to be more careful about the probability distribution.</p>
-<p>Consider two configurations related by time reversal, A with magnetization \(M\) and B with \(-M\). The coupling term \(-H\sum_iS_i\) gives</p>
+<p data-k="k49">This set of phenomena is called <mark>spontaneous symmetry breaking</mark> (SSB). "Spontaneous" distinguishes it from magnetization induced by an external field, which itself breaks the symmetry. At \(H=0\) the Hamiltonian is invariant under \(\{S_i\}\to\{-S_i\}\), yet \(M = \lim_{N\to\infty}N^{-1}\sum_i\langle S_i\rangle \ne 0\): the state is not invariant under time reversal.</p>
+<p data-k="k50">SSB seems paradoxical for another reason. With the Boltzmann distribution \(P_\Omega(\{S_i\}) = e^{-\beta\mathcal H_\Omega(\{S_i\})}/Z_\Omega\), if \(\mathcal H_\Omega\) is time-reversal invariant then so is \(P_\Omega\), an even function, while \(S_i\) is odd. Thus \(\langle S_i\rangle \equiv \operatorname{Tr}\,P_\Omega(\{S_i\})S_i = 0\). This is just a restatement of the impossibility theorem. In an infinite system \(Z\to\infty\), and we have to be more careful about the probability distribution.</p>
+<p data-k="k51">Consider two configurations related by time reversal, A with magnetization \(M\) and B with \(-M\). The coupling term \(-H\sum_iS_i\) gives</p>
 <div class="result"><p>\[ \frac{P_A}{P_B} = \frac{\exp\big(\beta HN(\Omega)M\big)}{\exp\big(-\beta HN(\Omega)M\big)} = \exp\big(2\beta HN(\Omega)M\big). \]</p></div>
-<p>Take the thermodynamic limit first. For \(H>0\), \(P_B/P_A\to0\): the system must be in state A, with \(+M\), and this still holds as \(H\to0^+\). For \(H\lt 0\), the system must be in B. (Take \(H\to0\) before \(N\to\infty\), and \(P_A/P_B = 1\).) Using the limit \(H\to0^+\) together with the thermodynamic limit is therefore equivalent to setting \(H=0\) but using a <mark>restricted ensemble</mark> in which the microstates contributing to \(-M_s\) are not included; \(H\to0^-\) excludes those contributing to \(+M_s\).</p>
+<p data-k="k52">Take the thermodynamic limit first. For \(H>0\), \(P_B/P_A\to0\): the system must be in state A, with \(+M\), and this still holds as \(H\to0^+\). For \(H\lt 0\), the system must be in B. (Take \(H\to0\) before \(N\to\infty\), and \(P_A/P_B = 1\).) Using the limit \(H\to0^+\) together with the thermodynamic limit is therefore equivalent to setting \(H=0\) but using a <mark>restricted ensemble</mark> in which the microstates contributing to \(-M_s\) are not included; \(H\to0^-\) excludes those contributing to \(+M_s\).</p>
 
-<h3>Continuous symmetry</h3>
-<p>Long-range order in the Ising model for \(d>1\) relies on its symmetry group being \(\mathbb Z_2\), \(\mathcal H_\Omega[\{S_i\}] = \mathcal H_\Omega[\{-S_i\}]\). Because this symmetry is <i>discrete</i>, domain walls have finite width: a wall separates \(\uparrow\) from \(\downarrow\), the only possible spin states, so its thickness is one lattice unit.</p>
-<p>Things change when the spins obey a <mark>continuous symmetry</mark>, for example when the \(\mathbf S_i\) are vectors free to point in all directions, as in the Heisenberg ferromagnet:</p>
+<h3 data-k="k53">Continuous symmetry</h3>
+<p data-k="k54">Long-range order in the Ising model for \(d>1\) relies on its symmetry group being \(\mathbb Z_2\), \(\mathcal H_\Omega[\{S_i\}] = \mathcal H_\Omega[\{-S_i\}]\). Because this symmetry is <i>discrete</i>, domain walls have finite width: a wall separates \(\uparrow\) from \(\downarrow\), the only possible spin states, so its thickness is one lattice unit.</p>
+<p data-k="k55">Things change when the spins obey a <mark>continuous symmetry</mark>, for example when the \(\mathbf S_i\) are vectors free to point in all directions, as in the Heisenberg ferromagnet:</p>
 <div class="result"><p>\[ \mathcal H_\Omega[\{\mathbf S_i\}] = -\sum_{\langle ij\rangle}J_{ij}\,\mathbf S_i\cdot\mathbf S_j - \sum_i\mathbf H_i\cdot\mathbf S_i. \]</p></div>
-<p>This is in general a more realistic model of a ferromagnet, with no preferred direction for the spins. (In real crystals, spin–orbit coupling ties the spins to the lattice and can break the rotational symmetry, favoring crystallographic axes; in extreme cases the Ising model is the better description.) With \(\mathbf S_i = (S_i^x, S_i^y, S_i^z)\) and \(R(\theta)\) a rotation by \(\theta\) about any axis, the energy in zero field is invariant under rotating <i>all</i> spins simultaneously, \(\mathcal H_\Omega[\{R(\theta)\mathbf S_i\}] = \mathcal H_\Omega[\{\mathbf S_i\}]\). The model is rotationally invariant, with symmetry group \(O(3)\). The rotation acts on the spins, not on the lattice, which stays fixed in space.</p>
-<p>Thermal fluctuations destroy long-range order more easily with a continuous symmetry, because there are "more directions to point in" (made precise in Chapter 11). To compensate for the larger entropy, ordering needs more energy, which a higher-dimensional lattice provides: spins have more neighbors. A detailed analysis shows that long-range order requires \(d>2\). These results reflect the fact that with a continuous symmetry, a domain wall can spread to the size of the system.</p>
+<p data-k="k56">This is in general a more realistic model of a ferromagnet, with no preferred direction for the spins. (In real crystals, spin–orbit coupling ties the spins to the lattice and can break the rotational symmetry, favoring crystallographic axes; in extreme cases the Ising model is the better description.) With \(\mathbf S_i = (S_i^x, S_i^y, S_i^z)\) and \(R(\theta)\) a rotation by \(\theta\) about any axis, the energy in zero field is invariant under rotating <i>all</i> spins simultaneously, \(\mathcal H_\Omega[\{R(\theta)\mathbf S_i\}] = \mathcal H_\Omega[\{\mathbf S_i\}]\). The model is rotationally invariant, with symmetry group \(O(3)\). The rotation acts on the spins, not on the lattice, which stays fixed in space.</p>
+<p data-k="k57">Thermal fluctuations destroy long-range order more easily with a continuous symmetry, because there are "more directions to point in" (made precise in Chapter 11). To compensate for the larger entropy, ordering needs more energy, which a higher-dimensional lattice provides: spins have more neighbors. A detailed analysis shows that long-range order requires \(d>2\). These results reflect the fact that with a continuous symmetry, a domain wall can spread to the size of the system.</p>
 
 <figure class="demo" id="demo-wall">
-  <p class="title">Sharp walls vs spread-out twists</p>
+  <p class="title" data-k="k58">Sharp walls vs spread-out twists</p>
   <div class="controls">
-    <label>Wall width \(w\) (lattice spacings) <input type="range" id="wl-w" min="1" max="24" step="1" value="1"> <output id="wl-w-out"></output></label>
+    <label><span data-k="k59">Wall width \(w\) (lattice spacings)</span> <input type="range" id="wl-w" min="1" max="24" step="1" value="1"> <output id="wl-w-out"></output></label>
   </div>
   <canvas class="arrows" id="wl-arrows" aria-label="A row of planar spins rotating from up to down across the wall"></canvas>
   <div class="grid2" style="margin-top:.8rem">
-    <div><p class="plot-label">Energy of one row of the wall vs its width</p><canvas class="plot" id="wl-e"></canvas></div>
-    <div><p class="plot-label">Total wall energy vs system size \(L\) (solid: discrete, dashed: continuous)</p><canvas class="plot" id="wl-L"></canvas></div>
+    <div><p class="plot-label" data-k="k60">Energy of one row of the wall vs its width</p><canvas class="plot" id="wl-e"></canvas></div>
+    <div><p class="plot-label" data-k="k61">Total wall energy vs system size \(L\) (solid: discrete, dashed: continuous)</p><canvas class="plot" id="wl-L"></canvas></div>
   </div>
   <p class="readout" id="wl-read"></p>
-  <figcaption>A row of planar spins turning from up to down. Ising spins must flip in one bond, costing \(2J\). Continuous spins can share the \(\pi\) rotation over \(w\) bonds, costing \(Jw[1-\cos(\pi/w)] \approx \pi^2J/2w\), which keeps falling as the wall spreads, up to \(w = L\). A wall spanning a \(d\)-dimensional system thus costs \(\propto L^{d-1}\) for discrete symmetry but only \(\propto L^{d-2}\) for continuous symmetry. Note the parallel pairs on the right: continuous spins in \(d\) dimensions scale like discrete spins in \(d-1\), which is why the lower critical dimension moves from 1 to 2. Against the logarithmic entropy of placing the wall, the cost stays bounded for \(d \le 2\), consistent with the requirement \(d > 2\) for order.</figcaption>
+  <figcaption data-k="k62">A row of planar spins turning from up to down. Ising spins must flip in one bond, costing \(2J\). Continuous spins can share the \(\pi\) rotation over \(w\) bonds, costing \(Jw[1-\cos(\pi/w)] \approx \pi^2J/2w\), which keeps falling as the wall spreads, up to \(w = L\). A wall spanning a \(d\)-dimensional system thus costs \(\propto L^{d-1}\) for discrete symmetry but only \(\propto L^{d-2}\) for continuous symmetry. Note the parallel pairs on the right: continuous spins in \(d\) dimensions scale like discrete spins in \(d-1\), which is why the lower critical dimension moves from 1 to 2. Against the logarithmic entropy of placing the wall, the cost stays bounded for \(d \le 2\), consistent with the requirement \(d > 2\) for order.</figcaption>
 </figure>
 </section>
 
 <!-- ======================= 2.10 ======================= -->
 <section id="s2-10">
-<h2><span class="sec">2.10</span>Ergodicity breaking</h2>
-<p>What does SSB mean for the dynamics? Statistical mechanics is usually justified by the equivalence of <mark>time averages and ensemble averages</mark>. For an observable \(A\{\eta_i\}\), where the \(\eta_i(t)\) are the dynamical degrees of freedom (positions and momenta for a fluid),</p>
+<h2 data-k="k63"><span class="sec">2.10</span>Ergodicity breaking</h2>
+<p data-k="k64">What does SSB mean for the dynamics? Statistical mechanics is usually justified by the equivalence of <mark>time averages and ensemble averages</mark>. For an observable \(A\{\eta_i\}\), where the \(\eta_i(t)\) are the dynamical degrees of freedom (positions and momenta for a fluid),</p>
 <div class="math-scroll">\[ \langle A\rangle \equiv \lim_{t\to\infty}\frac1t\int_0^t A\{\eta_i(t')\}\,dt' = \int\prod_i d\eta_i\,P_{\text{eqm}}(\{\eta_i\})\,A\{\eta_i\}, \]</div>
-<p>where \(P_{\text{eqm}}\) is the equilibrium distribution on the phase space of the system. The equivalence rests on the <mark>ergodic hypothesis</mark>: as \(t\to\infty\), \(\{\eta_i(t)\}\) comes arbitrarily close to every configuration allowed by energy conservation. (For the Ising model, the Hamiltonian does not generate an equation of motion; we assume dynamics is supplied separately, as in our Monte Carlo demos.)</p>
-<p>When \(H=0\) and \(T\lt T_c\), the regions of configuration space with \(M_\Omega = +M\) and \(M_\Omega = -M\) should be sampled equally. A system that starts with positive magnetization must eventually reverse, and the rate \(R\) at which this happens is expected to take the Arrhenius form</p>
+<p data-k="k65">where \(P_{\text{eqm}}\) is the equilibrium distribution on the phase space of the system. The equivalence rests on the <mark>ergodic hypothesis</mark>: as \(t\to\infty\), \(\{\eta_i(t)\}\) comes arbitrarily close to every configuration allowed by energy conservation. (For the Ising model, the Hamiltonian does not generate an equation of motion; we assume dynamics is supplied separately, as in our Monte Carlo demos.)</p>
+<p data-k="k66">When \(H=0\) and \(T\lt T_c\), the regions of configuration space with \(M_\Omega = +M\) and \(M_\Omega = -M\) should be sampled equally. A system that starts with positive magnetization must eventually reverse, and the rate \(R\) at which this happens is expected to take the Arrhenius form</p>
 <div class="result"><p>\[ \begin{gathered} R \propto e^{-\beta\Delta F},\qquad \Delta F \propto L^{d-1} \propto N^{(d-1)/d},\\ \tau \sim \frac1R \sim \exp\!\big[N^{(d-1)/d}\big]. \end{gathered} \]</p></div>
-<p>The barrier \(\Delta F\) is proportional to a surface area, so the lifetime \(\tau\) of a state with a given magnetization diverges as \(N\to\infty\). The initial condition decides whether the magnetization is positive or negative, and in the thermodynamic limit the system is effectively trapped in one region of phase space. This is <mark>ergodicity breaking</mark>. Each trapped region has a time-reversed partner, in one-to-one correspondence.</p>
+<p data-k="k67">The barrier \(\Delta F\) is proportional to a surface area, so the lifetime \(\tau\) of a state with a given magnetization diverges as \(N\to\infty\). The initial condition decides whether the magnetization is positive or negative, and in the thermodynamic limit the system is effectively trapped in one region of phase space. This is <mark>ergodicity breaking</mark>. Each trapped region has a time-reversed partner, in one-to-one correspondence.</p>
 
 <div class="proof">
-<p><b>Which barrier sets \(\tau\) at \(H=0\)?</b> The notes raise a natural question here. The book calls \(\Delta F\) the free energy of a "critical cluster": clusters larger than this one will grow. Yet at \(H=0\) the all-up and all-down states have exactly the same energy, so a flipped cluster gains no bulk energy. Why should a large one grow?</p>
-<p>It doesn't, at least not because of a bulk gain. The critical-cluster picture, with surface cost competing against bulk gain, describes <i>metastable</i> decay in a small reversed field \(H\), where the critical radius scales as \(\sigma/(|H|M_s)\) and diverges as \(H\to0\). At \(H=0\) a compact cluster always tends to shrink. The relevant barrier is the free energy of the bottleneck configuration halfway between \(+M\) and \(-M\): two flat domain walls cutting straight across the periodic system, each of area \(L^{d-1}\). With interfacial tension \(\sigma\), that gives \(\Delta F \approx 2\sigma L^{d-1}\), the same scaling as above. Once both walls exist they cost nothing to move, so the system can drift to either side. The demo below measures this barrier.</p>
+<p data-k="k68"><b>Which barrier sets \(\tau\) at \(H=0\)?</b> The notes raise a natural question here. The book calls \(\Delta F\) the free energy of a "critical cluster": clusters larger than this one will grow. Yet at \(H=0\) the all-up and all-down states have exactly the same energy, so a flipped cluster gains no bulk energy. Why should a large one grow?</p>
+<p data-k="k69">It doesn't, at least not because of a bulk gain. The critical-cluster picture, with surface cost competing against bulk gain, describes <i>metastable</i> decay in a small reversed field \(H\), where the critical radius scales as \(\sigma/(|H|M_s)\) and diverges as \(H\to0\). At \(H=0\) a compact cluster always tends to shrink. The relevant barrier is the free energy of the bottleneck configuration halfway between \(+M\) and \(-M\): two flat domain walls cutting straight across the periodic system, each of area \(L^{d-1}\). With interfacial tension \(\sigma\), that gives \(\Delta F \approx 2\sigma L^{d-1}\), the same scaling as above. Once both walls exist they cost nothing to move, so the system can drift to either side. The demo below measures this barrier.</p>
 </div>
 
 <figure class="demo" id="demo-erg">
-  <p class="title">Watching ergodicity break as the system grows</p>
+  <p class="title" data-k="k70">Watching ergodicity break as the system grows</p>
   <div class="controls">
     <label>\(k_BT/J\) <input type="range" id="er-T" aria-label="Temperature k_B T / J" min="1.9" max="2.25" step="0.01" value="2.1"> <output id="er-T-out"></output></label>
-    <label>Show trace for \(L\) = <select id="er-L"></select></label>
-    <button id="er-reset">Restart</button>
+    <label><span data-k="k71">Show trace for \(L\) =</span> <select id="er-L"></select></label>
+    <button id="er-reset" data-k="k72">Restart</button>
     <button id="er-play" aria-pressed="false">Pause</button>
   </div>
   <div class="grid2">
-    <div><p class="plot-label">Magnetization per spin over the last 4000 sweeps</p><canvas class="plot" id="er-trace"></canvas></div>
-    <div><p class="plot-label">Mean time between reversals \(\tau\) (sweeps) vs \(L\)</p><canvas class="plot" id="er-tau"></canvas></div>
+    <div><p class="plot-label" data-k="k74">Magnetization per spin over the last 4000 sweeps</p><canvas class="plot" id="er-trace"></canvas></div>
+    <div><p class="plot-label" data-k="k75">Mean time between reversals \(\tau\) (sweeps) vs \(L\)</p><canvas class="plot" id="er-tau"></canvas></div>
   </div>
   <p class="readout" id="er-read"></p>
-  <figcaption>Two-dimensional Ising models of side \(L\) (periodic, \(H=0\), \(T \lt T_c\)) run in parallel under Metropolis dynamics. A reversal is counted when the magnetization crosses from \(\gtrsim +\tfrac12M_s\) to \(\lesssim -\tfrac12M_s\) or back. Hollow points are lower bounds for sizes that have not reversed yet. The dashed line has the slope predicted by the two-wall barrier, \(\ln\tau \approx 2\sigma L/k_BT + \text{const}\), with Onsager's exact interfacial tension \(\sigma = 2J + k_BT\ln\tanh(J/k_BT)\). Small systems reverse constantly; each extra step in \(L\) multiplies \(\tau\) by a roughly fixed factor. Expect the fitted slope to sit somewhat above the prediction: the formula neglects \(L\)-dependent prefactors from the walls' entropy and shape fluctuations, which matter at these small sizes, and the largest sizes need minutes of running for good statistics.</figcaption>
+  <figcaption data-k="k76">Two-dimensional Ising models of side \(L\) (periodic, \(H=0\), \(T \lt T_c\)) run in parallel under Metropolis dynamics. A reversal is counted when the magnetization crosses from \(\gtrsim +\tfrac12M_s\) to \(\lesssim -\tfrac12M_s\) or back. Hollow points are lower bounds for sizes that have not reversed yet. The dashed line has the slope predicted by the two-wall barrier, \(\ln\tau \approx 2\sigma L/k_BT + \text{const}\), with Onsager's exact interfacial tension \(\sigma = 2J + k_BT\ln\tanh(J/k_BT)\). Small systems reverse constantly; each extra step in \(L\) multiplies \(\tau\) by a roughly fixed factor. Expect the fitted slope to sit somewhat above the prediction: the formula neglects \(L\)-dependent prefactors from the walls' entropy and shape fluctuations, which matter at these small sizes, and the largest sizes need minutes of running for good statistics.</figcaption>
 </figure>
 
-<h3>Ergodicity breaking and symmetry</h3>
-<p>As an illustration, take a system with degrees of freedom \(\{\vec C_i\}\), \(i=1,\dots,N\), which may be thought of as particle positions in a many-body system, and a Hamiltonian \(\mathcal H_\lambda\{\vec C_i\}\), where \(\lambda\) stands for all the coupling constants. Suppose it is <b>translationally invariant</b>: \(\mathcal H_\lambda\{\vec C_i\} = \mathcal H_\lambda\{\vec C_i+\vec a\}\) for any vector \(\vec a\). By varying \(\lambda\) we intend to drive a transition with SSB. The order parameter is</p>
+<h3 data-k="k77">Ergodicity breaking and symmetry</h3>
+<p data-k="k78">As an illustration, take a system with degrees of freedom \(\{\vec C_i\}\), \(i=1,\dots,N\), which may be thought of as particle positions in a many-body system, and a Hamiltonian \(\mathcal H_\lambda\{\vec C_i\}\), where \(\lambda\) stands for all the coupling constants. Suppose it is <b>translationally invariant</b>: \(\mathcal H_\lambda\{\vec C_i\} = \mathcal H_\lambda\{\vec C_i+\vec a\}\) for any vector \(\vec a\). By varying \(\lambda\) we intend to drive a transition with SSB. The order parameter is</p>
 <div class="math-scroll">\[ \begin{gathered} f_i(\vec k) = \exp(i\vec k\cdot\vec C_i)\quad(\vec k\ne0),\\ \sum_if_i(\vec k) = \int\rho(\vec r)\,e^{i\vec k\cdot\vec r}\,d^dr,\qquad \rho(\vec r) \equiv \sum_i\delta(\vec r-\vec C_i), \end{gathered} \]</div>
-<p>the Fourier transform of the density. For \(\lambda>\lambda_c\), \(\langle f_i(\vec k)\rangle = 0\); for \(\lambda\lt\lambda_c\), \(\langle f_i(\vec k)\rangle\ne0\), meaning the density is not simply constant in space. The particles have ordered: <mark>solidification</mark>, the spontaneous breaking of translational (and rotational) invariance. With \(\mathcal G\) the set of microstates included in the trace,</p>
+<p data-k="k79">the Fourier transform of the density. For \(\lambda>\lambda_c\), \(\langle f_i(\vec k)\rangle = 0\); for \(\lambda\lt\lambda_c\), \(\langle f_i(\vec k)\rangle\ne0\), meaning the density is not simply constant in space. The particles have ordered: <mark>solidification</mark>, the spontaneous breaking of translational (and rotational) invariance. With \(\mathcal G\) the set of microstates included in the trace,</p>
 <div class="math-scroll">\[ \langle f_i(\vec k)\rangle_{\mathcal G} = \frac{\operatorname{Tr}_{\mathcal G}\,f_i(\vec k)\,e^{-\beta\mathcal H_\lambda\{\vec C_i\}}}{\operatorname{Tr}_{\mathcal G}\,e^{-\beta\mathcal H_\lambda\{\vec C_i\}}}. \]</div>
-<p>If all microstates are included, \(\mathcal G\) is invariant under \(\vec C_i\to\vec C_i+\vec a\). Shifting the variables and using translational invariance gives \(\langle f_i(\vec k)\rangle_{\mathcal G} = e^{-i\vec k\cdot\vec a}\langle f_i(\vec k)\rangle_{\mathcal G}\) for every \(\vec a\), so \(\langle f_i(\vec k)\rangle_{\mathcal G} = 0\) regardless of \(\lambda\). The order parameter can be nonzero only if \(\mathcal G\) does <i>not</i> include all the allowed microstates, and only if this residual set is not invariant under the symmetry group of \(\mathcal H_\lambda\). An example is a system constrained to have its center of mass at a given position. That is <mark>ergodicity breaking</mark>. It accompanies SSB, but not all ergodicity breaking comes from SSB: the liquid–gas coexistence line is a counterexample, with no symmetry broken.</p>
-<p>The structure of phase space depends on \(\lambda\) and \(\beta\). In what manner is it broken? For \(\lambda\lt\lambda_c\), let \(\mathcal G_1\) be the largest set of microstates for which \(\langle f_i(\vec k)\rangle\ne0\), and let \(\mathcal G_2 = T(\mathcal G_1)\) for some translation \(T_a:\vec C_i\to\vec C_i+\vec a\). By definition \(\mathcal G_2\ne\mathcal G_1\), while \(\mathcal H(T\vec C_i) = \mathcal H(\vec C_i)\), so \(Z_2 = Z_1\) and</p>
+<p data-k="k80">If all microstates are included, \(\mathcal G\) is invariant under \(\vec C_i\to\vec C_i+\vec a\). Shifting the variables and using translational invariance gives \(\langle f_i(\vec k)\rangle_{\mathcal G} = e^{-i\vec k\cdot\vec a}\langle f_i(\vec k)\rangle_{\mathcal G}\) for every \(\vec a\), so \(\langle f_i(\vec k)\rangle_{\mathcal G} = 0\) regardless of \(\lambda\). The order parameter can be nonzero only if \(\mathcal G\) does <i>not</i> include all the allowed microstates, and only if this residual set is not invariant under the symmetry group of \(\mathcal H_\lambda\). An example is a system constrained to have its center of mass at a given position. That is <mark>ergodicity breaking</mark>. It accompanies SSB, but not all ergodicity breaking comes from SSB: the liquid–gas coexistence line is a counterexample, with no symmetry broken.</p>
+<p data-k="k81">The structure of phase space depends on \(\lambda\) and \(\beta\). In what manner is it broken? For \(\lambda\lt\lambda_c\), let \(\mathcal G_1\) be the largest set of microstates for which \(\langle f_i(\vec k)\rangle\ne0\), and let \(\mathcal G_2 = T(\mathcal G_1)\) for some translation \(T_a:\vec C_i\to\vec C_i+\vec a\). By definition \(\mathcal G_2\ne\mathcal G_1\), while \(\mathcal H(T\vec C_i) = \mathcal H(\vec C_i)\), so \(Z_2 = Z_1\) and</p>
 <div class="result"><p>\[ \langle f_i(\vec k)\rangle_{\mathcal G_2} = e^{i\vec k\cdot\vec a}\,\langle f_i(\vec k)\rangle_{\mathcal G_1} \ne 0. \]</p></div>
-<p>If ergodicity is broken so that an order parameter is nonzero in some set \(\mathcal G\) of microstates, the order parameter takes a (possibly different) nonzero value in every set related to \(\mathcal G\) by the spontaneously broken symmetry of the Hamiltonian. But the symmetry-related ergodic regions need <i>not</i> exhaust phase space. When they do not, the situation is known in disordered systems as <mark>replica symmetry breaking</mark>, believed to occur in spin glasses and, after vulcanization, in rubber, where cross-linked polymers can no longer pass through one another and the system is trapped in ergodic regions not related by translation.</p>
+<p data-k="k82">If ergodicity is broken so that an order parameter is nonzero in some set \(\mathcal G\) of microstates, the order parameter takes a (possibly different) nonzero value in every set related to \(\mathcal G\) by the spontaneously broken symmetry of the Hamiltonian. But the symmetry-related ergodic regions need <i>not</i> exhaust phase space. When they do not, the situation is known in disordered systems as <mark>replica symmetry breaking</mark>, believed to occur in spin glasses and, after vulcanization, in rubber, where cross-linked polymers can no longer pass through one another and the system is trapped in ergodic regions not related by translation.</p>
 
-<h3>Spin glasses and the overlap</h3>
-<p>An <b>Ising spin glass</b> is an Ising model whose exchange constants are random variables with some spread about a mean,</p>
+<h3 data-k="k83">Spin glasses and the overlap</h3>
+<p data-k="k84">An <b>Ising spin glass</b> is an Ising model whose exchange constants are random variables with some spread about a mean,</p>
 <div class="math-scroll">\[ \mathcal H = -\sum_{\langle ij\rangle}J_{ij}S_iS_j,\qquad J_{ij} \sim P(J_{ij}), \]</div>
-<p>where each \(J_{ij}\) may be ferromagnetic (\(>0\)) or antiferromagnetic (\(\lt 0\)). Magnetic alloys, with magnetic moments randomly distributed in the material, are examples. The ground state is no longer simply all up or all down: around a loop with an odd number of negative bonds, not all bonds can be satisfied, which is <mark>frustration</mark>. If \(P(J) = P(-J)\), then \(\sum_im_i = 0\) even in the low-temperature spin-glass phase, so the net magnetization cannot distinguish the frozen spin-glass state from the paramagnet. It is not a good order parameter here.</p>
-<p>Label the ergodic regions \(\sigma, \sigma', \dots\), and define the <mark>overlap</mark> between two of them,</p>
+<p data-k="k85">where each \(J_{ij}\) may be ferromagnetic (\(>0\)) or antiferromagnetic (\(\lt 0\)). Magnetic alloys, with magnetic moments randomly distributed in the material, are examples. The ground state is no longer simply all up or all down: around a loop with an odd number of negative bonds, not all bonds can be satisfied, which is <mark>frustration</mark>. If \(P(J) = P(-J)\), then \(\sum_im_i = 0\) even in the low-temperature spin-glass phase, so the net magnetization cannot distinguish the frozen spin-glass state from the paramagnet. It is not a good order parameter here.</p>
+<p data-k="k86">Label the ergodic regions \(\sigma, \sigma', \dots\), and define the <mark>overlap</mark> between two of them,</p>
 <div class="result"><p>\[ q^{\sigma\sigma'} \equiv \lim_{N(\Omega)\to\infty}\left|\frac1{N(\Omega)}\sum_{i=1}^{N}m_i^{\sigma}m_i^{\sigma'}\right|,\qquad m_i^{\sigma} = \frac1{Z_\sigma}\operatorname{Tr}_\sigma S_i\,e^{-\beta\mathcal H_\Omega}, \]</p></div>
-<p>with \(m_i^\sigma\) the average moment at site \(i\) in region \(\sigma\). The overlap is zero in the paramagnetic phase but can be nonzero in the spin-glass phase. In particular \(q^{\sigma\sigma}\ne0\), and if \(\sigma_1'\) is \(\sigma_1\) with all spins flipped, \(q^{\sigma_1\sigma_1} = q^{\sigma_1\sigma_1'}\), so the overlap does not favor a region over its time-reversed partner. If there is only one ergodic region (plus its partner), \(q\) has only one value: the replica-symmetric case. With replica symmetry breaking, \(q^{\sigma\sigma'}\) takes a range of values. Since \(q\) usually cannot be computed directly, consider its distribution</p>
+<p data-k="k87">with \(m_i^\sigma\) the average moment at site \(i\) in region \(\sigma\). The overlap is zero in the paramagnetic phase but can be nonzero in the spin-glass phase. In particular \(q^{\sigma\sigma}\ne0\), and if \(\sigma_1'\) is \(\sigma_1\) with all spins flipped, \(q^{\sigma_1\sigma_1} = q^{\sigma_1\sigma_1'}\), so the overlap does not favor a region over its time-reversed partner. If there is only one ergodic region (plus its partner), \(q\) has only one value: the replica-symmetric case. With replica symmetry breaking, \(q^{\sigma\sigma'}\) takes a range of values. Since \(q\) usually cannot be computed directly, consider its distribution</p>
 <div class="result"><p>\[ P(q) \equiv \sum_{\sigma\sigma'}w^{\sigma}w^{\sigma'}\,\delta\big(q-q^{\sigma\sigma'}\big),\qquad w^{\sigma} \equiv \frac{Z_\sigma}{\sum_\tau Z_\tau}. \]</p></div>
-<p>\(P(q)\) varies from sample to sample, as the \(J_{ij}\) do; what is important and potentially calculable is its average over the distribution of couplings, \([P(q)]\). It has three generic forms: a delta function at the origin when there is no order (paramagnet); \(\delta(q-\hat q)\) with a unique \(\hat q\ne0\) when there is only one way to order (ferromagnet); and a nontrivial function, not a single delta function, when ordering can occur in many ways (the putative spin-glass phase). The nature of the low-temperature phase of real spin glasses was still debated when the book was written. Calculating \([P(q)]\) as the couplings vary offers a way to map the phase diagram of a complex system, where the elementary order-parameter concept is not enough.</p>
+<p data-k="k88">\(P(q)\) varies from sample to sample, as the \(J_{ij}\) do; what is important and potentially calculable is its average over the distribution of couplings, \([P(q)]\). It has three generic forms: a delta function at the origin when there is no order (paramagnet); \(\delta(q-\hat q)\) with a unique \(\hat q\ne0\) when there is only one way to order (ferromagnet); and a nontrivial function, not a single delta function, when ordering can occur in many ways (the putative spin-glass phase). The nature of the low-temperature phase of real spin glasses was still debated when the book was written. Calculating \([P(q)]\) as the couplings vary offers a way to map the phase diagram of a complex system, where the elementary order-parameter concept is not enough.</p>
 
 <figure class="demo" id="demo-pq">
-  <p class="title">The overlap distribution of a 16-spin spin glass, computed exactly</p>
+  <p class="title" data-k="k89">The overlap distribution of a 16-spin spin glass, computed exactly</p>
   <div class="controls">
     <label>\(k_BT/J\) <input type="range" id="pq-T" aria-label="Temperature k_B T / J" min="0.15" max="2" step="0.01" value="0.4"> <output id="pq-T-out"></output></label>
-    <label>Mean coupling \(J_0/J\) <input type="range" id="pq-J0" min="0" max="2.5" step="0.05" value="0"> <output id="pq-J0-out"></output></label>
+    <label><span data-k="k90">Mean coupling \(J_0/J\)</span> <input type="range" id="pq-J0" min="0" max="2.5" step="0.05" value="0"> <output id="pq-J0-out"></output></label>
   </div>
   <div class="controls">
-    <span role="group" aria-label="Average"><button id="pq-one" aria-pressed="false">One sample</button> <button id="pq-avg" aria-pressed="true">Average of 24 samples</button></span>
-    <button id="pq-new">New disorder</button>
+    <span role="group" aria-label="Average"><button id="pq-one" aria-pressed="false" data-k="k91">One sample</button> <button id="pq-avg" aria-pressed="true" data-k="k92">Average of 24 samples</button></span>
+    <button id="pq-new" data-k="k93">New disorder</button>
   </div>
   <div class="grid2">
-    <div><p class="plot-label">Overlap distribution \(P(q)\) at the chosen \(T\) and \(J_0\)</p><canvas class="plot" id="pq-plot"></canvas></div>
-    <div><p class="plot-label">Where the model sits (schematic SK phase diagram)</p><canvas class="plot" id="pq-pd"></canvas></div>
+    <div><p class="plot-label" data-k="k94">Overlap distribution \(P(q)\) at the chosen \(T\) and \(J_0\)</p><canvas class="plot" id="pq-plot"></canvas></div>
+    <div><p class="plot-label" data-k="k95">Where the model sits (schematic SK phase diagram)</p><canvas class="plot" id="pq-pd"></canvas></div>
   </div>
   <p class="readout" id="pq-read"></p>
-  <figcaption>The Sherrington–Kirkpatrick (SK) model: every pair of 16 spins coupled by a Gaussian \(J_{ij}\) with mean \(J_0/N\) and variance \(J^2/N\). For each disorder sample all \(2^{16}\) states are summed and \(P(q)\) over all \(2^{32}\) pairs of states is obtained exactly with a Walsh–Hadamard transform. Here \(q\) ranges over \([-1,1]\) without the absolute value; the time-reversed partners make \(P(q)\) symmetric. Hot: a single peak at \(q=0\), broadened by the small size. Large \(J_0\), cold: two sharp peaks at \(\pm\hat q\), a ferromagnet. Small \(J_0\), cold: weight spread across all \(q\) between the peaks, and different samples look different. With only 16 spins these are strong finite-size caricatures of the three cases.</figcaption>
+  <figcaption data-k="k96">The Sherrington–Kirkpatrick (SK) model: every pair of 16 spins coupled by a Gaussian \(J_{ij}\) with mean \(J_0/N\) and variance \(J^2/N\). For each disorder sample all \(2^{16}\) states are summed and \(P(q)\) over all \(2^{32}\) pairs of states is obtained exactly with a Walsh–Hadamard transform. Here \(q\) ranges over \([-1,1]\) without the absolute value; the time-reversed partners make \(P(q)\) symmetric. Hot: a single peak at \(q=0\), broadened by the small size. Large \(J_0\), cold: two sharp peaks at \(\pm\hat q\), a ferromagnet. Small \(J_0\), cold: weight spread across all \(q\) between the peaks, and different samples look different. With only 16 spins these are strong finite-size caricatures of the three cases.</figcaption>
 </figure>
 
-<h3>Quenched disorder and the replica trick</h3>
-<p>The SK model above is the infinite-range spin glass, with \(i,j\) running over all pairs and Gaussian couplings, \(P(J) = (2\pi(\delta J)^2)^{-1/2}\exp[-(J-J_0)^2/2(\delta J)^2]\); for it mean-field theory becomes exact. The couplings are <b>quenched</b> disorder: random, but fixed for a given system, which is described by \(\mathcal H(\{S_i\};X)\) with \(X\) the random variables. If \(X\) could change during the dynamics, the disorder would be <b>annealed</b>; quenched impurities are bound to lattice sites on the timescale of the experiment. The two free energies are</p>
+<h3 data-k="k97">Quenched disorder and the replica trick</h3>
+<p data-k="k98">The SK model above is the infinite-range spin glass, with \(i,j\) running over all pairs and Gaussian couplings, \(P(J) = (2\pi(\delta J)^2)^{-1/2}\exp[-(J-J_0)^2/2(\delta J)^2]\); for it mean-field theory becomes exact. The couplings are <b>quenched</b> disorder: random, but fixed for a given system, which is described by \(\mathcal H(\{S_i\};X)\) with \(X\) the random variables. If \(X\) could change during the dynamics, the disorder would be <b>annealed</b>; quenched impurities are bound to lattice sites on the timescale of the experiment. The two free energies are</p>
 <div class="math-scroll">\[ e^{-\beta F_{ad}} = \operatorname{Tr}_{\{S\},X}\,e^{-\beta\mathcal H(\{S_i\};X)},\qquad e^{-\beta F_{qd}(X)} = \operatorname{Tr}_{\{S\}}\,e^{-\beta\mathcal H(\{S_i\};X)}. \]</div>
-<p>A large sample can be regarded as many macroscopic subsystems, each a realization of \(X\), so a measurement averages over realizations. Systems for which this holds are <b>self-averaging</b>, and the observed free energy is</p>
+<p data-k="k99">A large sample can be regarded as many macroscopic subsystems, each a realization of \(X\), so a measurement averages over realizations. Systems for which this holds are <b>self-averaging</b>, and the observed free energy is</p>
 <div class="result"><p>\[ \begin{aligned} F_e = [F_{qd}(X)] &\equiv \int P(X)F_{qd}(X)\,dX\\ &= -k_BT\int P(X)\log Z(X)\,dX. \end{aligned} \]</p></div>
-<p>Averaging a logarithm is hard. The <mark>replica trick</mark> uses \(\log Z = \lim_{n\to0}(Z^n-1)/n\) (by l'Hôpital's rule), so we must compute</p>
+<p data-k="k100">Averaging a logarithm is hard. The <mark>replica trick</mark> uses \(\log Z = \lim_{n\to0}(Z^n-1)/n\) (by l'Hôpital's rule), so we must compute</p>
 <div class="math-scroll">\[ [Z^n] = \Big[\prod_{\alpha=1}^{n}Z_\alpha\Big] = \operatorname{Tr}_{S^1}\cdots\operatorname{Tr}_{S^n}\Big[e^{-\beta\sum_{\alpha=1}^n\mathcal H(\{S^\alpha\};X)}\Big], \]</div>
-<p>the trace over \(n\) <i>replicas</i> of the system, each with the same realization of the disorder, with \(nN(\Omega)\) degrees of freedom \(\{S_i^\alpha\}\). The effective replica Hamiltonian \(\mathcal H_n\), defined by \(e^{-\beta\mathcal H_n(\{S^\alpha\})} = [e^{-\beta\sum_\alpha\mathcal H(\{S^\alpha\};X)}]\), no longer depends on \(X\). It is symmetric under permutation of the replicas, but it is not a sum of \(n\) single-replica Hamiltonians: the disorder average has coupled the replicas. This permutation symmetry can be spontaneously broken in the limit \(n\to0\).</p>
+<p data-k="k101">the trace over \(n\) <i>replicas</i> of the system, each with the same realization of the disorder, with \(nN(\Omega)\) degrees of freedom \(\{S_i^\alpha\}\). The effective replica Hamiltonian \(\mathcal H_n\), defined by \(e^{-\beta\mathcal H_n(\{S^\alpha\})} = [e^{-\beta\sum_\alpha\mathcal H(\{S^\alpha\};X)}]\), no longer depends on \(X\). It is symmetric under permutation of the replicas, but it is not a sum of \(n\) single-replica Hamiltonians: the disorder average has coupled the replicas. This permutation symmetry can be spontaneously broken in the limit \(n\to0\).</p>
 
 <figure class="demo" id="demo-rep">
-  <p class="title">Quenched vs annealed, and the \(n\to0\) limit</p>
+  <p class="title" data-k="k102">Quenched vs annealed, and the \(n\to0\) limit</p>
   <div class="controls">
-    <label>\(k_BT/J\) for the right panel <input type="range" id="rp-T" min="0.2" max="2" step="0.01" value="0.5"> <output id="rp-T-out"></output></label>
+    <label><span data-k="k103">\(k_BT/J\) for the right panel</span> <input type="range" id="rp-T" min="0.2" max="2" step="0.01" value="0.5"> <output id="rp-T-out"></output></label>
   </div>
   <div class="grid2">
-    <div><p class="plot-label">Free energy per spin vs \(T\)</p><canvas class="plot" id="rp-f"></canvas></div>
-    <div><p class="plot-label">\(f_n = -\dfrac{k_BT}{nN}\ln[Z^n]\) vs replica number \(n\)</p><canvas class="plot" id="rp-n"></canvas></div>
+    <div><p class="plot-label" data-k="k104">Free energy per spin vs \(T\)</p><canvas class="plot" id="rp-f"></canvas></div>
+    <div><p class="plot-label" data-k="k105">\(f_n = -\dfrac{k_BT}{nN}\ln[Z^n]\) vs replica number \(n\)</p><canvas class="plot" id="rp-n"></canvas></div>
   </div>
   <p class="readout" id="rp-read"></p>
-  <figcaption>Twenty-four exactly summed 16-spin SK samples with \(J_0=0\). Left: the quenched free energy \([\ln Z]\), the annealed \(\ln[Z]\) from the same samples, and the exact annealed result \(-k_BT\ln2 - (N-1)J^2/4Nk_BT\). They agree at high \(T\) and separate at low \(T\), where the annealed average is dominated by rare samples with unusually large \(Z\); 24 samples miss those, which is why the sampled annealed curve falls short of the exact one. The quenched average has no such problem, since \(\ln Z\) is self-averaging. Jensen's inequality, \([\ln Z]\le\ln[Z]\), keeps the annealed free energy below the quenched one. Right: \(f_n\) as a smooth function of real \(n\). At \(n=1\) it is the annealed free energy; as \(n\to0\) it tends to the quenched one, which is what the replica trick exploits.</figcaption>
+  <figcaption data-k="k106">Twenty-four exactly summed 16-spin SK samples with \(J_0=0\). Left: the quenched free energy \([\ln Z]\), the annealed \(\ln[Z]\) from the same samples, and the exact annealed result \(-k_BT\ln2 - (N-1)J^2/4Nk_BT\). They agree at high \(T\) and separate at low \(T\), where the annealed average is dominated by rare samples with unusually large \(Z\); 24 samples miss those, which is why the sampled annealed curve falls short of the exact one. The quenched average has no such problem, since \(\ln Z\) is self-averaging. Jensen's inequality, \([\ln Z]\le\ln[Z]\), keeps the annealed free energy below the quenched one. Right: \(f_n\) as a smooth function of real \(n\). At \(n=1\) it is the annealed free energy; as \(n\to0\) it tends to the quenched one, which is what the replica trick exploits.</figcaption>
 </figure>
 
-<p>The central result of replica theory is that the disorder-averaged overlap distribution can be computed from replicas. For the infinite-range spin glass,</p>
+<p data-k="k107">The central result of replica theory is that the disorder-averaged overlap distribution can be computed from replicas. For the infinite-range spin glass,</p>
 <div class="result"><p>\[ [P(q)] = \lim_{n\to0}\frac{1}{n(n-1)}\sum_{\alpha\ne\beta}\delta\big(q-q^{\alpha\beta}\big),\qquad q^{\alpha\beta} = \big\langle S_i^\alpha S_i^\beta\big\rangle_n, \]</div>
-<p>with the average taken with respect to \(\mathcal H_n\). Since \(\mathcal H_n\) is symmetric under permuting replicas, one might expect \(q^{\alpha\beta} = \hat q\) for all \(\alpha\ne\beta\), giving \([P(q)] = \delta(q-\hat q)\): simple SSB with ordering at a single value. Below the zero-field spin-glass transition this is not correct. <mark>Replica permutation symmetry is spontaneously broken</mark>, \([P(q)]\) is not a single delta function, and ergodicity is broken with more than one family of ergodic regions not related by symmetry. Interpreting replica symmetry breaking as ergodicity breaking shows that the replica method, far from being a mere averaging trick, is a complex encoding of phase space. (Giving meaning to an \(n\times n\) matrix order parameter as \(n\to0\) is delicate; see Parisi's papers.) The method has proved valuable in disordered systems, neural-network models, graph theory, and optimization.</p>
-<p class="aside">Two Nobel Prizes in Physics trace back to this circle of ideas: Giorgio Parisi in 2021, for the interplay of disorder and fluctuations in physical systems, and John Hopfield in 2024, whose associative-memory network is a spin-glass model of neurons (Mézard, Parisi, and Virasoro, <i>Spin Glass Theory and Beyond</i>, ch. XIII).</p>
+<p data-k="k108">with the average taken with respect to \(\mathcal H_n\). Since \(\mathcal H_n\) is symmetric under permuting replicas, one might expect \(q^{\alpha\beta} = \hat q\) for all \(\alpha\ne\beta\), giving \([P(q)] = \delta(q-\hat q)\): simple SSB with ordering at a single value. Below the zero-field spin-glass transition this is not correct. <mark>Replica permutation symmetry is spontaneously broken</mark>, \([P(q)]\) is not a single delta function, and ergodicity is broken with more than one family of ergodic regions not related by symmetry. Interpreting replica symmetry breaking as ergodicity breaking shows that the replica method, far from being a mere averaging trick, is a complex encoding of phase space. (Giving meaning to an \(n\times n\) matrix order parameter as \(n\to0\) is delicate; see Parisi's papers.) The method has proved valuable in disordered systems, neural-network models, graph theory, and optimization.</p>
+<p class="aside" data-k="k109">Two Nobel Prizes in Physics trace back to this circle of ideas: Giorgio Parisi in 2021, for the interplay of disorder and fluctuations in physical systems, and John Hopfield in 2024, whose associative-memory network is a spin-glass model of neurons (Mézard, Parisi, and Virasoro, <i>Spin Glass Theory and Beyond</i>, ch. XIII).</p>
 </section>
 
 <!-- ======================= 2.11 ======================= -->
 <section id="s2-11">
-<h2><span class="sec">2.11</span>Fluids</h2>
-<p>Is there a connection between fluids and magnets? Consider a continuum fluid of \(N\) particles in a region \(\Omega\) confined by hard walls, with coordinates \(\vec r_i\) and momenta \(\vec p_i\), and Hamiltonian</p>
+<h2 data-k="k110"><span class="sec">2.11</span>Fluids</h2>
+<p data-k="k111">Is there a connection between fluids and magnets? Consider a continuum fluid of \(N\) particles in a region \(\Omega\) confined by hard walls, with coordinates \(\vec r_i\) and momenta \(\vec p_i\), and Hamiltonian</p>
 <div class="result"><p>\[ \begin{aligned} \mathcal H_\Omega = \sum_{i=1}^{N}\Big[\frac{p_i^2}{2m}+U_1(\vec r_i)\Big] &+ \frac1{2!}\sum_{i\ne j}U_2(\vec r_i,\vec r_j)\\ &+ \frac1{3!}\sum_{i\ne j\ne k}U_3(\vec r_i,\vec r_j,\vec r_k) + \cdots \end{aligned} \]</p></div>
-<p>Here \(U_1\) is an external field acting on each particle (gravity, say; usually zero), and \(U_2, U_3, \dots\) are two-body, three-body, … potentials, translationally invariant so that they depend only on coordinate differences. In the grand canonical ensemble, where \(N\) varies, with chemical potential \(\mu\),</p>
+<p data-k="k112">Here \(U_1\) is an external field acting on each particle (gravity, say; usually zero), and \(U_2, U_3, \dots\) are two-body, three-body, … potentials, translationally invariant so that they depend only on coordinate differences. In the grand canonical ensemble, where \(N\) varies, with chemical potential \(\mu\),</p>
 <div class="math-scroll">\[ \Xi_\Omega = \operatorname{Tr}_\Omega\,e^{-\beta(\mathcal H_\Omega-\mu N)},\qquad \operatorname{Tr}_\Omega \equiv \sum_{N=0}^{\infty}\frac1{N!}\int\prod_{i=1}^{N}\frac{d^dp_i\,d^dr_i}{h^{dN}}. \]</div>
-<p>Planck's constant \(h\) sets the unit of phase space and provides continuity with quantum statistical mechanics. The momentum integrals are Gaussian, each giving \(1/\Lambda_T^d\) with the thermal wavelength \(\Lambda_T \equiv h/\sqrt{2\pi mk_BT}\), so</p>
+<p data-k="k113">Planck's constant \(h\) sets the unit of phase space and provides continuity with quantum statistical mechanics. The momentum integrals are Gaussian, each giving \(1/\Lambda_T^d\) with the thermal wavelength \(\Lambda_T \equiv h/\sqrt{2\pi mk_BT}\), so</p>
 <div class="result"><p>\[ \Xi_\Omega = \sum_{N=0}^{\infty}\frac1{N!}\left(\frac{e^{\beta\mu}}{\Lambda_T^d}\right)^{\!N}Q_N,\qquad Q_N \equiv \int\prod_{i=1}^N d^dr_i\,e^{-\beta U\{\vec r_i\}}, \]</p></div>
-<p>with fugacity \(e^{\beta\mu}\) and configurational sum \(Q_N\). The grand potential is \(F_\Omega(T,\mu,U_1,U_2,\dots) = -k_BT\log\Xi_\Omega = U-TS-\mu N\). It is nonsingular for finite \(\Omega\) provided the potentials have a hard core, so that at most \(N_{cp}\) particles fit in \(V(\Omega)\). Its bulk density</p>
+<p data-k="k114">with fugacity \(e^{\beta\mu}\) and configurational sum \(Q_N\). The grand potential is \(F_\Omega(T,\mu,U_1,U_2,\dots) = -k_BT\log\Xi_\Omega = U-TS-\mu N\). It is nonsingular for finite \(\Omega\) provided the potentials have a hard core, so that at most \(N_{cp}\) particles fit in \(V(\Omega)\). Its bulk density</p>
 <div class="math-scroll">\[ f_b(T,\mu,U_1,U_2,\dots) = \lim_{V(\Omega)\to\infty}\frac{F_\Omega}{V(\Omega)},\qquad df_b = -\sigma\,dT - \rho\,d\mu, \]</div>
-<p>involves the entropy per unit volume \(\sigma\) and the number density \(\rho = \lim\langle N\rangle/V\). Since \(f_b = -p\), analytic properties follow as in the magnetic case, many from convexity: (a) \(p(T,\mu)\ge0\); (b) \(p\) is continuous; (c) \(\partial p/\partial T\) and \(\partial p/\partial\mu\) exist almost everywhere; (d) \(\partial p/\partial\mu = \rho\ge0\); (e) \(\partial p/\partial T = \sigma\ge0\) (true in quantum statistical mechanics, but false for classical systems); (f) \(\partial p/\partial T\) is monotonically non-decreasing, so the heat capacity \(C_\mu\ge0\); (g) \(\partial p/\partial\mu\) is monotonically non-decreasing, so the isothermal compressibility \(K_T\ge0\).</p>
+<p data-k="k115">involves the entropy per unit volume \(\sigma\) and the number density \(\rho = \lim\langle N\rangle/V\). Since \(f_b = -p\), analytic properties follow as in the magnetic case, many from convexity: (a) \(p(T,\mu)\ge0\); (b) \(p\) is continuous; (c) \(\partial p/\partial T\) and \(\partial p/\partial\mu\) exist almost everywhere; (d) \(\partial p/\partial\mu = \rho\ge0\); (e) \(\partial p/\partial T = \sigma\ge0\) (true in quantum statistical mechanics, but false for classical systems); (f) \(\partial p/\partial T\) is monotonically non-decreasing, so the heat capacity \(C_\mu\ge0\); (g) \(\partial p/\partial\mu\) is monotonically non-decreasing, so the isothermal compressibility \(K_T\ge0\).</p>
 </section>
 
 <!-- ======================= 2.12 ======================= -->
 <section id="s2-12">
-<h2><span class="sec">2.12</span>Lattice gases</h2>
-<p>A simple model of a fluid is the <mark>lattice gas</mark> of Lee and Yang. The basic idea is to relate the local density of particles in a fluid to the local density of up spins in a magnet. The microscopic density is \(\rho(\vec r) \equiv \sum_{i=1}^N\delta(\vec r-\vec r_i)\), with \(\int_V\rho\,d^dr = N(V)\), and the potentials can be rewritten in terms of it:</p>
+<h2 data-k="k116"><span class="sec">2.12</span>Lattice gases</h2>
+<p data-k="k117">A simple model of a fluid is the <mark>lattice gas</mark> of Lee and Yang. The basic idea is to relate the local density of particles in a fluid to the local density of up spins in a magnet. The microscopic density is \(\rho(\vec r) \equiv \sum_{i=1}^N\delta(\vec r-\vec r_i)\), with \(\int_V\rho\,d^dr = N(V)\), and the potentials can be rewritten in terms of it:</p>
 <div class="math-scroll">\[ \begin{aligned} \sum_iU_1(\vec r_i) &= \int_\Omega d^dr\,U_1(\vec r)\rho(\vec r),\\ \sum_{i\ne j}U_2(\vec r_i-\vec r_j) &= \int_\Omega\!\!\int_\Omega U_2(\vec r-\vec r')\rho(\vec r)\rho(\vec r')\,d^dr\,d^dr'. \end{aligned} \]</div>
-<p>Now take a \(d\)-dimensional lattice with coordination number \(z\), where each site holds at most one molecule. The occupation number \(n_i = 0\) or \(1\) plays the role of \(\rho(\vec r)\), with \(N = \sum_in_i\), and a suitable Hamiltonian in the grand canonical ensemble is</p>
+<p data-k="k118">Now take a \(d\)-dimensional lattice with coordination number \(z\), where each site holds at most one molecule. The occupation number \(n_i = 0\) or \(1\) plays the role of \(\rho(\vec r)\), with \(N = \sum_in_i\), and a suitable Hamiltonian in the grand canonical ensemble is</p>
 <div class="result"><p>\[ \mathcal H_\Omega - \mu N = \sum_i\big(U_1(i)-\mu\big)n_i + \frac12\sum_{ij}U_2(i,j)\,n_in_j + \cdots, \]</p></div>
-<p>with the \(\tfrac12\) cancelling the double counting. There is no kinetic term; as we saw, it only contributes to the fugacity, and we really model \(Q_N\). Define \(n_i = \tfrac12(1+S_i)\) with \(S_i = \pm1\). For short-ranged forces and low density, drop three-body and higher terms and take \(U_2(i,j) = U_2\) for nearest neighbors, zero otherwise. With the sum over ordered pairs, \(\sum_{ij}U_2(i,j) = U_2Nz\), \(\sum_{ij}U_2(i,j)S_i = zU_2\sum_iS_i\), and \(\sum_{ij}U_2(i,j)S_iS_j = 2U_2\sum_{\langle ij\rangle}S_iS_j\), since each nearest-neighbor pair appears twice. Hence</p>
+<p data-k="k119">with the \(\tfrac12\) cancelling the double counting. There is no kinetic term; as we saw, it only contributes to the fugacity, and we really model \(Q_N\). Define \(n_i = \tfrac12(1+S_i)\) with \(S_i = \pm1\). For short-ranged forces and low density, drop three-body and higher terms and take \(U_2(i,j) = U_2\) for nearest neighbors, zero otherwise. With the sum over ordered pairs, \(\sum_{ij}U_2(i,j) = U_2Nz\), \(\sum_{ij}U_2(i,j)S_i = zU_2\sum_iS_i\), and \(\sum_{ij}U_2(i,j)S_iS_j = 2U_2\sum_{\langle ij\rangle}S_iS_j\), since each nearest-neighbor pair appears twice. Hence</p>
 <div class="math-scroll">\[ \frac12\sum_{ij}U_2(i,j)\,n_in_j = \frac18U_2N(\Omega)z + \frac14U_2z\sum_iS_i + \frac{U_2}{4}\sum_{\langle ij\rangle}S_iS_j, \]</div>
-<p>and, setting \(U_1=0\),</p>
+<p data-k="k120">and, setting \(U_1=0\),</p>
 <div class="result"><p>\[ \begin{gathered} \mathcal H_\Omega-\mu N = E_0 - H\sum_iS_i - J\sum_{\langle ij\rangle}S_iS_j,\\ E_0 = -\tfrac12N(\Omega)\mu + \tfrac18zU_2N(\Omega),\\ H = \tfrac12\mu - \tfrac14zU_2,\qquad J = -\tfrac14U_2, \end{gathered} \]</p></div>
 <div class="math-scroll">\[ \begin{aligned} \Xi_{\text{lattice gas}} &= \operatorname{Tr}\,e^{-\beta(\mathcal H_\Omega-\mu N)} = \Big(\prod_{i=1}^{N(\Omega)}\sum_{n_i=0,1}\Big)e^{-\beta(\mathcal H_\Omega-\mu N)}\\ &= e^{-\beta E_0}\,Z_{\text{Ising}}\big(H, J, N(\Omega)\big). \end{aligned} \]</div>
-<p>This is the desired result: <mark>the thermodynamics of the lattice gas follows from that of the Ising model</mark>. An attractive potential (\(U_2\lt 0\)) is a ferromagnet, and the field vanishes at \(\mu = zU_2/2\): the liquid–gas coexistence line is the Ising first-order line \(H=0\), \(T\lt T_c\). Even the ideal gas law and its corrections can be derived from the lattice gas.</p>
+<p data-k="k121">This is the desired result: <mark>the thermodynamics of the lattice gas follows from that of the Ising model</mark>. An attractive potential (\(U_2\lt 0\)) is a ferromagnet, and the field vanishes at \(\mu = zU_2/2\): the liquid–gas coexistence line is the Ising first-order line \(H=0\), \(T\lt T_c\). Even the ideal gas law and its corrections can be derived from the lattice gas.</p>
 
 <figure class="demo" id="demo-lg">
-  <p class="title">A lattice gas is an Ising magnet</p>
+  <p class="title" data-k="k122">A lattice gas is an Ising magnet</p>
   <div class="controls">
     <label>\(k_BT/|U_2|\) <input type="range" id="lg-T" aria-label="Temperature k_B T / |U_2|" min="0.3" max="0.9" step="0.005" value="0.45"> <output id="lg-T-out"></output></label>
     <label>\(\mu/|U_2|\) <input type="range" id="lg-mu" aria-label="Chemical potential mu / |U_2|" min="-3" max="-1" step="0.01" value="-2"> <output id="lg-mu-out"></output></label>
-    <label>Speed <input type="range" id="lg-speed" min="1" max="30" step="1" value="6"> <output id="lg-speed-out"></output></label>
+    <label><span data-k="k123">Speed</span> <input type="range" id="lg-speed" min="1" max="30" step="1" value="6"> <output id="lg-speed-out"></output></label>
     <button id="lg-play" aria-pressed="false">Pause</button>
   </div>
   <div class="grid-lat" style="grid-template-columns:minmax(0,260px) minmax(0,1fr)">
     <div><canvas class="lattice" id="lg-lat" width="64" height="64" aria-label="Lattice-gas configuration"></canvas>
       <p class="readout" id="lg-map"></p></div>
     <div class="grid2">
-      <div><p class="plot-label">Exact coexistence curve and the current state</p><canvas class="plot" id="lg-dome" style="height:250px"></canvas></div>
-      <div><p class="plot-label">Density over the last 600 sweeps</p><canvas class="plot" id="lg-rho" style="height:250px"></canvas></div>
+      <div><p class="plot-label" data-k="k125">Exact coexistence curve and the current state</p><canvas class="plot" id="lg-dome" style="height:250px"></canvas></div>
+      <div><p class="plot-label" data-k="k126">Density over the last 600 sweeps</p><canvas class="plot" id="lg-rho" style="height:250px"></canvas></div>
     </div>
   </div>
-  <figcaption>Grand-canonical simulation of a 64 × 64 square-lattice gas with nearest-neighbor attraction \(U_2\lt 0\), run as the equivalent Ising model with \(J=-U_2/4\) and \(H = \mu/2 - zU_2/4\). The dome is exact: Onsager's spontaneous magnetization mapped by \(\rho_\pm = (1\pm M_s)/2\), with \(k_BT_c \approx 0.567|U_2|\) and \(\beta = 1/8\). Below \(T_c\), sweep \(\mu\) through \(-2|U_2|\) and the density jumps between vapor and liquid branches (with hysteresis, since the system stays trapped as in §2.10). Above \(T_c\) it changes smoothly. The particle–hole symmetry of the picture is the \(\mathbb Z_2\) symmetry of the magnet.</figcaption>
+  <figcaption data-k="k127">Grand-canonical simulation of a 64 × 64 square-lattice gas with nearest-neighbor attraction \(U_2\lt 0\), run as the equivalent Ising model with \(J=-U_2/4\) and \(H = \mu/2 - zU_2/4\). The dome is exact: Onsager's spontaneous magnetization mapped by \(\rho_\pm = (1\pm M_s)/2\), with \(k_BT_c \approx 0.567|U_2|\) and \(\beta = 1/8\). Below \(T_c\), sweep \(\mu\) through \(-2|U_2|\) and the density jumps between vapor and liquid branches (with hysteresis, since the system stays trapped as in §2.10). Above \(T_c\) it changes smoothly. The particle–hole symmetry of the picture is the \(\mathbb Z_2\) symmetry of the magnet.</figcaption>
 </figure>
 
-<h3>From the continuum to the lattice</h3>
-<p>The configurational sum \(Q_N\) can be approximated by dividing \(\Omega\) into \(N(\Omega) = V(\Omega)/a^d\) cells of linear size \(a\), small enough (\(a \lesssim\) hard-core radius) that more than one molecule per cell is negligible. Then \(\int_\Omega\prod_i d^dr_i \approx a^{dN}\sum_\alpha\), with the number of cells generally different from the number of particles. Replacing \(U_2(\vec r_i,\vec r_j)\) by \(U_2(\alpha,\beta)\) when \(\vec r_i\in\alpha\), \(\vec r_j\in\beta\), and keeping short-ranged forces (nonzero only for neighboring cells, with constant value \(U_2\)), \(U\{\vec r_i\}\to U_2\sum_{\langle\alpha\beta\rangle}n_\alpha n_\beta+\cdots\). Each configuration \(\{n_\alpha\}\) corresponds to \(N!\) configurations \(\{\vec r_i\}\), so \(Q_N = N!\,a^{dN}\sum'_{\{n_\alpha\}}e^{-\beta U\{n_\alpha\}}\), where the prime constrains \(\sum_\alpha n_\alpha = N\). That constraint makes \(Q_N\) hard, but the grand sum removes it: summing over all \(N\) of constrained sums gives the unrestricted sum over all \(2^{N(\Omega)}\) states of \(\{n_\alpha\}\), the advantage of the grand canonical ensemble. Thus</p>
+<h3 data-k="k128">From the continuum to the lattice</h3>
+<p data-k="k129">The configurational sum \(Q_N\) can be approximated by dividing \(\Omega\) into \(N(\Omega) = V(\Omega)/a^d\) cells of linear size \(a\), small enough (\(a \lesssim\) hard-core radius) that more than one molecule per cell is negligible. Then \(\int_\Omega\prod_i d^dr_i \approx a^{dN}\sum_\alpha\), with the number of cells generally different from the number of particles. Replacing \(U_2(\vec r_i,\vec r_j)\) by \(U_2(\alpha,\beta)\) when \(\vec r_i\in\alpha\), \(\vec r_j\in\beta\), and keeping short-ranged forces (nonzero only for neighboring cells, with constant value \(U_2\)), \(U\{\vec r_i\}\to U_2\sum_{\langle\alpha\beta\rangle}n_\alpha n_\beta+\cdots\). Each configuration \(\{n_\alpha\}\) corresponds to \(N!\) configurations \(\{\vec r_i\}\), so \(Q_N = N!\,a^{dN}\sum'_{\{n_\alpha\}}e^{-\beta U\{n_\alpha\}}\), where the prime constrains \(\sum_\alpha n_\alpha = N\). That constraint makes \(Q_N\) hard, but the grand sum removes it: summing over all \(N\) of constrained sums gives the unrestricted sum over all \(2^{N(\Omega)}\) states of \(\{n_\alpha\}\), the advantage of the grand canonical ensemble. Thus</p>
 <div class="result"><p>\[ \begin{aligned} \Xi_\Omega &= \sum_{\{n_\alpha\}}\exp\!\Big\{-\beta\Big[-\bar\mu\sum_\alpha n_\alpha + U_2\sum_{\langle\alpha\beta\rangle}n_\alpha n_\beta+\cdots\Big]\Big\}\\ &= \Xi_{\text{lattice gas}},\qquad \bar\mu \equiv \mu_{\text{physical}} + dk_BT\log(a/\Lambda_T). \end{aligned} \]</p></div>
-<p>So, heuristically, the grand partition function of the lattice gas follows from that of the continuum fluid.</p>
+<p data-k="k130">So, heuristically, the grand partition function of the lattice gas follows from that of the continuum fluid.</p>
 </section>
 
 <!-- ======================= 2.13 ======================= -->
 <section id="s2-13">
-<h2><span class="sec">2.13</span>Equivalence in statistical mechanics</h2>
-<p>The lattice-gas mapping illustrates an <b>equivalence</b> between two systems. The term is used in two ways:</p>
+<h2 data-k="k131"><span class="sec">2.13</span>Equivalence in statistical mechanics</h2>
+<p data-k="k132">The lattice-gas mapping illustrates an <b>equivalence</b> between two systems. The term is used in two ways:</p>
 <ol type="A">
-  <li><b>Exact equivalence:</b> an exact mapping between the partition functions of two models, such as Ising model \(\leftrightarrow\) lattice gas.</li>
-  <li><b>Approximate equivalence:</b> partition functions that are not equal or exactly related, but behave identically near a critical point. Such models are in the same <mark>universality class</mark>. An example we will meet is Landau theory, whose effective Hamiltonian is roughly a power series in \(M\) to order \(M^4\), and the Ising model, whose free energy written in these terms involves \(\log\cosh M\).</li>
+  <li data-k="k133"><b>Exact equivalence:</b> an exact mapping between the partition functions of two models, such as Ising model \(\leftrightarrow\) lattice gas.</li>
+  <li data-k="k134"><b>Approximate equivalence:</b> partition functions that are not equal or exactly related, but behave identically near a critical point. Such models are in the same <mark>universality class</mark>. An example we will meet is Landau theory, whose effective Hamiltonian is roughly a power series in \(M\) to order \(M^4\), and the Ising model, whose free energy written in these terms involves \(\log\cosh M\).</li>
 </ol>
-<p>The phase diagram, thermodynamics, and correlation functions depend on (a) the specific coupling constants, (b) the symmetry of the model (discrete, continuous, the actual symmetry group), (c) the lattice type, (d) the dimensionality, and (e) everything else you can think of. The <i>critical</i> behavior turns out to depend only on (a) the symmetry of the order parameter, (b) the dimensionality, and (c) the nature of the critical point, and not on coupling constants, lattice type, or the precise Hamiltonian. (A notable exception is Baxter's eight-vertex model, where an exponent varies continuously with the couplings; this is understood within the RG and occurs only for models with marginal operators.) Models related by exact equivalence obviously share critical behavior. That unrelated systems so often do too, in experiment and theory, is the phenomenon of <mark>universality</mark>.</p>
+<p data-k="k135">The phase diagram, thermodynamics, and correlation functions depend on (a) the specific coupling constants, (b) the symmetry of the model (discrete, continuous, the actual symmetry group), (c) the lattice type, (d) the dimensionality, and (e) everything else you can think of. The <i>critical</i> behavior turns out to depend only on (a) the symmetry of the order parameter, (b) the dimensionality, and (c) the nature of the critical point, and not on coupling constants, lattice type, or the precise Hamiltonian. (A notable exception is Baxter's eight-vertex model, where an exponent varies continuously with the couplings; this is understood within the RG and occurs only for models with marginal operators.) Models related by exact equivalence obviously share critical behavior. That unrelated systems so often do too, in experiment and theory, is the phenomenon of <mark>universality</mark>.</p>
 </section>
 
 <!-- ======================= 2.14 ======================= -->
 <section id="s2-14">
-<h2><span class="sec">2.14</span>Miscellaneous remarks</h2>
-<h3>History of the thermodynamic limit</h3>
+<h2 data-k="k136"><span class="sec">2.14</span>Miscellaneous remarks</h2>
+<h3 data-k="k137">History of the thermodynamic limit</h3>
 <ol class="timeline">
-  <li><span class="yr">1936</span>Hendrik Kramers realizes that the limit \(\lim_{N\to\infty}N^{-1}\log Z\) can give distinct functions not analytically joined: phase transitions require the thermodynamic limit.</li>
-  <li><span class="yr">1937</span>Most physicists are unaware of this; even Sommerfeld believes a partition function describes only one phase. At a congress in Amsterdam for the centenary of van der Waals's birth, Kramers, as chairman, puts the question of whether a partition function can give a sharp transition to a vote. The outcome is "inconclusive."</li>
-  <li><span class="yr">1941</span>Kramers and Wannier use the transfer-matrix method and duality to find \(T_c\) of the \(d=2\) Ising model, assuming a single transition in the thermodynamic limit.</li>
-  <li><span class="yr">1944</span>Lars Onsager solves the \(d=2\) Ising model exactly. This settles the relevance of the thermodynamic limit, and shows that critical behavior can disagree with mean-field theory: the exponents need not be those of the Weiss ferromagnet or the van der Waals gas.</li>
+  <li data-k="k138"><span class="yr">1936</span>Hendrik Kramers realizes that the limit \(\lim_{N\to\infty}N^{-1}\log Z\) can give distinct functions not analytically joined: phase transitions require the thermodynamic limit.</li>
+  <li data-k="k139"><span class="yr">1937</span>Most physicists are unaware of this; even Sommerfeld believes a partition function describes only one phase. At a congress in Amsterdam for the centenary of van der Waals's birth, Kramers, as chairman, puts the question of whether a partition function can give a sharp transition to a vote. The outcome is "inconclusive."</li>
+  <li data-k="k140"><span class="yr">1941</span>Kramers and Wannier use the transfer-matrix method and duality to find \(T_c\) of the \(d=2\) Ising model, assuming a single transition in the thermodynamic limit.</li>
+  <li data-k="k141"><span class="yr">1944</span>Lars Onsager solves the \(d=2\) Ising model exactly. This settles the relevance of the thermodynamic limit, and shows that critical behavior can disagree with mean-field theory: the exponents need not be those of the Weiss ferromagnet or the van der Waals gas.</li>
 </ol>
-<h3>Do quantum effects matter?</h3>
-<p>Condensed matter is held together by quantum mechanics, but its gross characteristics need not be determined by quantum considerations. The self-avoiding walk of Chapter 1 is an example: quantum mechanics explains the polymer's existence and bond energies, but its long-scale statistics are independent of microscopic details. For continuous transitions at \(T>0\) the answer is no: as \(\xi\to\infty\), thermodynamic behavior is determined by regions much larger than the length scales at which quantum effects matter. Intrinsically quantum systems such as ferromagnets and superconductors can therefore be modeled by classical ones such as the Ising model. (For first-order transitions a quantum effect is not ruled out, though Goldenfeld knew of no example.) At \(T=0\) quantum effects <i>are</i> important, but a quantum system at \(T=0\) in \(d\) dimensions is related to a classical system in \(d+1\) dimensions, most cleanly seen with path integrals, so classical statistical mechanics can still be used.</p>
-<p class="aside">This completes Chapter 2. <a href="ch03-phase-transitions-in-practice.html">Chapter 3</a> puts these ideas to work with exact and approximate calculations.</p>
+<h3 data-k="k142">Do quantum effects matter?</h3>
+<p data-k="k143">Condensed matter is held together by quantum mechanics, but its gross characteristics need not be determined by quantum considerations. The self-avoiding walk of Chapter 1 is an example: quantum mechanics explains the polymer's existence and bond energies, but its long-scale statistics are independent of microscopic details. For continuous transitions at \(T>0\) the answer is no: as \(\xi\to\infty\), thermodynamic behavior is determined by regions much larger than the length scales at which quantum effects matter. Intrinsically quantum systems such as ferromagnets and superconductors can therefore be modeled by classical ones such as the Ising model. (For first-order transitions a quantum effect is not ruled out, though Goldenfeld knew of no example.) At \(T=0\) quantum effects <i>are</i> important, but a quantum system at \(T=0\) in \(d\) dimensions is related to a classical system in \(d+1\) dimensions, most cleanly seen with path integrals, so classical statistical mechanics can still be used.</p>
+<p class="aside" data-k="k144">This completes Chapter 2. <a href="ch03-phase-transitions-in-practice.html">Chapter 3</a> puts these ideas to work with exact and approximate calculations.</p>
 </section>
 
 <section id="reading">
-<h2>Further reading</h2>
+<h2 data-k="k145">Further reading</h2>
 <ul>
-  <li>N. Goldenfeld, <i>Lectures on Phase Transitions and the Renormalization Group</i> (Addison-Wesley, 1992), Chapter 2.</li>
-  <li>R. Peierls, "On Ising's model of ferromagnetism," <i>Proc. Cambridge Philos. Soc.</i> <b>32</b>, 477 (1936).</li>
-  <li>H. A. Kramers and G. H. Wannier, "Statistics of the two-dimensional ferromagnet," <i>Phys. Rev.</i> <b>60</b>, 252 and 263 (1941).</li>
-  <li>L. Onsager, "Crystal statistics. I," <i>Phys. Rev.</i> <b>65</b>, 117 (1944).</li>
-  <li>T. D. Lee and C. N. Yang, "Statistical theory of equations of state and phase transitions. II. Lattice gas and Ising model," <i>Phys. Rev.</i> <b>87</b>, 410 (1952).</li>
-  <li>D. Sherrington and S. Kirkpatrick, "Solvable model of a spin-glass," <i>Phys. Rev. Lett.</i> <b>35</b>, 1792 (1975).</li>
-  <li>M. Mézard, G. Parisi, and M. A. Virasoro, <i>Spin Glass Theory and Beyond</i> (World Scientific, 1987).</li>
-  <li>M. Dresden, "Kramers's contributions to statistical mechanics," <i>Physics Today</i> <b>41</b>(9), 26 (1988).</li>
+  <li data-k="k146">N. Goldenfeld, <i>Lectures on Phase Transitions and the Renormalization Group</i> (Addison-Wesley, 1992), Chapter 2.</li>
+  <li data-k="k147">R. Peierls, "On Ising's model of ferromagnetism," <i>Proc. Cambridge Philos. Soc.</i> <b>32</b>, 477 (1936).</li>
+  <li data-k="k148">H. A. Kramers and G. H. Wannier, "Statistics of the two-dimensional ferromagnet," <i>Phys. Rev.</i> <b>60</b>, 252 and 263 (1941).</li>
+  <li data-k="k149">L. Onsager, "Crystal statistics. I," <i>Phys. Rev.</i> <b>65</b>, 117 (1944).</li>
+  <li data-k="k150">T. D. Lee and C. N. Yang, "Statistical theory of equations of state and phase transitions. II. Lattice gas and Ising model," <i>Phys. Rev.</i> <b>87</b>, 410 (1952).</li>
+  <li data-k="k151">D. Sherrington and S. Kirkpatrick, "Solvable model of a spin-glass," <i>Phys. Rev. Lett.</i> <b>35</b>, 1792 (1975).</li>
+  <li data-k="k152">M. Mézard, G. Parisi, and M. A. Virasoro, <i>Spin Glass Theory and Beyond</i> (World Scientific, 1987).</li>
+  <li data-k="k153">M. Dresden, "Kramers's contributions to statistical mechanics," <i>Physics Today</i> <b>41</b>(9), 26 (1988).</li>
 </ul>
 </section>
 </main>
@@ -491,11 +509,11 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 
 <footer>
   <nav class="chapnav" aria-label="Chapters">
-    <a href="index.html">All chapters</a>
+    <span data-k="k154"><a href="index.html">All chapters</a>
     <a href="ch02a-phase-transitions-in-principle.html">Previous: Chapter 2, Part 1</a>
-    <a href="ch03-phase-transitions-in-practice.html">Next: Chapter 3, How phase transitions occur in practice</a>
+    <a href="ch03-phase-transitions-in-practice.html">Next: Chapter 3, How phase transitions occur in practice</a></span>
   </nav>
-  <p>Interactive companion to Sang Hoon Lee's lecture notes on Chapter 2 of N. Goldenfeld, <i>Lectures on Phase Transitions and the Renormalization Group</i>. The text paraphrases the notes. All calculations run client side with no data collection. Created by Claude Opus 5.5 (Anthropic) based on Sang Hoon Lee's lecture notes, for the graduate course of the Department of Physics, Gyeongsang National University.</p>
+  <p data-k="k155">Interactive companion to Sang Hoon Lee's lecture notes on Chapter 2 of N. Goldenfeld, <i>Lectures on Phase Transitions and the Renormalization Group</i>. The text paraphrases the notes. All calculations run client side with no data collection. Created by Claude Opus 5.5 (Anthropic) based on Sang Hoon Lee's lecture notes, for the graduate course of the Department of Physics, Gyeongsang National University.</p>
 </footer>
 
 <script>
@@ -510,9 +528,10 @@ let reduceMotion = motionMQ.matches;
 const motionHooks = [];
 motionMQ.addEventListener('change', e => { reduceMotion = e.matches; motionHooks.forEach(f => f()); });
 function playButton(btn, st, on, labels){ // st.run is the panel's running flag; on() runs after every change
-  const [pl, rl] = labels || ['Pause', 'Play']; let chosen = false;
+  const [pl, rl] = labels || ['Pause', 'Play']; let chosen = false; const KO_BTN = {Pause:'일시 정지', Play:'재생', Resume:'계속'};
   st.run = !reduceMotion;
-  const sync = () => { btn.textContent = st.run ? pl : rl; btn.setAttribute('aria-pressed', String(!st.run)); };
+  const sync = () => { const w = st.run ? pl : rl; btn.textContent = tr(w, KO_BTN[w]); btn.setAttribute('aria-pressed', String(!st.run)); };
+  window.addEventListener('langchange', sync);
   btn.addEventListener('click', () => { st.run = !st.run; chosen = true; sync(); if(on) on(); });
   motionHooks.push(() => { if(chosen) return; st.run = !reduceMotion; sync(); if(on) on(); });
   sync(); return sync;
@@ -621,6 +640,7 @@ function reg(f){ redraws.push(f); f(); }
 let rzT; window.addEventListener('resize',()=>{ clearTimeout(rzT); rzT=setTimeout(()=>redraws.forEach(f=>f()),120); });
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{ refreshSpinColors(); redraws.forEach(f=>f()); });
 new MutationObserver(()=>{ refreshSpinColors(); redraws.forEach(f=>f()); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+window.addEventListener('langchange',()=>redraws.forEach(f=>f()));
 
 /* visibility flags so off-screen simulations sleep */
 const visible=new Map();
@@ -649,7 +669,7 @@ function markScrollers(){
   document.querySelectorAll('.result, .math-scroll, .table-scroll, .katex-display').forEach(el=>{
     const ours=el.dataset.scrollFocus==='1', over=el.scrollWidth>el.clientWidth+1;
     const inside=el.parentElement&&el.parentElement.closest('[data-scroll-focus="1"]');
-    if(over&&!inside&&!ours){ el.tabIndex=0; el.setAttribute('role','region'); el.setAttribute('aria-label',el.querySelector('table')?'Scrollable table':'Scrollable equation'); el.dataset.scrollFocus='1'; }
+    if(over&&!inside&&!ours){ el.tabIndex=0; el.setAttribute('role','region'); el.setAttribute('aria-label',el.querySelector('table')?tr('Scrollable table','스크롤 가능한 표'):tr('Scrollable equation','스크롤 가능한 수식')); el.dataset.scrollFocus='1'; }
     else if(ours&&(!over||inside)){ el.removeAttribute('tabindex'); el.removeAttribute('role'); el.removeAttribute('aria-label'); delete el.dataset.scrollFocus; }
   });
 }
@@ -662,7 +682,7 @@ window.addEventListener('load',()=>setTimeout(()=>{ if(document.fonts) document.
 let SPIN_UP=[0,0,0], SPIN_DN=[0,0,0];
 function refreshSpinColors(){ SPIN_UP=hexRGB(css('--spin-up')); SPIN_DN=hexRGB(css('--spin-down')); }
 refreshSpinColors();
-function bindSlider(id,fn,fmtf){ const el=$(id), out=$(id+'-out'); const u=()=>{ const v=+el.value; if(out) out.textContent=fmtf?fmtf(v):v; fn(v); }; el.addEventListener('input',u); u(); return el; }
+function bindSlider(id,fn,fmtf){ const el=$(id), out=$(id+'-out'); const u=()=>{ const v=+el.value; if(out) out.textContent=fmtf?fmtf(v):v; fn(v); }; el.addEventListener('input',u); if(fmtf) window.addEventListener('langchange',()=>{ if(out) out.textContent=fmtf(+el.value); }); u(); return el; }
 const lncosh2 = x => { const a=Math.abs(x); return a+Math.log1p(Math.exp(-2*a)); }; // ln(2 cosh x)
 
 
@@ -720,22 +740,23 @@ function heroTick(now){
 
 /* ---------- 2.8 Peierls ---------- */
 (function(){
+  const LATKO={square:'정사각',triangular:'삼각',honeycomb:'벌집'};
   const LAT={sq:{name:'square',z:4,zd:4,tc:2/Math.log(1+Math.SQRT2)},tri:{name:'triangular',z:6,zd:3,tc:4/Math.log(3)},hc:{name:'honeycomb',z:3,zd:6,tc:2/Math.log(2+Math.sqrt(3))}};
   let T=1.5, lat='sq';
   function draw(){
     const L=LAT[lat], est=2/Math.log(L.zd-1), slope=2-T*Math.log(L.zd-1), ns=range(0,60,61);
     const lo=Math.min(-10,slope*60*1.1), hi=Math.max(10,slope*60*1.1);
-    plot($('#pe-dF'),{xlim:[0,60],ylim:[lo,hi],xlabel:'wall length n (bonds)',ylabel:'ΔF_n / J',hlines:[{y:0}],
+    plot($('#pe-dF'),{xlim:[0,60],ylim:[lo,hi],xlabel:tr('wall length n (bonds)','벽 길이 n (결합 수)'),ylabel:'ΔF_n / J',hlines:[{y:0}],
       series:[{data:ns.map(n=>[n,slope*n]),color:slope>0?css('--up'):css('--crit'),width:2.6}]});
     const keys=['sq','tri','hc'];
     plot($('#pe-tc'),{xlim:[0,4.5],ylim:[0.4,3.6],yticks:3,noYLabels:true,xlabel:'k_B T / J',legend:'br',
       vlines:[{x:T,color:css('--muted')}],
-      series:[{data:keys.map((k,i)=>[2/Math.log(LAT[k].zd-1),3-i]),points:true,color:css('--down'),r:6,name:'Peierls estimate'},
-        {data:keys.map((k,i)=>[LAT[k].tc,3-i]),points:true,color:css('--up'),r:6,name:'exact'}],
+      series:[{data:keys.map((k,i)=>[2/Math.log(LAT[k].zd-1),3-i]),points:true,color:css('--down'),r:6,name:tr('Peierls estimate','파이얼스 어림')},
+        {data:keys.map((k,i)=>[LAT[k].tc,3-i]),points:true,color:css('--up'),r:6,name:tr('exact','정확한 값')}],
       after:(ctx,X,Y)=>{ ctx.font=`12px ${css('--ui-font')}`; ctx.fillStyle=css('--ink'); ctx.textAlign='left';
         keys.forEach((k,i)=>{ ctx.fillText(LAT[k].name+(k===lat?' ◂':''),X(0.1),Y(3-i)-10); });
         ctx.fillStyle=css('--surface'); keys.forEach((k,i)=>{ ctx.beginPath(); ctx.arc(X(2/Math.log(LAT[k].zd-1)),Y(3-i),3,0,2*Math.PI); ctx.fill(); }); }});
-    $('#pe-read').innerHTML=`${L.name} lattice: dual coordination z* = ${L.zd}, estimate k<sub>B</sub>T<sub>c</sub> ≈ 2J/ln(z*−1) = <b>${est.toFixed(3)} J</b>; exact <b>${L.tc.toFixed(3)} J</b>. At T = ${T.toFixed(2)}, ΔF<sub>n</sub> = ${slope.toFixed(3)} n J: ${slope>0?'long walls are suppressed, <b>order survives</b>.':'long walls lower F, <b>order is destroyed</b> (in this estimate).'}`;
+    $('#pe-read').innerHTML=tr(`${L.name} lattice: dual coordination z* = ${L.zd}, estimate k<sub>B</sub>T<sub>c</sub> ≈ 2J/ln(z*−1) = <b>${est.toFixed(3)} J</b>; exact <b>${L.tc.toFixed(3)} J</b>. At T = ${T.toFixed(2)}, ΔF<sub>n</sub> = ${slope.toFixed(3)} n J: ${slope>0?'long walls are suppressed, <b>order survives</b>.':'long walls lower F, <b>order is destroyed</b> (in this estimate).'}`,`${LATKO[L.name]} 격자: 쌍대 배위수 z* = ${L.zd}, 어림 k<sub>B</sub>T<sub>c</sub> ≈ 2J/ln(z*−1) = <b>${est.toFixed(3)} J</b>, 정확한 값 <b>${L.tc.toFixed(3)} J</b>. T = ${T.toFixed(2)}에서 ΔF<sub>n</sub> = ${slope.toFixed(3)} n J: ${slope>0?'긴 벽이 억제되어 <b>질서가 살아남습니다</b>.':'긴 벽이 F를 낮추어 <b>질서가 무너집니다</b> (이 어림에서).'}`);
   }
   bindSlider('#pe-T',v=>{T=v;draw();},v=>v.toFixed(2));
   $('#pe-lat').addEventListener('change',e=>{ lat=e.target.value; draw(); });
@@ -766,8 +787,8 @@ function heroTick(now){
       hlines:ms>0?[{y:ms,color:css('--crit')}]:[],
       series:Hf.map((h,i)=>({data:Ng.map(N=>[N,MN(N,h,T)]),color:css('--up'),width:2,alpha:1-0.2*i,dash:i%2?[5,3]:[],name:'H = '+fmt(h)}))});
     $('#ss-read').innerHTML = ms>0
-      ? `M<sub>s</sub>(T) = <b>${ms.toFixed(4)}</b>. For every finite N, M<sub>N</sub>(0) = 0 exactly. Crossover sizes N ≈ k<sub>B</sub>T/(2HM<sub>s</sub>): ${Hf.map(h=>fmt(+(T/(2*h*ms)).toPrecision(2))).join(', ')} for H = ${Hf.map(fmt).join(', ')}.`
-      : `T ≥ T<sub>c</sub>: M<sub>s</sub> = 0, so both orders of limits give zero; there is no symmetry breaking to see.`;
+      ? tr(`M<sub>s</sub>(T) = <b>${ms.toFixed(4)}</b>. For every finite N, M<sub>N</sub>(0) = 0 exactly. Crossover sizes N ≈ k<sub>B</sub>T/(2HM<sub>s</sub>): ${Hf.map(h=>fmt(+(T/(2*h*ms)).toPrecision(2))).join(', ')} for H = ${Hf.map(fmt).join(', ')}.`,`M<sub>s</sub>(T) = <b>${ms.toFixed(4)}</b>. 모든 유한한 N에서 정확히 M<sub>N</sub>(0) = 0입니다. 넘어가는 크기 N ≈ k<sub>B</sub>T/(2HM<sub>s</sub>): H = ${Hf.map(fmt).join(', ')}에 대해 ${Hf.map(h=>fmt(+(T/(2*h*ms)).toPrecision(2))).join(', ')}.`)
+      : tr(`T ≥ T<sub>c</sub>: M<sub>s</sub> = 0, so both orders of limits give zero; there is no symmetry breaking to see.`,`T ≥ T<sub>c</sub>: M<sub>s</sub> = 0이므로 극한의 순서와 상관없이 0입니다. 볼 수 있는 대칭 깨짐이 없습니다.`);
   }
   bindSlider('#ss-T',v=>{ T=v; clearTimeout(timer); timer=setTimeout(draw,60); },v=>v.toFixed(2));
   reg(draw);
@@ -793,21 +814,21 @@ function heroTick(now){
   function draw(){
     drawArrows();
     const ws=range(1,24,24);
-    plot($('#wl-e'),{xlim:[1,24],ylim:[0,2.2],xlabel:'wall width w',ylabel:'E_row / J',legend:'tr',
+    plot($('#wl-e'),{xlim:[1,24],ylim:[0,2.2],xlabel:tr('wall width w','벽 폭 w'),ylabel:'E_row / J',legend:'tr',
       hlines:[{y:2,color:css('--down')}],
       series:[{data:range(1,24,200).map(x=>[x,Math.PI*Math.PI/(2*x)]),color:css('--muted'),dash:[5,4],width:1.4,name:'π²J / 2w'},
-        {data:ws.map(x=>[x,Erow(x)]),color:css('--up'),width:2.4,name:'continuous spins'},
-        {data:[[1,2],[24,2]],color:css('--down'),width:2,name:'Ising wall, 2J'},
+        {data:ws.map(x=>[x,Erow(x)]),color:css('--up'),width:2.4,name:tr('continuous spins','연속 스핀')},
+        {data:[[1,2],[24,2]],color:css('--down'),width:2,name:tr('Ising wall, 2J','이징 벽, 2J')},
         {data:[[w,Erow(w)]],points:true,color:css('--crit'),r:6}]});
     const Ls=logRange(2,1000,50);
-    plot($('#wl-L'),{xlog:true,ylog:true,xlim:[2,1000],ylim:[1e-3,1e7],xlabel:'system size L',ylabel:'wall energy / J',
+    plot($('#wl-L'),{xlog:true,ylog:true,xlim:[2,1000],ylim:[1e-3,1e7],xlabel:tr('system size L','계의 크기 L'),ylabel:tr('wall energy / J','벽 에너지 / J'),
       series:[1,2,3].flatMap(d=>[
         {data:Ls.map(L=>[L,2*Math.pow(L,d-1)]),color:css('--down'),width:2.2},
         {data:Ls.map(L=>[L,Math.PI*Math.PI/2*Math.pow(L,d-2)]),color:css('--up'),width:2.2,dash:[6,4]}]),
       after:(ctx,X,Y)=>{ ctx.font=`12px ${css('--ui-font')}`; ctx.textAlign='right'; ctx.textBaseline='bottom';
-        [1,2,3].forEach(d=>{ ctx.textBaseline='top'; ctx.fillStyle=css('--down'); ctx.fillText('discrete, d='+d,X(900),Y(2*Math.pow(900,d-1))+3);
-          ctx.textAlign='left'; ctx.textBaseline='bottom'; ctx.fillStyle=css('--up'); ctx.fillText('continuous, d='+d,X(40),Y(Math.PI*Math.PI/2*Math.pow(40,d-2))-4); ctx.textAlign='right'; }); }});
-    $('#wl-read').innerHTML=`w = ${w}: E<sub>row</sub> = <b>${Erow(w).toFixed(3)} J</b> ${w===1?'(the abrupt Ising-like flip, 2J)':`vs 2J for an abrupt flip, ${(2/Erow(w)).toFixed(1)}× cheaper`}.`;
+        [1,2,3].forEach(d=>{ ctx.textBaseline='top'; ctx.fillStyle=css('--down'); ctx.fillText(tr('discrete, d=','이산, d=')+d,X(900),Y(2*Math.pow(900,d-1))+3);
+          ctx.textAlign='left'; ctx.textBaseline='bottom'; ctx.fillStyle=css('--up'); ctx.fillText(tr('continuous, d=','연속, d=')+d,X(40),Y(Math.PI*Math.PI/2*Math.pow(40,d-2))-4); ctx.textAlign='right'; }); }});
+    $('#wl-read').innerHTML=`w = ${w}: E<sub>row</sub> = <b>${Erow(w).toFixed(3)} J</b> ${w===1?tr('(the abrupt Ising-like flip, 2J)','(이징처럼 갑작스러운 뒤집기, 2J)'):tr(`vs 2J for an abrupt flip, ${(2/Erow(w)).toFixed(1)}× cheaper`,`갑작스러운 뒤집기의 2J보다 ${(2/Erow(w)).toFixed(1)}배 저렴`)}.`;
   }
   bindSlider('#wl-w',v=>{w=v;draw();},v=>v);
   reg(draw);
@@ -831,23 +852,23 @@ function ergInit(){
 watch('demo-erg');
 function sigmaOnsager(TJ){ return 2+TJ*Math.log(Math.tanh(1/TJ)); }
 function drawErg(){
-  const ch=erg.chains.find(c=>c.L===erg.show), tr=[];
-  for(let k=0;k<ch.count;k++) tr.push([k,ch.buf[(ch.head-1-k+ERG_TRACE)%ERG_TRACE]]); // k sweeps ago
-  plot($('#er-trace'),{xlim:[0,ERG_TRACE],ylim:[-1.05,1.05],xlabel:'sweeps ago',ylabel:'m',xticks:4,
+  const ch=erg.chains.find(c=>c.L===erg.show), trc=[];
+  for(let k=0;k<ch.count;k++) trc.push([k,ch.buf[(ch.head-1-k+ERG_TRACE)%ERG_TRACE]]); // k sweeps ago
+  plot($('#er-trace'),{xlim:[0,ERG_TRACE],ylim:[-1.05,1.05],xlabel:tr('sweeps ago','몇 스윕 전'),ylabel:'m',xticks:4,
     hlines:[{y:erg.thr,color:css('--muted')},{y:-erg.thr,color:css('--muted')}],
-    series:[{data:tr,color:css('--up'),width:1.2}]});
+    series:[{data:trc,color:css('--up'),width:1.2}]});
   const done=erg.chains.filter(c=>c.flips>=3).map(c=>[c.L,c.sweeps/c.flips]);
   const lower=erg.chains.filter(c=>c.flips<3&&c.sweeps>0).map(c=>[c.L,Math.max(1,c.sweeps/Math.max(1,c.flips))]);
   const slope=2*sigmaOnsager(erg.T)/erg.T, big=done.filter(p=>p[0]>=8);
   const ref=big.length?[big.reduce((a,p)=>a+p[0],0)/big.length, Math.exp(big.reduce((a,p)=>a+Math.log(p[1]),0)/big.length)]:null;
-  plot($('#er-tau'),{ylog:true,xlim:[3,17],ylim:[1,1e7],xlabel:'L',ylabel:'τ (sweeps)',legend:'tl',
-    series:[...(ref?[{data:[[3,ref[1]*Math.exp(slope*(3-ref[0]))],[17,ref[1]*Math.exp(slope*(17-ref[0]))]],color:css('--crit'),dash:[6,4],width:1.6,name:'slope 2σ/k_BT'}]:[]),
-      {data:done,points:true,color:css('--up'),r:5,name:'measured (≥ 3 reversals)'},
-      {data:lower,points:true,color:css('--muted'),r:4,name:'lower bound so far'}],
+  plot($('#er-tau'),{ylog:true,xlim:[3,17],ylim:[1,1e7],xlabel:'L',ylabel:tr('τ (sweeps)','τ (스윕)'),legend:'tl',
+    series:[...(ref?[{data:[[3,ref[1]*Math.exp(slope*(3-ref[0]))],[17,ref[1]*Math.exp(slope*(17-ref[0]))]],color:css('--crit'),dash:[6,4],width:1.6,name:tr('slope 2σ/k_BT','기울기 2σ/k_BT')}]:[]),
+      {data:done,points:true,color:css('--up'),r:5,name:tr('measured (≥ 3 reversals)','측정값 (뒤집힘 ≥ 3회)')},
+      {data:lower,points:true,color:css('--muted'),r:4,name:tr('lower bound so far','현재까지의 하한')}],
     after:(ctx,X,Y)=>{ ctx.fillStyle=css('--surface'); lower.forEach(([x,y])=>{ ctx.beginPath(); ctx.arc(X(x),Y(y),2,0,2*Math.PI); ctx.fill(); }); }});
   let fitTxt='';
-  if(big.length>=3){ const n=big.length; let sx=0,sy=0,sxx=0,sxy=0; for(const [x,y] of big){ const ly=Math.log(y); sx+=x; sy+=ly; sxx+=x*x; sxy+=x*ly; } const b=(n*sxy-sx*sy)/(n*sxx-sx*sx); fitTxt=` Fitted slope for L ≥ 8, d ln τ/dL = <b>${b.toFixed(2)}</b> vs two-wall prediction 2σ/k<sub>B</sub>T = <b>${slope.toFixed(2)}</b>.`; }
-  $('#er-read').innerHTML=`L = ${ch.L}: ${ch.sweeps.toLocaleString('en-US')} sweeps, ${ch.flips} reversals.${fitTxt}`;
+  if(big.length>=3){ const n=big.length; let sx=0,sy=0,sxx=0,sxy=0; for(const [x,y] of big){ const ly=Math.log(y); sx+=x; sy+=ly; sxx+=x*x; sxy+=x*ly; } const b=(n*sxy-sx*sy)/(n*sxx-sx*sx); fitTxt=tr(` Fitted slope for L ≥ 8, d ln τ/dL = <b>${b.toFixed(2)}</b> vs two-wall prediction 2σ/k<sub>B</sub>T = <b>${slope.toFixed(2)}</b>.`,` L ≥ 8에 맞춘 기울기 d ln τ/dL = <b>${b.toFixed(2)}</b>, 두 벽 예측 2σ/k<sub>B</sub>T = <b>${slope.toFixed(2)}</b>.`); }
+  $('#er-read').innerHTML=tr(`L = ${ch.L}: ${ch.sweeps.toLocaleString('en-US')} sweeps, ${ch.flips} reversals.`,`L = ${ch.L}: ${ch.sweeps.toLocaleString('en-US')} 스윕, 뒤집힘 ${ch.flips}회.`)+fitTxt;
 }
 ergInit(); reg(drawErg);
 function ergTick(now){
@@ -912,9 +933,9 @@ function lnZof(sample,T){ const b=1/T; let Z=0; for(let i=0;i<NST;i++) Z+=Math.e
       series:[{data:[[0,1],[1,1],[2.5,2.5]],color:css('--ink'),width:1.6},{data:[[1,1],[1,0]],color:css('--ink'),width:1.6,dash:[4,4]},
         {data:[[J0,T]],points:true,color:css('--crit'),r:6}],
       after:(ctx,X,Y)=>{ ctx.font=`13px ${css('--ui-font')}`; ctx.fillStyle=css('--muted'); ctx.textAlign='center';
-        ctx.fillText('paramagnet',X(0.8),Y(1.6)); ctx.fillText('spin glass',X(0.5),Y(0.45)); ctx.fillText('ferromagnet',X(1.8),Y(0.6)); }});
+        ctx.fillText(tr('paramagnet','상자성체'),X(0.8),Y(1.6)); ctx.fillText(tr('spin glass','스핀 유리'),X(0.5),Y(0.45)); ctx.fillText(tr('ferromagnet','강자성체'),X(1.8),Y(0.6)); }});
     let q2=0; for(let d=0;d<=NS;d++){ const q=1-2*d/NS; q2+=q*q*hist[d]; }
-    $('#pq-read').innerHTML=`${avg?'Disorder-averaged':'Single-sample'} ⟨q²⟩ = <b>${q2.toFixed(3)}</b> (a 16-spin paramagnet would give 1/N ≈ 0.063).`;
+    $('#pq-read').innerHTML=tr(`${avg?'Disorder-averaged':'Single-sample'} ⟨q²⟩ = <b>${q2.toFixed(3)}</b> (a 16-spin paramagnet would give 1/N ≈ 0.063).`,`${avg?'무질서 평균한':'시료 하나의'} ⟨q²⟩ = <b>${q2.toFixed(3)}</b> (스핀 16개 상자성체라면 1/N ≈ 0.063).`);
     $('#pq-one').setAttribute('aria-pressed',String(!avg)); $('#pq-avg').setAttribute('aria-pressed',String(avg));
   }
   const schedule=(re)=>{ if(pending) cancelAnimationFrame(pending); pending=requestAnimationFrame(()=>{ pending=null; if(re) rebuild(); draw(); }); };
@@ -942,16 +963,16 @@ function lnZof(sample,T){ const b=1/T; let Z=0; for(let i=0;i<NST;i++) Z+=Math.e
   }
   function draw(){
     plot($('#rp-f'),{xlim:[0.2,2],ylim:[-1.9,-0.4],xlabel:'k_B T / J',ylabel:'f / J',legend:'br',vlines:[{x:T,color:css('--muted')}],
-      series:[{data:curves.map(c=>[c.t,c.fx]),color:css('--muted'),dash:[5,4],width:1.6,name:'annealed, exact'},
-        {data:curves.map(c=>[c.t,c.fa]),color:css('--down'),width:2.2,name:'annealed, ln[Z]'},
-        {data:curves.map(c=>[c.t,c.fq]),color:css('--up'),width:2.6,name:'quenched, [ln Z]'}]});
+      series:[{data:curves.map(c=>[c.t,c.fx]),color:css('--muted'),dash:[5,4],width:1.6,name:tr('annealed, exact','풀린, 정확한 값')},
+        {data:curves.map(c=>[c.t,c.fa]),color:css('--down'),width:2.2,name:tr('annealed, ln[Z]','풀린, ln[Z]')},
+        {data:curves.map(c=>[c.t,c.fq]),color:css('--up'),width:2.6,name:tr('quenched, [ln Z]','고정, [ln Z]')}]});
     const l=samples.map(s=>lnZof(s,T)), mx=Math.max(...l), mean=l.reduce((a,b)=>a+b,0)/l.length;
     const fn=n=>{ const lm=n*mx+Math.log(l.reduce((a,b)=>a+Math.exp(n*(b-mx)),0)/l.length); return -T*lm/(n*N); };
     const ns=range(0.01,2,120), fq=-T*mean/N, fa=fn(1), vals=ns.map(fn);
     const lo=Math.min(...vals,fq), hi=Math.max(...vals,fq), pad=(hi-lo)*0.15+1e-3;
     plot($('#rp-n'),{xlim:[0,2],ylim:[lo-pad,hi+pad],xlabel:'n',ylabel:'f_n / J',legend:'tr',
       hlines:[{y:fq,color:css('--up')}],vlines:[{x:1,color:css('--muted')}],
-      series:[{data:ns.map((n,i)=>[n,vals[i]]),color:css('--ink'),width:2.4,name:'f_n'},{data:[[0,fq]],points:true,color:css('--up'),r:6,name:'quenched (n → 0)'},{data:[[1,fa]],points:true,color:css('--down'),r:6,name:'annealed (n = 1)'}]});
+      series:[{data:ns.map((n,i)=>[n,vals[i]]),color:css('--ink'),width:2.4,name:'f_n'},{data:[[0,fq]],points:true,color:css('--up'),r:6,name:tr('quenched (n → 0)','고정 (n → 0)')},{data:[[1,fa]],points:true,color:css('--down'),r:6,name:tr('annealed (n = 1)','풀린 (n = 1)')}]});
     $('#rp-read').innerHTML=`At k<sub>B</sub>T = ${T.toFixed(2)} J: quenched f = <b>${fq.toFixed(4)} J</b>, annealed f = <b>${fa.toFixed(4)} J</b>, f<sub>n</sub> at n = 0.01: ${fn(0.01).toFixed(4)} J.`;
   }
   bindSlider('#rp-T',v=>{ T=v; if(curves){ clearTimeout(timer); timer=setTimeout(draw,30); } },v=>v.toFixed(2));
@@ -965,22 +986,23 @@ const lg={sys:lattice(64),T:0.45,mu:-2,speed:6,acc:0,last:0,trace:[],run:true};
   const {s}=lg.sys; for(let i=0;i<s.length;i++) s[i]=Math.random()<0.5?1:-1;
   bindSlider('#lg-T',v=>{ lg.T=v; mapRead(); },v=>v.toFixed(3));
   bindSlider('#lg-mu',v=>{ lg.mu=v; mapRead(); },v=>v.toFixed(2));
-  bindSlider('#lg-speed',v=>lg.speed=v,v=>v+' sweeps/s');
+  bindSlider('#lg-speed',v=>lg.speed=v,v=>v+tr(' sweeps/s',' 스윕/초'));
   playButton($('#lg-play'),lg,()=>{ lg.last=0; lg.acc=0; });
 })();
 // energies in units of |U2| (U2 = -1): J = 1/4, H = mu/2 + z/4 with z = 4
 function lgJH(){ return {J:0.25,H:lg.mu/2+1}; }
-function mapRead(){ const {J,H}=lgJH(); $('#lg-map').innerHTML=`Mapping: J = −U₂/4 = <b>${J.toFixed(2)}</b>|U₂|, H = μ/2 − zU₂/4 = <b>${H.toFixed(3)}</b>|U₂|${Math.abs(H)<0.005?' (coexistence line)':''}.`; }
+function mapRead(){ const {J,H}=lgJH(); $('#lg-map').innerHTML=tr(`Mapping: J = −U₂/4 = <b>${J.toFixed(2)}</b>|U₂|, H = μ/2 − zU₂/4 = <b>${H.toFixed(3)}</b>|U₂|${Math.abs(H)<0.005?' (coexistence line)':''}.`,`대응: J = −U₂/4 = <b>${J.toFixed(2)}</b>|U₂|, H = μ/2 − zU₂/4 = <b>${H.toFixed(3)}</b>|U₂|${Math.abs(H)<0.005?' (공존선)':''}.`); }
+window.addEventListener('langchange',()=>mapRead());
 watch('demo-lg');
 function drawLG(){
   const TcU=0.25*2/Math.log(1+Math.SQRT2), Tg=range(0.3,TcU,200).concat([TcU]);
   const left=Tg.map(t=>[(1-onsagerM(t/0.25))/2,t]), right=Tg.map(t=>[(1+onsagerM(t/0.25))/2,t]).reverse();
   const rho=(1+mag(lg.sys))/2;
-  plot($('#lg-dome'),{height:250,xlim:[0,1],ylim:[0.3,0.9],xlabel:'density ρ',ylabel:'k_B T / |U₂|',hlines:[{y:TcU,color:css('--muted')}],
+  plot($('#lg-dome'),{height:250,xlim:[0,1],ylim:[0.3,0.9],xlabel:tr('density ρ','밀도 ρ'),ylabel:'k_B T / |U₂|',hlines:[{y:TcU,color:css('--muted')}],
     series:[{data:[...left,...right],color:css('--ink'),width:2},{data:[[rho,lg.T]],points:true,color:css('--crit'),r:6}]});
-  const tr=lg.trace;
-  plot($('#lg-rho'),{height:250,xlim:[0,600],ylim:[0,1],xlabel:'sweeps ago',ylabel:'ρ',xticks:3,
-    series:[{data:tr.map((v,i)=>[tr.length-1-i,v]),color:css('--up'),width:1.6}]});
+  const trc=lg.trace;
+  plot($('#lg-rho'),{height:250,xlim:[0,600],ylim:[0,1],xlabel:tr('sweeps ago','몇 스윕 전'),ylabel:'ρ',xticks:3,
+    series:[{data:trc.map((v,i)=>[trc.length-1-i,v]),color:css('--up'),width:1.6}]});
 }
 mapRead(); reg(drawLG);
 function lgTick(now){
@@ -1003,8 +1025,9 @@ function loop(now){ heroTick(now); ergTick(now); lgTick(now); requestAnimationFr
 requestAnimationFrame(loop);
 
 /* ---------- math typesetting ---------- */
+window.KATEX_OPTS={delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false};
 window.addEventListener('load',()=>{
-  if(window.renderMathInElement) renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});
+  if(window.renderMathInElement) renderMathInElement(document.body,window.KATEX_OPTS);
   redraws.forEach(f=>f());
 });
 </script>
@@ -1015,13 +1038,200 @@ window.addEventListener('load',()=>{
   const SUN = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>';
   const MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>';
   const current = () => root.dataset.theme || (mq.matches ? "dark" : "light");
-  const sync = () => { const dark = current() === "dark", label = dark ? "Switch to light mode" : "Switch to dark mode";
+  const sync = () => { const dark = current() === "dark", label = dark ? tr("Switch to light mode","밝은 화면으로 전환") : tr("Switch to dark mode","어두운 화면으로 전환");
     btn.innerHTML = dark ? SUN : MOON; btn.setAttribute("aria-label", label); btn.title = label; };
   btn.addEventListener("click", () => { const next = current() === "dark" ? "light" : "dark"; root.dataset.theme = next;
     try { localStorage.setItem("netsci-theme", next); } catch (e) {} sync(); });
   mq.addEventListener("change", sync);
+  window.addEventListener("langchange", sync);
   sync();
 })();
 </script>
+<!-- lang-toggle:body -->
+<script>
+window.I18N_KO={
+"__title": "2장: 원리적으로 상전이는 어떻게 일어나는가 (2부)",
+"k1": "상전이와 임계 현상, 대학원 과목, 경상국립대학교 물리학과",
+"k2": "2장: 원리적으로 상전이는 어떻게 일어나는가<span>2부: 대칭 깨짐, 에르고딕성, 격자 기체<\/span>",
+"k3": "대칭적인 해밀토니언이 어떻게 비대칭적인 상태에 이르는지, 왜 계가 거기서 빠져나오지 못하는지, 그리고 왜 유체와 자석이 사실은 같은 문제인지 살펴봅니다. 이 부분은 §2.8(이어서)부터 §2.14까지 다룹니다.",
+"k4": "온도",
+"k6": "밀도를 35%로 고정한 2차원 격자 기체: 차 있는 자리는 남색, 빈 자리는 노란색입니다. 입자는 이웃한 빈 자리로 뛰어 옮기며, 천천히 응축하여 증기와 공존하는 액체 방울이 됩니다. 차 있는 자리를 위 스핀으로 바꿔 부르면 이징 자석이 됩니다(§2.12). 온도의 단위는 인력 \\(|U_2|/k_B\\)이며 \\(T_c \\approx 0.567\\)입니다.",
+"k7": "<a href=\"#s2-8\">2.8 상전이의 존재 (이어서)<\/a>",
+"k8": "<a href=\"#s2-9\">2.9 자발 대칭 깨짐<\/a>",
+"k9": "<a href=\"#s2-10\">2.10 에르고딕성 깨짐<\/a>",
+"k10": "<a href=\"#s2-11\">2.11 유체<\/a>",
+"k11": "<a href=\"#s2-12\">2.12 격자 기체<\/a>",
+"k12": "<a href=\"#s2-13\">2.13 동등성<\/a>",
+"k13": "<a href=\"#s2-14\">2.14 그 밖의 이야기<\/a>",
+"k14": "<a href=\"#reading\">더 읽을거리<\/a>",
+"k15": "<a href=\"ch02a-phase-transitions-in-principle.html\">2장 1부<\/a>",
+"k16": "<a href=\"ch01-introduction.html\">1장: 서론<\/a>",
+"k17": "<a href=\"ch03-phase-transitions-in-practice.html\">3장<\/a>",
+"k18": "<a href=\"index.html\">전체 장<\/a>",
+"k19": "<span class=\"sec\">2.8<\/span>상전이의 존재, 이어서",
+"k20": "1부는 1차원 논증으로 끝났습니다: 자구벽 하나는 일정한 에너지 \\(2J\\)가 들지만 엔트로피 \\(k_B\\log N\\)을 얻으므로, 어떤 \\(T>0\\)에서든 장거리 질서가 무너집니다. 2차원에서는 무엇이 달라질까요?",
+"k21": "\\(d = 2\\)의 파이얼스 논증",
+"k22": "\\(d=2\\)에서 뒤집힌 스핀의 자구는 벽으로 둘러싸입니다. 벽이 뒤집힌 스핀과 뒤집히지 않은 스핀 사이의 결합 \\(n\\)개를 가로지르면, 질서 상태에 대한 에너지 비용은 \\(\\Delta E \\approx 2Jn\\)입니다: 이제 벽의 길이에 따라 커집니다. 엔트로피는 어떨까요? 경계 위의 한 점에서 시작해 벽이 이어질 수 있는 방법을 셉니다. 배위수 \\(z\\)(네트워크 과학 용어로는 “연결선 수”)일 때, 길이 \\(n\\)인 벽 배치 수의 상한은 \\(z^n\\)입니다.",
+"k23": "이는 부풀린 값입니다. 벽은 되돌아갈 수 없으므로 매 걸음 \\(z-1\\)개 방향으로만 갈 수 있고, 자기 자신과 교차할 수도 없으므로 실제 허용되는 배치 수는 더 작습니다. \\(d=1\\)에서처럼 \\((z-1)^n\\)을 쓰면",
+"k24": "열역학적 극한 \\(n\\to\\infty\\)에서:",
+"k25": "\\(T > T_c \\equiv 2J/k_B\\log(z-1)\\)이면 \\(\\Delta F_n \\to -\\infty\\)입니다. 벽이 퍼져 나가 \\(M=0\\)인 무질서한 상자성 상이 됩니다. (\\(\\Delta S\\)를 부풀려 잡았으므로 실제 \\(\\Delta F_n\\)은 이보다 덜 음수입니다.)",
+"k26": "\\(0\\lt T\\lt T_c\\)이면 \\(\\Delta F_n\\)은 \\(n\\to0\\)에서 최소입니다. <mark>장거리 질서<\/mark>를 가진 상태가 안정합니다: 자기장을 걸지 않아도 0이 아닌 알짜 자발 자화 \\(M\\ne0\\)이 있습니다.",
+"k27": "따라서 온도 \\(T_c>0\\)에서 상전이가 있고, 이징(Ising) 모형의 하임계 차원은 \\(d=1\\)입니다. \\(T_c\\)는 배위수, 따라서 격자의 종류에 의존한다는 점에 주의하세요: 보편적인 양이 <i>아닙니다<\/i>. 정사각 격자(\\(z=4\\))에서 이 어림은 \\(k_BT_c \\approx 1.82J\\)를 주는 반면, 정확한 결과 \\(k_BT_c = 2J/\\sinh^{-1}(1) \\approx 2.27J\\)는 1941년 크라머르스와 바니에가 모형을 풀지 않고 얻었습니다. 엔트로피를 부풀렸기 때문에 어림값이 너무 낮습니다.",
+"k28": "2차원 자구벽의 에너지 대 엔트로피",
+"k29": "격자",
+"k30": "정사각 (z = 4)",
+"k31": "삼각 (z = 6)",
+"k32": "벌집 (z = 3)",
+"k33": "벽 길이 \\(n\\)에 대한 \\(\\Delta F_n\\)",
+"k34": "파이얼스 어림 대 정확한 \\(T_c\\)",
+"k35": "왼쪽: 고른 온도에서 \\(\\Delta F_n = [2J - k_BT\\ln(z^*-1)]\\,n\\). 기울기가 양수이면 긴 벽이 억제되어 질서가 살아남습니다. 오른쪽: 세 격자에 대한 어림값(빈 원)과 정확한 임계 온도(채운 원). 자구벽은 스핀 사이, 즉 <i>쌍대<\/i> 격자 위를 지나가므로, 벽의 이어짐을 세는 \\(z\\)는 쌍대 격자의 배위수 \\(z^*\\)입니다: 정사각 격자(자기 쌍대)는 4, 삼각 격자(쌍대: 벌집)는 3, 벌집 격자(쌍대: 삼각)는 6입니다. \\(z^*\\)를 쓰면 엔트로피를 부풀린 어림이 그래야 하듯이 어림값이 언제나 정확한 값보다 아래에 있습니다.",
+"k36": "이 결과들에서 \\(d\\)는 정수이므로, 결론이 정수가 아닌 \\(d\\)에서도 성립한다는 것은 안심이 됩니다: \\(d = 1+\\epsilon\\)으로 쓰면 \\(T_c = O(\\epsilon)\\)을 얻습니다. 분석에는 자구벽이 존재한다는 사실만 썼으므로, 결론은 일반적으로 <mark>이산 대칭<\/mark>을 가진 해밀토니언에 적용됩니다.",
+"k37": "맛보기: 상전이의 불가능성",
+"k38": "상전이가 불가능하다는 것을 쉽게 “보일” 수 있습니다. 시간 반전 대칭에서 \\(F_\\Omega(H,J,T) = F_\\Omega(-H,J,T)\\)이고, 자화는 다음을 따릅니다.",
+"k39": "이 “불가능성 정리”는 영 자기장에서 자화가 사라져야 한다고 말합니다. 무엇이 잘못되었을까요?",
+"k40": "<span class=\"sec\">2.9<\/span>자발 대칭 깨짐",
+"k41": "위의 논증은 <i>유한한<\/i> 계에서는 옳습니다. 열역학적 극한에서는 \\(f(H)\\)의 <mark>1계 도함수 \\(\\partial f/\\partial H\\)에 불연속<\/mark>이 생길 수 있기 때문에 틀립니다. 대칭 \\(f(H) = f(-H)\\)는 \\(f\\)가 \\(H=0\\)에서 매끄러워 왼쪽·오른쪽 도함수가 같다고 가정하지 않는 한 \\(M(0) = 0\\)을 뜻하지 않습니다. \\(\\sigma>1\\)에 대해 \\(f(H) = f(0) + O(H^{\\sigma})\\)이면",
+"k42": "이고 \\(f\\)는 매끄럽습니다. 그러나 \\(f(H) = f(0) - M_s|H| + O(H^{\\sigma})\\)이면",
+"k43": "유한한 계의 자유 에너지는 \\(H=0\\)에서 매끄러운 포물선이지만, 무한한 계에서는 뾰족점을 가지는데, 이는 바로 볼록성이 허용하는 기울기 불연속입니다(1부, §2.6). 두 극한",
+"k44": "은 <mark>교환되지 않습니다<\/mark>. 자발 자화는 온도에 의존합니다: \\(|M_s(0)| = 1\\), \\(0 \\lt T \\lt T_c\\)에서 \\(|M_s| \\lt 1\\), \\(T \\ge T_c\\)에서 \\(M_s = 0\\).",
+"k45": "교환되지 않는 두 극한",
+"k46": "계의 크기를 키울 때의 \\(M_N(H)\\)",
+"k47": "작은 자기장을 고정했을 때 \\(N\\)에 대한 \\(M_N(H)\\)",
+"k48": "퀴리–바이스 자석(\\(T_c = J_0/k_B\\))의 정확한 결과로, 각 \\(N\\)에 대해 모든 자화에 걸쳐 분배함수를 더했습니다. 왼쪽: 유한한 \\(N\\)의 모든 곡선은 불가능성 정리가 요구하듯 \\(H=0\\)에서 \\(M=0\\)을 매끄럽게 지나지만, 무한한 계의 \\(\\pm M_s\\) 사이 도약(자홍색)을 향해 가팔라집니다. 오른쪽: 고정된 자기장 \\(H>0\\)에서 \\(N \\gtrsim k_BT/(2HM_s)\\)가 되면 \\(M_N\\)이 \\(M_s\\)에 다가가는데, 이는 시간 반전된 두 상태의 볼츠만 비 \\(P_B/P_A = e^{-2\\beta HNM}\\)가 작아지는 곳입니다. \\(H\\to0\\)을 먼저 취하면 답은 언제나 0이고, \\(N\\to\\infty\\)를 먼저 취하면 \\(M_s\\)입니다.",
+"k49": "이런 현상들을 <mark>자발 대칭 깨짐<\/mark>(SSB)이라 합니다. “자발”은 그 자체로 대칭을 깨는 외부 자기장이 유도한 자화와 구별하는 말입니다. \\(H=0\\)에서 해밀토니언은 \\(\\{S_i\\}\\to\\{-S_i\\}\\)에 대해 불변인데도 \\(M = \\lim_{N\\to\\infty}N^{-1}\\sum_i\\langle S_i\\rangle \\ne 0\\)입니다: 상태가 시간 반전에 대해 불변이 아닙니다.",
+"k50": "SSB는 또 다른 이유로도 역설적으로 보입니다. 볼츠만 분포 \\(P_\\Omega(\\{S_i\\}) = e^{-\\beta\\mathcal H_\\Omega(\\{S_i\\})}/Z_\\Omega\\)에서 \\(\\mathcal H_\\Omega\\)가 시간 반전에 대해 불변이면 \\(P_\\Omega\\)도 불변인 짝함수이고, \\(S_i\\)는 홀함수입니다. 따라서 \\(\\langle S_i\\rangle \\equiv \\operatorname{Tr}\\,P_\\Omega(\\{S_i\\})S_i = 0\\)입니다. 이는 불가능성 정리를 다시 말한 것일 뿐입니다. 무한한 계에서는 \\(Z\\to\\infty\\)이므로 확률 분포를 더 조심스럽게 다뤄야 합니다.",
+"k51": "시간 반전으로 연결된 두 배치, 자화가 \\(M\\)인 A와 \\(-M\\)인 B를 생각합시다. 결합 항 \\(-H\\sum_iS_i\\)는 다음을 줍니다.",
+"k52": "열역학적 극한을 먼저 취합시다. \\(H>0\\)이면 \\(P_B/P_A\\to0\\)입니다: 계는 \\(+M\\)인 상태 A에 있어야 하고, 이는 \\(H\\to0^+\\)에서도 여전히 성립합니다. \\(H\\lt 0\\)이면 계는 B에 있어야 합니다. (\\(N\\to\\infty\\)보다 \\(H\\to0\\)을 먼저 취하면 \\(P_A/P_B = 1\\)입니다.) 따라서 열역학적 극한과 함께 극한 \\(H\\to0^+\\)을 쓰는 것은 \\(H=0\\)으로 두되 \\(-M_s\\)에 기여하는 미시상태를 포함하지 않는 <mark>제한된 앙상블<\/mark>을 쓰는 것과 동등합니다. \\(H\\to0^-\\)은 \\(+M_s\\)에 기여하는 미시상태를 제외합니다.",
+"k53": "연속 대칭",
+"k54": "\\(d>1\\)에서 이징 모형의 장거리 질서는 그 대칭군이 \\(\\mathbb Z_2\\), 즉 \\(\\mathcal H_\\Omega[\\{S_i\\}] = \\mathcal H_\\Omega[\\{-S_i\\}]\\)라는 데 기대고 있습니다. 이 대칭이 <i>이산<\/i>적이므로 자구벽의 폭은 유한합니다: 벽은 가능한 스핀 상태인 \\(\\uparrow\\)와 \\(\\downarrow\\)만을 나누므로 그 두께는 격자 한 칸입니다.",
+"k55": "스핀이 <mark>연속 대칭<\/mark>을 따르면 사정이 달라집니다. 예를 들어 하이젠베르크 강자성체에서처럼 \\(\\mathbf S_i\\)가 모든 방향을 자유롭게 가리킬 수 있는 벡터라면:",
+"k56": "이는 일반적으로 스핀에 선호 방향이 없는, 더 현실적인 강자성체 모형입니다. (실제 결정에서는 스핀–궤도 결합이 스핀을 격자에 묶어 회전 대칭을 깨고 결정축을 선호하게 만들 수 있으며, 극단적인 경우에는 이징 모형이 더 나은 기술입니다.) \\(\\mathbf S_i = (S_i^x, S_i^y, S_i^z)\\)이고 \\(R(\\theta)\\)가 임의의 축에 대한 각 \\(\\theta\\)의 회전일 때, 영 자기장의 에너지는 <i>모든<\/i> 스핀을 동시에 회전해도 불변입니다: \\(\\mathcal H_\\Omega[\\{R(\\theta)\\mathbf S_i\\}] = \\mathcal H_\\Omega[\\{\\mathbf S_i\\}]\\). 모형은 대칭군 \\(O(3)\\)을 가지는 회전 불변 모형입니다. 회전은 격자가 아니라 스핀에 작용하며, 격자는 공간에 고정되어 있습니다.",
+"k57": "연속 대칭에서는 “가리킬 수 있는 방향이 더 많기” 때문에 열적 요동이 장거리 질서를 더 쉽게 무너뜨립니다(11장에서 엄밀하게 다룹니다). 더 큰 엔트로피를 상쇄하려면 질서에 더 많은 에너지가 필요한데, 더 높은 차원의 격자가 이를 제공합니다: 스핀의 이웃이 더 많기 때문입니다. 자세히 분석하면 장거리 질서에는 \\(d>2\\)가 필요합니다. 이 결과들은 연속 대칭에서 자구벽이 계의 크기까지 퍼질 수 있다는 사실을 반영합니다.",
+"k58": "날카로운 벽 대 퍼진 비틀림",
+"k59": "벽 폭 \\(w\\) (격자 간격)",
+"k60": "폭에 대한 벽 한 줄의 에너지",
+"k61": "계의 크기 \\(L\\)에 대한 전체 벽 에너지 (실선: 이산, 점선: 연속)",
+"k62": "위에서 아래로 돌아가는 평면 스핀 한 줄. 이징 스핀은 결합 하나에서 뒤집혀야 하므로 비용이 \\(2J\\)입니다. 연속 스핀은 \\(\\pi\\) 회전을 \\(w\\)개 결합에 나누어 비용이 \\(Jw[1-\\cos(\\pi/w)] \\approx \\pi^2J/2w\\)인데, 이는 벽이 \\(w = L\\)까지 퍼질수록 계속 줄어듭니다. 따라서 \\(d\\)차원 계를 가로지르는 벽의 비용은 이산 대칭에서는 \\(\\propto L^{d-1}\\)이지만 연속 대칭에서는 \\(\\propto L^{d-2}\\)일 뿐입니다. 오른쪽의 평행한 짝에 주목하세요: \\(d\\)차원의 연속 스핀은 \\(d-1\\)차원의 이산 스핀처럼 변하며, 그래서 하임계 차원이 1에서 2로 옮겨 갑니다. 벽을 놓는 로그 엔트로피에 비해 비용은 \\(d \\le 2\\)에서 유계로 남으며, 이는 질서에 \\(d > 2\\)가 필요하다는 것과 들어맞습니다.",
+"k63": "<span class=\"sec\">2.10<\/span>에르고딕성 깨짐",
+"k64": "SSB는 동역학에 대해 무엇을 뜻할까요? 통계역학은 보통 <mark>시간 평균과 앙상블 평균<\/mark>의 동등성으로 정당화됩니다. 관측량 \\(A\\{\\eta_i\\}\\)에 대해(\\(\\eta_i(t)\\)는 동역학적 자유도로, 유체에서는 위치와 운동량)",
+"k65": "이며, \\(P_{\\text{eqm}}\\)은 계의 위상 공간 위의 평형 분포입니다. 이 동등성은 <mark>에르고딕 가설<\/mark>에 기댑니다: \\(t\\to\\infty\\)이면 \\(\\{\\eta_i(t)\\}\\)는 에너지 보존이 허용하는 모든 배치에 임의로 가까이 갑니다. (이징 모형에서는 해밀토니언이 운동 방정식을 만들지 않으므로, 몬테카를로 데모에서처럼 동역학이 따로 주어진다고 가정합니다.)",
+"k66": "\\(H=0\\), \\(T\\lt T_c\\)이면 배치 공간에서 \\(M_\\Omega = +M\\)인 영역과 \\(M_\\Omega = -M\\)인 영역을 똑같이 표집해야 합니다. 양의 자화로 시작한 계는 결국 뒤집혀야 하고, 그런 일이 일어나는 비율 \\(R\\)은 아레니우스 꼴을 가질 것으로 예상됩니다.",
+"k67": "장벽 \\(\\Delta F\\)는 넓이에 비례하므로, 주어진 자화를 가진 상태의 수명 \\(\\tau\\)는 \\(N\\to\\infty\\)에서 발산합니다. 자화가 양수인지 음수인지는 초기 조건이 정하고, 열역학적 극한에서 계는 사실상 위상 공간의 한 영역에 갇힙니다. 이것이 <mark>에르고딕성 깨짐<\/mark>입니다. 갇힌 영역마다 일대일로 대응하는 시간 반전된 짝이 있습니다.",
+"k68": "<b>\\(H=0\\)에서 \\(\\tau\\)를 정하는 장벽은 무엇인가?<\/b> 강의 노트는 여기서 자연스러운 질문을 던집니다. 책은 \\(\\Delta F\\)를 “임계 클러스터”의 자유 에너지라 부릅니다: 이보다 큰 클러스터는 자랄 것입니다. 그런데 \\(H=0\\)에서는 모두 위 상태와 모두 아래 상태의 에너지가 정확히 같으므로, 뒤집힌 클러스터는 부피 에너지를 얻지 못합니다. 그렇다면 왜 큰 클러스터가 자라야 할까요?",
+"k69": "자라지 않습니다. 적어도 부피 이득 때문에는 아닙니다. 표면 비용과 부피 이득이 경쟁하는 임계 클러스터 그림은 작은 역방향 자기장 \\(H\\)에서의 <i>준안정<\/i> 붕괴를 기술하며, 거기서 임계 반지름은 \\(\\sigma/(|H|M_s)\\)처럼 변하고 \\(H\\to0\\)에서 발산합니다. \\(H=0\\)에서 조밀한 클러스터는 언제나 줄어드는 경향이 있습니다. 관련된 장벽은 \\(+M\\)과 \\(-M\\) 사이 중간의 병목 배치, 즉 주기적인 계를 똑바로 가로지르는 넓이 \\(L^{d-1}\\)의 평평한 자구벽 두 개의 자유 에너지입니다. 경계면 장력이 \\(\\sigma\\)이면 \\(\\Delta F \\approx 2\\sigma L^{d-1}\\)로, 위와 같은 스케일링입니다. 두 벽이 일단 생기면 움직이는 데 비용이 들지 않으므로, 계는 어느 쪽으로든 흘러갈 수 있습니다. 아래 데모가 이 장벽을 측정합니다.",
+"k70": "계가 커지면서 에르고딕성이 깨지는 것 보기",
+"k71": "자취를 보여 줄 \\(L\\) =",
+"k72": "다시 시작",
+"k74": "최근 4000 스윕 동안의 스핀당 자화",
+"k75": "\\(L\\)에 대한 뒤집힘 사이 평균 시간 \\(\\tau\\) (스윕)",
+"k76": "한 변이 \\(L\\)인 2차원 이징 모형들(주기 경계, \\(H=0\\), \\(T \\lt T_c\\))을 메트로폴리스 동역학으로 나란히 돌립니다. 자화가 \\(\\gtrsim +\\tfrac12M_s\\)에서 \\(\\lesssim -\\tfrac12M_s\\)로, 또는 그 반대로 건너가면 뒤집힘 한 번으로 셉니다. 빈 점은 아직 뒤집히지 않은 크기에 대한 하한입니다. 점선은 두 벽 장벽이 예측하는 기울기 \\(\\ln\\tau \\approx 2\\sigma L/k_BT + \\text{const}\\)이며, 온사거의 정확한 경계면 장력 \\(\\sigma = 2J + k_BT\\ln\\tanh(J/k_BT)\\)를 씁니다. 작은 계는 끊임없이 뒤집히고, \\(L\\)이 한 단계 커질 때마다 \\(\\tau\\)는 대략 일정한 배수로 늘어납니다. 맞춘 기울기는 예측보다 다소 높게 나올 것입니다: 이 공식은 벽의 엔트로피와 모양 요동에서 오는 \\(L\\) 의존 앞인자를 무시하는데, 이 작은 크기에서는 그것이 중요하고, 가장 큰 크기는 좋은 통계를 얻으려면 몇 분을 돌려야 합니다.",
+"k77": "에르고딕성 깨짐과 대칭",
+"k78": "예로, 자유도가 \\(\\{\\vec C_i\\}\\), \\(i=1,\\dots,N\\)(다체계의 입자 위치로 생각할 수 있음)이고 해밀토니언이 \\(\\mathcal H_\\lambda\\{\\vec C_i\\}\\)인 계를 생각합시다. \\(\\lambda\\)는 모든 결합 상수를 나타냅니다. 이 계가 <b>병진 불변<\/b>이라 합시다: 임의의 벡터 \\(\\vec a\\)에 대해 \\(\\mathcal H_\\lambda\\{\\vec C_i\\} = \\mathcal H_\\lambda\\{\\vec C_i+\\vec a\\}\\). \\(\\lambda\\)를 바꿔 SSB를 동반한 상전이를 일으키려 합니다. 질서 변수는",
+"k79": "밀도의 푸리에 변환입니다. \\(\\lambda>\\lambda_c\\)이면 \\(\\langle f_i(\\vec k)\\rangle = 0\\)이고, \\(\\lambda\\lt\\lambda_c\\)이면 \\(\\langle f_i(\\vec k)\\rangle\\ne0\\)인데, 이는 밀도가 공간에서 단순히 일정하지 않다는 뜻입니다. 입자가 질서를 이룬 것입니다: 병진(과 회전) 불변성의 자발적 깨짐인 <mark>고체화<\/mark>입니다. 대각합에 포함된 미시상태의 집합을 \\(\\mathcal G\\)라 하면",
+"k80": "모든 미시상태를 포함하면 \\(\\mathcal G\\)는 \\(\\vec C_i\\to\\vec C_i+\\vec a\\)에 대해 불변입니다. 변수를 옮기고 병진 불변성을 쓰면 모든 \\(\\vec a\\)에 대해 \\(\\langle f_i(\\vec k)\\rangle_{\\mathcal G} = e^{-i\\vec k\\cdot\\vec a}\\langle f_i(\\vec k)\\rangle_{\\mathcal G}\\)이므로, \\(\\lambda\\)와 상관없이 \\(\\langle f_i(\\vec k)\\rangle_{\\mathcal G} = 0\\)입니다. 질서 변수는 \\(\\mathcal G\\)가 허용된 미시상태를 모두 포함하지 <i>않을<\/i> 때에만, 그리고 그 남은 집합이 \\(\\mathcal H_\\lambda\\)의 대칭군에 대해 불변이 아닐 때에만 0이 아닐 수 있습니다. 질량 중심이 주어진 위치에 있도록 구속된 계가 그 예입니다. 그것이 <mark>에르고딕성 깨짐<\/mark>입니다. 이는 SSB에 동반되지만, 모든 에르고딕성 깨짐이 SSB에서 오는 것은 아닙니다: 액체–기체 공존선은 대칭이 전혀 깨지지 않는 반례입니다.",
+"k81": "위상 공간의 구조는 \\(\\lambda\\)와 \\(\\beta\\)에 의존합니다. 어떤 방식으로 깨질까요? \\(\\lambda\\lt\\lambda_c\\)에서 \\(\\langle f_i(\\vec k)\\rangle\\ne0\\)인 미시상태의 가장 큰 집합을 \\(\\mathcal G_1\\)이라 하고, 어떤 병진 \\(T_a:\\vec C_i\\to\\vec C_i+\\vec a\\)에 대해 \\(\\mathcal G_2 = T(\\mathcal G_1)\\)이라 합시다. 정의에 의해 \\(\\mathcal G_2\\ne\\mathcal G_1\\)이지만 \\(\\mathcal H(T\\vec C_i) = \\mathcal H(\\vec C_i)\\)이므로 \\(Z_2 = Z_1\\)이고",
+"k82": "질서 변수가 미시상태의 어떤 집합 \\(\\mathcal G\\)에서 0이 아니도록 에르고딕성이 깨지면, 해밀토니언의 자발적으로 깨진 대칭으로 \\(\\mathcal G\\)와 연결된 모든 집합에서 질서 변수는 (다를 수도 있는) 0이 아닌 값을 가집니다. 그러나 대칭으로 연결된 에르고딕 영역들이 위상 공간 전체를 채울 필요는 <i>없습니다<\/i>. 채우지 않는 경우를 무질서계에서는 <mark>레플리카 대칭 깨짐<\/mark>이라 하며, 스핀 유리와 가황 후의 고무에서 일어난다고 여겨집니다. 고무에서는 가교된 고분자가 더 이상 서로를 통과할 수 없어, 계가 병진으로 연결되지 않은 에르고딕 영역에 갇힙니다.",
+"k83": "스핀 유리와 겹침",
+"k84": "<b>이징 스핀 유리<\/b>는 교환 상수가 평균 둘레로 퍼진 확률 변수인 이징 모형입니다.",
+"k85": "각 \\(J_{ij}\\)는 강자성(\\(>0\\))일 수도 반강자성(\\(\\lt 0\\))일 수도 있습니다. 자기 모멘트가 물질 속에 무작위로 분포한 자성 합금이 그 예입니다. 바닥 상태는 더 이상 단순히 모두 위나 모두 아래가 아닙니다: 음의 결합이 홀수 개인 고리를 따라서는 모든 결합을 만족시킬 수 없는데, 이것이 <mark>쩔쩔맴<\/mark>입니다. \\(P(J) = P(-J)\\)이면 저온의 스핀 유리 상에서도 \\(\\sum_im_i = 0\\)이므로, 알짜 자화로는 얼어붙은 스핀 유리 상태와 상자성체를 구별할 수 없습니다. 여기서는 좋은 질서 변수가 아닙니다.",
+"k86": "에르고딕 영역에 \\(\\sigma, \\sigma', \\dots\\)로 이름을 붙이고, 두 영역 사이의 <mark>겹침<\/mark>을 정의합니다.",
+"k87": "\\(m_i^\\sigma\\)는 영역 \\(\\sigma\\)에서 자리 \\(i\\)의 평균 모멘트입니다. 겹침은 상자성 상에서는 0이지만 스핀 유리 상에서는 0이 아닐 수 있습니다. 특히 \\(q^{\\sigma\\sigma}\\ne0\\)이고, \\(\\sigma_1'\\)이 모든 스핀을 뒤집은 \\(\\sigma_1\\)이면 \\(q^{\\sigma_1\\sigma_1} = q^{\\sigma_1\\sigma_1'}\\)이므로, 겹침은 어떤 영역과 그 시간 반전된 짝 중 어느 쪽도 편들지 않습니다. 에르고딕 영역이 하나뿐이면(그 짝과 함께) \\(q\\)는 값이 하나뿐입니다: 레플리카 대칭인 경우입니다. 레플리카 대칭이 깨지면 \\(q^{\\sigma\\sigma'}\\)는 여러 값을 가집니다. 보통 \\(q\\)를 직접 계산할 수 없으므로, 그 분포를 생각합시다.",
+"k88": "\\(P(q)\\)는 \\(J_{ij}\\)처럼 시료마다 다릅니다. 중요하고 계산할 수 있을지도 모르는 것은 결합 상수 분포에 대한 그 평균 \\([P(q)]\\)입니다. 이는 세 가지 전형적인 꼴을 가집니다: 질서가 없으면(상자성체) 원점의 델타 함수, 질서를 이루는 방법이 하나뿐이면(강자성체) 유일한 \\(\\hat q\\ne0\\)에 대한 \\(\\delta(q-\\hat q)\\), 질서를 이루는 방법이 많으면(스핀 유리 상으로 추정되는 상) 델타 함수 하나가 아닌 자명하지 않은 함수입니다. 실제 스핀 유리의 저온 상의 성격은 책이 쓰일 당시에도 논쟁 중이었습니다. 결합 상수를 바꾸면서 \\([P(q)]\\)를 계산하면, 기본적인 질서 변수 개념만으로는 부족한 복잡계의 상그림을 그리는 방법이 됩니다.",
+"k89": "정확히 계산한 스핀 16개 스핀 유리의 겹침 분포",
+"k90": "평균 결합 상수 \\(J_0/J\\)",
+"k91": "시료 하나",
+"k92": "시료 24개의 평균",
+"k93": "새 무질서",
+"k94": "고른 \\(T\\)와 \\(J_0\\)에서의 겹침 분포 \\(P(q)\\)",
+"k95": "모형이 있는 곳 (SK 상그림 개략)",
+"k96": "셰링턴–커크패트릭(SK) 모형: 스핀 16개의 모든 쌍이 평균 \\(J_0/N\\), 분산 \\(J^2/N\\)인 가우스 \\(J_{ij}\\)로 결합되어 있습니다. 무질서 시료마다 \\(2^{16}\\)개 상태를 모두 더하고, \\(2^{32}\\)개 상태 쌍 전부에 대한 \\(P(q)\\)를 월시–아다마르 변환으로 정확히 얻습니다. 여기서 \\(q\\)는 절댓값 없이 \\([-1,1]\\)에 걸치며, 시간 반전된 짝 때문에 \\(P(q)\\)가 대칭입니다. 뜨거울 때: 작은 크기 때문에 넓어진 \\(q=0\\)의 봉우리 하나. \\(J_0\\)가 크고 차가울 때: \\(\\pm\\hat q\\)의 날카로운 봉우리 둘, 강자성체. \\(J_0\\)가 작고 차가울 때: 봉우리 사이의 모든 \\(q\\)에 무게가 퍼지고, 시료마다 모양이 다릅니다. 스핀이 16개뿐이므로 이들은 세 경우를 유한 크기로 크게 과장한 그림입니다.",
+"k97": "고정된 무질서와 레플리카 기법",
+"k98": "위의 SK 모형은 무한 도달 거리 스핀 유리로, \\(i,j\\)가 모든 쌍에 걸치고 결합 상수는 가우스 분포 \\(P(J) = (2\\pi(\\delta J)^2)^{-1/2}\\exp[-(J-J_0)^2/2(\\delta J)^2]\\)를 따릅니다. 이 모형에서는 평균장 이론이 정확해집니다. 결합 상수는 <b>고정된(quenched)<\/b> 무질서입니다: 무작위이지만 주어진 계에서는 고정되어 있으며, 계는 \\(X\\)를 확률 변수로 하는 \\(\\mathcal H(\\{S_i\\};X)\\)로 기술됩니다. \\(X\\)가 동역학 동안 변할 수 있다면 무질서는 <b>풀린(annealed)<\/b> 것입니다. 고정된 불순물은 실험의 시간 척도에서 격자 자리에 묶여 있습니다. 두 자유 에너지는",
+"k99": "큰 시료는 각각이 \\(X\\)의 한 실현인 많은 거시적 부분계로 볼 수 있으므로, 측정은 실현들에 대해 평균합니다. 이것이 성립하는 계를 <b>자기 평균<\/b>적이라 하며, 관측되는 자유 에너지는",
+"k100": "로그를 평균하기는 어렵습니다. <mark>레플리카 기법<\/mark>은 (로피탈 정리로) \\(\\log Z = \\lim_{n\\to0}(Z^n-1)/n\\)을 쓰므로, 다음을 계산해야 합니다.",
+"k101": "이는 계의 <i>레플리카<\/i> \\(n\\)개에 대한 대각합으로, 각 레플리카는 같은 무질서 실현을 가지며 자유도는 \\(nN(\\Omega)\\)개 \\(\\{S_i^\\alpha\\}\\)입니다. \\(e^{-\\beta\\mathcal H_n(\\{S^\\alpha\\})} = [e^{-\\beta\\sum_\\alpha\\mathcal H(\\{S^\\alpha\\};X)}]\\)로 정의한 유효 레플리카 해밀토니언 \\(\\mathcal H_n\\)은 더 이상 \\(X\\)에 의존하지 않습니다. 레플리카의 순열에 대해 대칭이지만, 레플리카 하나짜리 해밀토니언 \\(n\\)개의 합은 아닙니다: 무질서 평균이 레플리카들을 결합했습니다. 이 순열 대칭은 극한 \\(n\\to0\\)에서 자발적으로 깨질 수 있습니다.",
+"k102": "고정 대 풀린 무질서, 그리고 \\(n\\to0\\) 극한",
+"k103": "오른쪽 그림의 \\(k_BT/J\\)",
+"k104": "\\(T\\)에 대한 스핀당 자유 에너지",
+"k105": "레플리카 수 \\(n\\)에 대한 \\(f_n = -\\dfrac{k_BT}{nN}\\ln[Z^n]\\)",
+"k106": "\\(J_0=0\\)인 스핀 16개 SK 시료 24개를 정확히 더했습니다. 왼쪽: 고정된 자유 에너지 \\([\\ln Z]\\), 같은 시료에서 얻은 풀린 자유 에너지 \\(\\ln[Z]\\), 그리고 정확한 풀린 결과 \\(-k_BT\\ln2 - (N-1)J^2/4Nk_BT\\). 높은 \\(T\\)에서는 일치하고 낮은 \\(T\\)에서는 갈라지는데, 거기서 풀린 평균은 \\(Z\\)가 유난히 큰 드문 시료가 지배합니다. 시료 24개는 그런 시료를 놓치므로, 표본으로 얻은 풀린 곡선이 정확한 곡선에 못 미칩니다. 고정된 평균에는 그런 문제가 없는데, \\(\\ln Z\\)가 자기 평균적이기 때문입니다. 옌센 부등식 \\([\\ln Z]\\le\\ln[Z]\\) 때문에 풀린 자유 에너지는 고정된 자유 에너지보다 아래에 있습니다. 오른쪽: 실수 \\(n\\)의 매끄러운 함수로서의 \\(f_n\\). \\(n=1\\)에서는 풀린 자유 에너지이고, \\(n\\to0\\)에서는 고정된 자유 에너지로 가는데, 이것이 레플리카 기법이 이용하는 점입니다.",
+"k107": "레플리카 이론의 핵심 결과는 무질서 평균한 겹침 분포를 레플리카로 계산할 수 있다는 것입니다. 무한 도달 거리 스핀 유리에서",
+"k108": "이며, 평균은 \\(\\mathcal H_n\\)에 대해 취합니다. \\(\\mathcal H_n\\)이 레플리카 순열에 대해 대칭이므로 모든 \\(\\alpha\\ne\\beta\\)에 대해 \\(q^{\\alpha\\beta} = \\hat q\\)이고 \\([P(q)] = \\delta(q-\\hat q)\\)일 것으로, 즉 한 값에서 질서를 이루는 단순한 SSB를 기대할 수도 있습니다. 영 자기장 스핀 유리 상전이 아래에서는 이것이 옳지 않습니다. <mark>레플리카 순열 대칭이 자발적으로 깨지고<\/mark>, \\([P(q)]\\)는 델타 함수 하나가 아니며, 대칭으로 연결되지 않은 둘 이상의 에르고딕 영역 가족으로 에르고딕성이 깨집니다. 레플리카 대칭 깨짐을 에르고딕성 깨짐으로 해석하면, 레플리카 방법이 단순한 평균 기법이 아니라 위상 공간을 복잡하게 부호화한 것임을 알 수 있습니다. (\\(n\\to0\\)에서 \\(n\\times n\\) 행렬 질서 변수에 의미를 부여하는 일은 미묘합니다. 파리시의 논문을 보세요.) 이 방법은 무질서계, 신경망 모형, 그래프 이론, 최적화에서 가치를 증명했습니다.",
+"k109": "두 번의 노벨 물리학상이 이 아이디어들로 거슬러 올라갑니다: 물리계에서 무질서와 요동의 상호작용으로 2021년에 받은 조르조 파리시, 그리고 연상 기억 네트워크가 뉴런의 스핀 유리 모형인 2024년의 존 홉필드입니다(Mézard, Parisi, and Virasoro, <i>Spin Glass Theory and Beyond<\/i>, ch. XIII).",
+"k110": "<span class=\"sec\">2.11<\/span>유체",
+"k111": "유체와 자석 사이에 연결이 있을까요? 단단한 벽으로 둘러싸인 영역 \\(\\Omega\\) 안의, 좌표 \\(\\vec r_i\\)와 운동량 \\(\\vec p_i\\)를 가진 \\(N\\)개 입자의 연속 유체를 생각합시다. 해밀토니언은",
+"k112": "여기서 \\(U_1\\)은 각 입자에 작용하는 외부장(예를 들어 중력, 보통은 0)이고, \\(U_2, U_3, \\dots\\)는 2체, 3체, … 퍼텐셜로, 병진 불변이어서 좌표 차이에만 의존합니다. \\(N\\)이 변하는 큰 바른틀 앙상블에서 화학 퍼텐셜이 \\(\\mu\\)이면",
+"k113": "플랑크 상수 \\(h\\)는 위상 공간의 단위를 정하고 양자 통계역학과의 연속성을 줍니다. 운동량 적분은 가우스 적분이며, 각각 열적 파장 \\(\\Lambda_T \\equiv h/\\sqrt{2\\pi mk_BT}\\)에 대해 \\(1/\\Lambda_T^d\\)를 주므로",
+"k114": "이며, 퓨개시티는 \\(e^{\\beta\\mu}\\), 배치 합은 \\(Q_N\\)입니다. 큰 퍼텐셜은 \\(F_\\Omega(T,\\mu,U_1,U_2,\\dots) = -k_BT\\log\\Xi_\\Omega = U-TS-\\mu N\\)입니다. 퍼텐셜에 단단한 알맹이가 있어 \\(V(\\Omega)\\)에 최대 \\(N_{cp}\\)개의 입자만 들어간다면, 이는 유한한 \\(\\Omega\\)에서 특이하지 않습니다. 그 부피 밀도",
+"k115": "는 단위 부피당 엔트로피 \\(\\sigma\\)와 수밀도 \\(\\rho = \\lim\\langle N\\rangle/V\\)를 포함합니다. \\(f_b = -p\\)이므로 자석의 경우처럼 해석적 성질이 나오며, 많은 것이 볼록성에서 나옵니다: (a) \\(p(T,\\mu)\\ge0\\); (b) \\(p\\)는 연속; (c) \\(\\partial p/\\partial T\\)와 \\(\\partial p/\\partial\\mu\\)는 거의 모든 곳에서 존재; (d) \\(\\partial p/\\partial\\mu = \\rho\\ge0\\); (e) \\(\\partial p/\\partial T = \\sigma\\ge0\\) (양자 통계역학에서는 참이지만 고전계에서는 거짓); (f) \\(\\partial p/\\partial T\\)는 단조 비감소이므로 열용량 \\(C_\\mu\\ge0\\); (g) \\(\\partial p/\\partial\\mu\\)는 단조 비감소이므로 등온 압축률 \\(K_T\\ge0\\).",
+"k116": "<span class=\"sec\">2.12<\/span>격자 기체",
+"k117": "유체의 간단한 모형으로 리와 양의 <mark>격자 기체<\/mark>가 있습니다. 기본 아이디어는 유체 속 입자의 국소 밀도를 자석 속 위 스핀의 국소 밀도와 연결하는 것입니다. 미시적 밀도는 \\(\\rho(\\vec r) \\equiv \\sum_{i=1}^N\\delta(\\vec r-\\vec r_i)\\), \\(\\int_V\\rho\\,d^dr = N(V)\\)이고, 퍼텐셜을 이것으로 다시 쓸 수 있습니다:",
+"k118": "이제 배위수 \\(z\\)인 \\(d\\)차원 격자를 생각하는데, 각 자리에는 분자가 최대 하나만 있습니다. 점유수 \\(n_i = 0\\) 또는 \\(1\\)이 \\(\\rho(\\vec r)\\)의 역할을 하고 \\(N = \\sum_in_i\\)이며, 큰 바른틀 앙상블에서 알맞은 해밀토니언은",
+"k119": "이며, \\(\\tfrac12\\)은 두 번 센 것을 상쇄합니다. 운동 에너지 항은 없습니다. 앞에서 보았듯이 그것은 퓨개시티에만 기여하므로, 실제로 모형화하는 것은 \\(Q_N\\)입니다. \\(S_i = \\pm1\\)에 대해 \\(n_i = \\tfrac12(1+S_i)\\)로 정의합시다. 짧은 도달 거리의 힘과 낮은 밀도에서는 3체 이상의 항을 버리고, 최근접에 대해 \\(U_2(i,j) = U_2\\), 그 밖에는 0으로 둡니다. 순서쌍에 대한 합으로 \\(\\sum_{ij}U_2(i,j) = U_2Nz\\), \\(\\sum_{ij}U_2(i,j)S_i = zU_2\\sum_iS_i\\), 그리고 최근접 쌍이 두 번씩 나타나므로 \\(\\sum_{ij}U_2(i,j)S_iS_j = 2U_2\\sum_{\\langle ij\\rangle}S_iS_j\\)입니다. 따라서",
+"k120": "이고, \\(U_1=0\\)으로 두면",
+"k121": "이것이 원하던 결과입니다: <mark>격자 기체의 열역학은 이징 모형의 열역학에서 나옵니다<\/mark>. 끌어당기는 퍼텐셜(\\(U_2\\lt 0\\))은 강자성체이고, 자기장은 \\(\\mu = zU_2/2\\)에서 사라집니다: 액체–기체 공존선은 이징 모형의 1차 상전이 선 \\(H=0\\), \\(T\\lt T_c\\)입니다. 이상 기체 법칙과 그 보정조차 격자 기체에서 유도할 수 있습니다.",
+"k122": "격자 기체는 이징 자석이다",
+"k123": "속도",
+"k125": "정확한 공존 곡선과 현재 상태",
+"k126": "최근 600 스윕 동안의 밀도",
+"k127": "최근접 인력 \\(U_2\\lt 0\\)을 가진 64 × 64 정사각 격자 기체의 큰 바른틀 시뮬레이션으로, \\(J=-U_2/4\\), \\(H = \\mu/2 - zU_2/4\\)인 동등한 이징 모형으로 돌립니다. 둥근 지붕은 정확합니다: 온사거의 자발 자화를 \\(\\rho_\\pm = (1\\pm M_s)/2\\)로 옮긴 것이며, \\(k_BT_c \\approx 0.567|U_2|\\), \\(\\beta = 1/8\\)입니다. \\(T_c\\) 아래에서 \\(\\mu\\)를 \\(-2|U_2|\\) 너머로 훑으면 밀도가 증기 가지와 액체 가지 사이를 뜁니다(§2.10에서처럼 계가 갇혀 있으므로 이력 현상이 있습니다). \\(T_c\\) 위에서는 매끄럽게 변합니다. 그림의 입자–구멍 대칭이 자석의 \\(\\mathbb Z_2\\) 대칭입니다.",
+"k128": "연속체에서 격자로",
+"k129": "배치 합 \\(Q_N\\)은 \\(\\Omega\\)를 선형 크기 \\(a\\)인 칸 \\(N(\\Omega) = V(\\Omega)/a^d\\)개로 나누어 근사할 수 있는데, \\(a\\)는 한 칸에 분자가 둘 이상 있는 경우를 무시할 수 있을 만큼(\\(a \\lesssim\\) 단단한 알맹이 반지름) 작아야 합니다. 그러면 \\(\\int_\\Omega\\prod_i d^dr_i \\approx a^{dN}\\sum_\\alpha\\)이며, 칸의 수는 일반적으로 입자 수와 다릅니다. \\(\\vec r_i\\in\\alpha\\), \\(\\vec r_j\\in\\beta\\)일 때 \\(U_2(\\vec r_i,\\vec r_j)\\)를 \\(U_2(\\alpha,\\beta)\\)로 바꾸고 짧은 도달 거리의 힘(이웃한 칸에서만 0이 아니고 값은 일정한 \\(U_2\\))만 남기면 \\(U\\{\\vec r_i\\}\\to U_2\\sum_{\\langle\\alpha\\beta\\rangle}n_\\alpha n_\\beta+\\cdots\\)입니다. 각 배치 \\(\\{n_\\alpha\\}\\)는 \\(N!\\)개의 배치 \\(\\{\\vec r_i\\}\\)에 대응하므로 \\(Q_N = N!\\,a^{dN}\\sum'_{\\{n_\\alpha\\}}e^{-\\beta U\\{n_\\alpha\\}}\\)이며, 프라임은 \\(\\sum_\\alpha n_\\alpha = N\\)이라는 구속을 뜻합니다. 그 구속 때문에 \\(Q_N\\)이 어렵지만, 큰 합이 그것을 없앱니다: 모든 \\(N\\)에 대해 구속된 합들을 더하면 \\(\\{n_\\alpha\\}\\)의 \\(2^{N(\\Omega)}\\)개 상태 전부에 대한 제한 없는 합이 되는데, 이것이 큰 바른틀 앙상블의 장점입니다. 따라서",
+"k130": "그러므로 발견적으로, 격자 기체의 큰 분배함수는 연속 유체의 큰 분배함수에서 나옵니다.",
+"k131": "<span class=\"sec\">2.13<\/span>통계역학에서의 동등성",
+"k132": "격자 기체 대응은 두 계 사이의 <b>동등성<\/b>을 보여 줍니다. 이 용어는 두 가지 뜻으로 쓰입니다:",
+"k133": "<b>정확한 동등성:<\/b> 이징 모형 \\(\\leftrightarrow\\) 격자 기체처럼, 두 모형의 분배함수 사이의 정확한 대응.",
+"k134": "<b>근사적 동등성:<\/b> 분배함수가 같거나 정확히 연결되지는 않지만 임계점 근처에서 똑같이 행동하는 경우. 이런 모형들은 같은 <mark>보편성 부류<\/mark>에 속합니다. 앞으로 만날 예는 유효 해밀토니언이 대략 \\(M\\)에 대한 \\(M^4\\)차까지의 거듭제곱 급수인 란다우 이론과, 같은 방식으로 쓴 자유 에너지에 \\(\\log\\cosh M\\)이 들어가는 이징 모형입니다.",
+"k135": "상그림, 열역학, 상관 함수는 (a) 구체적인 결합 상수, (b) 모형의 대칭(이산, 연속, 실제 대칭군), (c) 격자 종류, (d) 차원, (e) 그 밖에 떠올릴 수 있는 모든 것에 의존합니다. <i>임계<\/i> 거동은 (a) 질서 변수의 대칭, (b) 차원, (c) 임계점의 성격에만 의존하고, 결합 상수, 격자 종류, 정확한 해밀토니언에는 의존하지 않는 것으로 드러납니다. (주목할 만한 예외는 백스터의 8꼭짓점 모형으로, 임계 지수가 결합 상수에 따라 연속적으로 변합니다. 이는 RG 안에서 이해되며, 경계적 연산자를 가진 모형에서만 일어납니다.) 정확한 동등성으로 연결된 모형들이 임계 거동을 공유하는 것은 당연합니다. 서로 관련 없는 계들도 실험과 이론에서 그토록 자주 그렇다는 것이 <mark>보편성<\/mark> 현상입니다.",
+"k136": "<span class=\"sec\">2.14<\/span>그 밖의 이야기",
+"k137": "열역학적 극한의 역사",
+"k138": "<span class=\"yr\">1936<\/span>헨드릭 크라머르스는 극한 \\(\\lim_{N\\to\\infty}N^{-1}\\log Z\\)가 해석적으로 이어지지 않는 서로 다른 함수를 줄 수 있음을 깨닫습니다: 상전이에는 열역학적 극한이 필요합니다.",
+"k139": "<span class=\"yr\">1937<\/span>대부분의 물리학자는 이를 알지 못합니다. 조머펠트조차 분배함수는 한 상만 기술한다고 믿습니다. 판데르발스 탄생 100주년을 맞아 암스테르담에서 열린 학회에서, 의장인 크라머르스는 분배함수가 날카로운 상전이를 줄 수 있는지를 투표에 부칩니다. 결과는 “결론 없음”이었습니다.",
+"k140": "<span class=\"yr\">1941<\/span>크라머르스와 바니에는 열역학적 극한에서 상전이가 하나라고 가정하고, 전달 행렬 방법과 쌍대성을 이용해 \\(d=2\\) 이징 모형의 \\(T_c\\)를 찾습니다.",
+"k141": "<span class=\"yr\">1944<\/span>라르스 온사거가 \\(d=2\\) 이징 모형을 정확히 풉니다. 이로써 열역학적 극한의 타당성이 확정되고, 임계 거동이 평균장 이론과 맞지 않을 수 있음이 드러납니다: 임계 지수가 바이스 강자성체나 판데르발스 기체의 값일 필요가 없습니다.",
+"k142": "양자 효과가 중요한가?",
+"k143": "응집 물질은 양자역학으로 결합되어 있지만, 그 대략적인 특성이 양자적 고려로 정해질 필요는 없습니다. 1장의 자기 회피 걸음이 그 예입니다: 양자역학은 고분자의 존재와 결합 에너지를 설명하지만, 긴 규모의 통계는 미시적 세부 사항과 무관합니다. \\(T>0\\)의 연속 상전이에서는 답이 ‘아니다’입니다: \\(\\xi\\to\\infty\\)이면 열역학적 거동은 양자 효과가 중요한 길이 척도보다 훨씬 큰 영역이 정합니다. 따라서 강자성체와 초전도체 같은 본질적으로 양자적인 계를 이징 모형 같은 고전 모형으로 나타낼 수 있습니다. (1차 상전이에서는 양자 효과를 배제할 수 없지만, Goldenfeld는 그런 예를 알지 못했습니다.) \\(T=0\\)에서는 양자 효과가 <i>중요하지만<\/i>, \\(d\\)차원의 \\(T=0\\) 양자계는 \\(d+1\\)차원의 고전계와 연결되므로(경로 적분으로 가장 깔끔하게 보입니다), 여전히 고전 통계역학을 쓸 수 있습니다.",
+"k144": "이로써 2장을 마칩니다. <a href=\"ch03-phase-transitions-in-practice.html\">3장<\/a>에서는 정확한 계산과 근사 계산으로 이 아이디어들을 활용합니다.",
+"k145": "더 읽을거리",
+"k154": "<a href=\"index.html\">전체 장<\/a>\n    <a href=\"ch02a-phase-transitions-in-principle.html\">이전: 2장 1부<\/a>\n    <a href=\"ch03-phase-transitions-in-practice.html\">다음: 3장, 실제로 상전이는 어떻게 일어나는가<\/a>",
+"k155": "N. Goldenfeld, <i>Lectures on Phase Transitions and the Renormalization Group<\/i> 2장에 관한 이상훈 교수의 강의 노트에 딸린 대화형 자료입니다. 본문은 강의 노트를 풀어 쓴 것입니다. 모든 계산은 브라우저에서 이루어지며 데이터를 수집하지 않습니다. 경상국립대학교 물리학과 대학원 과목을 위해 이상훈 교수의 강의 노트를 바탕으로 Claude Opus 5.5 (Anthropic)가 만들었습니다.",
+"k146": "N. Goldenfeld, <i>Lectures on Phase Transitions and the Renormalization Group<\/i> (Addison-Wesley, 1992), Chapter 2.",
+"k147": "R. Peierls, \"On Ising's model of ferromagnetism,\" <i>Proc. Cambridge Philos. Soc.<\/i> <b>32<\/b>, 477 (1936).",
+"k148": "H. A. Kramers and G. H. Wannier, \"Statistics of the two-dimensional ferromagnet,\" <i>Phys. Rev.<\/i> <b>60<\/b>, 252 and 263 (1941).",
+"k149": "L. Onsager, \"Crystal statistics. I,\" <i>Phys. Rev.<\/i> <b>65<\/b>, 117 (1944).",
+"k150": "T. D. Lee and C. N. Yang, \"Statistical theory of equations of state and phase transitions. II. Lattice gas and Ising model,\" <i>Phys. Rev.<\/i> <b>87<\/b>, 410 (1952).",
+"k151": "D. Sherrington and S. Kirkpatrick, \"Solvable model of a spin-glass,\" <i>Phys. Rev. Lett.<\/i> <b>35<\/b>, 1792 (1975).",
+"k152": "M. Mézard, G. Parisi, and M. A. Virasoro, <i>Spin Glass Theory and Beyond<\/i> (World Scientific, 1987).",
+"k153": "M. Dresden, \"Kramers's contributions to statistical mechanics,\" <i>Physics Today<\/i> <b>41<\/b>(9), 26 (1988)."
+};
+(function(){
+  // English / 한국어 switch shared by the course demos; the choice is remembered across pages
+  var KEY='lshlj82-demo-lang', root=document.documentElement, KO=window.I18N_KO||{}, EN={};
+  var els=[].slice.call(document.querySelectorAll('[data-k]'));
+  els.forEach(function(e){EN[e.getAttribute('data-k')]=e.innerHTML;});
+  var titleEN=document.title;
+  var btn=document.createElement('button');btn.id='langBtn';btn.type='button';document.body.appendChild(btn);
+  function typeset(list){
+    if(!list.length)return;
+    if(window.MathJax&&MathJax.typesetPromise){var go=function(){MathJax.typesetPromise(list).catch(function(){});};
+      if(MathJax.startup&&MathJax.startup.promise)MathJax.startup.promise.then(go);else go();}
+    if(window.renderMathInElement&&window.KATEX_OPTS)list.forEach(function(e){try{renderMathInElement(e,window.KATEX_OPTS)}catch(_){}}); 
+  }
+  function apply(l,first){
+    window.LANG=l;root.dataset.lang=l;root.lang=l;var changed=[];
+    els.forEach(function(e){var k=e.getAttribute('data-k'),s=(l==='ko'&&KO[k]!=null)?KO[k]:EN[k];if(e.innerHTML!==s){e.innerHTML=s;changed.push(e);}});
+    document.title=(l==='ko'&&KO.__title)?KO.__title:titleEN;
+    btn.textContent=l==='ko'?'EN':'한국어';btn.setAttribute('aria-label',l==='ko'?'View in English':'한국어로 보기');btn.title=btn.getAttribute('aria-label');
+    btn.setAttribute('lang',l==='ko'?'en':'ko');
+    if(!first)typeset(changed);
+    window.dispatchEvent(new CustomEvent('langchange',{detail:{lang:l}}));
+    // canvases drawn before the Korean web font arrives are redrawn once it has loaded
+    if(l==='ko'&&document.fonts&&!document.fonts.check('16px "IBM Plex Sans KR"','가'))document.fonts.load('16px "IBM Plex Sans KR"','가').then(function(){if(window.LANG==='ko')window.dispatchEvent(new CustomEvent('langchange',{detail:{lang:'ko'}}));}).catch(function(){});
+  }
+  btn.addEventListener('click',function(){var n=window.LANG==='ko'?'en':'ko';try{localStorage.setItem(KEY,n)}catch(e){}apply(n,false);});
+  apply(window.LANG||'en',true);
+})();
+</script>
+<!-- lang-toggle:body-end -->
 </body>
 </html>

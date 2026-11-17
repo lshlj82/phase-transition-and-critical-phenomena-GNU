@@ -2,6 +2,24 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<!-- lang-toggle:head -->
+<script>(function(){var l='en';try{if(localStorage.getItem('lshlj82-demo-lang')==='ko')l='ko'}catch(e){}window.LANG=l;document.documentElement.dataset.lang=l;window.tr=function(en,ko){return window.LANG==='ko'&&ko!=null?ko:en};})();</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+#langBtn{position:fixed;z-index:21;top:calc(env(safe-area-inset-top,0px) + 12px);right:calc(env(safe-area-inset-right,0px) + 60px);
+  min-width:40px;height:40px;padding:0 10px;border-radius:20px;display:grid;place-items:center;cursor:pointer;font:600 14px/1 system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+  background:var(--lb-bg,rgba(255,255,255,.92));color:var(--lb-fg,#1d2633);border:1px solid var(--lb-bd,rgba(20,30,45,.18));box-shadow:0 1px 4px rgba(0,0,0,.12)}
+#langBtn:hover{border-color:currentColor}
+#langBtn:focus-visible{outline:2px solid #3b82f6;outline-offset:2px}
+:root[data-theme="dark"] #langBtn{--lb-bg:rgba(22,28,38,.92);--lb-fg:#e8eef6;--lb-bd:rgba(255,255,255,.18)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #langBtn{--lb-bg:rgba(22,28,38,.92);--lb-fg:#e8eef6;--lb-bd:rgba(255,255,255,.18)}}
+:root[data-lang="ko"] body{word-break:keep-all}
+:root[data-lang="ko"]{--sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;--serif:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;--ui-font:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif}
+:root[data-lang="ko"] body{font-family:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif}
+
+@media print{#langBtn{display:none}}
+</style>
+<!-- lang-toggle:head-end -->
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Chapter 2, Part 1: How Phase Transitions Occur in Principle | Phase Transitions and Critical Phenomena</title>
 <meta name="description" content="Interactive lecture notes for Chapter 2 (Part 1) of a graduate course on phase transitions and critical phenomena: the thermodynamic limit, phase boundaries, the Ising model, convexity, symmetry, and the existence of phase transitions.">
@@ -165,278 +183,278 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 
 <header class="hero">
   <div>
-    <p class="course">Phase Transitions and Critical Phenomena, graduate course, Department of Physics, Gyeongsang National University</p>
-    <h1>Chapter 2: How phase transitions occur in principle<span>Part 1: from the partition function to the lower critical dimension</span></h1>
-    <p class="lede">What exactly is a phase transition, and how can a sum of smooth Boltzmann factors produce one? This part covers §2.1–2.8 of Goldenfeld's lectures.</p>
+    <p class="course" data-k="k1">Phase Transitions and Critical Phenomena, graduate course, Department of Physics, Gyeongsang National University</p>
+    <h1 data-k="k2">Chapter 2: How phase transitions occur in principle<span>Part 1: from the partition function to the lower critical dimension</span></h1>
+    <p class="lede" data-k="k3">What exactly is a phase transition, and how can a sum of smooth Boltzmann factors produce one? This part covers §2.1–2.8 of Goldenfeld's lectures.</p>
   </div>
   <div class="lattice-wrap">
     <canvas class="kymo" id="hero-kymo" width="256" height="200" style="aspect-ratio:256/200" aria-label="Space-time history of a one-dimensional Ising chain"></canvas>
     <div class="controls" style="margin:10px 0 0">
-      <label>Temperature <input type="range" id="hero-T" min="0.4" max="2" step="0.01" value="0.75"> <output id="hero-T-out"></output></label>
+      <label><span data-k="k4">Temperature</span> <input type="range" id="hero-T" min="0.4" max="2" step="0.01" value="0.75"> <output id="hero-T-out"></output></label>
       <button id="hero-play" aria-pressed="false">Pause</button>
     </div>
-    <p class="readout" style="margin-top:.2rem;color:var(--muted)">A one-dimensional Ising chain of 256 spins, one row per sweep, with time running downward. Up spins are navy, down spins yellow. Domain walls wander, meet, annihilate, and are created again: at any \(T>0\) a long chain never stays ordered (§2.8).</p>
+    <p class="readout" style="margin-top:.2rem;color:var(--muted)" data-k="k6">A one-dimensional Ising chain of 256 spins, one row per sweep, with time running downward. Up spins are navy, down spins yellow. Domain walls wander, meet, annihilate, and are created again: at any \(T>0\) a long chain never stays ordered (§2.8).</p>
   </div>
 </header>
 
 <div class="page">
 <nav class="toc" aria-label="Contents">
   <ol>
-    <li><a href="#s2-1">2.1 Review of statistical mechanics</a></li>
-    <li><a href="#s2-2">2.2 The thermodynamic limit</a></li>
-    <li><a href="#s2-3">2.3 Phase boundaries and phase transitions</a></li>
-    <li><a href="#s2-4">2.4 The role of models</a></li>
-    <li><a href="#s2-5">2.5 The Ising model</a></li>
-    <li><a href="#s2-6">2.6 Analytic properties</a></li>
-    <li><a href="#s2-7">2.7 Symmetry properties</a></li>
-    <li><a href="#s2-8">2.8 Existence of phase transitions</a></li>
-    <li><a href="#reading">Further reading</a></li>
+    <li data-k="k7"><a href="#s2-1">2.1 Review of statistical mechanics</a></li>
+    <li data-k="k8"><a href="#s2-2">2.2 The thermodynamic limit</a></li>
+    <li data-k="k9"><a href="#s2-3">2.3 Phase boundaries and phase transitions</a></li>
+    <li data-k="k10"><a href="#s2-4">2.4 The role of models</a></li>
+    <li data-k="k11"><a href="#s2-5">2.5 The Ising model</a></li>
+    <li data-k="k12"><a href="#s2-6">2.6 Analytic properties</a></li>
+    <li data-k="k13"><a href="#s2-7">2.7 Symmetry properties</a></li>
+    <li data-k="k14"><a href="#s2-8">2.8 Existence of phase transitions</a></li>
+    <li data-k="k15"><a href="#reading">Further reading</a></li>
   </ol>
-  <p style="margin-top:1.5rem"><a href="ch01-introduction.html">Chapter 1: Introduction</a></p>
-  <p><a href="ch02b-symmetry-breaking-and-lattice-gases.html">Chapter 2, Part 2</a></p>
-  <p><a href="index.html">All chapters</a></p>
+  <p style="margin-top:1.5rem" data-k="k16"><a href="ch01-introduction.html">Chapter 1: Introduction</a></p>
+  <p data-k="k17"><a href="ch02b-symmetry-breaking-and-lattice-gases.html">Chapter 2, Part 2</a></p>
+  <p data-k="k18"><a href="index.html">All chapters</a></p>
 </nav>
 
 <main>
 
 <!-- ======================= 2.1 ======================= -->
 <section id="s2-1">
-<h2><span class="sec">2.1</span>Review of statistical mechanics</h2>
-<p>What do we mean by a phase transition? This chapter examines how one can occur, in principle, in a simple model of a magnet: the <mark>Ising model</mark>, the "fruit fly" of statistical mechanics. We will use it to illustrate many of the general ideas developed later. The model was proposed by Wilhelm Lenz in 1920 and studied by his student Ernst Ising in 1925; S. G. Brush's 1967 review in <i>Reviews of Modern Physics</i> tells the story.</p>
-<p>We need mainly the Helmholtz free energy and the canonical ensemble. A system exchanging energy with a reservoir at temperature \(T\) reaches equilibrium, where a state \(s\) of energy \(E(s)\) occurs with probability given by the Boltzmann factor, \(P(s) \propto e^{-E(s)/k_BT}\). The goal is to compute the <mark>partition function</mark> \(Z\).</p>
-<p>The system is specified by a region \(\Omega\) in which the Hamiltonian \(\mathcal H_\Omega\) is defined (in quantum mechanics, the energy operator; here we consider only classical statistical mechanics). The region has volume \(V(\Omega) \propto L^d\) and surface area \(S(\Omega) \propto L^{d-1}\), where \(L\) is a linear dimension and \(d\) the dimension of space. Boundary conditions may be periodic or hard wall, and the system may be a continuum (a fluid) or live on a lattice (a magnet). For now, \(V(\Omega)\) is finite.</p>
-<p>We write the Hamiltonian as</p>
+<h2 data-k="k19"><span class="sec">2.1</span>Review of statistical mechanics</h2>
+<p data-k="k20">What do we mean by a phase transition? This chapter examines how one can occur, in principle, in a simple model of a magnet: the <mark>Ising model</mark>, the "fruit fly" of statistical mechanics. We will use it to illustrate many of the general ideas developed later. The model was proposed by Wilhelm Lenz in 1920 and studied by his student Ernst Ising in 1925; S. G. Brush's 1967 review in <i>Reviews of Modern Physics</i> tells the story.</p>
+<p data-k="k21">We need mainly the Helmholtz free energy and the canonical ensemble. A system exchanging energy with a reservoir at temperature \(T\) reaches equilibrium, where a state \(s\) of energy \(E(s)\) occurs with probability given by the Boltzmann factor, \(P(s) \propto e^{-E(s)/k_BT}\). The goal is to compute the <mark>partition function</mark> \(Z\).</p>
+<p data-k="k22">The system is specified by a region \(\Omega\) in which the Hamiltonian \(\mathcal H_\Omega\) is defined (in quantum mechanics, the energy operator; here we consider only classical statistical mechanics). The region has volume \(V(\Omega) \propto L^d\) and surface area \(S(\Omega) \propto L^{d-1}\), where \(L\) is a linear dimension and \(d\) the dimension of space. Boundary conditions may be periodic or hard wall, and the system may be a continuum (a fluid) or live on a lattice (a magnet). For now, \(V(\Omega)\) is finite.</p>
+<p data-k="k23">We write the Hamiltonian as</p>
 <div class="result"><p>\[ -\frac{\mathcal H_\Omega}{k_BT} = \sum_n K_n\,\Theta_n, \]</p></div>
-<p>where the \(K_n\) are <b>coupling constants</b>: the external parameters, such as fields, exchange interaction strengths, and the temperature (which we absorb into the \(K_n\)). The \(\Theta_n\) are combinations of the dynamical degrees of freedom. For a magnet these are the (vector) spins \(\vec S_i\) on lattice sites \(1 \le i \le N(\Omega)\), so for example \(\Theta_1 = \sum_i \vec S_i\) and \(\Theta_2 = \sum_{ij}\vec S_i\cdot\vec S_j\). A simple example is the Zeeman coupling \(K_1 = \vec H/k_BT\), \(\mathcal H_\Omega = -\sum_i \vec H\cdot\vec S_i\); we will need to be careful about its meaning when we discuss spontaneous symmetry breaking. The trace is the sum over every possible value of every degree of freedom,</p>
+<p data-k="k24">where the \(K_n\) are <b>coupling constants</b>: the external parameters, such as fields, exchange interaction strengths, and the temperature (which we absorb into the \(K_n\)). The \(\Theta_n\) are combinations of the dynamical degrees of freedom. For a magnet these are the (vector) spins \(\vec S_i\) on lattice sites \(1 \le i \le N(\Omega)\), so for example \(\Theta_1 = \sum_i \vec S_i\) and \(\Theta_2 = \sum_{ij}\vec S_i\cdot\vec S_j\). A simple example is the Zeeman coupling \(K_1 = \vec H/k_BT\), \(\mathcal H_\Omega = -\sum_i \vec H\cdot\vec S_i\); we will need to be careful about its meaning when we discuss spontaneous symmetry breaking. The trace is the sum over every possible value of every degree of freedom,</p>
 <div class="math-scroll">\[ \operatorname{Tr} \equiv \sum_{\vec S_1}\sum_{\vec S_2}\cdots\sum_{\vec S_{N(\Omega)}}, \]</div>
-<p>and the partition function and free energy are</p>
+<p data-k="k25">and the partition function and free energy are</p>
 <div class="result"><p>\[ \begin{gathered} Z_\Omega[\{K_n\}] = \operatorname{Tr}\, e^{-\beta\mathcal H_\Omega},\qquad \beta \equiv \frac{1}{k_BT},\\ F_\Omega[\{K_n\}] = -k_BT\log Z_\Omega. \end{gathered} \]</p></div>
-<p>All thermodynamic information is contained in derivatives such as \(\partial F_\Omega/\partial K_n\) and \(\partial^2F_\Omega/\partial K_n\partial K_m\), which include bulk effects, surface effects, and finite-size effects. At this stage, with \(\Omega\) finite, there is <mark>no information about phase transitions or phases</mark>.</p>
+<p data-k="k26">All thermodynamic information is contained in derivatives such as \(\partial F_\Omega/\partial K_n\) and \(\partial^2F_\Omega/\partial K_n\partial K_m\), which include bulk effects, surface effects, and finite-size effects. At this stage, with \(\Omega\) finite, there is <mark>no information about phase transitions or phases</mark>.</p>
 </section>
 
 <!-- ======================= 2.2 ======================= -->
 <section id="s2-2">
-<h2><span class="sec">2.2</span>The thermodynamic limit</h2>
-<p>Experience tells us that the free energy is extensive, \(F_\Omega \propto V(\Omega)\). For a finite system we may therefore write</p>
+<h2 data-k="k27"><span class="sec">2.2</span>The thermodynamic limit</h2>
+<p data-k="k28">Experience tells us that the free energy is extensive, \(F_\Omega \propto V(\Omega)\). For a finite system we may therefore write</p>
 <div class="result"><p>\[ F_\Omega = V(\Omega)\,f_b + S(\Omega)\,f_s + O(L^{d-2}), \]</p></div>
-<p>with \(f_b\) the bulk free energy per unit volume and \(f_s\) the surface free energy per unit area. Precisely, the bulk free energy is</p>
+<p data-k="k29">with \(f_b\) the bulk free energy per unit volume and \(f_s\) the surface free energy per unit area. Precisely, the bulk free energy is</p>
 <div class="math-scroll">\[ \begin{gathered} f_b[K] \equiv \lim_{V(\Omega)\to\infty}\frac{F_\Omega[K]}{V(\Omega)},\\ \text{or, on a lattice,}\quad f_b[K] \equiv \lim_{N(\Omega)\to\infty}\frac{F_\Omega[K]}{N(\Omega)}, \end{gathered} \]</div>
-<p>provided the limit exists and is independent of \(\Omega\) (which is nontrivial), and the surface free energy is</p>
+<p data-k="k30">provided the limit exists and is independent of \(\Omega\) (which is nontrivial), and the surface free energy is</p>
 <div class="math-scroll">\[ f_s[K] \equiv \lim_{S(\Omega)\to\infty}\frac{F_\Omega[K]-V(\Omega)f_b[K]}{S(\Omega)}. \]</div>
-<p>These limits define the <mark>thermodynamic limit</mark>. The concepts of phase and phase transition are only sharply defined in this limit.</p>
+<p data-k="k31">These limits define the <mark>thermodynamic limit</mark>. The concepts of phase and phase transition are only sharply defined in this limit.</p>
 
 <figure class="demo" id="demo-surface">
-  <p class="title">Bulk and surface free energy of an Ising chain</p>
+  <p class="title" data-k="k32">Bulk and surface free energy of an Ising chain</p>
   <div class="controls">
     <label>\(k_BT/J\) <input type="range" id="sf-T" aria-label="Temperature k_B T / J" min="0.3" max="4" step="0.01" value="1"> <output id="sf-T-out"></output></label>
     <label>\(H/J\) <input type="range" id="sf-H" aria-label="Field H / J" min="-1" max="1" step="0.01" value="0"> <output id="sf-H-out"></output></label>
   </div>
   <div class="grid2">
-    <div><p class="plot-label">Free energy per site \(F_N/N\) vs number of sites \(N\)</p><canvas class="plot" id="sf-f"></canvas></div>
-    <div><p class="plot-label">Distance from the bulk value, \(|F_N/N - f_b|\), log–log</p><canvas class="plot" id="sf-d"></canvas></div>
+    <div><p class="plot-label" data-k="k33">Free energy per site \(F_N/N\) vs number of sites \(N\)</p><canvas class="plot" id="sf-f"></canvas></div>
+    <div><p class="plot-label" data-k="k34">Distance from the bulk value, \(|F_N/N - f_b|\), log–log</p><canvas class="plot" id="sf-d"></canvas></div>
   </div>
   <p class="readout" id="sf-read"></p>
-  <figcaption>Exact transfer-matrix results for a chain of \(N\) spins, \(-\mathcal H = J\sum_i S_iS_{i+1} + H\sum_i S_i\). An open chain has two ends, its "surface", so \(F_N = Nf_b + 2f_s + \dots\) and the per-site free energy approaches \(f_b\) as \(1/N\) (slope −1 on the right). A periodic ring has no surface, and its finite-size correction decays exponentially, as \((\lambda_-/\lambda_+)^N\).</figcaption>
+  <figcaption data-k="k35">Exact transfer-matrix results for a chain of \(N\) spins, \(-\mathcal H = J\sum_i S_iS_{i+1} + H\sum_i S_i\). An open chain has two ends, its "surface", so \(F_N = Nf_b + 2f_s + \dots\) and the per-site free energy approaches \(f_b\) as \(1/N\) (slope −1 on the right). A periodic ring has no surface, and its finite-size correction decays exponentially, as \((\lambda_-/\lambda_+)^N\).</figcaption>
 </figure>
 
-<h3>The thermodynamic limit in a charged system</h3>
-<p>Consider the energy at \(T=0\) of a uniform charge density \(\rho\) in three dimensions, with the Coulomb interaction \(U(r) = A/r\) between two particles separated by \(r\). Building up a sphere of radius \(R\) shell by shell, the shell theorem (Gauss's law) lets us treat the charge already inside radius \(r\) as concentrated at the center:</p>
+<h3 data-k="k36">The thermodynamic limit in a charged system</h3>
+<p data-k="k37">Consider the energy at \(T=0\) of a uniform charge density \(\rho\) in three dimensions, with the Coulomb interaction \(U(r) = A/r\) between two particles separated by \(r\). Building up a sphere of radius \(R\) shell by shell, the shell theorem (Gauss's law) lets us treat the charge already inside radius \(r\) as concentrated at the center:</p>
 <div class="math-scroll">\[ \begin{aligned} E(R) &= \int_0^R \left(\tfrac43\pi r^3\rho\right)\frac{A}{r}\,4\pi r^2\rho\,dr = A\,\frac{(4\pi)^2}{15}\rho^2R^5,\\ E_b &\equiv \frac{E(R)}{V(R)} = \frac{4\pi A}{5}\rho^2R^2, \end{aligned} \]</div>
-<p>which diverges as \(R\to\infty\). Inverse-square forces such as gravity and electrostatics are too long ranged to permit thermodynamic behavior. This is a consequence of allowing charge of only one sign. If charges of both signs are present and mobile, screening changes the interaction from \(1/r\) to \(e^{-r/\lambda_D}/r\), with \(\lambda_D\) the Debye screening length. A fully satisfactory treatment of the stability of matter and a sensible thermodynamic limit requires quantum mechanics: fermions and the Pauli exclusion principle.</p>
+<p data-k="k38">which diverges as \(R\to\infty\). Inverse-square forces such as gravity and electrostatics are too long ranged to permit thermodynamic behavior. This is a consequence of allowing charge of only one sign. If charges of both signs are present and mobile, screening changes the interaction from \(1/r\) to \(e^{-r/\lambda_D}/r\), with \(\lambda_D\) the Debye screening length. A fully satisfactory treatment of the stability of matter and a sensible thermodynamic limit requires quantum mechanics: fermions and the Pauli exclusion principle.</p>
 
-<h3>Power-law interactions</h3>
-<p>Generalize to \(U(r) = A/r^{\sigma}\) in \(d\) dimensions. For a uniform system in a \(d\)-dimensional sphere \(\Omega\) of radius \(R\),</p>
+<h3 data-k="k39">Power-law interactions</h3>
+<p data-k="k40">Generalize to \(U(r) = A/r^{\sigma}\) in \(d\) dimensions. For a uniform system in a \(d\)-dimensional sphere \(\Omega\) of radius \(R\),</p>
 <div class="math-scroll">\[ \begin{aligned} E(R) &= \frac{A\rho^2}{2}\int_\Omega d^dr\,d^dr'\,\frac{1}{|\vec r-\vec r'|^{\sigma}} = \frac{A\rho^2}{2}R^{2d-\sigma}C,\\ C &= \int_{\text{unit sphere}} \frac{d^dx\,d^dy}{|\vec x-\vec y|^{\sigma}}, \end{aligned} \]</div>
-<p>after rescaling \(\vec r = R\vec x\), \(\vec r' = R\vec y\). Hence \(E_b = E(R)/V(R) \propto R^{d-\sigma}\), with \(V(R) = V_dR^d\) and \(V_d\) the volume of the unit sphere in \(d\) dimensions. As \(R\to\infty\) the thermodynamic limit is well defined if and only if \(\sigma > d\).</p>
-<p>The integral \(C\) may itself diverge as \(\vec x \to \vec y\) when \(\sigma > d\). In practice this is harmless: charges sit on a lattice of spacing \(a\), or have a hard core of radius \(a\), so \(U \sim r^{-\sigma}\) only for \(r>a\). With this cutoff,</p>
+<p data-k="k41">after rescaling \(\vec r = R\vec x\), \(\vec r' = R\vec y\). Hence \(E_b = E(R)/V(R) \propto R^{d-\sigma}\), with \(V(R) = V_dR^d\) and \(V_d\) the volume of the unit sphere in \(d\) dimensions. As \(R\to\infty\) the thermodynamic limit is well defined if and only if \(\sigma > d\).</p>
+<p data-k="k42">The integral \(C\) may itself diverge as \(\vec x \to \vec y\) when \(\sigma > d\). In practice this is harmless: charges sit on a lattice of spacing \(a\), or have a hard core of radius \(a\), so \(U \sim r^{-\sigma}\) only for \(r>a\). With this cutoff,</p>
 <div class="result"><p>\[ E_b = \frac{A\rho^2S_d\,R^{d-\sigma}}{2(d-\sigma)}\left[1-\left(\frac aR\right)^{d-\sigma}\right]\quad (d\neq\sigma), \]</p></div>
-<p>where \(S_d\) is the surface area of the unit sphere. What about \(\sigma = d\)? Then the inner integral gives \(\log(R/a)\), which still diverges as \(R\to\infty\). The thermodynamic limit exists only for \(\sigma>d\).</p>
+<p data-k="k43">where \(S_d\) is the surface area of the unit sphere. What about \(\sigma = d\)? Then the inner integral gives \(\log(R/a)\), which still diverges as \(R\to\infty\). The thermodynamic limit exists only for \(\sigma>d\).</p>
 
 <figure class="demo" id="demo-power">
-  <p class="title">When does the bulk energy converge?</p>
+  <p class="title" data-k="k44">When does the bulk energy converge?</p>
   <div class="controls">
-    <label>Dimension \(d\) <input type="range" id="pw-d" min="1" max="3" step="1" value="3"> <output id="pw-d-out"></output></label>
-    <label>Exponent \(\sigma\) <input type="range" id="pw-s" min="0.25" max="7" step="0.05" value="1"> <output id="pw-s-out"></output></label>
+    <label><span data-k="k45">Dimension \(d\)</span> <input type="range" id="pw-d" min="1" max="3" step="1" value="3"> <output id="pw-d-out"></output></label>
+    <label><span data-k="k46">Exponent \(\sigma\)</span> <input type="range" id="pw-s" min="0.25" max="7" step="0.05" value="1"> <output id="pw-s-out"></output></label>
   </div>
   <div class="controls">
-    <button data-ds="3,1">Coulomb, gravity (d = 3, σ = 1)</button>
-    <button data-ds="3,3">Dipolar (d = 3, σ = 3)</button>
-    <button data-ds="3,6">van der Waals (d = 3, σ = 6)</button>
+    <button data-ds="3,1" data-k="k47">Coulomb, gravity (d = 3, σ = 1)</button>
+    <button data-ds="3,3" data-k="k48">Dipolar (d = 3, σ = 3)</button>
+    <button data-ds="3,6" data-k="k49">van der Waals (d = 3, σ = 6)</button>
   </div>
   <canvas class="plot" id="pw-plot"></canvas>
   <p class="readout" id="pw-read"></p>
-  <figcaption>The bulk energy per unit volume \(E_b \propto [R^{d-\sigma}-a^{d-\sigma}]/(d-\sigma)\) (with \(a=1\)), and \(\ln(R/a)\) when \(\sigma=d\), against the system radius \(R\). The thermodynamic limit requires the curve to level off. Gray curves show the marginal case \(\sigma = d\) and the convergent case \(\sigma = d+1\) for reference.</figcaption>
+  <figcaption data-k="k50">The bulk energy per unit volume \(E_b \propto [R^{d-\sigma}-a^{d-\sigma}]/(d-\sigma)\) (with \(a=1\)), and \(\ln(R/a)\) when \(\sigma=d\), against the system radius \(R\). The thermodynamic limit requires the curve to level off. Gray curves show the marginal case \(\sigma = d\) and the convergent case \(\sigma = d+1\) for reference.</figcaption>
 </figure>
 </section>
 
 <!-- ======================= 2.3 ======================= -->
 <section id="s2-3">
-<h2><span class="sec">2.3</span>Phase boundaries and phase transitions</h2>
-<p>Suppose \(f_b[K]\) exists, and that there are \(D\) coupling constants \(K_1,\dots,K_D\); the phase diagram is then \(D\)-dimensional. The function \(f_b[K]\) is analytic <i>almost</i> everywhere. Its possible non-analyticities lie on points, lines, planes, hyperplanes, and so on: <b>singular loci</b> of dimension \(D_s = 0, 1, 2, \dots\). An important invariant of each type of locus is its <mark>codimension</mark></p>
+<h2 data-k="k51"><span class="sec">2.3</span>Phase boundaries and phase transitions</h2>
+<p data-k="k52">Suppose \(f_b[K]\) exists, and that there are \(D\) coupling constants \(K_1,\dots,K_D\); the phase diagram is then \(D\)-dimensional. The function \(f_b[K]\) is analytic <i>almost</i> everywhere. Its possible non-analyticities lie on points, lines, planes, hyperplanes, and so on: <b>singular loci</b> of dimension \(D_s = 0, 1, 2, \dots\). An important invariant of each type of locus is its <mark>codimension</mark></p>
 <div class="result"><p>\[ C \equiv D - D_s. \]</p></div>
-<p>Adding an extra variable to \(\{K_n\}\) takes \(D\to D+1\) and \(D_s\to D_s+1\), so \(C\) is unchanged. Regions in which \(f_b\) is analytic are <mark>phases</mark>, and loci of codimension \(C=1\), which separate phases, are <mark>phase boundaries</mark>. In the pressure–temperature plane of a simple substance, \(D=2\) and the coexistence lines have \(D_s = 1\), \(C=1\).</p>
-<p>There is an ambiguity in the definition of a phase boundary. The liquid–gas line ends at a critical point, so one can travel around it from liquid to gas without crossing any boundary: liquid and gas have the same degree of symmetry. The solid–liquid line cannot simply end in the same way, because a fluid has a higher degree of symmetry than a crystalline solid.</p>
-<p>The free energy \(f_b[K]\) is everywhere continuous, but where phase boundaries exist they come in two classes:</p>
+<p data-k="k53">Adding an extra variable to \(\{K_n\}\) takes \(D\to D+1\) and \(D_s\to D_s+1\), so \(C\) is unchanged. Regions in which \(f_b\) is analytic are <mark>phases</mark>, and loci of codimension \(C=1\), which separate phases, are <mark>phase boundaries</mark>. In the pressure–temperature plane of a simple substance, \(D=2\) and the coexistence lines have \(D_s = 1\), \(C=1\).</p>
+<p data-k="k54">There is an ambiguity in the definition of a phase boundary. The liquid–gas line ends at a critical point, so one can travel around it from liquid to gas without crossing any boundary: liquid and gas have the same degree of symmetry. The solid–liquid line cannot simply end in the same way, because a fluid has a higher degree of symmetry than a crystalline solid.</p>
+<p data-k="k55">The free energy \(f_b[K]\) is everywhere continuous, but where phase boundaries exist they come in two classes:</p>
 <ol>
-  <li>One or more of the \(\partial f_b/\partial K_i\) is discontinuous across the boundary: a <mark>first-order phase transition</mark>.</li>
-  <li>All of the \(\partial f_b/\partial K_i\) are continuous across the boundary: a <mark>continuous phase transition</mark>. (The name "second-order transition" is not encouraged.)</li>
+  <li data-k="k56">One or more of the \(\partial f_b/\partial K_i\) is discontinuous across the boundary: a <mark>first-order phase transition</mark>.</li>
+  <li data-k="k57">All of the \(\partial f_b/\partial K_i\) are continuous across the boundary: a <mark>continuous phase transition</mark>. (The name "second-order transition" is not encouraged.)</li>
 </ol>
 
 <figure class="demo" id="demo-classes">
-  <p class="title">Crossing the phase diagram of a magnet</p>
+  <p class="title" data-k="k58">Crossing the phase diagram of a magnet</p>
   <div class="controls">
-    <label>Path at \(k_BT/J_0\) = <input type="range" id="cl-T" min="0.3" max="1.6" step="0.005" value="0.7"> <output id="cl-T-out"></output></label>
-    <button data-T="0.7">Below \(T_c\)</button> <button data-T="1">At \(T_c\)</button> <button data-T="1.3">Above \(T_c\)</button>
+    <label><span data-k="k59">Path at \(k_BT/J_0\) =</span> <input type="range" id="cl-T" min="0.3" max="1.6" step="0.005" value="0.7"> <output id="cl-T-out"></output></label>
+    <button data-T="0.7" data-k="k60">Below \(T_c\)</button> <button data-T="1" data-k="k61">At \(T_c\)</button> <button data-T="1.3" data-k="k62">Above \(T_c\)</button>
   </div>
   <div class="grid3">
-    <div><p class="plot-label">Phase diagram \((T, H)\)</p><canvas class="plot" id="cl-pd" style="height:240px"></canvas></div>
-    <div><p class="plot-label">Magnetization \(m = -\partial f/\partial H\)</p><canvas class="plot" id="cl-m" style="height:240px"></canvas></div>
-    <div><p class="plot-label">Susceptibility \(\chi = \partial m/\partial H\)</p><canvas class="plot" id="cl-chi" style="height:240px"></canvas></div>
+    <div><p class="plot-label" data-k="k63">Phase diagram \((T, H)\)</p><canvas class="plot" id="cl-pd" style="height:240px"></canvas></div>
+    <div><p class="plot-label" data-k="k64">Magnetization \(m = -\partial f/\partial H\)</p><canvas class="plot" id="cl-m" style="height:240px"></canvas></div>
+    <div><p class="plot-label" data-k="k65">Susceptibility \(\chi = \partial m/\partial H\)</p><canvas class="plot" id="cl-chi" style="height:240px"></canvas></div>
   </div>
   <p class="readout" id="cl-read"></p>
-  <figcaption>Mean-field (Curie–Weiss) magnet with free energy per spin \(f(H,T) = \min_m\big[\tfrac12J_0m^2 - k_BT\ln 2\cosh\big((J_0m+H)/k_BT\big)\big]\) and \(T_c = J_0/k_B\). Its only phase boundary is the segment \(H=0\), \(T\lt T_c\) (magenta), ending at the critical point. Moving the vertical path across it, \(\partial f/\partial H\) jumps: first order. At \(T_c\) the derivative is continuous but \(\chi\) diverges: continuous. Above \(T_c\) the path meets no singularity, and spin-up and spin-down states are connected smoothly, just as liquid and gas are above the critical point.</figcaption>
+  <figcaption data-k="k66">Mean-field (Curie–Weiss) magnet with free energy per spin \(f(H,T) = \min_m\big[\tfrac12J_0m^2 - k_BT\ln 2\cosh\big((J_0m+H)/k_BT\big)\big]\) and \(T_c = J_0/k_B\). Its only phase boundary is the segment \(H=0\), \(T\lt T_c\) (magenta), ending at the critical point. Moving the vertical path across it, \(\partial f/\partial H\) jumps: first order. At \(T_c\) the derivative is continuous but \(\chi\) diverges: continuous. Above \(T_c\) the path meets no singularity, and spin-up and spin-down states are connected smoothly, just as liquid and gas are above the critical point.</figcaption>
 </figure>
 
-<h3>Finite-size effects and the correlation length</h3>
-<p>In practice even \(10^{23} \ne \infty\), so the thermodynamic limit is never attained. In a finite system a change of physical properties occurs over some finite range of parameters, a <i>finite-size effect</i>, discussed in detail later. A simple criterion for when predictions based on \(f_b[K]\) are unreliable uses the <mark>correlation length</mark> \(\xi\): the spatial extent of fluctuations of a quantity about its average, for example the size of "droplets" of near-liquid density floating in a gas in thermal equilibrium.</p>
-<p>Near a continuous transition \(\xi\) depends strongly on temperature and diverges at the transition itself, which gives rise to scaling behavior. In a finite system, \(\xi\) cannot diverge: it cannot exceed \(L\), the characteristic linear dimension of the system. When \(T\) is close enough to \(T_c\) that \(\xi\) of the infinite system would exceed \(L\), the finite system departs from the ideal behavior described by \(f_b\).</p>
+<h3 data-k="k67">Finite-size effects and the correlation length</h3>
+<p data-k="k68">In practice even \(10^{23} \ne \infty\), so the thermodynamic limit is never attained. In a finite system a change of physical properties occurs over some finite range of parameters, a <i>finite-size effect</i>, discussed in detail later. A simple criterion for when predictions based on \(f_b[K]\) are unreliable uses the <mark>correlation length</mark> \(\xi\): the spatial extent of fluctuations of a quantity about its average, for example the size of "droplets" of near-liquid density floating in a gas in thermal equilibrium.</p>
+<p data-k="k69">Near a continuous transition \(\xi\) depends strongly on temperature and diverges at the transition itself, which gives rise to scaling behavior. In a finite system, \(\xi\) cannot diverge: it cannot exceed \(L\), the characteristic linear dimension of the system. When \(T\) is close enough to \(T_c\) that \(\xi\) of the infinite system would exceed \(L\), the finite system departs from the ideal behavior described by \(f_b\).</p>
 
 <figure class="demo" id="demo-xi">
-  <p class="title">How close to \(T_c\) can a finite sample get?</p>
+  <p class="title" data-k="k70">How close to \(T_c\) can a finite sample get?</p>
   <div class="controls">
-    <label>System size \(L\) <input type="range" id="xi-L" min="-8" max="0" step="0.05" value="-2"> <output id="xi-L-out"></output></label>
+    <label><span data-k="k71">System size \(L\)</span> <input type="range" id="xi-L" min="-8" max="0" step="0.05" value="-2"> <output id="xi-L-out"></output></label>
     <label>\(T_c\) <input type="range" id="xi-Tc" aria-label="Critical temperature T_c" min="1" max="1000" step="1" value="300"> <output id="xi-Tc-out"></output></label>
   </div>
   <div class="controls">
-    <button data-L="-2">Laboratory sample, 1 cm</button>
-    <button data-L="-7">Simulation, L = 100 ξ₀</button>
-    <button data-L="-6">Nanoparticle, 1 μm</button>
+    <button data-L="-2" data-k="k72">Laboratory sample, 1 cm</button>
+    <button data-L="-7" data-k="k73">Simulation, L = 100 ξ₀</button>
+    <button data-L="-6" data-k="k74">Nanoparticle, 1 μm</button>
   </div>
   <canvas class="plot" id="xi-plot"></canvas>
   <p class="readout" id="xi-read"></p>
-  <figcaption>\(\xi = \xi_0 |t|^{-2/3}\) with \(t = (T-T_c)/T_c\) and \(\xi_0 = 10\) Å \(= 10^{-9}\) m, the correlation length well away from the critical point. For \(L = 1\) cm, \(\xi = L\) only when \(|t| \approx 10^{-11}\), so finite-size effects are hard to observe in the laboratory. In computer simulations of critical phenomena \(L\) is usually only a modest multiple of \(\xi_0\), and finite-size effects must be taken into account carefully. We return to this after introducing the renormalization group.</figcaption>
+  <figcaption data-k="k75">\(\xi = \xi_0 |t|^{-2/3}\) with \(t = (T-T_c)/T_c\) and \(\xi_0 = 10\) Å \(= 10^{-9}\) m, the correlation length well away from the critical point. For \(L = 1\) cm, \(\xi = L\) only when \(|t| \approx 10^{-11}\), so finite-size effects are hard to observe in the laboratory. In computer simulations of critical phenomena \(L\) is usually only a modest multiple of \(\xi_0\), and finite-size effects must be taken into account carefully. We return to this after introducing the renormalization group.</figcaption>
 </figure>
 </section>
 
 <!-- ======================= 2.4 ======================= -->
 <section id="s2-4">
-<h2><span class="sec">2.4</span>The role of models</h2>
-<p>The phase-transition literature is full of models: the Ising, Heisenberg, Potts, Baxter, and F models, and even the nonlinear sigma model. They are often systems whose partition function can be computed exactly, perhaps only in some limit or special dimension, or reduced to a finite number of integrals. Beautiful mathematics has come from this enterprise, with connections to solitons, Ramanujan identities, string theory, and topology. The techniques are specialized, however. Onsager solved the two-dimensional Ising model in zero field in 1944, but the model has still not been solved in a field, nor in three dimensions. What we really need is an approach that always works, albeit approximately; exactly solvable models remain enormously important as benchmarks for approximation methods.</p>
-<p>There are two opposing views of what models are for. The traditional one builds a faithful representation of the physical system with as many fine details as possible, and tunes or adds parameters when theory and experiment disagree; quantum chemistry is a field where this is appropriate. The other view holds that <mark>such fine detail may not be needed</mark> to describe a particular phenomenon. Many parameters may be irrelevant, and the measurable quantities may form dimensionless numbers or even <mark>universal functions</mark> that, to a good approximation, do not depend on microscopic details. The BCS theory of superconductivity is an example: it predicts dimensionless ratios such as \(2\Delta/k_BT_c \approx 3.5\) for all weak-coupling superconductors. In this view one starts from the correct <mark>minimal model</mark>, the one that most economically caricatures the essential physics. That such a viewpoint works is a consequence of renormalization-group arguments, and the RG also provides a framework for identifying and calculating universal observables.</p>
+<h2 data-k="k76"><span class="sec">2.4</span>The role of models</h2>
+<p data-k="k77">The phase-transition literature is full of models: the Ising, Heisenberg, Potts, Baxter, and F models, and even the nonlinear sigma model. They are often systems whose partition function can be computed exactly, perhaps only in some limit or special dimension, or reduced to a finite number of integrals. Beautiful mathematics has come from this enterprise, with connections to solitons, Ramanujan identities, string theory, and topology. The techniques are specialized, however. Onsager solved the two-dimensional Ising model in zero field in 1944, but the model has still not been solved in a field, nor in three dimensions. What we really need is an approach that always works, albeit approximately; exactly solvable models remain enormously important as benchmarks for approximation methods.</p>
+<p data-k="k78">There are two opposing views of what models are for. The traditional one builds a faithful representation of the physical system with as many fine details as possible, and tunes or adds parameters when theory and experiment disagree; quantum chemistry is a field where this is appropriate. The other view holds that <mark>such fine detail may not be needed</mark> to describe a particular phenomenon. Many parameters may be irrelevant, and the measurable quantities may form dimensionless numbers or even <mark>universal functions</mark> that, to a good approximation, do not depend on microscopic details. The BCS theory of superconductivity is an example: it predicts dimensionless ratios such as \(2\Delta/k_BT_c \approx 3.5\) for all weak-coupling superconductors. In this view one starts from the correct <mark>minimal model</mark>, the one that most economically caricatures the essential physics. That such a viewpoint works is a consequence of renormalization-group arguments, and the RG also provides a framework for identifying and calculating universal observables.</p>
 </section>
 
 <!-- ======================= 2.5 ======================= -->
 <section id="s2-5">
-<h2><span class="sec">2.5</span>The Ising model</h2>
-<p>The Ising model is a model of a ferromagnet or antiferromagnet on a lattice. Lenz and Ising first studied it in 1925 and found no phase transition for \(T>0\) in \(d=1\). They <i>incorrectly</i> concluded that the model has no transition at nonzero temperature for \(d>1\) either, and so could not describe real magnets.</p>
-<p>Consider a \(d\)-dimensional lattice of sites \(i = 1,\dots,N(\Omega)\), hypercubic unless stated otherwise. The degrees of freedom are classical spin variables \(S_i = \pm1\) on the vertices of the lattice, so the system has \(2^{N(\Omega)}\) states. The spins interact with an external magnetic field \(H_i\), which may vary from site to site, and with each other through exchange interactions \(J_{ij}\) (two-spin), \(K_{ijk}\) (three-spin), and so on. A general Hamiltonian is</p>
+<h2 data-k="k79"><span class="sec">2.5</span>The Ising model</h2>
+<p data-k="k80">The Ising model is a model of a ferromagnet or antiferromagnet on a lattice. Lenz and Ising first studied it in 1925 and found no phase transition for \(T>0\) in \(d=1\). They <i>incorrectly</i> concluded that the model has no transition at nonzero temperature for \(d>1\) either, and so could not describe real magnets.</p>
+<p data-k="k81">Consider a \(d\)-dimensional lattice of sites \(i = 1,\dots,N(\Omega)\), hypercubic unless stated otherwise. The degrees of freedom are classical spin variables \(S_i = \pm1\) on the vertices of the lattice, so the system has \(2^{N(\Omega)}\) states. The spins interact with an external magnetic field \(H_i\), which may vary from site to site, and with each other through exchange interactions \(J_{ij}\) (two-spin), \(K_{ijk}\) (three-spin), and so on. A general Hamiltonian is</p>
 <div class="result"><p>\[ \begin{aligned} -\mathcal H_\Omega = \sum_{i\in\Omega}H_iS_i &+ \sum_{ij}J_{ij}S_iS_j\\ &+ \sum_{ijk}K_{ijk}S_iS_jS_k + \cdots, \end{aligned} \]</p></div>
-<p>and we will neglect three-spin and higher interactions. Now</p>
+<p data-k="k82">and we will neglect three-spin and higher interactions. Now</p>
 <div class="math-scroll">\[ \begin{aligned} \operatorname{Tr} &\equiv \sum_{S_1=\pm1}\sum_{S_2=\pm1}\cdots\sum_{S_{N(\Omega)}=\pm1},\\ F_\Omega(T,\{H_i\},\{J_{ij}\},\dots) &= -k_BT\log\operatorname{Tr}\,e^{-\beta\mathcal H_\Omega}, \end{aligned} \]</div>
-<p>and thermodynamic properties follow by differentiation. For example, since \(P(\{S_i\}) = e^{-\beta\mathcal H_\Omega(\{S_i\})}/\operatorname{Tr}\,e^{-\beta\mathcal H_\Omega}\), the average magnetization at site \(i\) is</p>
+<p data-k="k83">and thermodynamic properties follow by differentiation. For example, since \(P(\{S_i\}) = e^{-\beta\mathcal H_\Omega(\{S_i\})}/\operatorname{Tr}\,e^{-\beta\mathcal H_\Omega}\), the average magnetization at site \(i\) is</p>
 <div class="result"><p>\[ \begin{aligned} \frac{\partial F_\Omega}{\partial H_i} &= -k_BT\,\frac{1}{\operatorname{Tr}\,e^{-\beta\mathcal H_\Omega}}\operatorname{Tr}\!\left(\frac{S_i}{k_BT}e^{-\beta\mathcal H_\Omega}\right)\\ &= -\langle S_i\rangle_\Omega. \end{aligned} \]</p></div>
-<p>Even without an external field, or with a uniform one, it is useful to keep \(\sum_i H_iS_i\) in \(\mathcal H_\Omega\): the \(H_i\) can be set to any desired value, including zero, after differentiating. This is the <b>method of sources</b>.</p>
+<p data-k="k84">Even without an external field, or with a uniform one, it is useful to keep \(\sum_i H_iS_i\) in \(\mathcal H_\Omega\): the \(H_i\) can be set to any desired value, including zero, after differentiating. This is the <b>method of sources</b>.</p>
 
-<h3>The thermodynamic limit for the Ising model</h3>
-<p>For a finite system \(F_\Omega\) is an analytic function of each of its arguments, because the partition function</p>
+<h3 data-k="k85">The thermodynamic limit for the Ising model</h3>
+<p data-k="k86">For a finite system \(F_\Omega\) is an analytic function of each of its arguments, because the partition function</p>
 <div class="math-scroll">\[ Z_\Omega = \sum_{n=1}^{2^{N(\Omega)}} \exp\!\big(-\beta E_n[K]\big), \]</div>
-<p>with \(E_n\) the energy of the \(n\)th state, is a finite sum of analytic terms. Phase transitions can therefore only arise in the thermodynamic limit, which requires \(\sum_{j\ne i}|J_{ij}| \lt  \infty\). The range of the interaction and the dimensionality determine whether this limit exists. For \(J_{ij} = A|\vec r_i - \vec r_j|^{-\sigma}\) we need \(\sigma>d\), exactly as for the charged system; in \(d=3\) this excludes magnetic dipole–dipole interactions \(\propto r^{-3}\). However, as long as the dipoles are not all aligned, the thermodynamic limit can be shown to exist and to be independent of the shape of \(\Omega\) (see Griffiths in Domb and Green, vol. 1).</p>
+<p data-k="k87">with \(E_n\) the energy of the \(n\)th state, is a finite sum of analytic terms. Phase transitions can therefore only arise in the thermodynamic limit, which requires \(\sum_{j\ne i}|J_{ij}| \lt  \infty\). The range of the interaction and the dimensionality determine whether this limit exists. For \(J_{ij} = A|\vec r_i - \vec r_j|^{-\sigma}\) we need \(\sigma>d\), exactly as for the charged system; in \(d=3\) this excludes magnetic dipole–dipole interactions \(\propto r^{-3}\). However, as long as the dipoles are not all aligned, the thermodynamic limit can be shown to exist and to be independent of the shape of \(\Omega\) (see Griffiths in Domb and Green, vol. 1).</p>
 </section>
 
 <!-- ======================= 2.6 ======================= -->
 <section id="s2-6">
-<h2><span class="sec">2.6</span>Analytic properties of the Ising model</h2>
-<p>Assume \(f_b[K]\) exists. With \(\langle ij\rangle\) denoting nearest-neighbor pairs, the nearest-neighbor Ising Hamiltonian with a uniform field is</p>
+<h2 data-k="k88"><span class="sec">2.6</span>Analytic properties of the Ising model</h2>
+<p data-k="k89">Assume \(f_b[K]\) exists. With \(\langle ij\rangle\) denoting nearest-neighbor pairs, the nearest-neighbor Ising Hamiltonian with a uniform field is</p>
 <div class="result"><p>\[ -\mathcal H_\Omega = H\sum_{i=1}^{N(\Omega)}S_i + J\sum_{\langle ij\rangle}S_iS_j, \]</p></div>
-<p>and the average magnetization (magnetic moment) per site is</p>
+<p data-k="k90">and the average magnetization (magnetic moment) per site is</p>
 <div class="math-scroll">\[ M \equiv \frac{1}{N(\Omega)}\sum_{i=1}^{N(\Omega)}\langle S_i\rangle = -\frac{1}{N(\Omega)}\frac{\partial F_\Omega}{\partial H}. \]</div>
-<p>The principal analytic properties of \(f\) are postulates in thermodynamics but can be <i>proved</i> in statistical mechanics:</p>
+<p data-k="k91">The principal analytic properties of \(f\) are postulates in thermodynamics but can be <i>proved</i> in statistical mechanics:</p>
 <ol type="a">
   <li>\(f\lt 0\).</li>
-  <li>\(f(H,J,T,\dots)\) is continuous.</li>
-  <li>\(\partial f/\partial T\), \(\partial f/\partial H\), … exist almost everywhere; right and left derivatives exist everywhere and are equal almost everywhere.</li>
-  <li>The entropy per site \(S \equiv -\partial f/\partial T \ge 0\) almost everywhere.</li>
-  <li>\(\partial f/\partial T\) is monotonically non-increasing with \(T\), i.e., \(\partial^2f/\partial T^2 \le 0\). Hence the specific heat at constant field \(C_H \equiv T\,\partial S/\partial T|_H = -T\,\partial^2F/\partial T^2|_H \ge 0\).</li>
-  <li>\(\partial f/\partial H\) is monotonically non-increasing with \(H\), i.e., \(\partial^2f/\partial H^2 \le 0\). Hence the isothermal susceptibility \(\chi_T \equiv \partial M/\partial H|_T = -\partial^2f/\partial H^2 \ge 0\).</li>
+  <li data-k="k92">\(f(H,J,T,\dots)\) is continuous.</li>
+  <li data-k="k93">\(\partial f/\partial T\), \(\partial f/\partial H\), … exist almost everywhere; right and left derivatives exist everywhere and are equal almost everywhere.</li>
+  <li data-k="k94">The entropy per site \(S \equiv -\partial f/\partial T \ge 0\) almost everywhere.</li>
+  <li data-k="k95">\(\partial f/\partial T\) is monotonically non-increasing with \(T\), i.e., \(\partial^2f/\partial T^2 \le 0\). Hence the specific heat at constant field \(C_H \equiv T\,\partial S/\partial T|_H = -T\,\partial^2F/\partial T^2|_H \ge 0\).</li>
+  <li data-k="k96">\(\partial f/\partial H\) is monotonically non-increasing with \(H\), i.e., \(\partial^2f/\partial H^2 \le 0\). Hence the isothermal susceptibility \(\chi_T \equiv \partial M/\partial H|_T = -\partial^2f/\partial H^2 \ge 0\).</li>
 </ol>
-<p>Properties (a) and (d) follow from simple direct arguments; the others follow from <mark>convexity</mark>.</p>
+<p data-k="k97">Properties (a) and (d) follow from simple direct arguments; the others follow from <mark>convexity</mark>.</p>
 
 <div class="proof">
-<p><b>Proof of (a).</b> \(Z_\Omega = \sum_n e^{-\beta E_n}\) is a sum of positive terms, and \(f_\Omega = -k_BT\log Z_\Omega/N(\Omega)\), so \(f_\Omega\lt 0\) if \(Z_\Omega>1\). This holds because there is at least one configuration \(\{S_i^*\}\) with \(\mathcal H_\Omega\lt 0\) and hence \(e^{-\beta\mathcal H_\Omega}>1\). For \(J>0\) and \(H\lt 0\), take \(S_i^* = -1\) for all \(i\) (for \(H>0\), take all \(+1\)); then \(-\mathcal H_\Omega = H\sum_iS_i + J\sum_{\langle ij\rangle}S_iS_j > 0\). A slicker argument: \(\operatorname{Tr}\,\mathcal H_\Omega = 0\) by symmetry, since for any configuration the configurations with \(S_i\) or \(S_j\) reversed are also summed over. The terms in the trace are not all zero, so at least one configuration has \(\mathcal H_\Omega\lt 0\). Therefore \(f\lt 0\). And since \(\log Z_\Omega\) only develops singularities where its argument vanishes, \(F_\Omega\) is analytic; where \(Z\) can vanish in the complex plane of the couplings is the "partition-function zeros" problem.</p>
-<p><b>Proof of (d).</b> Using \(\partial\beta/\partial T = -1/k_BT^2\),</p>
+<p data-k="k98"><b>Proof of (a).</b> \(Z_\Omega = \sum_n e^{-\beta E_n}\) is a sum of positive terms, and \(f_\Omega = -k_BT\log Z_\Omega/N(\Omega)\), so \(f_\Omega\lt 0\) if \(Z_\Omega>1\). This holds because there is at least one configuration \(\{S_i^*\}\) with \(\mathcal H_\Omega\lt 0\) and hence \(e^{-\beta\mathcal H_\Omega}>1\). For \(J>0\) and \(H\lt 0\), take \(S_i^* = -1\) for all \(i\) (for \(H>0\), take all \(+1\)); then \(-\mathcal H_\Omega = H\sum_iS_i + J\sum_{\langle ij\rangle}S_iS_j > 0\). A slicker argument: \(\operatorname{Tr}\,\mathcal H_\Omega = 0\) by symmetry, since for any configuration the configurations with \(S_i\) or \(S_j\) reversed are also summed over. The terms in the trace are not all zero, so at least one configuration has \(\mathcal H_\Omega\lt 0\). Therefore \(f\lt 0\). And since \(\log Z_\Omega\) only develops singularities where its argument vanishes, \(F_\Omega\) is analytic; where \(Z\) can vanish in the complex plane of the couplings is the "partition-function zeros" problem.</p>
+<p data-k="k99"><b>Proof of (d).</b> Using \(\partial\beta/\partial T = -1/k_BT^2\),</p>
 <div class="math-scroll">\[ \begin{aligned} -\frac{\partial F_\Omega}{\partial T} &= k_B\log Z_\Omega + \frac{1}{T}\frac{\operatorname{Tr}\big(\mathcal H_\Omega e^{-\beta\mathcal H_\Omega}\big)}{Z_\Omega}\\ &= k_B\operatorname{Tr}\big[\rho_\Omega(\log Z_\Omega + \beta\mathcal H_\Omega)\big],\qquad \rho_\Omega \equiv \frac{e^{-\beta\mathcal H_\Omega}}{Z_\Omega}. \end{aligned} \]</div>
-<p>Since \(\log\rho_\Omega = -\beta\mathcal H_\Omega - \log Z_\Omega\),</p>
+<p data-k="k100">Since \(\log\rho_\Omega = -\beta\mathcal H_\Omega - \log Z_\Omega\),</p>
 <div class="math-scroll">\[ S = -\frac{\partial F_\Omega}{\partial T} = -k_B\operatorname{Tr}\big(\rho_\Omega\log\rho_\Omega\big) \ge 0, \]</div>
-<p>because \(0\lt \rho_\Omega\le1\) implies \(\log\rho_\Omega\le0\). This is the von Neumann (Gibbs) entropy. <span class="qed">QED</span></p>
+<p data-k="k101">because \(0\lt \rho_\Omega\le1\) implies \(\log\rho_\Omega\le0\). This is the von Neumann (Gibbs) entropy. <span class="qed">QED</span></p>
 </div>
 
 <figure class="demo" id="demo-enum">
-  <p class="title">Check the properties on an exactly summed lattice</p>
+  <p class="title" data-k="k102">Check the properties on an exactly summed lattice</p>
   <div class="controls">
     <label>\(k_BT/J\) <input type="range" id="en-T" aria-label="Temperature k_B T / J" min="0.1" max="5" step="0.01" value="2.27"> <output id="en-T-out"></output></label>
     <label>\(H/J\) <input type="range" id="en-H" aria-label="Field H / J" min="-1" max="1" step="0.01" value="0"> <output id="en-H-out"></output></label>
   </div>
   <div class="grid2">
-    <div><p class="plot-label">Free energy per site \(f\) vs \(T\)</p><canvas class="plot" id="en-f" style="height:210px"></canvas></div>
-    <div><p class="plot-label">Entropy per site \(S/k_B\) vs \(T\)</p><canvas class="plot" id="en-s" style="height:210px"></canvas></div>
-    <div><p class="plot-label">Specific heat per site \(C_H/k_B\) vs \(T\)</p><canvas class="plot" id="en-c" style="height:210px"></canvas></div>
-    <div><p class="plot-label">Magnetization per site \(M\) vs \(H\), at the chosen \(T\)</p><canvas class="plot" id="en-m" style="height:210px"></canvas></div>
+    <div><p class="plot-label" data-k="k103">Free energy per site \(f\) vs \(T\)</p><canvas class="plot" id="en-f" style="height:210px"></canvas></div>
+    <div><p class="plot-label" data-k="k104">Entropy per site \(S/k_B\) vs \(T\)</p><canvas class="plot" id="en-s" style="height:210px"></canvas></div>
+    <div><p class="plot-label" data-k="k105">Specific heat per site \(C_H/k_B\) vs \(T\)</p><canvas class="plot" id="en-c" style="height:210px"></canvas></div>
+    <div><p class="plot-label" data-k="k106">Magnetization per site \(M\) vs \(H\), at the chosen \(T\)</p><canvas class="plot" id="en-m" style="height:210px"></canvas></div>
   </div>
   <ul class="checklist" id="en-check"></ul>
-  <figcaption>A 4 × 4 periodic square-lattice Ising model, summed exactly over all \(2^{16} = 65{,}536\) configurations. The vertical line marks the chosen temperature. Every curve is smooth: a finite system has no phase transition, only a rounded peak in \(C_H\) near the infinite-lattice \(T_c \approx 2.269\,J/k_B\). The checklist verifies (a), (d), (e), (f), and the symmetry \(f(H)=f(-H)\) of §2.7 numerically over the plotted range.</figcaption>
+  <figcaption data-k="k107">A 4 × 4 periodic square-lattice Ising model, summed exactly over all \(2^{16} = 65{,}536\) configurations. The vertical line marks the chosen temperature. Every curve is smooth: a finite system has no phase transition, only a rounded peak in \(C_H\) near the infinite-lattice \(T_c \approx 2.269\,J/k_B\). The checklist verifies (a), (d), (e), (f), and the symmetry \(f(H)=f(-H)\) of §2.7 numerically over the plotted range.</figcaption>
 </figure>
 
-<h3>Convex functions</h3>
-<p>A function \(f(x)\) is <b>convex up</b> (respectively <b>down</b>) if and only if, for all \(0\le\alpha_1,\alpha_2\le1\) with \(\alpha_1+\alpha_2=1\),</p>
+<h3 data-k="k108">Convex functions</h3>
+<p data-k="k109">A function \(f(x)\) is <b>convex up</b> (respectively <b>down</b>) if and only if, for all \(0\le\alpha_1,\alpha_2\le1\) with \(\alpha_1+\alpha_2=1\),</p>
 <div class="math-scroll">\[ \begin{aligned} f(\alpha_1x+\alpha_2y) &\ge \alpha_1f(x)+\alpha_2f(y) && \text{(convex up)},\\ f(\alpha_1x+\alpha_2y) &\le \alpha_1f(x)+\alpha_2f(y) && \text{(convex down)}. \end{aligned} \]</div>
-<p>Graphically, a convex-up function always lies above any chord, and a convex-down function always lies below. One can prove that if \(f(x)\) is bounded and convex up (down), then (i) \(f\) is continuous, (ii) \(f\) is differentiable <i>almost</i> everywhere, and (iii) \(df/dx\) is monotonically non-increasing (non-decreasing). A discontinuity in \(f\) would put it both above and below some chord, but a <mark>point discontinuity in slope</mark>, a cusp, is allowed.</p>
-<p><b>Convexity of \(f\) in \(H\).</b> Recall the Hölder inequality: for sequences \(g_k, h_k \ge 0\) and \(\alpha,\beta\ge0\) with \(\alpha+\beta=1\),</p>
+<p data-k="k110">Graphically, a convex-up function always lies above any chord, and a convex-down function always lies below. One can prove that if \(f(x)\) is bounded and convex up (down), then (i) \(f\) is continuous, (ii) \(f\) is differentiable <i>almost</i> everywhere, and (iii) \(df/dx\) is monotonically non-increasing (non-decreasing). A discontinuity in \(f\) would put it both above and below some chord, but a <mark>point discontinuity in slope</mark>, a cusp, is allowed.</p>
+<p data-k="k111"><b>Convexity of \(f\) in \(H\).</b> Recall the Hölder inequality: for sequences \(g_k, h_k \ge 0\) and \(\alpha,\beta\ge0\) with \(\alpha+\beta=1\),</p>
 <div class="math-scroll">\[ \sum_k g_k^{\alpha}h_k^{\beta} \le \Big(\sum_k g_k\Big)^{\alpha}\Big(\sum_k h_k\Big)^{\beta}. \]</div>
-<p>Write \(Z_\Omega(H) = \operatorname{Tr}\,e^{\beta H\sum_iS_i}\,G[S]\) with \(G[S] = \exp\{\beta J\sum_{\langle ij\rangle}S_iS_j+\cdots\}\), and split \(G = G^{\alpha_1}G^{\alpha_2}\). Then</p>
+<p data-k="k112">Write \(Z_\Omega(H) = \operatorname{Tr}\,e^{\beta H\sum_iS_i}\,G[S]\) with \(G[S] = \exp\{\beta J\sum_{\langle ij\rangle}S_iS_j+\cdots\}\), and split \(G = G^{\alpha_1}G^{\alpha_2}\). Then</p>
 <div class="math-scroll">\[ \begin{aligned} Z_\Omega(\alpha_1H_1+\alpha_2H_2) &= \operatorname{Tr}\Big[\big(e^{\beta H_1\sum_iS_i}G\big)^{\alpha_1}\big(e^{\beta H_2\sum_iS_i}G\big)^{\alpha_2}\Big]\\ &\le Z_\Omega(H_1)^{\alpha_1}Z_\Omega(H_2)^{\alpha_2}. \end{aligned} \]</div>
-<p>Taking the logarithm (a monotonic function), multiplying by \(-k_BT\), dividing by \(N(\Omega)\), and taking the thermodynamic limit,</p>
+<p data-k="k113">Taking the logarithm (a monotonic function), multiplying by \(-k_BT\), dividing by \(N(\Omega)\), and taking the thermodynamic limit,</p>
 <div class="result"><p>\[ \begin{gathered} f(\alpha_1H_1+\alpha_2H_2) \ge \alpha_1f(H_1)+\alpha_2f(H_2):\\ f \text{ is convex up in } H. \end{gathered} \]</p></div>
-<p>Convexity in \(T\) and \(J\) is left as an exercise.</p>
+<p data-k="k114">Convexity in \(T\) and \(J\) is left as an exercise.</p>
 
 <figure class="demo" id="demo-convex">
-  <p class="title">The free energy always lies above its chords</p>
+  <p class="title" data-k="k115">The free energy always lies above its chords</p>
   <div class="controls">
     <label>\(k_BT/J_0\) <input type="range" id="cv-T" aria-label="Temperature k_B T / J_0" min="0.3" max="1.6" step="0.01" value="0.7"> <output id="cv-T-out"></output></label>
     <label>\(H_1\) <input type="range" id="cv-H1" aria-label="First field H_1" min="-0.6" max="0.6" step="0.01" value="-0.4"> <output id="cv-H1-out"></output></label>
     <label>\(H_2\) <input type="range" id="cv-H2" aria-label="Second field H_2" min="-0.6" max="0.6" step="0.01" value="0.3"> <output id="cv-H2-out"></output></label>
   </div>
   <div class="grid2">
-    <div><p class="plot-label">Free energy per spin \(f(H)\) with a chord</p><canvas class="plot" id="cv-f"></canvas></div>
-    <div><p class="plot-label">Slope \(\partial f/\partial H = -m\): non-increasing</p><canvas class="plot" id="cv-df"></canvas></div>
+    <div><p class="plot-label" data-k="k116">Free energy per spin \(f(H)\) with a chord</p><canvas class="plot" id="cv-f"></canvas></div>
+    <div><p class="plot-label" data-k="k117">Slope \(\partial f/\partial H = -m\): non-increasing</p><canvas class="plot" id="cv-df"></canvas></div>
   </div>
   <p class="readout" id="cv-read"></p>
-  <figcaption>The mean-field magnet of the §2.3 demo, in the thermodynamic limit. Below \(T_c\) the free energy has a cusp at \(H=0\): a point discontinuity in slope that convexity permits. The slope \(-m(H)\) jumps there but never increases, which is property (f). Drag the chord endpoints anywhere; the curve never dips below the chord.</figcaption>
+  <figcaption data-k="k118">The mean-field magnet of the §2.3 demo, in the thermodynamic limit. Below \(T_c\) the free energy has a cusp at \(H=0\): a point discontinuity in slope that convexity permits. The slope \(-m(H)\) jumps there but never increases, which is property (f). Drag the chord endpoints anywhere; the curve never dips below the chord.</figcaption>
 </figure>
 </section>
 
 <!-- ======================= 2.7 ======================= -->
 <section id="s2-7">
-<h2><span class="sec">2.7</span>Symmetry properties of the Ising model</h2>
-<p><b>Lemma.</b> For any function \(\phi\) of the spin configuration,</p>
+<h2 data-k="k119"><span class="sec">2.7</span>Symmetry properties of the Ising model</h2>
+<p data-k="k120"><b>Lemma.</b> For any function \(\phi\) of the spin configuration,</p>
 <div class="result"><p>\[ \sum_{\{S_i=\pm1\}}\phi(\{S_i\}) = \sum_{\{S_i=\pm1\}}\phi(\{-S_i\}). \tag{\(*\)} \]</p></div>
-<p>To see this, write out the terms: every term occurs exactly once in the summation on each side. <span class="qed">QED</span></p>
+<p data-k="k121">To see this, write out the terms: every term occurs exactly once in the summation on each side. <span class="qed">QED</span></p>
 
-<h3>Time-reversal (\(\mathbb Z_2\)) symmetry</h3>
-<p>Reversing all magnetic moments, including the external field, leaves the energy unchanged: \(\mathcal H_\Omega(H,J,\{S_i\}) = \mathcal H_\Omega(-H,J,\{-S_i\})\). Thus</p>
+<h3 data-k="k122">Time-reversal (\(\mathbb Z_2\)) symmetry</h3>
+<p data-k="k123">Reversing all magnetic moments, including the external field, leaves the energy unchanged: \(\mathcal H_\Omega(H,J,\{S_i\}) = \mathcal H_\Omega(-H,J,\{-S_i\})\). Thus</p>
 <div class="math-scroll">\[ \begin{aligned} Z_\Omega(-H,J,T) &= \sum_{\{S_i\}}e^{-\beta\mathcal H_\Omega(-H,J,\{S_i\})}\\ &= \sum_{\{S_i\}}e^{-\beta\mathcal H_\Omega(H,J,\{-S_i\})}\\ &\overset{(*)}{=} \sum_{\{S_i\}}e^{-\beta\mathcal H_\Omega(H,J,\{S_i\})}\\ &= Z_\Omega(H,J,T), \end{aligned} \]</div>
 <div class="result"><p>\[ f(H,J,T) = f(-H,J,T). \]</p></div>
 
-<h3>Sublattice symmetry</h3>
-<p>In zero field, divide the hypercubic lattice into two interpenetrating sublattices A and B and label the spins accordingly. On a <b>bipartite</b> lattice the spins on sublattice A interact only with spins on sublattice B and vice versa:</p>
+<h3 data-k="k124">Sublattice symmetry</h3>
+<p data-k="k125">In zero field, divide the hypercubic lattice into two interpenetrating sublattices A and B and label the spins accordingly. On a <b>bipartite</b> lattice the spins on sublattice A interact only with spins on sublattice B and vice versa:</p>
 <div class="math-scroll">\[ \begin{aligned} \mathcal H_\Omega(0,J,\{S^A\},\{S^B\}) &= -J\sum_{\langle ij\rangle}S_i^AS_j^B,\\ \operatorname{Tr} &= \sum_{\{S^A_i=\pm1\}}\sum_{\{S^B_i=\pm1\}}. \end{aligned} \]</div>
-<p>Only the sign of \(JS_i^AS_j^B\) matters, so \(\mathcal H_\Omega(0,-J,\{S^A\},\{S^B\}) = \mathcal H_\Omega(0,J,\{-S^A\},\{S^B\})\). Applying \((*)\) to the A spins alone,</p>
+<p data-k="k126">Only the sign of \(JS_i^AS_j^B\) matters, so \(\mathcal H_\Omega(0,-J,\{S^A\},\{S^B\}) = \mathcal H_\Omega(0,J,\{-S^A\},\{S^B\})\). Applying \((*)\) to the A spins alone,</p>
 <div class="result"><p>\[ f(0,J,T) = f(0,-J,T). \]</p></div>
-<p>In zero field the ferromagnetic (\(J>0\)) and antiferromagnetic (\(J\lt 0\)) Ising models on a hypercubic lattice have <mark>the same thermodynamics</mark>. The argument fails on a triangular lattice, which is not bipartite. There it is not possible to minimize all the antiferromagnetic interactions simultaneously, as it is on a square lattice: an example of <mark>frustration</mark>.</p>
+<p data-k="k127">In zero field the ferromagnetic (\(J>0\)) and antiferromagnetic (\(J\lt 0\)) Ising models on a hypercubic lattice have <mark>the same thermodynamics</mark>. The argument fails on a triangular lattice, which is not bipartite. There it is not possible to minimize all the antiferromagnetic interactions simultaneously, as it is on a square lattice: an example of <mark>frustration</mark>.</p>
 
 <figure class="demo" id="demo-sym">
-  <p class="title">Ferromagnet vs antiferromagnet, square vs triangular</p>
+  <p class="title" data-k="k128">Ferromagnet vs antiferromagnet, square vs triangular</p>
   <div class="controls">
-    <span role="group" aria-label="Lattice"><button id="sy-sq" aria-pressed="true">Square lattice</button> <button id="sy-tri" aria-pressed="false">Triangular lattice</button></span>
+    <span role="group" aria-label="Lattice"><button id="sy-sq" aria-pressed="true" data-k="k129">Square lattice</button> <button id="sy-tri" aria-pressed="false" data-k="k130">Triangular lattice</button></span>
   </div>
   <div class="grid-lat" style="grid-template-columns:minmax(0,200px) minmax(0,1fr)">
     <div>
@@ -449,80 +467,80 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
         <path d="M175 148 V172 M168 164 L175 172 L182 164" stroke="var(--crit)" stroke-width="3" fill="none"/>
         <text x="100" y="32" text-anchor="middle" font-size="22" font-family="var(--ui-font)" fill="currentColor">?</text>
       </svg>
-      <p class="readout" style="margin-top:.3rem">With \(J\lt 0\), the top spin cannot be antiparallel to both neighbors.</p>
+      <p class="readout" style="margin-top:.3rem" data-k="k131">With \(J\lt 0\), the top spin cannot be antiparallel to both neighbors.</p>
     </div>
     <div class="grid2">
-      <div><p class="plot-label">Free energy per site, \(H=0\)</p><canvas class="plot" id="sy-f" style="height:230px"></canvas></div>
-      <div><p class="plot-label">Entropy per site \(S/k_B\), \(H=0\)</p><canvas class="plot" id="sy-s" style="height:230px"></canvas></div>
+      <div><p class="plot-label" data-k="k132">Free energy per site, \(H=0\)</p><canvas class="plot" id="sy-f" style="height:230px"></canvas></div>
+      <div><p class="plot-label" data-k="k133">Entropy per site \(S/k_B\), \(H=0\)</p><canvas class="plot" id="sy-s" style="height:230px"></canvas></div>
     </div>
   </div>
   <p class="readout" id="sy-read"></p>
-  <figcaption>Exact sums over all \(2^{16}\) states of 4 × 4 periodic lattices with \(|J|=1\). On the bipartite square lattice the curves for \(J=+1\) and \(J=-1\) coincide exactly. On the triangular lattice they differ, and the frustrated antiferromagnet keeps a large ground-state degeneracy, so its entropy stays positive as \(T\to0\). For the infinite triangular lattice this residual entropy is \(0.3231\,k_B\) per site (Wannier, 1950); a 4 × 4 lattice only approximates it.</figcaption>
+  <figcaption data-k="k134">Exact sums over all \(2^{16}\) states of 4 × 4 periodic lattices with \(|J|=1\). On the bipartite square lattice the curves for \(J=+1\) and \(J=-1\) coincide exactly. On the triangular lattice they differ, and the frustrated antiferromagnet keeps a large ground-state degeneracy, so its entropy stays positive as \(T\to0\). For the infinite triangular lattice this residual entropy is \(0.3231\,k_B\) per site (Wannier, 1950); a 4 × 4 lattice only approximates it.</figcaption>
 </figure>
 </section>
 
 <!-- ======================= 2.8 ======================= -->
 <section id="s2-8">
-<h2><span class="sec">2.8</span>Existence of phase transitions</h2>
-<p>How do we "construct" the phase diagram of a particular system? The <mark>energy–entropy argument</mark>: at high temperature the entropy always dominates the free energy \(F = E-TS\), which is minimized by maximizing \(S\). At low temperature the internal energy may dominate \(TS\), so \(F\) is minimized by minimizing \(E\). If the macroscopic states selected by the two procedures are different, at least one phase transition has occurred at some intermediate temperature.</p>
+<h2 data-k="k135"><span class="sec">2.8</span>Existence of phase transitions</h2>
+<p data-k="k136">How do we "construct" the phase diagram of a particular system? The <mark>energy–entropy argument</mark>: at high temperature the entropy always dominates the free energy \(F = E-TS\), which is minimized by maximizing \(S\). At low temperature the internal energy may dominate \(TS\), so \(F\) is minimized by minimizing \(E\). If the macroscopic states selected by the two procedures are different, at least one phase transition has occurred at some intermediate temperature.</p>
 
-<h3>The zero-temperature phase diagram</h3>
-<p>At \(T=0\), \(F=E\). <b>Lemma:</b> if the energy is a sum of terms depending on the spin configuration \([S]\), \(E = \sum_\lambda E_\lambda[S]\), then</p>
+<h3 data-k="k137">The zero-temperature phase diagram</h3>
+<p data-k="k138">At \(T=0\), \(F=E\). <b>Lemma:</b> if the energy is a sum of terms depending on the spin configuration \([S]\), \(E = \sum_\lambda E_\lambda[S]\), then</p>
 <div class="result"><p>\[ \min_{[S]}E \ \ge\ \sum_\lambda\min_{[S]}E_\lambda[S]. \]</p></div>
-<p><i>Proof:</i> \(E_\lambda[S]\ge\min_{[S]}E_\lambda[S]\) for every \(\lambda\) and every \([S]\); sum over \(\lambda\) and minimize the left side, noting the right side is a constant. <span class="qed">QED</span> If one can find a configuration that minimizes each term in the Hamiltonian <i>separately</i>, it achieves the bound and is therefore a ground state, though not necessarily a unique one. Because the \(E_\lambda\) depend on the coupling constants, so does the minimizing configuration.</p>
-<p>As the couplings \([K]\) vary, the energy levels of the system move, and the ground state may switch from one level to another. Such a <mark>level crossing</mark> usually generates a first-order transition, because \(\partial E/\partial K_i\) is discontinuous there. Notice that the thermodynamic limit is <i>not</i> needed for a zero-temperature transition: the non-analyticity occurs not because \(N\to\infty\) but because \(\beta\to\infty\) (\(T\to0^+\)).</p>
-<p><b>Example: the Ising model with \(J>0\).</b> \(-J\sum_{\langle ij\rangle}S_iS_j\) is minimized by \(S_i = S_j\) for all pairs, and \(-H\sum_iS_i\) by \(S_i = +1\) for \(H>0\) and \(-1\) for \(H\lt 0\). Both are satisfied by \(S_i = \operatorname{sgn}H\), so</p>
+<p data-k="k139"><i>Proof:</i> \(E_\lambda[S]\ge\min_{[S]}E_\lambda[S]\) for every \(\lambda\) and every \([S]\); sum over \(\lambda\) and minimize the left side, noting the right side is a constant. <span class="qed">QED</span> If one can find a configuration that minimizes each term in the Hamiltonian <i>separately</i>, it achieves the bound and is therefore a ground state, though not necessarily a unique one. Because the \(E_\lambda\) depend on the coupling constants, so does the minimizing configuration.</p>
+<p data-k="k140">As the couplings \([K]\) vary, the energy levels of the system move, and the ground state may switch from one level to another. Such a <mark>level crossing</mark> usually generates a first-order transition, because \(\partial E/\partial K_i\) is discontinuous there. Notice that the thermodynamic limit is <i>not</i> needed for a zero-temperature transition: the non-analyticity occurs not because \(N\to\infty\) but because \(\beta\to\infty\) (\(T\to0^+\)).</p>
+<p data-k="k141"><b>Example: the Ising model with \(J>0\).</b> \(-J\sum_{\langle ij\rangle}S_iS_j\) is minimized by \(S_i = S_j\) for all pairs, and \(-H\sum_iS_i\) by \(S_i = +1\) for \(H>0\) and \(-1\) for \(H\lt 0\). Both are satisfied by \(S_i = \operatorname{sgn}H\), so</p>
 <div class="result"><p>\[ M_\Omega \equiv \frac{1}{N(\Omega)}\sum_{i\in\Omega}S_i = \begin{cases}+1, & H>0\\ -1, & H\lt 0\end{cases} \]</p></div>
-<p>and the zero-temperature phase diagram has a transition at \(H=0\). At \(H=0\) exactly, all-up and all-down have the same energy, and which is observed depends on the <b>initial conditions</b> in which the system is prepared.</p>
+<p data-k="k142">and the zero-temperature phase diagram has a transition at \(H=0\). At \(H=0\) exactly, all-up and all-down have the same energy, and which is observed depends on the <b>initial conditions</b> in which the system is prepared.</p>
 
 <figure class="demo" id="demo-level">
-  <p class="title">A level crossing, and a step that needs no thermodynamic limit</p>
+  <p class="title" data-k="k143">A level crossing, and a step that needs no thermodynamic limit</p>
   <div class="controls">
     <label>\(k_BT/J\) <input type="range" id="lv-T" aria-label="Temperature k_B T / J" min="0.02" max="3" step="0.01" value="1"> <output id="lv-T-out"></output></label>
   </div>
   <div class="grid2">
-    <div><p class="plot-label">Lowest energy in each magnetization sector, \(E_M(H)\)</p><canvas class="plot" id="lv-e"></canvas></div>
-    <div><p class="plot-label">\(M\) vs \(H\) for the same 16 spins</p><canvas class="plot" id="lv-m"></canvas></div>
+    <div><p class="plot-label" data-k="k144">Lowest energy in each magnetization sector, \(E_M(H)\)</p><canvas class="plot" id="lv-e"></canvas></div>
+    <div><p class="plot-label" data-k="k145">\(M\) vs \(H\) for the same 16 spins</p><canvas class="plot" id="lv-m"></canvas></div>
   </div>
-  <figcaption>Left: for the 4 × 4 periodic lattice (\(J=1\)), the lowest energy with total magnetization \(\sum_iS_i\) fixed is a straight line in \(H\) with slope \(-\sum_iS_i\). The ground state (thick) switches from all-down to all-up at \(H=0\). Right: the exact \(M(H)\) of the same 16 spins. Lower the temperature and the smooth curve sharpens into the zero-temperature step, with no \(N\to\infty\) required.</figcaption>
+  <figcaption data-k="k146">Left: for the 4 × 4 periodic lattice (\(J=1\)), the lowest energy with total magnetization \(\sum_iS_i\) fixed is a straight line in \(H\) with slope \(-\sum_iS_i\). The ground state (thick) switches from all-down to all-up at \(H=0\). Right: the exact \(M(H)\) of the same 16 spins. Lower the temperature and the smooth curve sharpens into the zero-temperature step, with no \(N\to\infty\) required.</figcaption>
 </figure>
 
-<h3>Nonzero temperature in \(d = 1\)</h3>
-<p>Whether a \(T=0\) transition survives at \(T>0\) depends on the <mark>dimensionality</mark>. Landau and Peierls showed there is no long-range order in \(d=1\) for \(T>0\), while for \(d=2\) a long-range-ordered (ferromagnetic) state exists above \(T=0\), with a transition at \(T_c>0\) to a paramagnetic (disordered) state. The dimension above which a given transition occurs at \(T>0\) is the <mark>lower critical dimension</mark>.</p>
-<p>At \(T=0\) in \(d=1\) there are two possible phases, all spins up and all spins down. As the temperature is raised, each spin executes a sort of Brownian motion by virtue of being in thermal equilibrium. In the thermodynamic limit, the uncorrelated flipping of a <i>finite</i> number \(n\) of spins cannot destroy long-range order, since \(\lim_{N\to\infty}(N-n)/N = 1\). To destroy it, a nonzero <i>fraction</i> \(f\) of the spins must be reversed on average, and since each reversed spin contributes \(-1\) instead of \(+1\), the magnetization becomes \(\lim_{N\to\infty}(N-2fN)/N = 1-2f\lt 1\). Even this only reduces the order: it is destroyed when the reversed spins are no longer a minority, \(f\to\tfrac12\) and \(M\to0\). The domain-wall argument below shows that this is what happens in \(d=1\).</p>
-<p>If all the spins are aligned the entropy is zero (\(k_B\log1\)) and \(F_N = -NJ\) at \(H=0\). Now consider a state with two domains, \(\uparrow\cdots\uparrow\,\downarrow\cdots\downarrow\). The interface costs \(\Delta E = 2J\), since one bond changes from \(-J\) to \(+J\), so \(E_N = -NJ+2J\). In an open chain the interface can sit on any of the \(N-1\approx N\) bonds, so \(S_N \approx k_B\log N\). (On a periodic ring walls come in pairs: two walls cost \(4J\) and can be placed in \(\binom N2\) ways, \(\Delta F = 4J - k_BT\log\binom N2\approx 4J-2k_BT\log N\), with the same conclusion.) Hence, for the open chain,</p>
+<h3 data-k="k147">Nonzero temperature in \(d = 1\)</h3>
+<p data-k="k148">Whether a \(T=0\) transition survives at \(T>0\) depends on the <mark>dimensionality</mark>. Landau and Peierls showed there is no long-range order in \(d=1\) for \(T>0\), while for \(d=2\) a long-range-ordered (ferromagnetic) state exists above \(T=0\), with a transition at \(T_c>0\) to a paramagnetic (disordered) state. The dimension above which a given transition occurs at \(T>0\) is the <mark>lower critical dimension</mark>.</p>
+<p data-k="k149">At \(T=0\) in \(d=1\) there are two possible phases, all spins up and all spins down. As the temperature is raised, each spin executes a sort of Brownian motion by virtue of being in thermal equilibrium. In the thermodynamic limit, the uncorrelated flipping of a <i>finite</i> number \(n\) of spins cannot destroy long-range order, since \(\lim_{N\to\infty}(N-n)/N = 1\). To destroy it, a nonzero <i>fraction</i> \(f\) of the spins must be reversed on average, and since each reversed spin contributes \(-1\) instead of \(+1\), the magnetization becomes \(\lim_{N\to\infty}(N-2fN)/N = 1-2f\lt 1\). Even this only reduces the order: it is destroyed when the reversed spins are no longer a minority, \(f\to\tfrac12\) and \(M\to0\). The domain-wall argument below shows that this is what happens in \(d=1\).</p>
+<p data-k="k150">If all the spins are aligned the entropy is zero (\(k_B\log1\)) and \(F_N = -NJ\) at \(H=0\). Now consider a state with two domains, \(\uparrow\cdots\uparrow\,\downarrow\cdots\downarrow\). The interface costs \(\Delta E = 2J\), since one bond changes from \(-J\) to \(+J\), so \(E_N = -NJ+2J\). In an open chain the interface can sit on any of the \(N-1\approx N\) bonds, so \(S_N \approx k_B\log N\). (On a periodic ring walls come in pairs: two walls cost \(4J\) and can be placed in \(\binom N2\) ways, \(\Delta F = 4J - k_BT\log\binom N2\approx 4J-2k_BT\log N\), with the same conclusion.) Hence, for the open chain,</p>
 <div class="result"><p>\[ \begin{gathered} \Delta F \equiv F_N^{\text{(boundary)}} - F_N^{\text{(one phase)}} = 2J - k_BT\log N,\\ \Delta F \longrightarrow -\infty\ \text{ as } N\to\infty,\ \text{for any } T>0. \end{gathered} \]</p></div>
-<p>The system lowers its free energy by creating a domain wall, at any \(T>0\), and again each time new domains are created; continue until no ordered domains remain at all. The long-range-ordered state is unstable to thermal fluctuations for \(T>0\), so \(M = 0\) in zero field. As a corollary there is <mark>no phase transition for \(T>0\)</mark> in \(d=1\): at \(H=0\) there are no longer two phases, only the two zero-temperature states \(M=\pm1\) at the ends of the line.</p>
+<p data-k="k151">The system lowers its free energy by creating a domain wall, at any \(T>0\), and again each time new domains are created; continue until no ordered domains remain at all. The long-range-ordered state is unstable to thermal fluctuations for \(T>0\), so \(M = 0\) in zero field. As a corollary there is <mark>no phase transition for \(T>0\)</mark> in \(d=1\): at \(H=0\) there are no longer two phases, only the two zero-temperature states \(M=\pm1\) at the ends of the line.</p>
 
 <figure class="demo" id="demo-dw">
-  <p class="title">Energy against entropy in one dimension</p>
+  <p class="title" data-k="k152">Energy against entropy in one dimension</p>
   <div class="controls">
     <label>\(k_BT/J\) <input type="range" id="dw-T" aria-label="Temperature k_B T / J" min="0.3" max="2.5" step="0.01" value="0.6"> <output id="dw-T-out"></output></label>
-    <label>Speed <input type="range" id="dw-speed" min="1" max="30" step="1" value="6"> <output id="dw-speed-out"></output></label>
-    <button id="dw-restart">Restart from all up</button>
+    <label><span data-k="k153">Speed</span> <input type="range" id="dw-speed" min="1" max="30" step="1" value="6"> <output id="dw-speed-out"></output></label>
+    <button id="dw-restart" data-k="k154">Restart from all up</button>
     <button id="dw-pause" aria-pressed="false">Pause</button>
   </div>
   <div class="grid2">
-    <div><p class="plot-label">\(\Delta F = 2J - k_BT\ln N\) for one domain wall</p><canvas class="plot" id="dw-plot"></canvas></div>
-    <div><p class="plot-label">A chain of 400 spins, time running downward</p><canvas class="kymo" id="dw-kymo" width="400" height="240" style="aspect-ratio:400/240"></canvas></div>
+    <div><p class="plot-label" data-k="k156">\(\Delta F = 2J - k_BT\ln N\) for one domain wall</p><canvas class="plot" id="dw-plot"></canvas></div>
+    <div><p class="plot-label" data-k="k157">A chain of 400 spins, time running downward</p><canvas class="kymo" id="dw-kymo" width="400" height="240" style="aspect-ratio:400/240"></canvas></div>
   </div>
   <p class="readout" id="dw-read"></p>
-  <figcaption>Left: the single-wall free-energy change of an open chain at the chosen temperature (solid) and at others (gray). It becomes negative for \(N > N^* = e^{2J/k_BT}\), so any long enough chain disorders, however low the temperature. Right: heat-bath dynamics started from the perfectly ordered state on a periodic ring. Walls nucleate in pairs and wander until their equilibrium density is reached. For this ring of \(N=400\) spins the exact density is \((1-u)(1-u^{N-1})/\big(2(1+u^N)\big)\) with \(u=\tanh(J/k_BT)\); its thermodynamic limit is \(1/(1+e^{2J/k_BT})\). The two differ noticeably at low \(T\), where the chain is not much longer than the correlation length.</figcaption>
+  <figcaption data-k="k158">Left: the single-wall free-energy change of an open chain at the chosen temperature (solid) and at others (gray). It becomes negative for \(N > N^* = e^{2J/k_BT}\), so any long enough chain disorders, however low the temperature. Right: heat-bath dynamics started from the perfectly ordered state on a periodic ring. Walls nucleate in pairs and wander until their equilibrium density is reached. For this ring of \(N=400\) spins the exact density is \((1-u)(1-u^{N-1})/\big(2(1+u^N)\big)\) with \(u=\tanh(J/k_BT)\); its thermodynamic limit is \(1/(1+e^{2J/k_BT})\). The two differ noticeably at low \(T\), where the chain is not much longer than the correlation length.</figcaption>
 </figure>
 
-<p>The argument assumed short-ranged interactions, so that the energy difference between the ordered and two-domain states did not depend on \(N\). If instead \(J_{ij} = J/|\vec r_i-\vec r_j|^{\sigma}\), long-range order can persist for \(0\lt T\lt T_c\) as long as \(1\le\sigma\le2\). For \(\sigma\lt 1\) the thermodynamic limit does not exist, consistent with the requirement \(\sigma>d\) of §2.2 (the boundary case \(\sigma=1\) is marginal). For \(\sigma>2\) the interaction counts as short ranged and the argument for the destruction of long-range order at \(T>0\) applies. The difficult case \(\sigma=2\) is treated by Fröhlich and Spencer (1982).</p>
-<p class="aside">Chapter 2 continues in <a href="ch02b-symmetry-breaking-and-lattice-gases.html">Part 2</a>, with the Peierls argument in two dimensions.</p>
+<p data-k="k159">The argument assumed short-ranged interactions, so that the energy difference between the ordered and two-domain states did not depend on \(N\). If instead \(J_{ij} = J/|\vec r_i-\vec r_j|^{\sigma}\), long-range order can persist for \(0\lt T\lt T_c\) as long as \(1\le\sigma\le2\). For \(\sigma\lt 1\) the thermodynamic limit does not exist, consistent with the requirement \(\sigma>d\) of §2.2 (the boundary case \(\sigma=1\) is marginal). For \(\sigma>2\) the interaction counts as short ranged and the argument for the destruction of long-range order at \(T>0\) applies. The difficult case \(\sigma=2\) is treated by Fröhlich and Spencer (1982).</p>
+<p class="aside" data-k="k160">Chapter 2 continues in <a href="ch02b-symmetry-breaking-and-lattice-gases.html">Part 2</a>, with the Peierls argument in two dimensions.</p>
 </section>
 
 <section id="reading">
-<h2>Further reading</h2>
+<h2 data-k="k161">Further reading</h2>
 <ul>
-  <li>N. Goldenfeld, <i>Lectures on Phase Transitions and the Renormalization Group</i> (Addison-Wesley, 1992), Chapter 2.</li>
-  <li>S. G. Brush, "History of the Lenz–Ising model," <i>Rev. Mod. Phys.</i> <b>39</b>, 883 (1967).</li>
-  <li>R. B. Griffiths, "Rigorous results and theorems," in C. Domb and M. S. Green (eds.), <i>Phase Transitions and Critical Phenomena</i>, vol. 1 (Academic Press, 1972).</li>
-  <li>R. J. Baxter, <i>Exactly Solved Models in Statistical Mechanics</i> (Academic Press, 1982).</li>
-  <li>J. Fröhlich and T. Spencer, "The phase transition in the one-dimensional Ising model with \(1/r^2\) interaction energy," <i>Commun. Math. Phys.</i> <b>84</b>, 87 (1982).</li>
-  <li>G. H. Wannier, "Antiferromagnetism. The triangular Ising net," <i>Phys. Rev.</i> <b>79</b>, 357 (1950).</li>
+  <li data-k="k162">N. Goldenfeld, <i>Lectures on Phase Transitions and the Renormalization Group</i> (Addison-Wesley, 1992), Chapter 2.</li>
+  <li data-k="k163">S. G. Brush, "History of the Lenz–Ising model," <i>Rev. Mod. Phys.</i> <b>39</b>, 883 (1967).</li>
+  <li data-k="k164">R. B. Griffiths, "Rigorous results and theorems," in C. Domb and M. S. Green (eds.), <i>Phase Transitions and Critical Phenomena</i>, vol. 1 (Academic Press, 1972).</li>
+  <li data-k="k165">R. J. Baxter, <i>Exactly Solved Models in Statistical Mechanics</i> (Academic Press, 1982).</li>
+  <li data-k="k166">J. Fröhlich and T. Spencer, "The phase transition in the one-dimensional Ising model with \(1/r^2\) interaction energy," <i>Commun. Math. Phys.</i> <b>84</b>, 87 (1982).</li>
+  <li data-k="k167">G. H. Wannier, "Antiferromagnetism. The triangular Ising net," <i>Phys. Rev.</i> <b>79</b>, 357 (1950).</li>
 </ul>
 </section>
 </main>
@@ -530,11 +548,11 @@ button.theme-btn svg{width:20px; height:20px; fill:none; stroke:currentColor; st
 
 <footer>
   <nav class="chapnav" aria-label="Chapters">
-    <a href="index.html">All chapters</a>
+    <span data-k="k168"><a href="index.html">All chapters</a>
     <a href="ch01-introduction.html">Previous: Chapter 1, Introduction</a>
-    <a href="ch02b-symmetry-breaking-and-lattice-gases.html">Next: Chapter 2, Part 2, Symmetry breaking, ergodicity, and lattice gases</a>
+    <a href="ch02b-symmetry-breaking-and-lattice-gases.html">Next: Chapter 2, Part 2, Symmetry breaking, ergodicity, and lattice gases</a></span>
   </nav>
-  <p>Interactive companion to Sang Hoon Lee's lecture notes on Chapter 2 of N. Goldenfeld, <i>Lectures on Phase Transitions and the Renormalization Group</i>. The text paraphrases the notes. All calculations run client side with no data collection. Created by Claude Opus 5.5 (Anthropic) based on Sang Hoon Lee's lecture notes, for the graduate course of the Department of Physics, Gyeongsang National University.</p>
+  <p data-k="k169">Interactive companion to Sang Hoon Lee's lecture notes on Chapter 2 of N. Goldenfeld, <i>Lectures on Phase Transitions and the Renormalization Group</i>. The text paraphrases the notes. All calculations run client side with no data collection. Created by Claude Opus 5.5 (Anthropic) based on Sang Hoon Lee's lecture notes, for the graduate course of the Department of Physics, Gyeongsang National University.</p>
 </footer>
 
 <script>
@@ -549,9 +567,10 @@ let reduceMotion = motionMQ.matches;
 const motionHooks = [];
 motionMQ.addEventListener('change', e => { reduceMotion = e.matches; motionHooks.forEach(f => f()); });
 function playButton(btn, st, on, labels){ // st.run is the panel's running flag; on() runs after every change
-  const [pl, rl] = labels || ['Pause', 'Play']; let chosen = false;
+  const [pl, rl] = labels || ['Pause', 'Play']; let chosen = false; const KO_BTN = {Pause:'일시 정지', Play:'재생', Resume:'계속'};
   st.run = !reduceMotion;
-  const sync = () => { btn.textContent = st.run ? pl : rl; btn.setAttribute('aria-pressed', String(!st.run)); };
+  const sync = () => { const w = st.run ? pl : rl; btn.textContent = tr(w, KO_BTN[w]); btn.setAttribute('aria-pressed', String(!st.run)); };
+  window.addEventListener('langchange', sync);
   btn.addEventListener('click', () => { st.run = !st.run; chosen = true; sync(); if(on) on(); });
   motionHooks.push(() => { if(chosen) return; st.run = !reduceMotion; sync(); if(on) on(); });
   sync(); return sync;
@@ -660,6 +679,7 @@ function reg(f){ redraws.push(f); f(); }
 let rzT; window.addEventListener('resize',()=>{ clearTimeout(rzT); rzT=setTimeout(()=>redraws.forEach(f=>f()),120); });
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{ refreshSpinColors(); redraws.forEach(f=>f()); });
 new MutationObserver(()=>{ refreshSpinColors(); redraws.forEach(f=>f()); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+window.addEventListener('langchange',()=>redraws.forEach(f=>f()));
 
 /* visibility flags so off-screen simulations sleep */
 const visible=new Map();
@@ -688,7 +708,7 @@ function markScrollers(){
   document.querySelectorAll('.result, .math-scroll, .table-scroll, .katex-display').forEach(el=>{
     const ours=el.dataset.scrollFocus==='1', over=el.scrollWidth>el.clientWidth+1;
     const inside=el.parentElement&&el.parentElement.closest('[data-scroll-focus="1"]');
-    if(over&&!inside&&!ours){ el.tabIndex=0; el.setAttribute('role','region'); el.setAttribute('aria-label',el.querySelector('table')?'Scrollable table':'Scrollable equation'); el.dataset.scrollFocus='1'; }
+    if(over&&!inside&&!ours){ el.tabIndex=0; el.setAttribute('role','region'); el.setAttribute('aria-label',el.querySelector('table')?tr('Scrollable table','스크롤 가능한 표'):tr('Scrollable equation','스크롤 가능한 수식')); el.dataset.scrollFocus='1'; }
     else if(ours&&(!over||inside)){ el.removeAttribute('tabindex'); el.removeAttribute('role'); el.removeAttribute('aria-label'); delete el.dataset.scrollFocus; }
   });
 }
@@ -701,7 +721,7 @@ window.addEventListener('load',()=>setTimeout(()=>{ if(document.fonts) document.
 let SPIN_UP=[0,0,0], SPIN_DN=[0,0,0];
 function refreshSpinColors(){ SPIN_UP=hexRGB(css('--spin-up')); SPIN_DN=hexRGB(css('--spin-down')); }
 refreshSpinColors();
-function bindSlider(id,fn,fmtf){ const el=$(id), out=$(id+'-out'); const u=()=>{ const v=+el.value; if(out) out.textContent=fmtf?fmtf(v):v; fn(v); }; el.addEventListener('input',u); u(); return el; }
+function bindSlider(id,fn,fmtf){ const el=$(id), out=$(id+'-out'); const u=()=>{ const v=+el.value; if(out) out.textContent=fmtf?fmtf(v):v; fn(v); }; el.addEventListener('input',u); if(fmtf) window.addEventListener('langchange',()=>{ if(out) out.textContent=fmtf(+el.value); }); u(); return el; }
 const lncosh2 = x => { const a=Math.abs(x); return a+Math.log1p(Math.exp(-2*a)); }; // ln(2 cosh x)
 
 /* ---------- 1D chain with kymograph ---------- */
@@ -762,14 +782,14 @@ function heroTick(now){
     const lo=Math.min(...all,fb), hi=Math.max(...all,fb), pad=(hi-lo)*0.08||0.1;
     plot($('#sf-f'),{xlog:true,xlim:[2,2000],ylim:[lo-pad,hi+pad],xlabel:'N',ylabel:'F_N / N',legend:'tr',
       hlines:[{y:fb,color:css('--crit')}],
-      series:[{data:rows.map(r=>[r.N,r.fo]),color:css('--up'),width:2.2,name:'open chain'},
-        {data:rows.map(r=>[r.N,r.fp]),color:css('--down'),width:2.2,name:'periodic ring'},
-        {data:[],color:css('--crit'),dash:[4,4],width:1.5,name:'bulk f_b'}]});
+      series:[{data:rows.map(r=>[r.N,r.fo]),color:css('--up'),width:2.2,name:tr('open chain','열린 사슬')},
+        {data:rows.map(r=>[r.N,r.fp]),color:css('--down'),width:2.2,name:tr('periodic ring','주기 고리')},
+        {data:[],color:css('--crit'),dash:[4,4],width:1.5,name:tr('bulk f_b','부피 f_b')}]});
     plot($('#sf-d'),{xlog:true,ylog:true,xlim:[2,2000],ylim:[1e-12,10],xlabel:'N',ylabel:'|F_N/N − f_b|',legend:'tr',
-      series:[{data:rows.map(r=>[r.N,Math.abs(r.fo-r.fb)]),color:css('--up'),width:2.2,name:'open: ~ 1/N'},
-        {data:rows.map(r=>[r.N,Math.abs(r.fp-r.fb)]),color:css('--down'),width:2.2,name:'periodic: ~ (λ₋/λ₊)^N'}]});
+      series:[{data:rows.map(r=>[r.N,Math.abs(r.fo-r.fb)]),color:css('--up'),width:2.2,name:tr('open: ~ 1/N','열린: ~ 1/N')},
+        {data:rows.map(r=>[r.N,Math.abs(r.fp-r.fb)]),color:css('--down'),width:2.2,name:tr('periodic: ~ (λ₋/λ₊)^N','주기: ~ (λ₋/λ₊)^N')}]});
     const big=rows[rows.length-1], fs=(big.N*big.fo - big.N*big.fb)/2;
-    $('#sf-read').innerHTML=`Bulk free energy per site <b>f<sub>b</sub> = ${big.fb.toFixed(5)} J</b>; surface free energy per end <b>f<sub>s</sub> ≈ ${fs.toFixed(5)} J</b> (from N = ${big.N.toLocaleString('en-US')}).`;
+    $('#sf-read').innerHTML=tr(`Bulk free energy per site <b>f<sub>b</sub> = ${big.fb.toFixed(5)} J</b>; surface free energy per end <b>f<sub>s</sub> ≈ ${fs.toFixed(5)} J</b> (from N = ${big.N.toLocaleString('en-US')}).`,`자리당 부피 자유 에너지 <b>f<sub>b</sub> = ${big.fb.toFixed(5)} J</b>, 끝 하나당 표면 자유 에너지 <b>f<sub>s</sub> ≈ ${fs.toFixed(5)} J</b> (N = ${big.N.toLocaleString('en-US')}에서).`);
   }
   bindSlider('#sf-T',v=>{T=v;draw();},v=>v.toFixed(2));
   bindSlider('#sf-H',v=>{H=v;draw();},v=>v.toFixed(2));
@@ -783,12 +803,12 @@ function heroTick(now){
   function draw(){
     const Rs=logRange(1.01,1e6,300);
     const ref=[d,d+1].map(v=>({data:Rs.map(R=>[R,Eb(R,d,v)]),color:css('--muted'),width:1.2,alpha:.45}));
-    plot($('#pw-plot'),{xlog:true,ylog:true,xlim:[1,1e6],ylim:[1e-2,1e12],xlabel:'R / a',ylabel:'E_b (arb. units)',
+    plot($('#pw-plot'),{xlog:true,ylog:true,xlim:[1,1e6],ylim:[1e-2,1e12],xlabel:'R / a',ylabel:tr('E_b (arb. units)','E_b (임의 단위)'),
       series:[...ref,{data:Rs.map(R=>[R,Eb(R,d,s)]),color:css('--up'),width:2.6}]});
     let msg;
-    if(Math.abs(d-s)<1e-9) msg=`σ = d: E<sub>b</sub> ∝ ln(R/a) <b>diverges</b> (marginal). No thermodynamic limit.`;
-    else if(s<d) msg=`σ &lt; d: E<sub>b</sub> ∝ R<sup>${(d-s).toFixed(2)}</sup> <b>diverges</b>. No thermodynamic limit.`;
-    else msg=`σ &gt; d: E<sub>b</sub> → a<sup>d−σ</sup>/(σ−d) = <b>${(1/(s-d)).toFixed(3)}</b>, finite. The thermodynamic limit exists.`;
+    if(Math.abs(d-s)<1e-9) msg=tr(`σ = d: E<sub>b</sub> ∝ ln(R/a) <b>diverges</b> (marginal). No thermodynamic limit.`,`σ = d: E<sub>b</sub> ∝ ln(R/a)로 <b>발산</b>합니다(경계적). 열역학적 극한이 없습니다.`);
+    else if(s<d) msg=tr(`σ &lt; d: E<sub>b</sub> ∝ R<sup>${(d-s).toFixed(2)}</sup> <b>diverges</b>. No thermodynamic limit.`,`σ &lt; d: E<sub>b</sub> ∝ R<sup>${(d-s).toFixed(2)}</sup>로 <b>발산</b>합니다. 열역학적 극한이 없습니다.`);
+    else msg=tr(`σ &gt; d: E<sub>b</sub> → a<sup>d−σ</sup>/(σ−d) = <b>${(1/(s-d)).toFixed(3)}</b>, finite. The thermodynamic limit exists.`,`σ &gt; d: E<sub>b</sub> → a<sup>d−σ</sup>/(σ−d) = <b>${(1/(s-d)).toFixed(3)}</b>로 유한합니다. 열역학적 극한이 존재합니다.`);
     $('#pw-read').innerHTML=msg;
   }
   const sd=bindSlider('#pw-d',v=>{d=v;draw();}), ss=bindSlider('#pw-s',v=>{s=v;draw();},v=>v.toFixed(2));
@@ -815,7 +835,7 @@ function hGrid(a,b,n,T){ const hs=range(a,b,n).filter(h=>Math.abs(h)>1e-9); if(T
     const crit=css('--crit'), up=css('--up');
     plot($('#cl-pd'),{height:240,xlim:[0,2],ylim:[-0.6,0.6],xlabel:'k_B T / J₀',ylabel:'H / J₀',
       series:[{data:[[0,0],[1,0]],color:crit,width:4},{data:[[T,-0.6],[T,0.6]],color:up,width:2,dash:[6,4]},{data:[[1,0]],points:true,color:crit,r:5}],
-      after:(ctx,X,Y)=>{ ctx.fillStyle=css('--muted'); ctx.font=`12px ${css('--ui-font')}`; ctx.textAlign='left'; ctx.fillText('m > 0',X(0.15),Y(0.3)); ctx.fillText('m < 0',X(0.15),Y(-0.3)); ctx.fillText('critical point',X(1.04),Y(0.06)); }});
+      after:(ctx,X,Y)=>{ ctx.fillStyle=css('--muted'); ctx.font=`12px ${css('--ui-font')}`; ctx.textAlign='left'; ctx.fillText('m > 0',X(0.15),Y(0.3)); ctx.fillText('m < 0',X(0.15),Y(-0.3)); ctx.fillText(tr('critical point','임계점'),X(1.04),Y(0.06)); }});
     const hs=hGrid(-0.6,0.6,601,T), pts=hs.map(h=>isNaN(h)?[0,NaN,NaN]:(r=>[h,r.m,r.chi])(mf(h,T)));
     plot($('#cl-m'),{height:240,xlim:[-0.6,0.6],ylim:[-1.05,1.05],xlabel:'H / J₀',ylabel:'m',hlines:[{y:0}],vlines:[{x:0}],
       series:[{data:pts.map(p=>[p[0],p[1]]),color:up,width:2.4}]});
@@ -825,9 +845,9 @@ function hGrid(a,b,n,T){ const hs=range(a,b,n).filter(h=>Math.abs(h)>1e-9); if(T
     let msg;
     // only the critical tick itself (T = 1 up to rounding) is the critical point; its neighbors are not
     const near=Math.abs(T-1)<0.05;
-    if(Math.abs(T-1)<1e-9) msg=`<b>Continuous transition</b> at the critical point: m(H) is continuous, but χ = ∂m/∂H diverges at H = 0 (m ∝ H<sup>1/3</sup>).`;
-    else if(T<1) msg=`<b>First-order transition</b> at H = 0: m jumps from ${(-ms).toFixed(3)} to +${ms.toFixed(3)}, so ∂f/∂H is discontinuous.${near?' Near T<sub>c</sub> the jump is small, shrinking as (T<sub>c</sub> − T)<sup>1/2</sup>, but it is still a jump.':''}`;
-    else msg=`<b>No transition</b> along this path: f is analytic, and m passes smoothly through zero.${near?` Near T<sub>c</sub> the zero-field susceptibility χ = 1/(T/T<sub>c</sub> − 1) = ${(1/(T-1)).toFixed(0)} is large, but finite.`:''}`;
+    if(Math.abs(T-1)<1e-9) msg=tr(`<b>Continuous transition</b> at the critical point: m(H) is continuous, but χ = ∂m/∂H diverges at H = 0 (m ∝ H<sup>1/3</sup>).`,`임계점에서 <b>연속 상전이</b>: m(H)는 연속이지만 χ = ∂m/∂H가 H = 0에서 발산합니다 (m ∝ H<sup>1/3</sup>).`);
+    else if(T<1) msg=tr(`<b>First-order transition</b> at H = 0: m jumps from ${(-ms).toFixed(3)} to +${ms.toFixed(3)}, so ∂f/∂H is discontinuous.${near?' Near T<sub>c</sub> the jump is small, shrinking as (T<sub>c</sub> − T)<sup>1/2</sup>, but it is still a jump.':''}`,`H = 0에서 <b>1차 상전이</b>: m이 ${(-ms).toFixed(3)}에서 +${ms.toFixed(3)}로 뛰므로 ∂f/∂H가 불연속입니다.${near?' T<sub>c</sub> 근처에서는 도약이 (T<sub>c</sub> − T)<sup>1/2</sup>처럼 줄어들어 작지만, 여전히 도약입니다.':''}`);
+    else msg=tr(`<b>No transition</b> along this path: f is analytic, and m passes smoothly through zero.${near?` Near T<sub>c</sub> the zero-field susceptibility χ = 1/(T/T<sub>c</sub> − 1) = ${(1/(T-1)).toFixed(0)} is large, but finite.`:''}`,`이 경로를 따라서는 <b>상전이 없음</b>: f는 해석적이고, m은 매끄럽게 0을 지납니다.${near?` T<sub>c</sub> 근처에서 영 자기장 감수율 χ = 1/(T/T<sub>c</sub> − 1) = ${(1/(T-1)).toFixed(0)}은 크지만 유한합니다.`:''}`);
     $('#cl-read').innerHTML=msg;
   }
   const sl=bindSlider('#cl-T',v=>{T=v;draw();},v=>v.toFixed(3));
@@ -843,8 +863,8 @@ function hGrid(a,b,n,T){ const hs=range(a,b,n).filter(h=>Math.abs(h)>1e-9); if(T
     const L=10**lgL, ts=logRange(1e-16,1,300), tstar=Math.pow(xi0/L,1/nu);
     plot($('#xi-plot'),{xlog:true,ylog:true,xlim:[1e-16,1],ylim:[1e-10,1e2],xlabel:'|t| = |T − Tc| / Tc',ylabel:'ξ (m)',
       hlines:[{y:L,color:css('--down'),dash:[6,4]}],vlines:[{x:tstar,color:css('--crit'),label:'ξ = L'}],
-      series:[{data:ts.map(t=>[t,xi0*Math.pow(t,-nu)]),color:css('--up'),width:2.4,name:'ξ = ξ₀ |t|^(−2/3)'},{data:[],color:css('--down'),dash:[6,4],width:1.6,name:'system size L'}],legend:'tr'});
-    $('#xi-read').innerHTML=`L = <b>${fmtLen(L)}</b> (${fmt(+(L/xi0).toPrecision(2))} ξ₀). Bulk behavior fails for |t| ≲ <b>${fmt(+tstar.toPrecision(2))}</b>, i.e. within <b>${fmt(+(tstar*Tc).toPrecision(2))} K</b> of T<sub>c</sub> = ${Tc} K.`;
+      series:[{data:ts.map(t=>[t,xi0*Math.pow(t,-nu)]),color:css('--up'),width:2.4,name:'ξ = ξ₀ |t|^(−2/3)'},{data:[],color:css('--down'),dash:[6,4],width:1.6,name:tr('system size L','계의 크기 L')}],legend:'tr'});
+    $('#xi-read').innerHTML=tr(`L = <b>${fmtLen(L)}</b> (${fmt(+(L/xi0).toPrecision(2))} ξ₀). Bulk behavior fails for |t| ≲ <b>${fmt(+tstar.toPrecision(2))}</b>, i.e. within <b>${fmt(+(tstar*Tc).toPrecision(2))} K</b> of T<sub>c</sub> = ${Tc} K.`,`L = <b>${fmtLen(L)}</b> (${fmt(+(L/xi0).toPrecision(2))} ξ₀). |t| ≲ <b>${fmt(+tstar.toPrecision(2))}</b>, 즉 T<sub>c</sub> = ${Tc} K에서 <b>${fmt(+(tstar*Tc).toPrecision(2))} K</b> 이내이면 부피 거동이 깨집니다.`);
   }
   const sl=bindSlider('#xi-L',v=>{lgL=v;draw();},v=>fmtLen(10**v));
   bindSlider('#xi-Tc',v=>{Tc=v;draw();},v=>v+' K');
@@ -881,7 +901,7 @@ function thermo(sys,J,H,T){
     const th=Ts.map(t=>thermo(sys,1,H,t)), up=css('--up'), vl=[{x:T,color:css('--crit')}];
     plot($('#en-f'),{height:210,xlim:[0,5],ylim:[Math.min(...th.map(r=>r.f))*1.05,0],xlabel:'k_B T / J',ylabel:'f / J',vlines:vl,series:[{data:Ts.map((t,i)=>[t,th[i].f]),color:up,width:2.2}]});
     plot($('#en-s'),{height:210,xlim:[0,5],ylim:[0,0.75],xlabel:'k_B T / J',ylabel:'S / k_B',vlines:vl,hlines:[{y:Math.LN2}],series:[{data:Ts.map((t,i)=>[t,th[i].S]),color:up,width:2.2}]});
-    plot($('#en-c'),{height:210,xlim:[0,5],ylim:[0,Math.max(2,Math.max(...th.map(r=>r.C))*1.1)],xlabel:'k_B T / J',ylabel:'C_H / k_B',vlines:[...vl,{x:2.269,label:'Tc (∞ lattice)'}],series:[{data:Ts.map((t,i)=>[t,th[i].C]),color:up,width:2.2}]});
+    plot($('#en-c'),{height:210,xlim:[0,5],ylim:[0,Math.max(2,Math.max(...th.map(r=>r.C))*1.1)],xlabel:'k_B T / J',ylabel:'C_H / k_B',vlines:[...vl,{x:2.269,label:tr('Tc (∞ lattice)','Tc (무한 격자)')}],series:[{data:Ts.map((t,i)=>[t,th[i].C]),color:up,width:2.2}]});
     const mh=Hs.map(h=>thermo(sys,1,h,T));
     plot($('#en-m'),{height:210,xlim:[-1,1],ylim:[-1.05,1.05],xlabel:'H / J',ylabel:'M',hlines:[{y:0}],vlines:[{x:H,color:css('--crit')}],series:[{data:Hs.map((h,i)=>[h,mh[i].m]),color:up,width:2.2}]});
     // numerical checks
@@ -890,11 +910,11 @@ function thermo(sys,J,H,T){
     const sym=Math.max(...Hs.map((h,i)=>Math.abs(fH[i]-fH[Hs.length-1-i])));
     const item=(ok,txt)=>`<li><span class="${ok?'ok':'bad'}">${ok?'✓':'✗'}</span> ${txt}</li>`;
     $('#en-check').innerHTML=
-      item(Math.max(...fT)<0,`(a) f &lt; 0: largest value ${Math.max(...fT).toFixed(4)} J`)+
-      item(Math.min(...th.map(r=>r.S))>=-1e-12,`(d) S ≥ 0: smallest value ${Math.min(...th.map(r=>r.S)).toExponential(2)} k<sub>B</sub>`)+
-      item(Math.max(...d2T)<=1e-12,`(e) ∂²f/∂T² ≤ 0 everywhere, so C<sub>H</sub> ≥ 0`)+
-      item(Math.max(...d2H)<=1e-12,`(f) ∂²f/∂H² ≤ 0 everywhere at this T, so χ<sub>T</sub> ≥ 0`)+
-      item(sym<1e-10,`§2.7: f(H) = f(−H) to within ${sym.toExponential(1)} J`);
+      item(Math.max(...fT)<0,tr(`(a) f &lt; 0: largest value ${Math.max(...fT).toFixed(4)} J`,`(a) f &lt; 0: 가장 큰 값 ${Math.max(...fT).toFixed(4)} J`))+
+      item(Math.min(...th.map(r=>r.S))>=-1e-12,tr(`(d) S ≥ 0: smallest value ${Math.min(...th.map(r=>r.S)).toExponential(2)} k<sub>B</sub>`,`(d) S ≥ 0: 가장 작은 값 ${Math.min(...th.map(r=>r.S)).toExponential(2)} k<sub>B</sub>`))+
+      item(Math.max(...d2T)<=1e-12,tr(`(e) ∂²f/∂T² ≤ 0 everywhere, so C<sub>H</sub> ≥ 0`,`(e) 모든 곳에서 ∂²f/∂T² ≤ 0이므로 C<sub>H</sub> ≥ 0`))+
+      item(Math.max(...d2H)<=1e-12,tr(`(f) ∂²f/∂H² ≤ 0 everywhere at this T, so χ<sub>T</sub> ≥ 0`,`(f) 이 T의 모든 곳에서 ∂²f/∂H² ≤ 0이므로 χ<sub>T</sub> ≥ 0`))+
+      item(sym<1e-10,tr(`§2.7: f(H) = f(−H) to within ${sym.toExponential(1)} J`,`§2.7: ${sym.toExponential(1)} J 이내에서 f(H) = f(−H)`));
   }
   bindSlider('#en-T',v=>{T=v;draw();},v=>v.toFixed(2));
   bindSlider('#en-H',v=>{H=v;draw();},v=>v.toFixed(2));
@@ -912,11 +932,11 @@ function thermo(sys,J,H,T){
     let worst=-Infinity; for(let k=0;k<=200;k++){ const a=k/200, h=a*H1+(1-a)*H2, ch=a*f1+(1-a)*f2; worst=Math.max(worst,ch-mf(h,T).f); }
     plot($('#cv-f'),{xlim:[-0.6,0.6],ylim:[lo-pad,hi+pad],xlabel:'H / J₀',ylabel:'f / J₀',legend:'bl',vlines:[{x:0}],
       series:[{data:hs.map((h,i)=>[isNaN(h)?0:h,rs[i]?rs[i].f:mf(0,T).f]),color:css('--up'),width:2.4,name:'f(H)'},
-        {data:[[H1,f1],[H2,f2]],color:css('--down'),width:2,dash:[6,4],name:'chord'},
+        {data:[[H1,f1],[H2,f2]],color:css('--down'),width:2,dash:[6,4],name:tr('chord','현')},
         {data:[[H1,f1],[H2,f2]],points:true,color:css('--down'),r:5}]});
     plot($('#cv-df'),{xlim:[-0.6,0.6],ylim:[-1.05,1.05],xlabel:'H / J₀',ylabel:'∂f/∂H',hlines:[{y:0}],vlines:[{x:0}],
       series:[{data:hs.map((h,i)=>[h,rs[i]?-rs[i].m:NaN]),color:css('--up'),width:2.4}]});
-    $('#cv-read').innerHTML=`Chord minus curve, maximized along the chord: <b>${worst<=1e-12?'≤ 0':worst.toExponential(2)}</b>. The curve lies on or above the chord: <b>convex up</b>. ${T<1?'Slope jump at H = 0: '+(2*mfSpont(T)).toFixed(3)+' (a cusp).':'No cusp above T<sub>c</sub>.'}`;
+    $('#cv-read').innerHTML=tr(`Chord minus curve, maximized along the chord: <b>${worst<=1e-12?'≤ 0':worst.toExponential(2)}</b>. The curve lies on or above the chord: <b>convex up</b>. ${T<1?'Slope jump at H = 0: '+(2*mfSpont(T)).toFixed(3)+' (a cusp).':'No cusp above T<sub>c</sub>.'}`,`현을 따라 최대로 한 (현 − 곡선): <b>${worst<=1e-12?'≤ 0':worst.toExponential(2)}</b>. 곡선은 현 위에 있거나 현보다 위에 있습니다: <b>아래로 볼록</b>. ${T<1?'H = 0에서 기울기 도약: '+(2*mfSpont(T)).toFixed(3)+' (뾰족점).':'T<sub>c</sub> 위에서는 뾰족점이 없습니다.'}`);
   }
   bindSlider('#cv-T',v=>{T=v;draw();},v=>v.toFixed(2));
   bindSlider('#cv-H1',v=>{H1=v;draw();},v=>v.toFixed(2));
@@ -932,11 +952,11 @@ function thermo(sys,J,H,T){
     const sys=ENUM[lat], F=Ts.map(t=>thermo(sys,1,0,t)), A=Ts.map(t=>thermo(sys,-1,0,t));
     const fmin=Math.min(...F.map(r=>r.f),...A.map(r=>r.f));
     plot($('#sy-f'),{height:230,xlim:[0,5],ylim:[fmin*1.05,0],xlabel:'k_B T / |J|',ylabel:'f / |J|',legend:'tr',
-      series:[{data:Ts.map((t,i)=>[t,F[i].f]),color:css('--up'),width:3,name:'ferro, J = +1'},{data:Ts.map((t,i)=>[t,A[i].f]),color:css('--down'),width:2,dash:[6,4],name:'antiferro, J = −1'}]});
+      series:[{data:Ts.map((t,i)=>[t,F[i].f]),color:css('--up'),width:3,name:tr('ferro, J = +1','강자성, J = +1')},{data:Ts.map((t,i)=>[t,A[i].f]),color:css('--down'),width:2,dash:[6,4],name:tr('antiferro, J = −1','반강자성, J = −1')}]});
     plot($('#sy-s'),{height:230,xlim:[0,5],ylim:[0,0.75],xlabel:'k_B T / |J|',ylabel:'S / k_B',legend:'br',hlines:[{y:Math.LN2}],
-      series:[{data:Ts.map((t,i)=>[t,F[i].S]),color:css('--up'),width:3,name:'ferro'},{data:Ts.map((t,i)=>[t,A[i].S]),color:css('--down'),width:2,dash:[6,4],name:'antiferro'}]});
+      series:[{data:Ts.map((t,i)=>[t,F[i].S]),color:css('--up'),width:3,name:tr('ferro','강자성')},{data:Ts.map((t,i)=>[t,A[i].S]),color:css('--down'),width:2,dash:[6,4],name:tr('antiferro','반강자성')}]});
     const gF=gs(sys,1), gA=gs(sys,-1), diff=Math.max(...F.map((r,i)=>Math.abs(r.f-A[i].f)));
-    $('#sy-read').innerHTML=`Ground states: ferromagnet <b>${gF.c}</b>, antiferromagnet <b>${gA.c.toLocaleString('en-US')}</b>${gA.c>2?` (residual entropy ln(${gA.c})/16 = ${(Math.log(gA.c)/16).toFixed(3)} k<sub>B</sub> per site)`:''}. Largest difference between the two free-energy curves: <b>${diff<1e-12?'0 (identical)':diff.toFixed(3)+' |J|'}</b>.`;
+    $('#sy-read').innerHTML=tr(`Ground states: ferromagnet <b>${gF.c}</b>, antiferromagnet <b>${gA.c.toLocaleString('en-US')}</b>${gA.c>2?` (residual entropy ln(${gA.c})/16 = ${(Math.log(gA.c)/16).toFixed(3)} k<sub>B</sub> per site)`:''}. Largest difference between the two free-energy curves: <b>${diff<1e-12?'0 (identical)':diff.toFixed(3)+' |J|'}</b>.`,`바닥 상태 수: 강자성체 <b>${gF.c}</b>, 반강자성체 <b>${gA.c.toLocaleString('en-US')}</b>${gA.c>2?` (잔류 엔트로피 ln(${gA.c})/16 = 자리당 ${(Math.log(gA.c)/16).toFixed(3)} k<sub>B</sub>)`:''}. 두 자유 에너지 곡선의 가장 큰 차이: <b>${diff<1e-12?'0 (동일)':diff.toFixed(3)+' |J|'}</b>.`);
     $('#sy-sq').setAttribute('aria-pressed',String(lat==='sq')); $('#sy-tri').setAttribute('aria-pressed',String(lat==='tri'));
   }
   $('#sy-sq').addEventListener('click',()=>{lat='sq';draw();}); $('#sy-tri').addEventListener('click',()=>{lat='tri';draw();});
@@ -952,11 +972,11 @@ function thermo(sys,J,H,T){
     const muted=css('--muted');
     const lines=Ms.map(M=>({data:[[-1,Emin[M]+M],[1,Emin[M]-M]],color:muted,width:1.1,alpha:.6}));
     const env=Hs.map(h=>[h,Math.min(...Ms.map(M=>Emin[M]-h*M))]);
-    plot($('#lv-e'),{xlim:[-1,1],ylim:[-50,-6],xlabel:'H / J',ylabel:'E / J',vlines:[{x:0,color:css('--crit'),label:'level crossing'}],legend:'tl',
-      series:[...lines,{data:env,color:css('--up'),width:3,name:'ground state'}]});
+    plot($('#lv-e'),{xlim:[-1,1],ylim:[-50,-6],xlabel:'H / J',ylabel:'E / J',vlines:[{x:0,color:css('--crit'),label:tr('level crossing','준위 교차')}],legend:'tl',
+      series:[...lines,{data:env,color:css('--up'),width:3,name:tr('ground state','바닥 상태')}]});
     const mh=Hs.map(h=>[h,thermo(sys,1,h,T).m]);
     plot($('#lv-m'),{xlim:[-1,1],ylim:[-1.05,1.05],xlabel:'H / J',ylabel:'M',hlines:[{y:0}],legend:'br',
-      series:[{data:[[-1,-1],[0,-1],[0,NaN],[0,1],[1,1]],color:css('--crit'),width:1.6,dash:[5,4],name:'T = 0 step'},{data:mh,color:css('--up'),width:2.4,name:`T = ${T.toFixed(2)} J/k_B`}]});
+      series:[{data:[[-1,-1],[0,-1],[0,NaN],[0,1],[1,1]],color:css('--crit'),width:1.6,dash:[5,4],name:tr('T = 0 step','T = 0 계단')},{data:mh,color:css('--up'),width:2.4,name:`T = ${T.toFixed(2)} J/k_B`}]});
   }
   bindSlider('#lv-T',v=>{T=v;draw();},v=>v.toFixed(2));
   reg(draw);
@@ -974,7 +994,7 @@ function ringWallDensity(N,T){
 (function(){
   const reset=()=>{ dw.chain.order(); dw.sum=0; dw.n=0; dw.rows=0; const cv=$('#dw-kymo'), ctx=cv.getContext('2d'); ctx.fillStyle=css('--spin-up'); ctx.fillRect(0,0,cv.width,cv.height); drawDW(); };
   bindSlider('#dw-T',v=>{ dw.T=v; dw.sum=0; dw.n=0; dw.rows=0; drawDW(); },v=>v.toFixed(2));
-  bindSlider('#dw-speed',v=>dw.speed=v,v=>v+' sweeps/s');
+  bindSlider('#dw-speed',v=>dw.speed=v,v=>v+tr(' sweeps/s',' 스윕/초'));
   $('#dw-restart').addEventListener('click',reset);
   playButton($('#dw-pause'),dw,()=>{ dw.last=0; dw.acc=0; },['Pause','Resume']);
   reset();
@@ -983,11 +1003,11 @@ watch('demo-dw');
 function drawDW(){
   const Ns=logRange(1,1e8,200), T=dw.T, Nstar=Math.exp(2/T);
   const others=[0.4,0.8,1.6].filter(t=>Math.abs(t-T)>0.05).map(t=>({data:Ns.map(N=>[N,2-t*Math.log(N)]),color:css('--muted'),width:1.2,alpha:.5}));
-  plot($('#dw-plot'),{xlog:true,xlim:[1,1e8],ylim:[-8,2.5],xlabel:'number of sites N',ylabel:'ΔF / J',hlines:[{y:0}],
+  plot($('#dw-plot'),{xlog:true,xlim:[1,1e8],ylim:[-8,2.5],xlabel:tr('number of sites N','자리 수 N'),ylabel:'ΔF / J',hlines:[{y:0}],
     vlines:Nstar<1e8?[{x:Nstar,color:css('--crit'),label:'N*'}]:[],
     series:[...others,{data:Ns.map(N=>[N,2-T*Math.log(N)]),color:css('--up'),width:2.6}]});
   const exact=ringWallDensity(dw.chain.N,T), lim=1/(1+Math.exp(2/T)), meas=dw.n?dw.sum/dw.n/dw.chain.N:NaN;
-  $('#dw-read').innerHTML=`N* = e<sup>2J/k<sub>B</sub>T</sup> = <b>${Nstar<1e6?Math.round(Nstar).toLocaleString('en-US'):Nstar.toExponential(2)}</b>. Wall density: exact for this ring (N = ${dw.chain.N}) <b>${exact.toPrecision(3)}</b> (N → ∞: ${lim.toPrecision(3)}), simulation ${isFinite(meas)&&dw.rows>150?meas.toPrecision(3):'(equilibrating)'}; |M| = ${Math.abs(dw.chain.s.reduce((a,b)=>a+b,0)/dw.chain.N).toFixed(2)}.`;
+  $('#dw-read').innerHTML=tr(`N* = e<sup>2J/k<sub>B</sub>T</sup> = <b>${Nstar<1e6?Math.round(Nstar).toLocaleString('en-US'):Nstar.toExponential(2)}</b>. Wall density: exact for this ring (N = ${dw.chain.N}) <b>${exact.toPrecision(3)}</b> (N → ∞: ${lim.toPrecision(3)}), simulation ${isFinite(meas)&&dw.rows>150?meas.toPrecision(3):'(equilibrating)'}; |M| = ${Math.abs(dw.chain.s.reduce((a,b)=>a+b,0)/dw.chain.N).toFixed(2)}.`,`N* = e<sup>2J/k<sub>B</sub>T</sup> = <b>${Nstar<1e6?Math.round(Nstar).toLocaleString('en-US'):Nstar.toExponential(2)}</b>. 벽 밀도: 이 고리(N = ${dw.chain.N})의 정확한 값 <b>${exact.toPrecision(3)}</b> (N → ∞: ${lim.toPrecision(3)}), 시뮬레이션 ${isFinite(meas)&&dw.rows>150?meas.toPrecision(3):'(평형화 중)'}; |M| = ${Math.abs(dw.chain.s.reduce((a,b)=>a+b,0)/dw.chain.N).toFixed(2)}.`);
 }
 reg(drawDW);
 function dwTick(now){
@@ -1009,8 +1029,9 @@ function loop(now){ heroTick(now); dwTick(now); requestAnimationFrame(loop); }
 requestAnimationFrame(loop);
 
 /* ---------- math typesetting ---------- */
+window.KATEX_OPTS={delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false};
 window.addEventListener('load',()=>{
-  if(window.renderMathInElement) renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});
+  if(window.renderMathInElement) renderMathInElement(document.body,window.KATEX_OPTS);
   redraws.forEach(f=>f());
 });
 </script>
@@ -1021,13 +1042,215 @@ window.addEventListener('load',()=>{
   const SUN = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>';
   const MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>';
   const current = () => root.dataset.theme || (mq.matches ? "dark" : "light");
-  const sync = () => { const dark = current() === "dark", label = dark ? "Switch to light mode" : "Switch to dark mode";
+  const sync = () => { const dark = current() === "dark", label = dark ? tr("Switch to light mode","밝은 화면으로 전환") : tr("Switch to dark mode","어두운 화면으로 전환");
     btn.innerHTML = dark ? SUN : MOON; btn.setAttribute("aria-label", label); btn.title = label; };
   btn.addEventListener("click", () => { const next = current() === "dark" ? "light" : "dark"; root.dataset.theme = next;
     try { localStorage.setItem("netsci-theme", next); } catch (e) {} sync(); });
   mq.addEventListener("change", sync);
+  window.addEventListener("langchange", sync);
   sync();
 })();
 </script>
+<!-- lang-toggle:body -->
+<script>
+window.I18N_KO={
+"__title": "2장: 원리적으로 상전이는 어떻게 일어나는가 (1부)",
+"k1": "상전이와 임계 현상, 대학원 과목, 경상국립대학교 물리학과",
+"k2": "2장: 원리적으로 상전이는 어떻게 일어나는가<span>1부: 분배함수에서 하임계 차원까지<\/span>",
+"k3": "상전이란 정확히 무엇이며, 매끄러운 볼츠만 인자의 합이 어떻게 상전이를 만들어 낼 수 있을까요? 이 부분은 Goldenfeld 강의의 §2.1–2.8을 다룹니다.",
+"k4": "온도",
+"k6": "스핀 256개로 된 1차원 이징 사슬로, 한 스윕에 한 줄씩 시간이 아래로 흐릅니다. 위 스핀은 남색, 아래 스핀은 노란색입니다. 자구벽은 떠돌다가 만나고, 소멸하고, 다시 생겨납니다: \\(T>0\\)이면 긴 사슬은 결코 질서를 유지하지 못합니다(§2.8).",
+"k7": "<a href=\"#s2-1\">2.1 통계역학 복습<\/a>",
+"k8": "<a href=\"#s2-2\">2.2 열역학적 극한<\/a>",
+"k9": "<a href=\"#s2-3\">2.3 상경계와 상전이<\/a>",
+"k10": "<a href=\"#s2-4\">2.4 모형의 역할<\/a>",
+"k11": "<a href=\"#s2-5\">2.5 이징 모형<\/a>",
+"k12": "<a href=\"#s2-6\">2.6 해석적 성질<\/a>",
+"k13": "<a href=\"#s2-7\">2.7 대칭 성질<\/a>",
+"k14": "<a href=\"#s2-8\">2.8 상전이의 존재<\/a>",
+"k15": "<a href=\"#reading\">더 읽을거리<\/a>",
+"k16": "<a href=\"ch01-introduction.html\">1장: 서론<\/a>",
+"k17": "<a href=\"ch02b-symmetry-breaking-and-lattice-gases.html\">2장 2부<\/a>",
+"k18": "<a href=\"index.html\">전체 장<\/a>",
+"k19": "<span class=\"sec\">2.1<\/span>통계역학 복습",
+"k20": "상전이란 무엇을 뜻할까요? 이 장에서는 자석의 간단한 모형, 즉 통계역학의 “초파리”인 <mark>이징(Ising) 모형<\/mark>에서 상전이가 원리적으로 어떻게 일어날 수 있는지 살펴봅니다. 뒤에서 전개할 많은 일반적인 아이디어를 이 모형으로 보여 줄 것입니다. 이 모형은 1920년 빌헬름 렌츠가 제안했고 1925년 그의 학생 에른스트 이징이 연구했습니다. 그 이야기는 <i>Reviews of Modern Physics<\/i>에 실린 S. G. Brush의 1967년 리뷰에 나옵니다.",
+"k21": "주로 헬름홀츠 자유 에너지와 바른틀 앙상블이 필요합니다. 온도 \\(T\\)의 열원과 에너지를 주고받는 계는 평형에 이르고, 거기서 에너지 \\(E(s)\\)인 상태 \\(s\\)는 볼츠만 인자로 주어지는 확률 \\(P(s) \\propto e^{-E(s)/k_BT}\\)로 나타납니다. 목표는 <mark>분배함수<\/mark> \\(Z\\)를 계산하는 것입니다.",
+"k22": "계는 해밀토니언 \\(\\mathcal H_\\Omega\\)가 정의된 영역 \\(\\Omega\\)로 지정됩니다(양자역학에서는 에너지 연산자이지만, 여기서는 고전 통계역학만 다룹니다). 영역의 부피는 \\(V(\\Omega) \\propto L^d\\), 겉넓이는 \\(S(\\Omega) \\propto L^{d-1}\\)이며, \\(L\\)은 선형 크기, \\(d\\)는 공간의 차원입니다. 경계 조건은 주기적이거나 단단한 벽일 수 있고, 계는 연속체(유체)일 수도 격자 위(자석)에 있을 수도 있습니다. 지금은 \\(V(\\Omega)\\)가 유한합니다.",
+"k23": "해밀토니언을 다음과 같이 씁니다.",
+"k24": "여기서 \\(K_n\\)은 <b>결합 상수<\/b>로, 자기장, 교환 상호작용 세기, 온도(이는 \\(K_n\\)에 흡수합니다) 같은 외부 매개변수입니다. \\(\\Theta_n\\)은 동역학적 자유도의 조합입니다. 자석이라면 이는 격자 자리 \\(1 \\le i \\le N(\\Omega)\\) 위의 (벡터) 스핀 \\(\\vec S_i\\)이므로, 예를 들어 \\(\\Theta_1 = \\sum_i \\vec S_i\\), \\(\\Theta_2 = \\sum_{ij}\\vec S_i\\cdot\\vec S_j\\)입니다. 간단한 예는 제이만 결합 \\(K_1 = \\vec H/k_BT\\), \\(\\mathcal H_\\Omega = -\\sum_i \\vec H\\cdot\\vec S_i\\)인데, 자발 대칭 깨짐을 논할 때 그 의미에 주의해야 합니다. 대각합(trace)은 모든 자유도의 모든 가능한 값에 대한 합이며,",
+"k25": "분배함수와 자유 에너지는 다음과 같습니다.",
+"k26": "모든 열역학적 정보는 \\(\\partial F_\\Omega/\\partial K_n\\), \\(\\partial^2F_\\Omega/\\partial K_n\\partial K_m\\) 같은 도함수에 담겨 있으며, 여기에는 부피 효과, 표면 효과, 유한 크기 효과가 모두 들어 있습니다. \\(\\Omega\\)가 유한한 이 단계에서는 <mark>상전이나 상에 대한 정보가 없습니다<\/mark>.",
+"k27": "<span class=\"sec\">2.2<\/span>열역학적 극한",
+"k28": "경험에 따르면 자유 에너지는 크기 변수, 즉 \\(F_\\Omega \\propto V(\\Omega)\\)입니다. 따라서 유한한 계에 대해 다음과 같이 쓸 수 있습니다.",
+"k29": "\\(f_b\\)는 단위 부피당 부피 자유 에너지, \\(f_s\\)는 단위 넓이당 표면 자유 에너지입니다. 정확히 말하면 부피 자유 에너지는",
+"k30": "이며, 극한이 존재하고 \\(\\Omega\\)와 무관해야 합니다(이는 자명하지 않습니다). 표면 자유 에너지는",
+"k31": "입니다. 이 극한들이 <mark>열역학적 극한<\/mark>을 정의합니다. 상과 상전이라는 개념은 이 극한에서만 날카롭게 정의됩니다.",
+"k32": "이징 사슬의 부피 자유 에너지와 표면 자유 에너지",
+"k33": "자리 수 \\(N\\)에 대한 자리당 자유 에너지 \\(F_N/N\\)",
+"k34": "부피 값으로부터의 거리 \\(|F_N/N - f_b|\\), 로그–로그",
+"k35": "스핀 \\(N\\)개 사슬 \\(-\\mathcal H = J\\sum_i S_iS_{i+1} + H\\sum_i S_i\\)에 대한 정확한 전달 행렬 결과. 열린 사슬에는 두 끝, 즉 “표면”이 있으므로 \\(F_N = Nf_b + 2f_s + \\dots\\)이고 자리당 자유 에너지는 \\(1/N\\)처럼 \\(f_b\\)에 다가갑니다(오른쪽에서 기울기 −1). 주기적인 고리에는 표면이 없고, 유한 크기 보정이 \\((\\lambda_-/\\lambda_+)^N\\)처럼 지수적으로 감쇠합니다.",
+"k36": "대전된 계의 열역학적 극한",
+"k37": "3차원에서 균일한 전하 밀도 \\(\\rho\\)의 \\(T=0\\) 에너지를 생각합시다. 거리 \\(r\\)만큼 떨어진 두 입자 사이에는 쿨롱 상호작용 \\(U(r) = A/r\\)이 작용합니다. 반지름 \\(R\\)인 구를 껍질 하나씩 쌓아 올리면, 껍질 정리(가우스 법칙)에 따라 반지름 \\(r\\) 안에 이미 있는 전하를 중심에 모인 것으로 다룰 수 있습니다:",
+"k38": "이는 \\(R\\to\\infty\\)에서 발산합니다. 중력과 정전기력 같은 역제곱 힘은 도달 거리가 너무 길어 열역학적 거동을 허용하지 않습니다. 이는 한 부호의 전하만 허용했기 때문입니다. 두 부호의 전하가 모두 있고 움직일 수 있으면, 가리기(screening)가 상호작용을 \\(1/r\\)에서 \\(e^{-r/\\lambda_D}/r\\)로 바꾸며, \\(\\lambda_D\\)는 디바이 가리기 길이입니다. 물질의 안정성과 타당한 열역학적 극한을 완전히 만족스럽게 다루려면 양자역학, 즉 페르미온과 파울리 배타 원리가 필요합니다.",
+"k39": "거듭제곱 상호작용",
+"k40": "\\(d\\)차원에서 \\(U(r) = A/r^{\\sigma}\\)로 일반화합시다. 반지름 \\(R\\)인 \\(d\\)차원 구 \\(\\Omega\\) 안의 균일한 계에 대해",
+"k41": "이며, \\(\\vec r = R\\vec x\\), \\(\\vec r' = R\\vec y\\)로 다시 축척했습니다. 따라서 \\(E_b = E(R)/V(R) \\propto R^{d-\\sigma}\\)이고, \\(V(R) = V_dR^d\\), \\(V_d\\)는 \\(d\\)차원 단위 구의 부피입니다. \\(R\\to\\infty\\)에서 열역학적 극한은 \\(\\sigma > d\\)일 때, 그리고 그때에만 잘 정의됩니다.",
+"k42": "\\(\\sigma > d\\)이면 적분 \\(C\\) 자체가 \\(\\vec x \\to \\vec y\\)에서 발산할 수 있습니다. 실제로는 문제가 되지 않습니다: 전하는 간격 \\(a\\)인 격자 위에 있거나 반지름 \\(a\\)인 단단한 알맹이를 가지므로, \\(r>a\\)에서만 \\(U \\sim r^{-\\sigma}\\)입니다. 이 절단을 쓰면",
+"k43": "이며, \\(S_d\\)는 단위 구의 겉넓이입니다. \\(\\sigma = d\\)이면 어떨까요? 그러면 안쪽 적분이 \\(\\log(R/a)\\)를 주는데, 이는 여전히 \\(R\\to\\infty\\)에서 발산합니다. 열역학적 극한은 \\(\\sigma>d\\)에서만 존재합니다.",
+"k44": "부피 에너지는 언제 수렴하는가?",
+"k45": "차원 \\(d\\)",
+"k46": "지수 \\(\\sigma\\)",
+"k47": "쿨롱, 중력 (d = 3, σ = 1)",
+"k48": "쌍극자 (d = 3, σ = 3)",
+"k49": "판데르발스 (d = 3, σ = 6)",
+"k50": "계의 반지름 \\(R\\)에 대한 단위 부피당 부피 에너지 \\(E_b \\propto [R^{d-\\sigma}-a^{d-\\sigma}]/(d-\\sigma)\\) (\\(a=1\\)), \\(\\sigma=d\\)이면 \\(\\ln(R/a)\\). 열역학적 극한이 있으려면 곡선이 평평해져야 합니다. 회색 곡선은 참고로 경계 경우 \\(\\sigma = d\\)와 수렴하는 경우 \\(\\sigma = d+1\\)을 보여 줍니다.",
+"k51": "<span class=\"sec\">2.3<\/span>상경계와 상전이",
+"k52": "\\(f_b[K]\\)가 존재하고, 결합 상수가 \\(D\\)개 \\(K_1,\\dots,K_D\\)라고 합시다. 그러면 상그림은 \\(D\\)차원입니다. 함수 \\(f_b[K]\\)는 <i>거의<\/i> 모든 곳에서 해석적입니다. 비해석적일 수 있는 곳은 점, 선, 평면, 초평면 등, 즉 차원 \\(D_s = 0, 1, 2, \\dots\\)의 <b>특이 자리<\/b>에 놓입니다. 각 유형의 자리에 대한 중요한 불변량은 <mark>여차원<\/mark>입니다.",
+"k53": "\\(\\{K_n\\}\\)에 변수를 하나 더하면 \\(D\\to D+1\\), \\(D_s\\to D_s+1\\)이므로 \\(C\\)는 변하지 않습니다. \\(f_b\\)가 해석적인 영역이 <mark>상<\/mark>이고, 상들을 나누는 여차원 \\(C=1\\)인 자리가 <mark>상경계<\/mark>입니다. 단순한 물질의 압력–온도 평면에서는 \\(D=2\\)이고 공존선은 \\(D_s = 1\\), \\(C=1\\)입니다.",
+"k54": "상경계의 정의에는 모호함이 있습니다. 액체–기체 선은 임계점에서 끝나므로, 경계를 넘지 않고 그 둘레를 돌아 액체에서 기체로 갈 수 있습니다: 액체와 기체는 대칭의 정도가 같습니다. 고체–액체 선은 같은 방식으로 그냥 끝날 수 없는데, 유체가 결정질 고체보다 대칭의 정도가 높기 때문입니다.",
+"k55": "자유 에너지 \\(f_b[K]\\)는 어디서나 연속이지만, 상경계가 있는 곳에서 상경계는 두 부류로 나뉩니다:",
+"k56": "하나 이상의 \\(\\partial f_b/\\partial K_i\\)가 경계를 가로질러 불연속: <mark>1차 상전이<\/mark>.",
+"k57": "모든 \\(\\partial f_b/\\partial K_i\\)가 경계를 가로질러 연속: <mark>연속 상전이<\/mark>. (“2차 상전이”라는 이름은 권장하지 않습니다.)",
+"k58": "자석의 상그림 가로지르기",
+"k59": "경로의 \\(k_BT/J_0\\) =",
+"k60": "\\(T_c\\) 아래",
+"k61": "\\(T_c\\)에서",
+"k62": "\\(T_c\\) 위",
+"k63": "상그림 \\((T, H)\\)",
+"k64": "자화 \\(m = -\\partial f/\\partial H\\)",
+"k65": "감수율 \\(\\chi = \\partial m/\\partial H\\)",
+"k66": "스핀당 자유 에너지가 \\(f(H,T) = \\min_m\\big[\\tfrac12J_0m^2 - k_BT\\ln 2\\cosh\\big((J_0m+H)/k_BT\\big)\\big]\\)이고 \\(T_c = J_0/k_B\\)인 평균장(퀴리–바이스) 자석. 유일한 상경계는 임계점에서 끝나는 선분 \\(H=0\\), \\(T\\lt T_c\\)(자홍색)입니다. 세로 경로를 이것을 가로질러 움직이면 \\(\\partial f/\\partial H\\)가 뜁니다: 1차입니다. \\(T_c\\)에서는 도함수가 연속이지만 \\(\\chi\\)가 발산합니다: 연속입니다. \\(T_c\\) 위에서는 경로가 특이점을 만나지 않고, 임계점 위의 액체와 기체처럼 위 스핀 상태와 아래 스핀 상태가 매끄럽게 이어집니다.",
+"k67": "유한 크기 효과와 상관 길이",
+"k68": "실제로는 \\(10^{23}\\)도 \\(\\infty\\)가 아니므로 열역학적 극한에는 결코 도달하지 않습니다. 유한한 계에서는 물리적 성질의 변화가 매개변수의 어떤 유한한 범위에 걸쳐 일어나는데, 이를 <i>유한 크기 효과<\/i>라 하며 뒤에서 자세히 다룹니다. \\(f_b[K]\\)에 근거한 예측을 믿을 수 없게 되는 때를 알려 주는 간단한 기준은 <mark>상관 길이<\/mark> \\(\\xi\\)를 쓰는 것입니다: 어떤 양이 평균 둘레로 요동하는 공간적 범위로, 예를 들어 열평형 상태의 기체 속에 떠다니는, 액체에 가까운 밀도의 “물방울”의 크기입니다.",
+"k69": "연속 상전이 근처에서 \\(\\xi\\)는 온도에 강하게 의존하고 상전이 자체에서 발산하며, 이것이 스케일링 거동을 낳습니다. 유한한 계에서 \\(\\xi\\)는 발산할 수 없습니다: 계의 특성 선형 크기 \\(L\\)을 넘을 수 없습니다. \\(T\\)가 \\(T_c\\)에 충분히 가까워서 무한한 계의 \\(\\xi\\)가 \\(L\\)을 넘게 되면, 유한한 계는 \\(f_b\\)가 기술하는 이상적인 거동에서 벗어납니다.",
+"k70": "유한한 시료는 \\(T_c\\)에 얼마나 가까이 갈 수 있을까?",
+"k71": "계의 크기 \\(L\\)",
+"k72": "실험실 시료, 1 cm",
+"k73": "시뮬레이션, L = 100 ξ₀",
+"k74": "나노 입자, 1 μm",
+"k75": "\\(t = (T-T_c)/T_c\\)이고 \\(\\xi_0 = 10\\) Å \\(= 10^{-9}\\) m(임계점에서 멀리 떨어진 곳의 상관 길이)일 때 \\(\\xi = \\xi_0 |t|^{-2/3}\\). \\(L = 1\\) cm이면 \\(|t| \\approx 10^{-11}\\)일 때에야 \\(\\xi = L\\)이므로, 실험실에서 유한 크기 효과를 관찰하기는 어렵습니다. 임계 현상의 컴퓨터 시뮬레이션에서는 \\(L\\)이 보통 \\(\\xi_0\\)의 그리 크지 않은 배수일 뿐이어서, 유한 크기 효과를 주의 깊게 고려해야 합니다. 재규격화 군을 소개한 뒤 이 문제로 돌아오겠습니다.",
+"k76": "<span class=\"sec\">2.4<\/span>모형의 역할",
+"k77": "상전이 문헌에는 이징, 하이젠베르크, 포츠, 백스터, F 모형, 심지어 비선형 시그마 모형까지 모형이 가득합니다. 이들은 흔히 분배함수를 정확히 계산할 수 있는 계로, 어떤 극한이나 특별한 차원에서만 그런 경우도 있고, 유한한 개수의 적분으로 줄일 수 있는 경우도 있습니다. 이 작업에서 솔리톤, 라마누잔 항등식, 끈 이론, 위상수학과 연결되는 아름다운 수학이 나왔습니다. 그러나 그 기법들은 특수합니다. 온사거는 1944년 영 자기장의 2차원 이징 모형을 풀었지만, 이 모형은 자기장이 있을 때나 3차원에서는 아직 풀리지 않았습니다. 정말로 필요한 것은 근사적이더라도 언제나 통하는 접근입니다. 정확히 풀리는 모형은 근사 방법의 기준으로서 여전히 매우 중요합니다.",
+"k78": "모형이 무엇을 위한 것인지에 대해서는 상반된 두 관점이 있습니다. 전통적인 관점은 가능한 한 많은 세부 사항을 담아 물리계를 충실하게 표현하고, 이론과 실험이 맞지 않으면 매개변수를 조정하거나 더합니다. 양자화학은 이것이 적절한 분야입니다. 다른 관점은 특정 현상을 기술하는 데 <mark>그런 세부 사항이 필요하지 않을 수 있다<\/mark>고 봅니다. 많은 매개변수가 무관할 수 있고, 측정 가능한 양들이 무차원 수나, 좋은 근사로 미시적 세부 사항에 의존하지 않는 <mark>보편 함수<\/mark>를 이룰 수도 있습니다. 초전도의 BCS 이론이 그 예입니다: 모든 약결합 초전도체에 대해 \\(2\\Delta/k_BT_c \\approx 3.5\\) 같은 무차원 비를 예측합니다. 이 관점에서는 올바른 <mark>최소 모형<\/mark>, 즉 본질적인 물리를 가장 경제적으로 그려 내는 모형에서 출발합니다. 이런 관점이 통한다는 것은 재규격화 군 논증의 결과이며, RG는 보편적인 관측량을 찾아내고 계산하는 틀도 제공합니다.",
+"k79": "<span class=\"sec\">2.5<\/span>이징 모형",
+"k80": "이징 모형은 격자 위의 강자성체나 반강자성체의 모형입니다. 렌츠와 이징이 1925년 처음 연구했고, \\(d=1\\)에서 \\(T>0\\)이면 상전이가 없음을 발견했습니다. 그들은 \\(d>1\\)에서도 0이 아닌 온도에서 상전이가 없어 실제 자석을 기술할 수 없다고 <i>잘못<\/i> 결론지었습니다.",
+"k81": "자리 \\(i = 1,\\dots,N(\\Omega)\\)로 된 \\(d\\)차원 격자를 생각합시다. 따로 밝히지 않으면 초입방 격자입니다. 자유도는 격자의 꼭짓점 위의 고전 스핀 변수 \\(S_i = \\pm1\\)이므로, 계의 상태는 \\(2^{N(\\Omega)}\\)개입니다. 스핀은 자리마다 다를 수 있는 외부 자기장 \\(H_i\\)와, 그리고 교환 상호작용 \\(J_{ij}\\)(두 스핀), \\(K_{ijk}\\)(세 스핀) 등을 통해 서로 상호작용합니다. 일반적인 해밀토니언은",
+"k82": "이며, 세 스핀 이상의 상호작용은 무시하겠습니다. 이제",
+"k83": "이고, 열역학적 성질은 미분으로 얻습니다. 예를 들어 \\(P(\\{S_i\\}) = e^{-\\beta\\mathcal H_\\Omega(\\{S_i\\})}/\\operatorname{Tr}\\,e^{-\\beta\\mathcal H_\\Omega}\\)이므로, 자리 \\(i\\)의 평균 자화는",
+"k84": "외부 자기장이 없거나 균일하더라도 \\(\\mathcal H_\\Omega\\)에 \\(\\sum_i H_iS_i\\)를 남겨 두면 유용합니다: 미분한 뒤에 \\(H_i\\)를 0을 포함해 원하는 값으로 둘 수 있기 때문입니다. 이것이 <b>원천(source) 방법<\/b>입니다.",
+"k85": "이징 모형의 열역학적 극한",
+"k86": "유한한 계에서 \\(F_\\Omega\\)는 각 인자에 대해 해석 함수입니다. 분배함수",
+"k87": "(\\(E_n\\)은 \\(n\\)번째 상태의 에너지)가 해석적인 항들의 유한한 합이기 때문입니다. 따라서 상전이는 열역학적 극한에서만 생길 수 있고, 그러려면 \\(\\sum_{j\\ne i}|J_{ij}| \\lt  \\infty\\)여야 합니다. 상호작용의 도달 거리와 차원이 이 극한의 존재 여부를 정합니다. \\(J_{ij} = A|\\vec r_i - \\vec r_j|^{-\\sigma}\\)이면 대전된 계에서와 똑같이 \\(\\sigma>d\\)가 필요하며, \\(d=3\\)에서는 이 때문에 \\(\\propto r^{-3}\\)인 자기 쌍극자–쌍극자 상호작용이 제외됩니다. 그러나 쌍극자가 모두 정렬되어 있지만 않으면, 열역학적 극한이 존재하고 \\(\\Omega\\)의 모양과 무관함을 보일 수 있습니다(Domb and Green, 1권의 Griffiths 참고).",
+"k88": "<span class=\"sec\">2.6<\/span>이징 모형의 해석적 성질",
+"k89": "\\(f_b[K]\\)가 존재한다고 가정합시다. \\(\\langle ij\\rangle\\)가 최근접 쌍을 나타낼 때, 균일한 자기장이 있는 최근접 이징 해밀토니언은",
+"k90": "이고, 자리당 평균 자화(자기 모멘트)는",
+"k91": "\\(f\\)의 주요 해석적 성질은 열역학에서는 공준이지만, 통계역학에서는 <i>증명<\/i>할 수 있습니다:",
+"k92": "\\(f(H,J,T,\\dots)\\)는 연속이다.",
+"k93": "\\(\\partial f/\\partial T\\), \\(\\partial f/\\partial H\\), …는 거의 모든 곳에서 존재한다. 오른쪽·왼쪽 도함수는 모든 곳에서 존재하고 거의 모든 곳에서 같다.",
+"k94": "자리당 엔트로피 \\(S \\equiv -\\partial f/\\partial T \\ge 0\\)이 거의 모든 곳에서 성립한다.",
+"k95": "\\(\\partial f/\\partial T\\)는 \\(T\\)에 대해 단조 비증가, 즉 \\(\\partial^2f/\\partial T^2 \\le 0\\)이다. 따라서 일정 자기장 비열 \\(C_H \\equiv T\\,\\partial S/\\partial T|_H = -T\\,\\partial^2F/\\partial T^2|_H \\ge 0\\)이다.",
+"k96": "\\(\\partial f/\\partial H\\)는 \\(H\\)에 대해 단조 비증가, 즉 \\(\\partial^2f/\\partial H^2 \\le 0\\)이다. 따라서 등온 감수율 \\(\\chi_T \\equiv \\partial M/\\partial H|_T = -\\partial^2f/\\partial H^2 \\ge 0\\)이다.",
+"k97": "성질 (a)와 (d)는 간단한 직접 논증으로 나오고, 나머지는 <mark>볼록성<\/mark>에서 나옵니다.",
+"k98": "<b>(a)의 증명.<\/b> \\(Z_\\Omega = \\sum_n e^{-\\beta E_n}\\)은 양수 항의 합이고 \\(f_\\Omega = -k_BT\\log Z_\\Omega/N(\\Omega)\\)이므로, \\(Z_\\Omega>1\\)이면 \\(f_\\Omega\\lt 0\\)입니다. 이는 \\(\\mathcal H_\\Omega\\lt 0\\), 따라서 \\(e^{-\\beta\\mathcal H_\\Omega}>1\\)인 배치 \\(\\{S_i^*\\}\\)가 적어도 하나 있기 때문에 성립합니다. \\(J>0\\), \\(H\\lt 0\\)이면 모든 \\(i\\)에 대해 \\(S_i^* = -1\\)로 잡으면(\\(H>0\\)이면 모두 \\(+1\\)) \\(-\\mathcal H_\\Omega = H\\sum_iS_i + J\\sum_{\\langle ij\\rangle}S_iS_j > 0\\)입니다. 더 세련된 논증: 어떤 배치에 대해서든 \\(S_i\\)나 \\(S_j\\)를 뒤집은 배치도 함께 더해지므로, 대칭에 의해 \\(\\operatorname{Tr}\\,\\mathcal H_\\Omega = 0\\)입니다. 대각합의 항이 모두 0은 아니므로, 적어도 한 배치는 \\(\\mathcal H_\\Omega\\lt 0\\)입니다. 따라서 \\(f\\lt 0\\)입니다. 그리고 \\(\\log Z_\\Omega\\)는 그 인자가 0이 되는 곳에서만 특이점이 생기므로 \\(F_\\Omega\\)는 해석적입니다. 결합 상수의 복소 평면에서 \\(Z\\)가 어디서 0이 될 수 있는지가 “분배함수 영점” 문제입니다.",
+"k99": "<b>(d)의 증명.<\/b> \\(\\partial\\beta/\\partial T = -1/k_BT^2\\)를 쓰면",
+"k100": "\\(\\log\\rho_\\Omega = -\\beta\\mathcal H_\\Omega - \\log Z_\\Omega\\)이므로",
+"k101": "\\(0\\lt \\rho_\\Omega\\le1\\)이면 \\(\\log\\rho_\\Omega\\le0\\)이기 때문입니다. 이것이 폰 노이만(깁스) 엔트로피입니다. <span class=\"qed\">증명 끝<\/span>",
+"k102": "정확히 더한 격자에서 성질 확인하기",
+"k103": "\\(T\\)에 대한 자리당 자유 에너지 \\(f\\)",
+"k104": "\\(T\\)에 대한 자리당 엔트로피 \\(S/k_B\\)",
+"k105": "\\(T\\)에 대한 자리당 비열 \\(C_H/k_B\\)",
+"k106": "고른 \\(T\\)에서 \\(H\\)에 대한 자리당 자화 \\(M\\)",
+"k107": "4 × 4 주기 정사각 격자 이징 모형으로, \\(2^{16} = 65{,}536\\)개 배치 전부를 정확히 더했습니다. 세로선은 고른 온도를 표시합니다. 모든 곡선이 매끄럽습니다: 유한한 계에는 상전이가 없고, 무한 격자의 \\(T_c \\approx 2.269\\,J/k_B\\) 근처에서 \\(C_H\\)에 둥근 봉우리만 있습니다. 확인 목록은 그려진 범위에서 (a), (d), (e), (f)와 §2.7의 대칭 \\(f(H)=f(-H)\\)를 수치로 검증합니다.",
+"k108": "볼록 함수",
+"k109": "함수 \\(f(x)\\)가 <b>아래로 볼록<\/b>(각각 <b>위로 볼록<\/b>)이라는 것은, \\(\\alpha_1+\\alpha_2=1\\)인 모든 \\(0\\le\\alpha_1,\\alpha_2\\le1\\)에 대해 다음이 성립하는 것과 동치입니다.",
+"k110": "그래프로 보면, 아래로 볼록한 함수는 언제나 어떤 현보다도 위에 있고, 위로 볼록한 함수는 언제나 아래에 있습니다. \\(f(x)\\)가 유계이고 아래로(위로) 볼록하면 (i) \\(f\\)는 연속이고, (ii) <i>거의<\/i> 모든 곳에서 미분 가능하며, (iii) \\(df/dx\\)는 단조 비증가(비감소)임을 증명할 수 있습니다. \\(f\\)에 불연속이 있으면 어떤 현의 위와 아래에 동시에 놓이게 되지만, <mark>기울기의 점 불연속<\/mark>, 즉 뾰족점은 허용됩니다.",
+"k111": "<b>\\(H\\)에 대한 \\(f\\)의 볼록성.<\/b> 횔더 부등식을 떠올립시다: 수열 \\(g_k, h_k \\ge 0\\)와 \\(\\alpha+\\beta=1\\)인 \\(\\alpha,\\beta\\ge0\\)에 대해",
+"k112": "\\(G[S] = \\exp\\{\\beta J\\sum_{\\langle ij\\rangle}S_iS_j+\\cdots\\}\\)로 두고 \\(Z_\\Omega(H) = \\operatorname{Tr}\\,e^{\\beta H\\sum_iS_i}\\,G[S]\\)로 쓴 뒤, \\(G = G^{\\alpha_1}G^{\\alpha_2}\\)로 나눕니다. 그러면",
+"k113": "(단조 함수인) 로그를 취하고, \\(-k_BT\\)를 곱하고, \\(N(\\Omega)\\)로 나눈 뒤 열역학적 극한을 취하면",
+"k114": "\\(T\\)와 \\(J\\)에 대한 볼록성은 연습 문제로 남깁니다.",
+"k115": "자유 에너지는 언제나 현보다 위에 있다",
+"k116": "현을 그은 스핀당 자유 에너지 \\(f(H)\\)",
+"k117": "기울기 \\(\\partial f/\\partial H = -m\\): 비증가",
+"k118": "§2.3 데모의 평균장 자석을 열역학적 극한에서 본 것입니다. \\(T_c\\) 아래에서 자유 에너지는 \\(H=0\\)에 뾰족점, 즉 볼록성이 허용하는 기울기의 점 불연속을 가집니다. 기울기 \\(-m(H)\\)는 거기서 뛰지만 결코 증가하지 않는데, 이것이 성질 (f)입니다. 현의 끝점을 아무 데나 끌어 보세요. 곡선은 결코 현 아래로 내려가지 않습니다.",
+"k119": "<span class=\"sec\">2.7<\/span>이징 모형의 대칭 성질",
+"k120": "<b>보조정리.<\/b> 스핀 배치의 임의의 함수 \\(\\phi\\)에 대해",
+"k121": "이를 보려면 항들을 써 보면 됩니다: 양변의 합에서 모든 항이 정확히 한 번씩 나타납니다. <span class=\"qed\">증명 끝<\/span>",
+"k122": "시간 반전 (\\(\\mathbb Z_2\\)) 대칭",
+"k123": "외부 자기장을 포함해 모든 자기 모멘트를 뒤집어도 에너지는 변하지 않습니다: \\(\\mathcal H_\\Omega(H,J,\\{S_i\\}) = \\mathcal H_\\Omega(-H,J,\\{-S_i\\})\\). 따라서",
+"k124": "부분 격자 대칭",
+"k125": "영 자기장에서 초입방 격자를 서로 맞물린 두 부분 격자 A와 B로 나누고 스핀에 그에 맞게 이름을 붙입시다. <b>이분<\/b> 격자에서는 부분 격자 A의 스핀이 부분 격자 B의 스핀하고만 상호작용하고, 그 반대도 마찬가지입니다:",
+"k126": "\\(JS_i^AS_j^B\\)의 부호만 중요하므로 \\(\\mathcal H_\\Omega(0,-J,\\{S^A\\},\\{S^B\\}) = \\mathcal H_\\Omega(0,J,\\{-S^A\\},\\{S^B\\})\\)입니다. \\((*)\\)를 A 스핀에만 적용하면",
+"k127": "영 자기장에서 초입방 격자 위의 강자성(\\(J>0\\))과 반강자성(\\(J\\lt 0\\)) 이징 모형은 <mark>같은 열역학<\/mark>을 가집니다. 이 논증은 이분 격자가 아닌 삼각 격자에서는 성립하지 않습니다. 거기서는 정사각 격자에서처럼 모든 반강자성 상호작용을 동시에 최소화할 수 없는데, 이것이 <mark>쩔쩔맴(frustration)<\/mark>의 예입니다.",
+"k128": "강자성체 대 반강자성체, 정사각 대 삼각",
+"k129": "정사각 격자",
+"k130": "삼각 격자",
+"k131": "\\(J\\lt 0\\)이면 맨 위 스핀은 두 이웃 모두와 반평행할 수 없습니다.",
+"k132": "자리당 자유 에너지, \\(H=0\\)",
+"k133": "자리당 엔트로피 \\(S/k_B\\), \\(H=0\\)",
+"k134": "\\(|J|=1\\)인 4 × 4 주기 격자의 \\(2^{16}\\)개 상태 전부에 대한 정확한 합. 이분 격자인 정사각 격자에서는 \\(J=+1\\)과 \\(J=-1\\)의 곡선이 정확히 겹칩니다. 삼각 격자에서는 서로 다르고, 쩔쩔매는 반강자성체는 큰 바닥 상태 겹침수를 유지하므로 \\(T\\to0\\)에서도 엔트로피가 양수로 남습니다. 무한한 삼각 격자에서 이 잔류 엔트로피는 자리당 \\(0.3231\\,k_B\\)입니다(Wannier, 1950). 4 × 4 격자는 이를 근사할 뿐입니다.",
+"k135": "<span class=\"sec\">2.8<\/span>상전이의 존재",
+"k136": "특정한 계의 상그림은 어떻게 “구성”할까요? <mark>에너지–엔트로피 논증<\/mark>: 높은 온도에서는 언제나 엔트로피가 자유 에너지 \\(F = E-TS\\)를 지배하므로, \\(F\\)는 \\(S\\)를 최대로 하여 최소가 됩니다. 낮은 온도에서는 내부 에너지가 \\(TS\\)를 지배할 수 있으므로, \\(F\\)는 \\(E\\)를 최소로 하여 최소가 됩니다. 두 절차가 고른 거시 상태가 다르면, 그 중간의 어떤 온도에서 적어도 한 번의 상전이가 일어난 것입니다.",
+"k137": "영 온도 상그림",
+"k138": "\\(T=0\\)에서 \\(F=E\\)입니다. <b>보조정리:<\/b> 에너지가 스핀 배치 \\([S]\\)에 의존하는 항들의 합 \\(E = \\sum_\\lambda E_\\lambda[S]\\)이면",
+"k139": "<i>증명:<\/i> 모든 \\(\\lambda\\)와 모든 \\([S]\\)에 대해 \\(E_\\lambda[S]\\ge\\min_{[S]}E_\\lambda[S]\\)입니다. \\(\\lambda\\)에 대해 더하고 좌변을 최소화하면 되는데, 우변은 상수임에 유의합니다. <span class=\"qed\">증명 끝<\/span> 해밀토니언의 각 항을 <i>따로따로<\/i> 최소화하는 배치를 찾을 수 있으면, 그 배치는 하한에 도달하므로 바닥 상태입니다. 다만 유일할 필요는 없습니다. \\(E_\\lambda\\)가 결합 상수에 의존하므로, 최소화하는 배치도 결합 상수에 의존합니다.",
+"k140": "결합 상수 \\([K]\\)가 변하면 계의 에너지 준위가 움직이고, 바닥 상태가 한 준위에서 다른 준위로 바뀔 수 있습니다. 이런 <mark>준위 교차<\/mark>는 보통 1차 상전이를 낳는데, 거기서 \\(\\partial E/\\partial K_i\\)가 불연속이기 때문입니다. 영 온도 상전이에는 열역학적 극한이 필요하지 <i>않다<\/i>는 데 주목하세요: 비해석성은 \\(N\\to\\infty\\) 때문이 아니라 \\(\\beta\\to\\infty\\) (\\(T\\to0^+\\)) 때문에 생깁니다.",
+"k141": "<b>예: \\(J>0\\)인 이징 모형.<\/b> \\(-J\\sum_{\\langle ij\\rangle}S_iS_j\\)는 모든 쌍에 대해 \\(S_i = S_j\\)일 때 최소이고, \\(-H\\sum_iS_i\\)는 \\(H>0\\)이면 \\(S_i = +1\\), \\(H\\lt 0\\)이면 \\(-1\\)일 때 최소입니다. 둘 다 \\(S_i = \\operatorname{sgn}H\\)로 만족되므로",
+"k142": "이고, 영 온도 상그림은 \\(H=0\\)에서 상전이를 가집니다. 정확히 \\(H=0\\)에서는 모두 위와 모두 아래의 에너지가 같고, 어느 쪽이 관찰되는지는 계를 준비한 <b>초기 조건<\/b>에 달려 있습니다.",
+"k143": "준위 교차, 그리고 열역학적 극한이 필요 없는 계단",
+"k144": "각 자화 부분 공간의 가장 낮은 에너지 \\(E_M(H)\\)",
+"k145": "같은 16개 스핀의 \\(H\\)에 대한 \\(M\\)",
+"k146": "왼쪽: 4 × 4 주기 격자(\\(J=1\\))에서 전체 자화 \\(\\sum_iS_i\\)를 고정했을 때의 가장 낮은 에너지는 \\(H\\)에 대해 기울기가 \\(-\\sum_iS_i\\)인 직선입니다. 바닥 상태(굵은 선)는 \\(H=0\\)에서 모두 아래에서 모두 위로 바뀝니다. 오른쪽: 같은 16개 스핀의 정확한 \\(M(H)\\). 온도를 낮추면 매끄러운 곡선이 날카로워져 영 온도 계단이 되며, \\(N\\to\\infty\\)는 필요하지 않습니다.",
+"k147": "\\(d = 1\\)에서 0이 아닌 온도",
+"k148": "\\(T=0\\) 상전이가 \\(T>0\\)에서도 살아남는지는 <mark>차원<\/mark>에 달려 있습니다. 란다우와 파이얼스는 \\(d=1\\)에서 \\(T>0\\)이면 장거리 질서가 없음을 보였고, \\(d=2\\)에서는 \\(T=0\\) 위에도 장거리 질서(강자성) 상태가 존재하며 \\(T_c>0\\)에서 상자성(무질서) 상태로 상전이함을 보였습니다. 주어진 상전이가 \\(T>0\\)에서 일어나기 시작하는 차원을 <mark>하임계 차원<\/mark>이라 합니다.",
+"k149": "\\(d=1\\)의 \\(T=0\\)에는 가능한 상이 두 개, 모든 스핀이 위인 상과 모든 스핀이 아래인 상이 있습니다. 온도를 올리면 각 스핀은 열평형에 있기 때문에 일종의 브라운 운동을 합니다. 열역학적 극한에서 <i>유한한<\/i> 개수 \\(n\\)의 스핀이 상관없이 뒤집혀도 장거리 질서는 무너지지 않는데, \\(\\lim_{N\\to\\infty}(N-n)/N = 1\\)이기 때문입니다. 질서를 무너뜨리려면 평균적으로 0이 아닌 <i>비율<\/i> \\(f\\)의 스핀이 뒤집혀야 하고, 뒤집힌 스핀은 \\(+1\\) 대신 \\(-1\\)을 기여하므로 자화는 \\(\\lim_{N\\to\\infty}(N-2fN)/N = 1-2f\\lt 1\\)이 됩니다. 이것도 질서를 줄일 뿐입니다: 뒤집힌 스핀이 더 이상 소수가 아니게 될 때, 즉 \\(f\\to\\tfrac12\\), \\(M\\to0\\)일 때 질서가 무너집니다. 아래의 자구벽 논증은 \\(d=1\\)에서 바로 이런 일이 일어남을 보여 줍니다.",
+"k150": "모든 스핀이 정렬되어 있으면 엔트로피는 0(\\(k_B\\log1\\))이고 \\(H=0\\)에서 \\(F_N = -NJ\\)입니다. 이제 두 자구를 가진 상태 \\(\\uparrow\\cdots\\uparrow\\,\\downarrow\\cdots\\downarrow\\)를 생각합시다. 결합 하나가 \\(-J\\)에서 \\(+J\\)로 바뀌므로 경계면의 비용은 \\(\\Delta E = 2J\\)이고, \\(E_N = -NJ+2J\\)입니다. 열린 사슬에서 경계면은 \\(N-1\\approx N\\)개의 결합 어디에나 놓일 수 있으므로 \\(S_N \\approx k_B\\log N\\)입니다. (주기적인 고리에서는 벽이 쌍으로 생깁니다: 벽 두 개는 \\(4J\\)의 비용이 들고 \\(\\binom N2\\)가지로 놓을 수 있어 \\(\\Delta F = 4J - k_BT\\log\\binom N2\\approx 4J-2k_BT\\log N\\)이며, 결론은 같습니다.) 따라서 열린 사슬에서",
+"k151": "계는 어떤 \\(T>0\\)에서든 자구벽을 만들어 자유 에너지를 낮추고, 새 자구가 생길 때마다 다시 그렇게 합니다. 질서 있는 자구가 전혀 남지 않을 때까지 이것이 계속됩니다. 장거리 질서 상태는 \\(T>0\\)에서 열적 요동에 대해 불안정하므로, 영 자기장에서 \\(M = 0\\)입니다. 따름정리로, \\(d=1\\)에서는 <mark>\\(T>0\\)에서 상전이가 없습니다<\/mark>: \\(H=0\\)에는 더 이상 두 상이 없고, 선의 끝에 영 온도 상태 \\(M=\\pm1\\) 두 개만 있습니다.",
+"k152": "1차원에서 에너지 대 엔트로피",
+"k153": "속도",
+"k154": "모두 위에서 다시 시작",
+"k156": "자구벽 하나에 대한 \\(\\Delta F = 2J - k_BT\\ln N\\)",
+"k157": "스핀 400개 사슬, 시간은 아래로 흐름",
+"k158": "왼쪽: 고른 온도(실선)와 다른 온도(회색)에서 열린 사슬의 벽 하나에 대한 자유 에너지 변화. \\(N > N^* = e^{2J/k_BT}\\)이면 음수가 되므로, 충분히 긴 사슬은 온도가 아무리 낮아도 무질서해집니다. 오른쪽: 주기적인 고리에서 완전히 질서 있는 상태로부터 시작한 열원(heat-bath) 동역학. 벽은 쌍으로 생겨나 평형 밀도에 이를 때까지 떠돕니다. 스핀 \\(N=400\\)개인 이 고리의 정확한 밀도는 \\(u=\\tanh(J/k_BT)\\)에 대해 \\((1-u)(1-u^{N-1})/\\big(2(1+u^N)\\big)\\)이고, 그 열역학적 극한은 \\(1/(1+e^{2J/k_BT})\\)입니다. 사슬이 상관 길이보다 그리 길지 않은 낮은 \\(T\\)에서는 둘이 눈에 띄게 다릅니다.",
+"k159": "이 논증은 질서 상태와 두 자구 상태의 에너지 차이가 \\(N\\)에 의존하지 않도록 짧은 도달 거리의 상호작용을 가정했습니다. 대신 \\(J_{ij} = J/|\\vec r_i-\\vec r_j|^{\\sigma}\\)이면, \\(1\\le\\sigma\\le2\\)인 한 \\(0\\lt T\\lt T_c\\)에서 장거리 질서가 유지될 수 있습니다. \\(\\sigma\\lt 1\\)이면 열역학적 극한이 존재하지 않는데, 이는 §2.2의 조건 \\(\\sigma>d\\)와 들어맞습니다(경계 경우 \\(\\sigma=1\\)은 경계적입니다). \\(\\sigma>2\\)이면 상호작용은 짧은 도달 거리로 간주되고, \\(T>0\\)에서 장거리 질서가 무너진다는 논증이 적용됩니다. 어려운 경우인 \\(\\sigma=2\\)는 Fröhlich and Spencer (1982)가 다룹니다.",
+"k160": "2장은 <a href=\"ch02b-symmetry-breaking-and-lattice-gases.html\">2부<\/a>에서 2차원의 파이얼스 논증으로 이어집니다.",
+"k161": "더 읽을거리",
+"k168": "<a href=\"index.html\">전체 장<\/a>\n    <a href=\"ch01-introduction.html\">이전: 1장, 서론<\/a>\n    <a href=\"ch02b-symmetry-breaking-and-lattice-gases.html\">다음: 2장 2부, 대칭 깨짐, 에르고딕성, 격자 기체<\/a>",
+"k169": "N. Goldenfeld, <i>Lectures on Phase Transitions and the Renormalization Group<\/i> 2장에 관한 이상훈 교수의 강의 노트에 딸린 대화형 자료입니다. 본문은 강의 노트를 풀어 쓴 것입니다. 모든 계산은 브라우저에서 이루어지며 데이터를 수집하지 않습니다. 경상국립대학교 물리학과 대학원 과목을 위해 이상훈 교수의 강의 노트를 바탕으로 Claude Opus 5.5 (Anthropic)가 만들었습니다.",
+"k162": "N. Goldenfeld, <i>Lectures on Phase Transitions and the Renormalization Group<\/i> (Addison-Wesley, 1992), Chapter 2.",
+"k163": "S. G. Brush, \"History of the Lenz–Ising model,\" <i>Rev. Mod. Phys.<\/i> <b>39<\/b>, 883 (1967).",
+"k164": "R. B. Griffiths, \"Rigorous results and theorems,\" in C. Domb and M. S. Green (eds.), <i>Phase Transitions and Critical Phenomena<\/i>, vol. 1 (Academic Press, 1972).",
+"k165": "R. J. Baxter, <i>Exactly Solved Models in Statistical Mechanics<\/i> (Academic Press, 1982).",
+"k166": "J. Fröhlich and T. Spencer, \"The phase transition in the one-dimensional Ising model with \\(1/r^2\\) interaction energy,\" <i>Commun. Math. Phys.<\/i> <b>84<\/b>, 87 (1982).",
+"k167": "G. H. Wannier, \"Antiferromagnetism. The triangular Ising net,\" <i>Phys. Rev.<\/i> <b>79<\/b>, 357 (1950)."
+};
+(function(){
+  // English / 한국어 switch shared by the course demos; the choice is remembered across pages
+  var KEY='lshlj82-demo-lang', root=document.documentElement, KO=window.I18N_KO||{}, EN={};
+  var els=[].slice.call(document.querySelectorAll('[data-k]'));
+  els.forEach(function(e){EN[e.getAttribute('data-k')]=e.innerHTML;});
+  var titleEN=document.title;
+  var btn=document.createElement('button');btn.id='langBtn';btn.type='button';document.body.appendChild(btn);
+  function typeset(list){
+    if(!list.length)return;
+    if(window.MathJax&&MathJax.typesetPromise){var go=function(){MathJax.typesetPromise(list).catch(function(){});};
+      if(MathJax.startup&&MathJax.startup.promise)MathJax.startup.promise.then(go);else go();}
+    if(window.renderMathInElement&&window.KATEX_OPTS)list.forEach(function(e){try{renderMathInElement(e,window.KATEX_OPTS)}catch(_){}}); 
+  }
+  function apply(l,first){
+    window.LANG=l;root.dataset.lang=l;root.lang=l;var changed=[];
+    els.forEach(function(e){var k=e.getAttribute('data-k'),s=(l==='ko'&&KO[k]!=null)?KO[k]:EN[k];if(e.innerHTML!==s){e.innerHTML=s;changed.push(e);}});
+    document.title=(l==='ko'&&KO.__title)?KO.__title:titleEN;
+    btn.textContent=l==='ko'?'EN':'한국어';btn.setAttribute('aria-label',l==='ko'?'View in English':'한국어로 보기');btn.title=btn.getAttribute('aria-label');
+    btn.setAttribute('lang',l==='ko'?'en':'ko');
+    if(!first)typeset(changed);
+    window.dispatchEvent(new CustomEvent('langchange',{detail:{lang:l}}));
+    // canvases drawn before the Korean web font arrives are redrawn once it has loaded
+    if(l==='ko'&&document.fonts&&!document.fonts.check('16px "IBM Plex Sans KR"','가'))document.fonts.load('16px "IBM Plex Sans KR"','가').then(function(){if(window.LANG==='ko')window.dispatchEvent(new CustomEvent('langchange',{detail:{lang:'ko'}}));}).catch(function(){});
+  }
+  btn.addEventListener('click',function(){var n=window.LANG==='ko'?'en':'ko';try{localStorage.setItem(KEY,n)}catch(e){}apply(n,false);});
+  apply(window.LANG||'en',true);
+})();
+</script>
+<!-- lang-toggle:body-end -->
 </body>
 </html>
